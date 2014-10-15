@@ -1,1 +1,14 @@
+Coach:
 
+  schedule and student info:
+    -> check his class schedule (time/date/venue)
+    -> view a list of his classes
+    -> view a list of student per class
+    -> view student's special needs
+    
+  input on students:
+    -> input info on student's progress (game scores and comments etc.)
+    -> input issues with students (medical/behavioral)
+    -> input student's attendance
+    
+    -? possibly make/give awards
