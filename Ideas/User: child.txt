@@ -1,1 +1,7 @@
+Child: (the subuser of parent)
 
+  classes:
+    -> check schedule
+    -> check list of classes attending
+    
+    -> request edit permission from parent
