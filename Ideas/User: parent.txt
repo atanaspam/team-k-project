@@ -24,7 +24,11 @@ Parent:
       -> check child's attendance
       -> check child's medical issues
 
-    Personal details:
+    personal details:
       -> setup their personal details (inc. contacts and emergency details)
+      
+    contacting:
+      -> contact the manager (query them? arrange meeting?)
+      -? contact coaches (query them? arrange meeting?) -ask Julie? the 'client'
       
     -? setup self as the user (check yourself into the camp)
