@@ -1,1 +1,26 @@
+Parent:
 
+  Features:
+    
+    configuring a child:
+      -> add a child
+      -> remove a child
+      -> edit a child
+      (inc. personal details)
+
+    enrolling a child:
+      -> enroll child in a holiday camp
+      -> choose classes (depending on how the camp works)
+      -> choose schedule (days/times/weeks)
+
+    check on child:
+      -> check list of children (subuser)
+      -> check child's schedule
+      -> check child's progress in the classes
+      -> check child's attendance
+      -> check child's medical issues
+
+    Personal details:
+      -> setup their personal details (inc. contacts and emergency details)
+      
+    -? setup self as the user (check yourself into the camp)
