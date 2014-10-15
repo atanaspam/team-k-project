@@ -8,3 +8,7 @@
    
 4> Should coach be able to create and give awards to students?
 
+5> Should 'parent' be able to book classes to itself?
+
+6> Should 'child' be able to ask for parent edit permissions?
+
