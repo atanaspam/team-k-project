@@ -1,0 +1,6 @@
+-->There could be some form of communication between the different users. [Extra Feature]
+For example:
+- A coach can notify the parents or the children about a cancellation or a last-minute change in the schedule.
+- A parent (or his/her children, maybe) can contact their coach about an absence.
+- A camp manager can inform the parents about an issue related to the camp or the fee payment.
+- The super user can notify all the other user groups about updates and maintenances performed on the system.
