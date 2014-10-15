@@ -11,4 +11,8 @@ Coach:
     -> input issues with students (medical/behavioral)
     -> input student's attendance
     
+  contacting:
+    -> contact manager
+    -? maybe contact parents in case of emergency (ask Julie? the 'client')
+    
     -? possibly make/give awards
