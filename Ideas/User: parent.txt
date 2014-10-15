@@ -12,6 +12,10 @@ Parent:
       -> enroll child in a holiday camp
       -> choose classes (depending on how the camp works)
       -> choose schedule (days/times/weeks)
+    
+    making payments:
+      -> pay the fees for child's classes [extra]
+      
 
     check on child:
       -> check list of children (subuser)
