@@ -1,8 +1,10 @@
 
-1> Should 'parent' be able to contact 'coaches'? Or only be able to contact the 'user'?
+1> Should 'parent' be able to contact 'coaches'? Or only be able to contact the 'manager'? How should the contacting work?
 
 2> Should we include previous requirements as a feature of a class?
 
 3> Do they use personal information forms already? If so ask for a copy. If not the what sort of personal information
    would you need from 'parents' and 'coaches'?
    
+4> Should coach be able to create and give awards to students?
+
