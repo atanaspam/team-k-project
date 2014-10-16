@@ -5,10 +5,16 @@
 
 3> Do they use personal information forms already? If so ask for a copy. If not the what sort of personal information
    would you need from 'parents' and 'coaches'?
+      
+   Are there personal information that we could enter already?
    
 4> Should coach be able to create and give awards to students?
 
 5> Should 'parent' be able to book classes to itself?
 
 6> Should 'child' be able to ask for parent edit permissions?
+
+7> Should there be an payment system for employees?
+
+8> Can children request to be with friends?
 
