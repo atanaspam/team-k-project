@@ -14,5 +14,6 @@ Coach:
   contacting:
     -> contact manager
     -? maybe contact parents in case of emergency (ask Julie? the 'client')
+    -? maybe an intercom between the coaches of the same camp
     
     -? possibly make/give awards
