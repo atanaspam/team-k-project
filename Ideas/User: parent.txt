@@ -2,12 +2,18 @@ Parent:
 
   Features:
     
-    configuring a child:
+    sign up
+      -> username or email address
+    
+    sign up children:
       -> add a child
       -> remove a child
       -> edit a child
       (inc. personal details)
-
+      
+    browse course
+      -> see course summaries, reviews, other details
+      
     enrolling a child:
       -> enroll child in a holiday camp
       -> choose classes (depending on how the camp works)
@@ -16,8 +22,7 @@ Parent:
     making payments:
       -> pay the fees for child's classes [extra]
       
-
-    check on child:
+    check on children:
       -> check list of children (subuser)
       -> check child's schedule
       -> check child's progress in the classes
@@ -30,5 +35,8 @@ Parent:
     contacting:
       -> contact the manager (query them? arrange meeting?)
       -? contact coaches (query them? arrange meeting?) -ask Julie? the 'client'
+      -> contact manager and/or coach in case of illness
       
     -? setup self as the user (check yourself into the camp)
+
+    main page after login should show a summary, ie. all children, active courses, etc.
