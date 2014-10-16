@@ -1,4 +1,4 @@
-Superuser:
+Superuser (Administrator?):
 
 General:
   ---> Full Access/Control Privilages
@@ -8,6 +8,9 @@ General:
             - coach
             - camp manager
       -- Can access and manipulate the data stored in system's database
+      -- Can update the system
+      -- Can modify views?
+      -- should deal with problems the system might encounter
 
 Contacting:
   ---> Inform users about issues related to the operation of the website
