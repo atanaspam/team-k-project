@@ -5,3 +5,6 @@ Child: (the subuser of parent)
     -> check list of classes attending
     
     -> request edit permission from parent
+  
+  contacting:
+    -> contact the coaches (questions related to the classes?)
