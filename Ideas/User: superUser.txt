@@ -1,1 +1,11 @@
+Superuser:
 
+General:
+  ---> Full Access/Control Privilages
+      -- Can access all user modes:
+            - child 
+            - parent
+            - coach
+            - camp manager
+      -- Can access and manipulate the data stored in system's database
+      
