@@ -5,6 +5,11 @@ Coach:
     -> view a list of his classes
     -> view a list of student per class
     -> view student's special needs
+    -> provide a timetable for download
+    
+  input on courses:
+    -> edit course descriptions, ie. plan for parents and children to read
+    -> add equipment they might require (managing and planing resources)
     
   input on students:
     -> input info on student's progress (game scores and comments etc.)
