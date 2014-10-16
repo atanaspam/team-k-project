@@ -1,6 +1,10 @@
 Manager:
 
   camp setup:
+    -> set up the venues of the camp
+        . add a new venue (Include its location, facilities and capacity)
+        . edit a venue
+        . delete a venue (if it is no longer used)
     -> set up the classes
       - add a class
       - edit classes
