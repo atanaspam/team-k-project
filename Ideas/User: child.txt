@@ -8,3 +8,4 @@ Child: (the subuser of parent)
   
   contacting:
     -> contact the coaches (questions related to the classes?)
+    -> send feedback for other user to read (might be supervised?)
