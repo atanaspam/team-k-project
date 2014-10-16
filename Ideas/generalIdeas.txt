@@ -7,3 +7,6 @@
         - Parents
         - Coaches
         - Camp Managers
+
+---> internal mailing or communication system
+---> back ups of the system! automatically?
