@@ -1,6 +1,9 @@
---> There could be some form of communication between the different users. [Extra Feature]
-For example:
-- A coach can notify the parents or the children about a cancellation or a last-minute change in the schedule.
-- A parent (or his/her children, maybe) can contact their coach about an absence.
-- A camp manager can inform the parents about an issue related to the camp or the fee payment.
-- The super user can notify all the other user groups about updates and maintenances performed on the system.
+---> "Export my Timetable" Feature
+    -- Select between "Export to PDF" or "Print" options
+    -- Creates a printer-friendly version of the timetable
+    -- Allows users from different user groups to export their timetables outside the website environment
+    -- Can be used by:
+        - Children
+        - Parents
+        - Coaches
+        - Camp Managers
