@@ -8,4 +8,13 @@ General:
             - coach
             - camp manager
       -- Can access and manipulate the data stored in system's database
+
+Contacting:
+  ---> Inform users about issues related to the operation of the website
+      -- Can contact members from other user groups:
+            - parents
+            - coaches
+            - camp managers
+      -- Notify them about any upcoming updates or maintenances to the website
+        
       
