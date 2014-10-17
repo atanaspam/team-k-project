@@ -1,6 +1,8 @@
 Superuser (Administrator?):
  
 I think our aim should be that the super user interacs with the system once a year or once per season and no more -A.P.
+-? Get notified when there are errors.
+-? Everything happening in the system should be kept in a log, for future reference (system maintenance).
 
 General:
   ---> Full Access/Control Privilages
@@ -15,12 +17,13 @@ General:
       -- Assigns different users to their corresponding user groups.
       -- should deal with problems the system might encounter
 
-Contacting:
+Contacting: (contact list at first, then think of implementing a comunication system)
   ---> Inform users about issues related to the operation of the website
       -- Can contact members from other user groups:
             - parents
             - coaches
             - camp managers
       -- Notify them about any upcoming updates or maintenances to the website
+      
         
       
