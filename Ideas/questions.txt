@@ -18,3 +18,8 @@
 
 8> Can children request to be with friends?
 
+9> To what extend your system is already computerised? Have you been using any electronic booking management system, web-based or not?
+
+10> Is the information about the bookings held in electronic form? If yes, in which type of file? (e.g. a database, a spreadsheet, etc.)
+
+11> How is the payment of the fees organised? Is the full amount of money paid in advance or is it splitted in monthly (or other) installments?
