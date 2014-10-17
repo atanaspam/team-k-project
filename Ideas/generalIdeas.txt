@@ -10,3 +10,5 @@
 
 ---> internal mailing or communication system
 ---> back ups of the system! automatically?
+---> Maby a visual representation of the fields/courts available
+---> We may need to create a function wich purges the whole program (used at the end of each season for example)
