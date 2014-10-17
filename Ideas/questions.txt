@@ -1,9 +1,11 @@
+Questions?
 
 1> Should 'parent' be able to contact 'coaches'? Or only be able to contact the 'manager'? How should the contacting work?
 
-2> Should we include previous requirements as a feature of a class?
+2> Should we include previous requirements as a feature of a class? Are there age restrictions to courses? 
+   Can parents sign up too?
 
-3> Do they use personal information forms already? If so ask for a copy. If not the what sort of personal information
+3> Do they use personal information forms already? If so ask for a copy. If not then what sort of personal information
    would you need from 'parents' and 'coaches'?
       
    Are there personal information that we could enter already?
@@ -40,4 +42,10 @@
 17> During the registration process, are there any children that register by themselves? (for themselves)
 
 18> Is the current manager keeping track of equiment and resource in venues? (number of bals etc)
+
+19> Who sets up the classes? Who plans the class structure? How does the planning happen?
+
+20> Should we treat the users as children/parent? Children are just clients?
+
+21> Would you prefer a Website or an App based approch to the implementation?
 
