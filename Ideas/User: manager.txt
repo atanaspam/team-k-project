@@ -11,6 +11,7 @@ Manager:
         . edit coaches assigned to that class (coaches should maybe be in charge of entering descriptions)
         . edit scheduling of the class (time/date)
         . edit venues of the class (flexible to date/time)
+        .? make a plan for the classes
       - delete classes
     -> assign coaches to the classes (be flexible) (coaches should maybe be in charge of entering descriptions)
     -> assign dates and times to the classes (be flexible)
