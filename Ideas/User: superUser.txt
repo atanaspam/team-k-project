@@ -1,4 +1,6 @@
 Superuser (Administrator?):
+ 
+I think our aim should be that the super user interacs with the system once a year or once per season and no more -A.P.
 
 General:
   ---> Full Access/Control Privilages
@@ -10,6 +12,7 @@ General:
       -- Can access and manipulate the data stored in system's database
       -- Can update the system
       -- Can modify views?
+      -- Assigns different users to their corresponding user groups.
       -- should deal with problems the system might encounter
 
 Contacting:
