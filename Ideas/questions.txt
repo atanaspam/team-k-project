@@ -38,3 +38,6 @@
 16> Can you describe your current registration process for customers? eg first customers contact us then we give them the available time slots.. ...
 
 17> During the registration process, are there any children that register by themselves? (for themselves)
+
+18> Is the current manager keeping track of equiment and resource in venues? (number of bals etc)
+
