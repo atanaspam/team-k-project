@@ -33,4 +33,8 @@
 
 14> Do you keep payment information about customers after they have become your clients?
 
-15> How many clients do you roughly have each year? /How many each summer?
+15> How many clients do you roughly have each year? / How many each summer?
+
+16> Can you describe your current registration process for customers? eg first customers contact us then we give them the available time slots.. ...
+
+17> During the registration process, are there any children that register by themselves? (for themselves)
