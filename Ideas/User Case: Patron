@@ -1,3 +1,20 @@
-User Case for Parent user:
+User Case for Patron(Parent) user:
 
+  User Stories:
+  
+  /** FORMAT **/
+  As a parent,
+  I want to <use a feature>,
+  So that <rationale>.
+  <Optional notes>
+  /************/  
+    
+  Scenarios:
+  
+  /** FORMAT **/
+  Given <steps describe pre-conditions>
+  When <steps that used to  be triggered>
+  Then <steps for output generation>
+  *And <extra> (optional at after any line)
+  /************/ 
   
