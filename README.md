@@ -1,7 +1,7 @@
 Sports Facilities Management <sup>pending better name</sup>
 ============================
 
-A web app to manage the running and mangement of sports facilities and camps over varying periods of time.
+A web app to manage the running and management of sports facilities and camps over varying periods of time.
 
 Team Members
 ------------
