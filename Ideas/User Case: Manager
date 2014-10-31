@@ -17,3 +17,9 @@ User Case for Manager user:
   Then <steps for output generation>
   *And <extra> (optional at after any line)
   /************/ 
+  
+  
+  User Story No. 1
+  As a Manager
+  I want to create a venue,
+  So that it will be used for the classes.
