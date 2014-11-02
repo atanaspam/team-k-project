@@ -33,3 +33,23 @@ User Case for Manager user:
  So that the children will be able to be enrolled on.
 
  ---------------------------------------------------------------
+
+ // User Story No. 3 //
+ As a Manager
+ I want to view the total hours each coach worked,
+ So that I can proceed with the payroll
+
+ ---------------------------------------------------------------
+
+ // User Story No. 4 //
+ As a Manager
+ I want to view the class lists with an indication on students with outstanding amounts,
+ so that I can perform changes on the class lists and make sure payments are up to date.
+
+ ---------------------------------------------------------------
+
+ // User Story No. 5 //
+ As a manager
+ I want to access a student and view their attendance log,
+ and charges, to assist me with payments of drop-in visits.
+

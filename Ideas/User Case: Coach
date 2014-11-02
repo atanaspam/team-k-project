@@ -17,3 +17,19 @@ User Case for Coach user.
   Then <steps for output generation>
   *And <extra> (optional at after any line)
   /************/ 
+
+ ---------------------------------------------------------------
+ 
+ // User Story No. 1 //
+ As a Coach
+ I want to take attendance of today’s class,
+ so that we make sure we know who attended (payments etc).
+
+ ---------------------------------------------------------------
+ 
+ // User Story No. 2 //
+ As a Coach
+ I want to view my schedule online and be able to add notes on session,
+ So that I don’t have to keep it in my calendar/keep management up2date.
+
+ ---------------------------------------------------------------
