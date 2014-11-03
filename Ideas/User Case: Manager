@@ -52,4 +52,15 @@ User Case for Manager user:
  As a manager
  I want to access a student and view their attendance log,
  and charges, to assist me with payments of drop-in visits.
+ 
+---------------------------------------------------------------
+  
+  // User Story No. 6 //
+  As a manager
+  I want to review a booking request made by a patron,
+  so that I can confirm the enrolment of his/her child(ren).
+  
+---------------------------------------------------------------
+
+  
 
