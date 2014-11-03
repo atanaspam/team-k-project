@@ -18,22 +18,29 @@ User Case for Patron(Parent) user:
   *And <extra> (optional at after any line)
   /************/ 
  ---------------------------------------------------------------
+ 
+ // User Story No. 1 //
+ As a Patron
+ I want to register myself as a user of the system,
+ so that I am able to making bookings in the future.
+ 
+ ---------------------------------------------------------------
   
-  // User Story No. 1 //
+  // User Story No. 2 //
   As a Patron
   I want to enquire for classes,
   so that I can book a place for my offspring online.
 
  ---------------------------------------------------------------
  
- // User Story No. 2 //
+ // User Story No. 3 //
  As a Patron
  I want to repeat the exact same booking I had last week for a given period,
  So that I won’t have to fill in the same information.
 
  ---------------------------------------------------------------
  
- // User Story No. 3 //
+ // User Story No. 4 //
  As a Patron
  I want to repeat a past reservation with some changes , 
  So that I won’t have to fill in the same information partially.
