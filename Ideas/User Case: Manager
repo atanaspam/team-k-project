@@ -62,5 +62,12 @@ User Case for Manager user:
   
 ---------------------------------------------------------------
 
+  // User Story No. 7 //
+  As a manager
+  I want to view the notes made by the coaches for their sessions,
+  so that I can be informed about any incidents occured during them (Medical, Behavioural, etc.).
+  
+---------------------------------------------------------------
+
   
 
