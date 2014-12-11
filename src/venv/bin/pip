@@ -1,4 +1,4 @@
-#!/home/imlach/dev/team-k-project/src/venv/bin/python
+#!`pwd`/python
 
 # -*- coding: utf-8 -*-
 import re
