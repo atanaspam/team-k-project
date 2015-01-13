@@ -3,7 +3,8 @@ html,body {
 }
 
 .studentLabel{
-  
+  color: black;
+  text-align: left;
 }
 
 .calendar-style{
