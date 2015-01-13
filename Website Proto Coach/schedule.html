@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
-		<title>Western Tennis Club Bookings</title>
+		<title>Western Tennis Club Coach Schedule</title>
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<link href="css/bootstrap.min.css" rel="stylesheet">
@@ -26,7 +26,7 @@
              <span class="icon-bar"></span>
            </button>
     	</div>
-   	   <span class="navbar-header"><a class="navbar-brand" href="#">Western Tennis Club</a></span>       </div>
+   	   <span class="navbar-header"><a class="navbar-brand" href="#">Western Tennis Club Coach</a></span>       </div>
     </div>
       
     <div class="container">
@@ -37,52 +37,25 @@
           <div data-spy="affix" data-offset-top="45" data-offset-bottom="90">
             <ul class="nav" id="sidebar-nav">
               <li><a href="index.html">Home</a></li>
-              <li><a href="index2.html"><strong>Bookings</strong></a></li>
-              <li><a href="#section2">sth</a></li>
-              <li><a href="#section3">sth else</a></li><span class="navbar-header"><a class="navbar-brand" href="#"><img src="Western Tennis Club tsp.png" width="88" height="88"></a></span>              
+              <li><a href="sessions.html">Attendance</a></li>
+              <li><a href="sessionsTimetable.html"><strong>Schedule</strong></a></li>
+              <li><a href="#section3">Edit Profile</a></li><span class="navbar-header">
+              <a class="navbar-brand" href="#"><img src="Western Tennis Club tsp.png" width="88" height="88"></a></span>             
             </ul>
            </div>
         </div>
 
         <!-- main area -->
         <div class="col-xs-12 col-sm-8" data-spy="scroll" data-target="#sidebar-nav">
-          <!-- select student checkboxes -->
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">Select Student (Make it load names from Db)</h3>
-            </div>
-            <div class="panel-body">
-              <div class="checkbox">
-                <label><input type="checkbox" value="">Pedro</label>
-              </div>
-              <div class="checkbox">
-                <label><input type="checkbox" value="">Nikolas</label>
-              </div>
-              <div class="checkbox">
-                <label><input type="checkbox" value="">Dimitris</label>
-              </div>
-            </div>
-          </div>
           
-                    <!-- select preset block of sessions -->
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">Select Block of sessions</h3>
-            </div>
-            <div class="panel-body">
-              <div class="checkbox">
-                <label><input type="checkbox" value="">Weekday Mornings (Actions of these will modify selections bellow)</label>
-              </div>
-              <div class="checkbox">
-                <label><input type="checkbox" value="">Plus Evenings</label>
-              </div>
-
-          </div>
           <!-- select bookings checkboxes --> 
           <div class="panel panel-default">
+
             <div class="panel-heading">
-              <h3 class="panel-title">View/Modify Schedule (Morning or Full Days)</h3>
+              <!-- TODO: add name of Session --> 
+              <h3 class="panel-title">View Schedule ** (Morning or Full Days)</h3>
             </div>
+
             <div class="panel-body">
 
               <fieldset>
@@ -272,10 +245,7 @@
           </div> <!--/.panel-->
 
         </div><!-- /.col-xs-12 main -->
-      
-      <button class="btn btn-default" type="button">
-      <span class="glyphicon glyphicon-check" aria-hidden="true"></span>Submit</button>
-      
+
     </div><!--/.row-->
   </div><!--/.container-->
 </div><!--/.page-container-->
