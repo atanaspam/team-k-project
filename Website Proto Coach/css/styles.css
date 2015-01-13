@@ -2,9 +2,6 @@ html,body {
   height: 100%;
 }
 
-.textfieldsEditProfile{
-  -moz-border-radius: 10px 20px 30px 0;
-}
 .studentLabel{
   color: black;
   text-align: left;
