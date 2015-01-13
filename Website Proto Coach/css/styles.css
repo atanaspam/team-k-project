@@ -2,6 +2,7 @@ html,body {
   height: 100%;
 }
 
+/* atteendance for sessions student label */
 .studentLabel{
   color: black;
   text-align: left;
