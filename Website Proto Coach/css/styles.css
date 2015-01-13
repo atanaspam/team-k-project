@@ -2,6 +2,10 @@ html,body {
   height: 100%;
 }
 
+.studentLabel{
+  
+}
+
 .calendar-style{
   float: left;
   position: relative;
