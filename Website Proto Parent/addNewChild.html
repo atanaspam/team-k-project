@@ -39,6 +39,7 @@
               <li><a href="index.html">Home</a></li>
               <li><a href="bookings.html">Bookings</a></li>
               <li><a href="childrenList.html"><strong>Children</strong></a></li>
+              <li><a href="payments.html">Payments</a></li>
               <li><a href="editProfile.html">Edit Profile</a></li>
               <span class="navbar-header"><a class="navbar-brand" href="#"><img src="Western Tennis Club tsp.png" width="88" height="88"></a></span>              
             </ul>
@@ -48,20 +49,20 @@
          <!-- main area -->
         <div class="col-xs-12 col-sm-8" data-spy="scroll" data-target="#sidebar-nav">
 
+          <!-- TODO: ** add id's to retrieve data from textfields 
+                        make sure the format of input is correct-->
+
           <!-- Personal Details -->
           <div class="panel panel-default">
             <div class="panel-heading">
 
-              <!-- TODO: ** get parent personal details filled in
-                         so the parent can edit the ones he wants 
-                         then retreive all the data -->
+              
               <h3 class="panel-title">Personal Details</h3>
             </div>
             <div class="panel-body">
               
 
               <!-- add body here -->
-
                 <!-- Name -->
                 <div class="input-group">
                   <input type="text" class="form-control" placeholder="Given Name" aria-describedby="basic-addon2">
@@ -72,13 +73,43 @@
           </div> <!--panel-->
           <!-- end of Personal Details -->
 
+          <!-- Date of Birth -->
+          <div class="panel panel-default">
+            <div class="panel-heading">
+
+              
+              <h3 class="panel-title">Date of Birth</h3>
+            </div>
+            <div class="panel-body">
+              
+
+              <!-- add body here -->
+                <!-- day -->
+                <div class="input-group">
+                  <span class="input-group-addon" id="basic-addon1">dd</span>
+                  <input type="text" class="form-control" placeholder="Day" aria-describedby="basic-addon1">
+                </div>
+
+                <!-- month -->
+                <div class="input-group">
+                  <span class="input-group-addon" id="basic-addon1">mm</span>
+                  <input type="text" class="form-control" placeholder="Month" aria-describedby="basic-addon1">
+                </div>
+
+                <!-- year -->
+                <div class="input-group">
+                  <span class="input-group-addon" id="basic-addon1">yyyy</span>
+                  <input type="text" class="form-control" placeholder="Year" aria-describedby="basic-addon1">
+                </div>
+
+            </div>
+          </div> <!--panel-->
+          <!-- end of Date of Birth -->
+
           <!-- Contact Details -->
           <div class="panel panel-default">
             <div class="panel-heading">
 
-              <!-- TODO: ** get parent personal details filled in
-                         so the parent can edit the ones he wants 
-                         then retreive all the data -->
               <h3 class="panel-title">Contact Details</h3>
             </div>
             <div class="panel-body">
@@ -102,12 +133,39 @@
           </div> <!--panel-->
           <!-- end of Contact Details -->
 
+          <!-- Medical Conditions -->
+          <div class="panel panel-default">
+            <div class="panel-heading">
+
+              
+              <h3 class="panel-title">Medical Conditions</h3>
+            </div>
+            <div class="panel-body">
+              
+              <!-- TODO: have to make this button add items-->
+
+              <!-- add body here -->
+                <div class="input-group">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">+</button>
+                  </span>
+                  <input type="text" class="form-control" placeholder="add New Medical Condition">
+                </div><!-- /input-group -->
+
+            </div>
+          </div> <!--panel-->
+          <!-- end of Medical Conditions -->
+
           <!-- submit or cancel buttons -->
           <button class="btn btn-default" type="button">
-          <span  class="glyphicon glyphicon-remove" aria-hidden="true"></span>Cancel</button>
+          <a class="addNewChildBtn"href="childrenList.html">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            Cancel and Back
+          </a>
+          </button>
 
           <button class="btn btn-default" type="button">
-          <span class="glyphicon glyphicon-check" aria-hidden="true"></span>Save changes</button>
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add New Child and Save Changes</button>
 
       </div><!-- /.col-xs-12 main -->
       
