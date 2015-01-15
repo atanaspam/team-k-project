@@ -59,12 +59,12 @@ html,body {
 }
 
 body {
-  padding-top: 51px; 
-  background: #1E1E1E;
-  color: #f9f9f9;
+	padding-top: 51px;
+	background: #1E1E1E;
+	color: #FFF;
 }
 a {
-  color:#efefef;
+	color: #FFFFFF;
 }
 .text-center {
   padding-top: 20px;
@@ -165,4 +165,3 @@ a {
     border-bottom-color: #fff;
   }
 }
-
