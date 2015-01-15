@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<title>Western Tennis Club Manager | Members</title>
+		<meta name="generator" content="Bootply" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+    <link rel="shortcut icon" href="{% static "wtc small icon.ico" %}">
+		<!--[if lt IE 9]>
+			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<link href="{% static "css/styles.css" %}" rel="stylesheet">
+	</head>
+	<body>
+<div class="page-container">
+  
+	<!-- top navbar -->
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+    	<div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".sidebar-nav">
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+           </button>
+    	</div>
+   	   <span class="navbar-header navbar-manager"><a class="navbar-brand" href="#">Western Tennis Club Manager | Members</a></span>       </div>
+    </div>
+      
+    <div class="container">
+      <div class="row row-offcanvas row-offcanvas-left">
+        
+        <!-- sidebar -->
+        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+          <div data-spy="affix" data-offset-top="45" data-offset-bottom="90">
+            <ul class="nav" id="sidebar-nav">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="bookings.html">Bookings</a></li>
+              <li><a href="coaches.html">Coaches</a></li>
+              <li><a href="members.html"><strong>Children</strong></a></li>
+              <li><a href="audit.html">Financial Data</a></li>
+              <span class="navbar-header"><a class="navbar-brand" href="#"><img src="{% static "Western Tennis Club tsp.png" %}" width="88" height="88"></a></span>              
+            </ul>
+           </div>
+        </div>
+
+        <!-- main area -->
+        <div class="col-xs-12 col-sm-8" data-spy="scroll" data-target="#sidebar-nav">
+
+          <!-- bookings pending confirmation -->
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Children List 1</h3>
+            </div>
+            <div class="panel-body">
+          <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Age</th>
+                <th>Start date</th>
+                <th>Salary</th>
+            </tr>
+        </thead>
+    
+        <!-- I think we dont need this as a footer too
+        <tfoot>
+            <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Age</th>
+                <th>Start date</th>
+                <th>Salary</th>
+            </tr>
+        </tfoot>
+        -->
+ 
+        <tbody>
+            <tr class="darkMemberName">
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Garrett Winters</td>
+                <td>Accountant</td>
+                <td>Tokyo</td>
+                <td>63</td>
+                <td>2011/07/25</td>
+                <td>$170,750</td>
+            </tr>
+            <tr class="darkMemberName">
+                <td>Ashton Cox</td>
+                <td>Junior Technical Author</td>
+                <td>San Francisco</td>
+                <td>66</td>
+                <td>2009/01/12</td>
+                <td>$86,000</td>
+            </tr>
+            <tr>
+                <td>Cedric Kelly</td>
+                <td>Senior Javascript Developer</td>
+                <td>Edinburgh</td>
+                <td>22</td>
+                <td>2012/03/29</td>
+                <td>$433,060</td>
+            </tr>
+            <tr class="darkMemberName">
+                <td>Airi Satou</td>
+                <td>Accountant</td>
+                <td>Tokyo</td>
+                <td>33</td>
+                <td>2008/11/28</td>
+                <td>$162,700</td>
+            </tr>
+            <tr>
+                <td>Brielle Williamson</td>
+                <td>Integration Specialist</td>
+                <td>New York</td>
+                <td>61</td>
+                <td>2012/12/02</td>
+                <td>$372,000</td>
+            </tr>
+            <tr class="darkMemberName">
+                <td>Herrod Chandler</td>
+                <td>Sales Assistant</td>
+                <td>San Francisco</td>
+                <td>59</td>
+                <td>2012/08/06</td>
+                <td>$137,500</td>
+            </tr>
+            <tr>
+                <td>Rhona Davidson</td>
+                <td>Integration Specialist</td>
+                <td>Tokyo</td>
+                <td>55</td>
+                <td>2010/10/14</td>
+                <td>$327,900</td>
+            </tr>
+            <tr class="darkMemberName">
+                <td>Colleen Hurst</td>
+                <td>Javascript Developer</td>
+                <td>San Francisco</td>
+                <td>39</td>
+                <td>2009/09/15</td>
+                <td>$205,500</td>
+            </tr>
+            <tr>
+                <td>Sonya Frost</td>
+                <td>Software Engineer</td>
+                <td>Edinburgh</td>
+                <td>23</td>
+                <td>2008/12/13</td>
+                <td>$103,600</td>
+            </tr>
+            <tr class="darkMemberName">
+                <td>Jena Gaines</td>
+                <td>Office Manager</td>
+                <td>London</td>
+                <td>30</td>
+                <td>2008/12/19</td>
+                <td>$90,560</td>
+            </tr>
+
+            <tr>
+                <td>Michael Silva</td>
+                <td>Marketing Designer</td>
+                <td>London</td>
+                <td>66</td>
+                <td>2012/11/27</td>
+                <td>$198,500</td>
+            </tr>
+            <tr class="darkMemberName">
+                <td>Paul Byrd</td>
+                <td>Chief Financial Officer (CFO)</td>
+                <td>New York</td>
+                <td>64</td>
+                <td>2010/06/09</td>
+                <td>$725,000</td>
+            </tr>
+            <tr>
+                <td>Gloria Little</td>
+                <td>Systems Administrator</td>
+                <td>New York</td>
+                <td>59</td>
+                <td>2009/04/10</td>
+                <td>$237,500</td>
+            </tr>
+            <tr class="darkMemberName">
+                <td>Bradley Greer</td>
+                <td>Software Engineer</td>
+                <td>London</td>
+                <td>41</td>
+                <td>2012/10/13</td>
+                <td>$132,000</td>
+            </tr>
+            <tr>
+                <td>Dai Rios</td>
+                <td>Personnel Lead</td>
+                <td>Edinburgh</td>
+                <td>35</td>
+                <td>2012/09/26</td>
+                <td>$217,500</td>
+            </tr>
+            <tr class="darkMemberName">
+                <td>Jenette Caldwell</td>
+                <td>Development Lead</td>
+                <td>New York</td>
+                <td>30</td>
+                <td>2011/09/03</td>
+                <td>$345,000</td>
+            </tr>
+            <tr>
+                <td>Yuri Berry</td>
+                <td>Chief Marketing Officer (CMO)</td>
+                <td>New York</td>
+                <td>40</td>
+                <td>2009/06/25</td>
+                <td>$675,000</td>
+            </tr>
+            <tr class="darkMemberName">
+                <td>Caesar Vance</td>
+                <td>Pre-Sales Support</td>
+                <td>New York</td>
+                <td>21</td>
+                <td>2011/12/12</td>
+                <td>$106,450</td>
+            </tr>
+            <tr>
+                <td>Doris Wilder</td>
+                <td>Sales Assistant</td>
+                <td>Sidney</td>
+                <td>23</td>
+                <td>2010/09/20</td>
+                <td>$85,600</td>
+            </tr>
+            <tr class="darkMemberName">
+                <td>Angelica Ramos</td>
+                <td>Chief Executive Officer (CEO)</td>
+                <td>London</td>
+                <td>47</td>
+                <td>2009/10/09</td>
+                <td>$1,200,000</td>
+            </tr>
+            <tr>
+                <td>Gavin Joyce</td>
+                <td>Developer</td>
+                <td>Edinburgh</td>
+                <td>42</td>
+                <td>2010/12/22</td>
+                <td>$92,575</td>
+            </tr>
+            <tr class="darkMemberName">
+                <td>Jennifer Chang</td>
+                <td>Regional Director</td>
+                <td>Singapore</td>
+                <td>28</td>
+                <td>2010/11/14</td>
+                <td>$357,650</td>
+            </tr>
+            <tr>
+                <td>Brenden Wagner</td>
+                <td>Software Engineer</td>
+                <td>San Francisco</td>
+                <td>28</td>
+                <td>2011/06/07</td>
+                <td>$206,850</td>
+            </tr>
+            <tr class="darkMemberName">
+                <td>Fiona Green</td>
+                <td>Chief Operating Officer (COO)</td>
+                <td>San Francisco</td>
+                <td>48</td>
+                <td>2010/03/11</td>
+                <td>$850,000</td>
+            </tr>
+            <tr>
+                <td>Shou Itou</td>
+                <td>Regional Marketing</td>
+                <td>Tokyo</td>
+                <td>20</td>
+                <td>2011/08/14</td>
+                <td>$163,000</td>
+            </tr>
+            <tr class="darkMemberName">
+                <td>Michelle House</td>
+                <td>Integration Specialist</td>
+                <td>Sidney</td>
+                <td>37</td>
+                <td>2011/06/02</td>
+                <td>$95,400</td>
+            </tr>
+            <tr>
+                <td>Suki Burks</td>
+                <td>Developer</td>
+                <td>London</td>
+                <td>53</td>
+                <td>2009/10/22</td>
+                <td>$114,500</td>
+            </tr>
+            <tr class="darkMemberName">
+                <td>Prescott Bartlett</td>
+                <td>Technical Author</td>
+                <td>London</td>
+                <td>27</td>
+                <td>2011/05/07</td>
+                <td>$145,000</td>
+            </tr>
+            <tr>
+                <td>Gavin Cortez</td>
+                <td>Team Leader</td>
+                <td>San Francisco</td>
+                <td>22</td>
+                <td>2008/10/26</td>
+                <td>$235,500</td>
+            </tr>
+            <tr class="darkMemberName">
+                <td>Martena Mccray</td>
+                <td>Post-Sales support</td>
+                <td>Edinburgh</td>
+                <td>46</td>
+                <td>2011/03/09</td>
+                <td>$324,050</td>
+            </tr>
+            <tr>
+                <td>Unity Butler</td>
+                <td>Marketing Designer</td>
+                <td>San Francisco</td>
+                <td>47</td>
+                <td>2009/12/09</td>
+                <td>$85,675</td>
+            </tr>
+            <tr class="darkMemberName">
+                <td>Howard Hatfield</td>
+                <td>Office Manager</td>
+                <td>San Francisco</td>
+                <td>51</td>
+                <td>2008/12/16</td>
+                <td>$164,500</td>
+            </tr>
+            <tr>
+                <td>Hope Fuentes</td>
+                <td>Secretary</td>
+                <td>San Francisco</td>
+                <td>41</td>
+                <td>2010/02/12</td>
+                <td>$109,850</td>
+            </tr>
+            <tr class="darkMemberName">
+                <td>Vivian Harrell</td>
+                <td>Financial Controller</td>
+                <td>San Francisco</td>
+                <td>62</td>
+                <td>2009/02/14</td>
+                <td>$452,500</td>
+            </tr>
+            <tr>
+                <td>Timothy Mooney</td>
+                <td>Office Manager</td>
+                <td>London</td>
+                <td>37</td>
+                <td>2008/12/11</td>
+                <td>$136,200</td>
+            </tr>
+            <tr class="darkMemberName">
+                <td>Jackson Bradshaw</td>
+                <td>Director</td>
+                <td>New York</td>
+                <td>65</td>
+                <td>2008/09/26</td>
+                <td>$645,750</td>
+            </tr>
+            <tr>
+                <td>Olivia Liang</td>
+                <td>Support Engineer</td>
+                <td>Singapore</td>
+                <td>64</td>
+                <td>2011/02/03</td>
+                <td>$234,500</td>
+            </tr>
+            <tr class="darkMemberName">
+                <td>Bruno Nash</td>
+                <td>Software Engineer</td>
+                <td>London</td>
+                <td>38</td>
+                <td>2011/05/03</td>
+                <td>$163,500</td>
+            </tr>
+            <tr>
+                <td>Sakura Yamamoto</td>
+                <td>Support Engineer</td>
+                <td>Tokyo</td>
+                <td>37</td>
+                <td>2009/08/19</td>
+                <td>$139,575</td>
+            </tr>
+            <tr class="darkMemberName">
+                <td>Thor Walton</td>
+                <td>Developer</td>
+                <td>New York</td>
+                <td>61</td>
+                <td>2013/08/11</td>
+                <td>$98,540</td>
+            </tr>
+
+        </tbody>
+    </table>
+</div> <!--panel-->
+
+              
+
+          <!-- sconfirmed bookings -->
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Children List 2</h3>
+            </div>
+            <div class="panel-body">
+              
+
+              <!-- add body here -->
+                  <div class="list-group">
+                        <a href="confirmbooking.html" class="list-group-item">Maria Sharapova</a>
+                        <a href="confirmbooking.html" class="list-group-item">Andy Murray</a>
+                        <a href="confirmbooking.html" class="list-group-item">Pete Sampras</a>
+                        <a href="confirmbooking.html" class="list-group-item">John McEnroe</a>
+                  </div>
+
+            </div>
+          </div> <!--panel-->
+
+        </div><!-- /.col-xs-12 main -->
+    </div><!--/.row-->
+  </div><!--/.container-->
+</div><!--/.page-container-->
+
+
+<div id="footer"><!--footer-->
+  <div class="container">
+      	<div class="row">
+          <ul class="list-unstyled">
+            <li class="col-sm-4 col-xs-6">
+              <a href="#">About the Club</a>
+            </li>
+            <li class="col-sm-4 col-xs-6">
+              <a href="#">Venues</a>
+            </li>
+            <li class="col-sm-4 col-xs-6">
+              <a href="#">Contact</a>
+            </li>
+            <li class="col-sm-4 col-xs-6">
+              <a href="#">Age Groups</a>
+            </li>
+            <li class="col-sm-4 col-xs-6">
+              <a href="#">Login</a>
+            </li>
+           <li class="col-sm-4 col-xs-6">
+              <a href="#">News</a>
+            </li>
+            <li class="col-sm-4 col-xs-6">
+              <a href="#">Contact</a>
+            </li>
+            <li class="col-sm-4 col-xs-6">
+              <a href="#">Events</a>
+            </li>
+          </ul>
+		</div><!--/row-->
+
+  </div><!--/container-->
+</div><!--/footer-->
+
+	<!-- script references -->
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/scripts.js"></script>
+	</body>
+</html>
