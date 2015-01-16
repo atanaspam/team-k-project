@@ -54,7 +54,7 @@
 
           <h1 id="section1"><br>
             <br>
-          Why Western tennis club?</h1>
+          Why Western tennis club? </h1>
           <p>Western tennis club is the best, dude. Wanna know why?</p>
     
           <p>We have pizza day on Fridays  and ALL children are welcome to stay for pizza including the morning children. They need to let the coach know in the morning when they arrive and hand in £3.50 for this on a Thursday. If morning children are staying for pizza, they can be collected at 1 pm instead of 1230 pm. 
@@ -73,7 +73,18 @@ We sometimes have a water fight on Friday afternoons (weather dependent). The ch
 
           <h1 id="section4">About us</h1>
           <p>We started as Glasgows first western tennis club. At the heart of the people, we became leaders in helping Glasgows tennis scene evolve. Now we train the young in the ancient arts of TennisKuwon and TennisFullan.</p>
-          
+          <!-- @@   CODE ADDED HERE !   @@ -->
+          <!-- if the users dictionary contains sth -->
+          {% if users %}
+            <ul>
+              <!-- print it (In this case the first name of the user specified in views.py ) -->
+              <li>{{ users.firstname }}</li>
+            </ul>
+        {% else %}
+                  <!-- Else do shit... -->
+            <strong>There are no categories present.</strong>
+        {% endif %}
+          <!-- @@  END OF CODE ADDED !   @@ -->
         </div><!-- /.col-xs-12 main -->
     </div><!--/.row-->
   </div><!--/.container-->

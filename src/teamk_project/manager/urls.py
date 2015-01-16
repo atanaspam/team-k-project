@@ -6,3 +6,4 @@ urlpatterns = patterns('',
 	url(r'^index', views.index, name='index'),
 	url(r'^bookings', views.bookings, name='bookings'),
 	url(r'^coaches', views.coaches, name='coaches')
+)
