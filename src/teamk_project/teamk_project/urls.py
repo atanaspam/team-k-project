@@ -17,4 +17,4 @@ urlpatterns = patterns('',
 
     url(r'^coach/', include('coach.urls')),
     url(r'^manager/', include('manager.urls')),
-)
+
