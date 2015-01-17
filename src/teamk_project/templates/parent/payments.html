@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<title>Western Tennis Club | Payments</title>
+		<meta name="generator" content="Bootply" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+    <link rel="shortcut icon" href="{% static "wtc small icon.ico" %}">
+		<!--[if lt IE 9]>
+			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<link href="{% static "css/styles.css" %}" rel="stylesheet">
+	</head>
+	<body>
+<div class="page-container">
+  
+	<!-- top navbar -->
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+    	<div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".sidebar-nav">
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+           </button>
+    	</div>
+   	   <span class="navbar-header"><a class="navbar-brand" href="#">Western Tennis Club  | Payments</a></span>       </div>
+    </div>
+      
+    <div class="container">
+      <div class="row row-offcanvas row-offcanvas-left">
+        
+        <!-- sidebar -->
+        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+          <div data-spy="affix" data-offset-top="45" data-offset-bottom="90">
+            <ul class="nav" id="sidebar-nav">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="bookings.html">Bookings</a></li>
+              <li><a href="childrenList.html">Children</a></li>
+              <li><a href="payments.html"><strong>Payments</strong></a></li>
+              <li><a href="editProfile.html">Edit Profile</a>
+              </li><span class="navbar-header"><a class="navbar-brand" href="#"><img src="{% static "Western Tennis Club tsp.png" %}" width="88" height="88"></a></span>              
+            </ul>
+           </div>
+        </div>
+
+        <!-- main area -->
+        <div class="col-xs-12 col-sm-8" data-spy="scroll" data-target="#sidebar-nav">
+
+         <!-- select student checkboxes -->
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Select Student (Make it load names from Db)</h3>
+            </div>
+            <div class="panel-body">
+              <div class="checkbox">
+                <label><input type="checkbox" value="">Pedro    | total: 200.00£</label>
+              </div>
+              <div class="checkbox">
+                <label><input type="checkbox" value="">Nikolas  | total: 300.00£</label>
+              </div>
+              <div class="checkbox">
+                <label><input type="checkbox" value="">Dimitris | total: 105.00£</label>
+              </div>
+              <div class="checkbox">
+                <label> total: 605.00£</label>
+              </div>
+            </div>
+          </div>
+          
+          <!-- TODO: add paypal -->
+          <button class="btn btn-default" type="button">
+          <a class="addNewChildBtn"href="">
+            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+            Process Payment
+          </a>
+          </button>
+                
+
+        </div><!-- /.col-xs-12 main --> 
+
+      </div><!--/.row-->
+  </div><!--/.container-->
+</div><!--/.page-container-->
+
+
+<div id="footer"><!--footer-->
+  <div class="container">
+      	<div class="row">
+          <ul class="list-unstyled">
+            <li class="col-sm-4 col-xs-6">
+              <a href="#">About the Club</a>
+            </li>
+            <li class="col-sm-4 col-xs-6">
+              <a href="#">Venues</a>
+            </li>
+            <li class="col-sm-4 col-xs-6">
+              <a href="#">Contact</a>
+            </li>
+            <li class="col-sm-4 col-xs-6">
+              <a href="#">Age Groups</a>
+            </li>
+            <li class="col-sm-4 col-xs-6">
+              <a href="#">Login</a>
+            </li>
+           <li class="col-sm-4 col-xs-6">
+              <a href="#">News</a>
+            </li>
+            <li class="col-sm-4 col-xs-6">
+              <a href="#">Contact</a>
+            </li>
+            <li class="col-sm-4 col-xs-6">
+              <a href="#">Events</a>
+            </li>
+          </ul>
+		</div><!--/row-->
+
+  </div><!--/container-->
+</div><!--/footer-->
+
+	<!-- script references -->
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/scripts.js"></script>
+	</body>
+</html>
