@@ -18,3 +18,4 @@ Requirements
 ------------
 
 * Python Virtualenv
+* Manual setup of the database using the instructions in settings.py in src/teamk-project
