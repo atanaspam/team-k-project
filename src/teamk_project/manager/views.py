@@ -7,11 +7,16 @@ from manager.models import User
 
 def index(request):
 	context = RequestContext(request)
+	context_dict={}
+	return render_to_response('index.html', context_dict, context)
+
+def loggedin(request):
+	context = RequestContext(request)
 	# Here we have some interaction with the model
 	user = User.objects.get(uid='4')
 	# We then plug the results of the interaction in the dictionary..
 	context_dict={'users':user}
-	return render_to_response('manager/index.html', context_dict, context)
+	return render_to_response('loggedin.html', context_dict, context)
 
 def bookings(request):
 	context = RequestContext(request)
@@ -23,15 +28,16 @@ def coaches(request):
 	context_dict={}
 	return render_to_response('manager/coaches.html', context_dict, context)
 
+def members(request):
+    context = RequestContext(request)
+    users = User.objects.all()
+    context_dict={'users':users}
+    return render_to_response('members.html', context_dict, context)
+
 # def coachProfile(request):
 # 	context = RequestContext(request)
 # 	context_dict={}
 # 	return render_to_response('manager/coachProfile.html', context_dict, context)
-
-# def members(request):
-# 	context = RequestContext(request)
-# 	context_dict={}
-# 	return render_to_response('manager/members.html', context_dict, context)
 
 # def confirmbooking(request):
 # 	context = RequestContext(request)
