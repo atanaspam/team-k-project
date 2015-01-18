@@ -20,10 +20,15 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+#################################################
+##               CHANGEME ! ! !                 #
+#################################################
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        # Under Name change the local path to your versioned folder.
         'NAME': '/Users/atanaspam/Documents/Versoned Projects/team-k-project/src/teamk_project/testDB.db',                      # Or path to database file if using sqlite3.
+        
         # The following settings are not used with sqlite3:
         'USER': 'root',
         'PASSWORD': '',
