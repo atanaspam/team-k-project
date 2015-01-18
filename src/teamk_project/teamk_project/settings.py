@@ -3,12 +3,14 @@
 import os
 SETTINGS_DIR = os.path.dirname(__file__)	# Settings' Path
 
-PROJECT_PATH = os.path.join(SETTINGS_DIR, os.pardir) 	# Project's Path
+PROJECT_PATH = os.path.join(SETTINGS_DIR, os.pardir) 	# Project Path
 PROJECT_PATH = os.path.abspath(PROJECT_PATH)	     	
 
-TEMPLATE_PATH = os.path.join(PROJECT_PATH, 'templates') # Templates' Path
+TEMPLATE_PATH = os.path.join(PROJECT_PATH, 'templates') # Templates Path
 
-STATIC_PATH = os.path.join(PROJECT_PATH, 'static')	# Static's Path
+STATIC_PATH = os.path.join(PROJECT_PATH, 'static')	# Static Path
+
+DATABASE_PATH = os.path.join(PROJECT_PATH, 'testDB.db') # Database Path
 
 
 DEBUG = True
@@ -27,7 +29,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         # Under Name change the local path to your versioned folder.
-        'NAME': '/Users/atanaspam/Documents/Versoned Projects/team-k-project/src/teamk_project/testDB.db',                      # Or path to database file if using sqlite3.
+        'NAME': DATABASE_PATH,                      # Or path to database file if using sqlite3.
         
         # The following settings are not used with sqlite3:
         'USER': 'root',
