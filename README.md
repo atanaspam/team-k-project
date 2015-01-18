@@ -27,6 +27,6 @@ Requirements
 ------------
 
 * Python Virtualenv
-* Python Django 1.5.4
-* Python Version 2.7.??
+* Python Django 1.5.4 following http://www.tangowithdjango.com/book/chapters/requirements.html#installing-the-software 
+* Python Version 2.7.6
 * Manual setup of the database using the instructions in settings.py in src/teamk-project
