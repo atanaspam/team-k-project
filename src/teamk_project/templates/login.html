@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block sidebarNav %}
+{% endblock %}
+
+{% block mainArea %}
+	<h2>Log in</h2>
+	<p>Please enter your username and password.</p>
+	<br>
+	<form action="/bookingsystem/index/" method="post">{% csrf_token %}
+		<label for="username">Username:</label>
+		<input type="test" name="username" value="" id="username">
+		<br><br>
+		<label for="password">Password:</label>
+		<input type="password" name="password" value="" id="password">
+		<br><br>
+		<input type="submit" value="login" />
+		<br>
+		<br>
+		<a href="/register">Register</a>
+	</form>
+{% endblock %}

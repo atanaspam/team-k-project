@@ -8,7 +8,7 @@ PROJECT_PATH = os.path.abspath(PROJECT_PATH)
 
 TEMPLATE_PATH = os.path.join(PROJECT_PATH, 'templates') # Templates Path
 
-MANAGER_TEMPLATE_PATH = os.path.join(PROJECT_PATH, 'manager/templates') # Manager Templates Path
+BS_TEMPLATE_PATH = os.path.join(PROJECT_PATH, 'bookingsystem/templates') # Bookingsystem Templates Path
 
 STATIC_PATH = os.path.join(PROJECT_PATH, 'static')	# Static Path
 
@@ -132,8 +132,9 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    
     TEMPLATE_PATH,
-    MANAGER_TEMPLATE_PATH,
+    BS_TEMPLATE_PATH,
 )
 
 INSTALLED_APPS = (
@@ -180,3 +181,5 @@ LOGGING = {
         },
     }
 }
+
+LOGIN_URL="/"

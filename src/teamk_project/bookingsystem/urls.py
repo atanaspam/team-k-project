@@ -2,6 +2,7 @@ from django.conf.urls import patterns, url
 from bookingsystem import views
 
 urlpatterns = patterns('',
+    url(r'^index/$', views.index, name='index'),
 	url(r'^coach/$', views.coachIndex, name='coachIndex'),
 	url(r'^coach/index', views.coachIndex, name='coachIndex'),
 	url(r'^coach/sessions', views.sessions, name='sessions'),

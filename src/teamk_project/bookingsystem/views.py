@@ -2,6 +2,13 @@ from django.http import HttpResponse
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 from bookingsystem.models import User
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def index(request):
+	context = RequestContext(request)
+	context_dict={}
+	return render_to_response('index.html', context_dict, context)
 
 def coachIndex(request):
 	context = RequestContext(request)
