@@ -1,8 +1,10 @@
 from django.http import HttpResponse
 from django.template import RequestContext
 from django.shortcuts import render_to_response
-from bookingsystem.models import Client
+from bookingsystem.models import Client, Session as dbtable
+from bookingsystem.models import Block
 from django.contrib.auth.decorators import login_required, user_passes_test
+import datetime
 
 @login_required
 def index(request):
@@ -139,7 +141,42 @@ def childrenList(request):
 @user_passes_test(is_parent)
 def childProfile(request):
 	context = RequestContext(request)
-	context_dict={}
+	child = request.user
+	today = datetime.datetime.today()
+	print 'BBB'
+	### This query gets all the "Children" of the user with UiD 1 ###
+	children = Client.objects.filter(belongsto='1')
+	### This just gets the current user (if he is not logged in he is Anonymous)
+	context_dict = {'children': children}
+	#context_dict['parent'] = parent
+	return render_to_response('parent/childProfile.html', context_dict, context)
+
+login_required
+@user_passes_test(is_parent)
+def childProfile1(request, num):
+	context = RequestContext(request)
+	child = Client.objects.get(uid = num)
+	today = datetime.datetime.now()
+	### This query gets all the "Children" of the user with UiD 1 ###
+	#Sessions = Block.objects.filter(blockid = '40')
+	sessions = dbtable.objects.filter(begintime__range = ['2015-01-25', '2015-01-31'])
+	print sessions 
+	### This just gets the current user (if he is not logged in he is Anonymous)
+	context_dict = {'dbsessions': sessions}
+	#context_dict['parent'] = parent
+	return render_to_response('parent/childProfile.html', context_dict, context)
+
+login_required
+@user_passes_test(is_parent)
+def childProfile2(request, num):
+	context = RequestContext(request)
+	child = request.user
+	print 'CCC'
+	### This query gets all the "Children" of the user with UiD 1 ###
+	children = Client.objects.filter(belongsto='1')
+	### This just gets the current user (if he is not logged in he is Anonymous)
+	context_dict = {'children': children}
+	#context_dict['parent'] = parent
 	return render_to_response('parent/childProfile.html', context_dict, context)
 
 @login_required
