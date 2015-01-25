@@ -1,0 +1,312 @@
+  {% extends "base.html" %}
+
+  {% block sidebarNav %}
+  {% endblock %}
+  <!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
+  <!--  EACH OF THE RESULTS SHOULD BE ENCODED INTO A HIPERLINK AND  -->
+  <!--  THIS HYPERLINK SHOULD POINT TO THE PAGE THAT IS RESPONSIBLE -->
+  <!--  FOR THE KID's PERSONAL INFORMATION              -->
+  <!--                                -->
+  <!--  ALSO WE NEED ALL THE BUTTONS THAT WOULD POINT TO THE REST   -->
+  <!--  OF THE FUNCTIONALITY PLACED AND POINTING TO THE CORRECT URL -->
+  <!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
+
+  {% block mainArea %}
+
+  <!-- main area -->
+
+    <!-- view schedule checkboxes --> 
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">View Schedule (Morning or Full Days)</h3>
+      </div>
+      <div class="panel-body">
+
+        <div class="alert alert-success" role="alert">Booking Successfully Confirmed</div>
+
+                <!-- possible alerts
+                <div class="alert alert-info" role="alert">Booking Pending Confirmation</div>
+                <div class="alert alert-warning" role="alert">Booking Pending Payment</div>
+                <div class="alert alert-danger" role="alert">No Bookings Requested.</div>
+              -->
+
+              <!-- TODO: make the radio buttons fixed, so the user can't change them -->
+
+              <!-- fieldset of the week days -->
+              <fieldset>
+                <div class="row">
+
+                  <!-- Monday -->
+                  <div class="calendar-style">
+                    <div class="panel panel-default">
+                      <div class="panel-heading-day">
+                        <h3 class="panel-title">Mon</h3>
+                      </div>
+                      <div class="panel-body">
+                        <div class="col-sm-2">
+                          <div class="radio">
+                            <input type="radio" name="M" id="MM" value="option1">
+                            <label for="radio1">M</label>
+                          </div>
+                          <div class="radio">
+                            <input type="radio" name="M" id="MF" value="option2">
+                            <label for="radio2">F</label>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div> <!--/.panel-->
+                  </div> <!--/.Monday-->
+
+                  <!-- Tuesday -->
+                  <div class="calendar-style">
+                    <div class="panel panel-default">
+                      <div class="panel-heading-day">
+                        <h3 class="panel-title">Tue</h3>
+                      </div>
+                      <div class="panel-body">
+                        <div class="col-sm-2">
+                          <div class="radio">
+                            <input type="radio" name="TU" id="TM" value="option1">
+                            <label for="TM">
+                              M
+                            </label>
+                          </div>
+                          <div class="radio">
+                            <input type="radio" name="TU" id="TF" value="option2">
+                            <label for="TF">
+                              F
+                            </label>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div> <!--/.panel-->
+                  </div> <!--/.Tuesday-->
+
+                  <!-- Wednesday -->
+                  <div class="calendar-style">
+                    <div class="panel panel-default">
+                      <div class="panel-heading-day">
+                        <h3 class="panel-title">Wed</h3>
+                      </div>
+                      <div class="panel-body">
+                        <div class="col-sm-2">
+                          <div class="radio">
+                            <input type="radio" name="W" id="WM" value="option1">
+                            <label for="WM">
+                              M
+                            </label>
+                          </div>
+                          <div class="radio">
+                            <input type="radio" name="W" id="WF" value="option2">
+                            <label for="WF">
+                              F
+                            </label>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div> <!--/.panel-->
+                  </div> <!--/.Wednesday-->
+
+                  <!-- Thursday -->
+                  <div class="calendar-style">
+                    <div class="panel panel-default">
+                      <div class="panel-heading-day">
+                        <h3 class="panel-title">Thu</h3>
+                      </div>
+                      <div class="panel-body">
+                        <div class="col-sm-2">
+                          <div class="radio">
+                            <input type="radio" name="TH" id="THM" value="option1">
+                            <label for="THM">M</label>
+                          </div>
+                          <div class="radio">
+                            <input type="radio" name="TH" id="THF" value="option2">
+                            <label for="THF">
+                              F
+                            </label>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div> <!--/.panel-->
+                  </div> <!--/.Thursday-->
+
+                  <!-- Friday -->
+                  <div class="calendar-style">
+                    <div class="panel panel-default">
+                      <div class="panel-heading-day">
+                        <h3 class="panel-title">Fri</h3>
+                      </div>
+                      <div class="panel-body">
+                        <div class="col-sm-2">
+                          <div class="radio">
+                            <input type="radio" name="FR" id="FRM" value="option1">
+                            <label for="FRM">
+                              M
+                            </label>
+                          </div>
+                          <div class="radio">
+                            <input type="radio" name="FR" id="FRF" value="option2">
+                            <label for="FRF">
+                              F
+                            </label>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div> <!--/.panel-->
+                  </div> <!--/.Friday-->
+
+                  <!-- Saturday -->
+                  <div class="calendar-style">
+                    <div class="panel panel-default">
+                      <div class="panel-heading-day">
+                        <h3 class="panel-title">Sat</h3>
+                      </div>
+                      <div class="panel-body">
+                        <div class="col-sm-2">
+                          <div class="radio">
+                            <input type="radio" name="S" id="SM" value="option1">
+                            <label for="SM">
+                              M
+                            </label>
+                          </div>
+                          <div class="radio">
+                            <input type="radio" name="S" id="SF" value="option2">
+                            <label for="SF">
+                              F
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div> <!--/.panel-->
+                  </div> <!--/.Saturday-->
+
+                  <!-- Sunday -->
+                  <div class="calendar-style">
+                    <div class="panel panel-default">
+                      <div class="panel-heading-day">
+                        <h3 class="panel-title">Sun</h3>
+                      </div>
+                      <div class="panel-body">
+                        <div class="col-sm-2">
+                          <div class="radio">
+                            <input type="radio" name="SU" id="SUM" value="option1">
+                            <label for="SUM">
+                              M
+                            </label>
+                          </div>
+                          <div class="radio">
+                            <input type="radio" name="SU" id="SUF" value="option2">
+                            <label for="SUF">
+                              F
+                            </label>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div> <!--/.panel-->
+                  </div> <!--/.Sunday-->
+
+
+                </div>
+
+              </fieldset>
+            </div> 
+
+            <!-- TODO: ** add id's to retrieve data from textfields 
+            make sure the format of input is correct
+            ** fill textfields with child's information
+            so the parent can edit them if needed-->
+
+            <!-- Personal Details -->
+
+            <div class="panel-heading">
+
+
+              <h3 class="panel-title">Personal Details</h3>
+            </div>
+            <div class="panel-body">
+
+
+              <!-- add body here -->
+              <!-- Name -->
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Given Name" aria-describedby="basic-addon2">
+                <input type="text" class="form-control" placeholder="Surname" aria-describedby="basic-addon1">
+              </div>
+
+              <!-- Date of Birth -->
+              <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">yyyy/mm/dd</span>
+                <input type="text" class="form-control" placeholder="Date Of Birth" aria-describedby="basic-addon1">
+              </div>
+
+            </div>
+
+            <!-- end of Personal Details -->
+
+            <!-- Contact Details -->
+            <div class="panel-heading">
+
+              <h3 class="panel-title">Contact Details</h3>
+            </div>
+            <div class="panel-body">
+
+
+              <!-- add body here -->
+
+              <!-- phone number -->
+              <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">#</span>
+                <input type="text" class="form-control" placeholder="Phone Number" aria-describedby="basic-addon1">
+              </div>
+
+              <!-- e-mail -->
+              <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">@</span>
+                <input type="text" class="form-control" placeholder="e-mail address" aria-describedby="basic-addon1">
+              </div>
+
+            </div>
+          </div> <!--panel-->
+          <!-- end of Contact Details -->
+
+          <!-- Medical Conditions -->
+          <div class="panel panel-default">
+            <div class="panel-heading">
+
+
+              <h3 class="panel-title">Medical Conditions</h3>
+            </div>
+            <div class="panel-body">
+
+              <!-- TODO: have to make this button add items-->
+
+              <!-- add body here -->
+              <div class="input-group">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button">+</button>
+                </span>
+                <input type="text" class="form-control" placeholder="add New Medical Condition">
+              </div><!-- /input-group -->
+
+            </div>
+            <!-- end of Medical Conditions -->
+
+          </div> <!--/.panel-->
+
+          <button class="btn btn-default" type="button">
+            <a class="studentLabel"href="index.html">
+              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+              Cancel and Back
+            </a>
+          </button>
+
+          <button class="btn btn-default" type="button">
+            <span class="glyphicon glyphicon-check" aria-hidden="true"></span>Save Changes</button>
+
+          {% endblock %}

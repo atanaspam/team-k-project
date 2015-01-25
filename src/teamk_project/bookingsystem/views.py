@@ -75,27 +75,33 @@ def audit(request):
  	context = RequestContext(request)
  	context_dict={}
  	return render_to_response('manager/audit.html', context_dict, context)
-
+ 	
+@login_required
 def parentIndex(request):
 	context = RequestContext(request)
-	context_dict={}
+	parent = request.user
+	### This query gets all the "Children" of the user with UiD 1 ###
+	children = Client.objects.filter(belongsto='1')
+	### This just gets the current user (if he is not logged in he is Anonymous)
+	context_dict = {'children': children}
+	context_dict['parent'] = parent
 	return render_to_response('parent/index.html', context_dict, context)
-
+@login_required
 def parentBookings(request):
 	context = RequestContext(request)
 	context_dict={}
 	return render_to_response('parent/bookings.html', context_dict, context)
-
+@login_required
 def childrenList(request):
 	context = RequestContext(request)
 	context_dict={}
 	return render_to_response('parent/childrenList.html', context_dict, context)
-
+@login_required
 def childProfile(request):
 	context = RequestContext(request)
 	context_dict={}
 	return render_to_response('parent/childProfile.html', context_dict, context)
-
+@login_required
 def addNewChild(request):
 	context = RequestContext(request)
 	context_dict={}
