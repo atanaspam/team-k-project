@@ -1,7 +1,13 @@
-  {% extends "base.html" %}
+{% extends "base.html" %}
 
-  {% block sidebarNav %}
-  {% endblock %}
+{% block sidebarNav %}
+<li><a href="index.html">Home</a></li>
+<li><a href="bookings.html">Bookings</a></li>
+<li><a href="childrenList.html"><strong>Children</strong></a></li>
+<li><a href="payments.html">Payments</a></li>
+<li><a href="editProfile.html">Edit Profile</a></li>
+{% endblock %}
+
   <!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
   <!--  EACH OF THE RESULTS SHOULD BE ENCODED INTO A HIPERLINK AND  -->
   <!--  THIS HYPERLINK SHOULD POINT TO THE PAGE THAT IS RESPONSIBLE -->
@@ -156,4 +162,8 @@
             <button class="btn btn-default" type="button">
               <span class="glyphicon glyphicon-check" aria-hidden="true"></span>Save Changes</button>
 
+<<<<<<< HEAD
               {% endblock %}
+=======
+          {% endblock %}
+>>>>>>> FETCH_HEAD

@@ -1,10 +1,9 @@
 {% extends "base.html" %}
 
 {% block sidebarNav %}
-<li><a href="index.html">Home</a></li>
-<li><a href="bookings.html">Bookings</a></li>
-<li><a href="childrenList.html"><strong>Children</strong></a></li>
-<li><a href="payments.html">Payments</a></li>
+<li><a href="index.html"><strong>Home</strong></a></li>
+<li><a href="sessions.html">Attendace</a></li>
+<li><a href="sessionsTimetable.html">Schedule</a></li>
 <li><a href="editProfile.html">Edit Profile</a></li>
 {% endblock %}
 
@@ -14,8 +13,8 @@
           <div class="panel panel-default">
             <div class="panel-heading">
 
-              <!-- TODO: ** get parent personal details filled in
-                         so the parent can edit the ones he wants 
+              <!-- TODO: ** get Coach personal details filled in
+                         so the coach can edit the ones he wants 
                          then retreive all the data -->
               <h3 class="panel-title">Contact Details</h3>
             </div>
@@ -44,8 +43,8 @@
           <div class="panel panel-default">
             <div class="panel-heading">
 
-              <!-- TODO: ** get parent personal details filled in
-                         so the parent can edit the ones he wants 
+              <!-- TODO: ** get Coach personal details filled in
+                         so the coach can edit the ones he wants 
                          then retreive all the data -->
               <h3 class="panel-title">Personal Details</h3>
             </div>
@@ -68,8 +67,8 @@
           <div class="panel panel-default">
             <div class="panel-heading">
 
-              <!-- TODO: ** get parent personal details filled in
-                         so the parent can edit the ones he wants 
+              <!-- TODO: ** get Coach personal details filled in
+                         so the coach can edit the ones he wants 
                          then retreive all the data -->
               <h3 class="panel-title">Account Settings</h3>
             </div>
@@ -80,7 +79,7 @@
 
                 <!-- Username -->
                 <div class="input-group">
-                  <span class="input-group-addon" id="basic-addon1">Parent</span>
+                  <span class="input-group-addon" id="basic-addon1">Coach</span>
                   <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
                 </div>
 
@@ -108,11 +107,7 @@
 
           <!-- submit or cancel buttons -->
           <button class="btn btn-default" type="button">
-            <a class="addNewChildBtn"href="index.html">
-              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-              Cancel an Back
-            </a>
-          </button>
+          <span  class="glyphicon glyphicon-remove" aria-hidden="true"></span>Cancel</button>
 
           <button class="btn btn-default" type="button">
           <span class="glyphicon glyphicon-check" aria-hidden="true"></span>Save changes</button>

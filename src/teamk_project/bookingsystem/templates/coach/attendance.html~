@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block mainArea %}
+
           <!-- Session Attendance -->
           <div class="panel panel-default">
             <div class="panel-heading">
@@ -64,4 +65,5 @@
 
           <button class="btn btn-default" type="button">
           <span class="glyphicon glyphicon-check" aria-hidden="true"></span>Submit</button>
+
 {% endblock %}
