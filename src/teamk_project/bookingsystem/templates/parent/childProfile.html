@@ -20,7 +20,7 @@
       <div class="panel-heading">
         <h3 class="panel-title">View Schedule (Morning or Full Days)</h3>
       </div>
-      <div class="panel-body">
+        <div class="panel-body">
 
         <div class="alert alert-success" role="alert">Booking Successfully Confirmed</div>
 
@@ -215,7 +215,10 @@
                 </div>
 
               </fieldset>
-            </div> 
+            </div> <!-- /.body -->
+
+          </div> <!-- /. checkbox pannel -->
+
 
             <!-- TODO: ** add id's to retrieve data from textfields 
             make sure the format of input is correct
@@ -223,81 +226,78 @@
             so the parent can edit them if needed-->
 
             <!-- Personal Details -->
-
-            <div class="panel-heading">
-
-
-              <h3 class="panel-title">Personal Details</h3>
-            </div>
-            <div class="panel-body">
-
-
-              <!-- add body here -->
-              <!-- Name -->
-              <div class="input-group">
-                <input type="text" class="form-control" placeholder="Given Name" aria-describedby="basic-addon2">
-                <input type="text" class="form-control" placeholder="Surname" aria-describedby="basic-addon1">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">Personal Details</h3>
               </div>
 
-              <!-- Date of Birth -->
-              <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">yyyy/mm/dd</span>
-                <input type="text" class="form-control" placeholder="Date Of Birth" aria-describedby="basic-addon1">
-              </div>
+              <div class="panel-body">
 
-            </div>
 
-            <!-- end of Personal Details -->
+                <!-- add body here -->
+                <!-- Name -->
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Given Name" aria-describedby="basic-addon2">
+                  <input type="text" class="form-control" placeholder="Surname" aria-describedby="basic-addon1">
+                </div>
+
+                <!-- Date of Birth -->
+                <div class="input-group">
+                  <span class="input-group-addon" id="basic-addon1">yyyy/mm/dd</span>
+                  <input type="text" class="form-control" placeholder="Date Of Birth" aria-describedby="basic-addon1">
+                </div>
+
+              </div> <!-- /.body -->
+
+            </div> <!-- end of Personal Details -->
 
             <!-- Contact Details -->
-            <div class="panel-heading">
+            <div class="panel panel-default">
+                <div class="panel-heading">
 
-              <h3 class="panel-title">Contact Details</h3>
-            </div>
-            <div class="panel-body">
+                  <h3 class="panel-title">Contact Details</h3>
+                </div>
+                <div class="panel-body">
 
 
-              <!-- add body here -->
+                  <!-- add body here -->
 
-              <!-- phone number -->
-              <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">#</span>
-                <input type="text" class="form-control" placeholder="Phone Number" aria-describedby="basic-addon1">
-              </div>
+                  <!-- phone number -->
+                  <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">#</span>
+                    <input type="text" class="form-control" placeholder="Phone Number" aria-describedby="basic-addon1">
+                  </div>
 
-              <!-- e-mail -->
-              <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">@</span>
-                <input type="text" class="form-control" placeholder="e-mail address" aria-describedby="basic-addon1">
-              </div>
+                  <!-- e-mail -->
+                  <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">@</span>
+                    <input type="text" class="form-control" placeholder="e-mail address" aria-describedby="basic-addon1">
+                  </div>
 
-            </div>
-          </div> <!--panel-->
-          <!-- end of Contact Details -->
+                </div>
+            </div> <!-- end of Contact Details -->
 
           <!-- Medical Conditions -->
           <div class="panel panel-default">
-            <div class="panel-heading">
+              <div class="panel-heading">
 
 
-              <h3 class="panel-title">Medical Conditions</h3>
-            </div>
-            <div class="panel-body">
+                <h3 class="panel-title">Medical Conditions</h3>
+              </div>
+              <div class="panel-body">
 
-              <!-- TODO: have to make this button add items-->
+                <!-- TODO: have to make this button add items-->
 
-              <!-- add body here -->
-              <div class="input-group">
-                <span class="input-group-btn">
-                  <button class="btn btn-default" type="button">+</button>
-                </span>
-                <input type="text" class="form-control" placeholder="add New Medical Condition">
-              </div><!-- /input-group -->
+                <!-- add body here -->
+                <div class="input-group">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">+</button>
+                  </span>
+                  <input type="text" class="form-control" placeholder="add New Medical Condition">
+                </div><!-- /input-group -->
 
-            </div>
-            <!-- end of Medical Conditions -->
-
-          </div> <!--/.panel-->
+              </div>
+          </div> <!-- end of Medical Conditions -->
 
           <button class="btn btn-default" type="button">
             <a class="studentLabel"href="index.html">
