@@ -14,9 +14,9 @@
             
                 <form action="login_view/" method="post">{% csrf_token %}
                   <label for="username">User name:</label>
-                  <input type="text" name="username" value="" id="username" >
+                  <input class="studentLabel" type="text" name="username" value="" id="username" >
                   <label for="password">Password:</label>
-                  <input type="password" name="password" value="" id="password">
+                  <input class="studentLabel" type="password" name="password" value="" id="password">
 
                   <input class="btn btn-default" type="submit" value="Login" />
                   <input type="hidden" name="next" value="{{ next|escape }}" />
