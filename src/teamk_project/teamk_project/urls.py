@@ -15,4 +15,6 @@ urlpatterns = patterns('',
     url(r'^$', 'teamk_project.views.login', name='login'),
     url(r'^login_view/', 'teamk_project.views.login_view', name='login_view'),
     url(r'^register/', 'teamk_project.views.register', name='register'),
+    url(r'^logout/', 'teamk_project.views.logout', name='logout'),
+    
 )

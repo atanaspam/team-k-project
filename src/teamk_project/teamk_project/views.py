@@ -16,12 +16,20 @@ def login_view(request):
         if user.is_active:
             auth.login(request, user)
             #return HttpResponseRedirect(user.check_password("nqmaparola"))
-            return HttpResponseRedirect("/bookingsystem/index/")
+            #return HttpResponseRedirect("/bookingsystem/index/")
+            if user.groups.filter(name = 'Manager'):
+                return HttpResponseRedirect("/bookingsystem/manager/index/")
+            elif user.groups.filter(name = 'Coach'):
+                return HttpResponseRedirect("/bookingsystem/coach/index/")
+            elif user.groups.filter(name = 'Parent'):
+                return HttpResponseRedirect("/bookingsystem/parent/index/")
+            else:
+                return HttpResponseRedirect("Not a manager!")
         else:
             return HttpResponseRedirect("This Account is Disabled")
     else:
         #return HttpResponseRedirect("Invalid details")
-        return HttpResponseRedirect("invalid.html")
+        return HttpResponseRedirect("/invalid.html")
             
 def register(request):
     if request.method == 'POST':
@@ -35,6 +43,6 @@ def register(request):
         'form': form,
     })
 
-def logout_view(request):
+def logout(request):
     auth.logout(request)
     return HttpResponseRedirect("/")

@@ -12,23 +12,5 @@
 <!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
 
 {% block mainArea %}
-	{% if parent %}
-			<h2>Hello, {{parent.first_name}}</h2>
-        {% else %}
-            <h2>Hello !</h2>
-        {% endif %}
-	
-	<p>Currently there are not available sessions.</p>
-	<a href="/bookingsystem/coach/sessions">here</a>
-	<h2>All your Children:</h2>
-	{% if children %}
-            <ul>
-                {% for child in children %}
-                <li>{{ child.firstname }}</li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <strong>There are no categories present.</strong>
-        {% endif %}
-	
+SESSIONS	
 {% endblock %}
