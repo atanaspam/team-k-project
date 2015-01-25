@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block sidebarNav %}
+{% endblock %}
+
+{% block mainArea %}
+
+         <!-- select student checkboxes -->
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Select Student (Make it load names from Db)</h3>
+            </div>
+            <div class="panel-body">
+              <div class="checkbox">
+                <label><input type="checkbox" value="">Pedro    | total: 200.00£</label>
+              </div>
+              <div class="checkbox">
+                <label><input type="checkbox" value="">Nikolas  | total: 300.00£</label>
+              </div>
+              <div class="checkbox">
+                <label><input type="checkbox" value="">Dimitris | total: 105.00£</label>
+              </div>
+              <div class="checkbox">
+                <label> total: 605.00£</label>
+              </div>
+            </div>
+          </div>
+          
+          <!-- TODO: add paypal -->
+          <button class="btn btn-default" type="button">
+          <a class="addNewChildBtn"href="">
+            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+            Process Payment
+          </a>
+          </button>
+
+{% endblock %}

@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block sidebarNav %}
+{% endblock %}
+
+{% block mainArea %}
+
+          <!-- Contact Details -->
+          <div class="panel panel-default">
+            <div class="panel-heading">
+
+              <!-- TODO: ** get parent personal details filled in
+                         so the parent can edit the ones he wants 
+                         then retreive all the data -->
+              <h3 class="panel-title">Contact Details</h3>
+            </div>
+            <div class="panel-body">
+              
+
+              <!-- add body here -->
+
+                <!-- phone number -->
+                <div class="input-group">
+                  <span class="input-group-addon" id="basic-addon1">#</span>
+                  <input type="text" class="form-control" placeholder="Phone Number" aria-describedby="basic-addon1">
+                </div>
+
+                <!-- e-mail -->
+                <div class="input-group">
+                  <span class="input-group-addon" id="basic-addon1">@</span>
+                  <input type="text" class="form-control" placeholder="e-mail address" aria-describedby="basic-addon1">
+                </div>
+
+            </div>
+          </div> <!--panel-->
+          <!-- end of Contact Details -->
+
+          <!-- Personal Details -->
+          <div class="panel panel-default">
+            <div class="panel-heading">
+
+              <!-- TODO: ** get parent personal details filled in
+                         so the parent can edit the ones he wants 
+                         then retreive all the data -->
+              <h3 class="panel-title">Personal Details</h3>
+            </div>
+            <div class="panel-body">
+              
+
+              <!-- add body here -->
+
+                <!-- Name -->
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Given Name" aria-describedby="basic-addon2">
+                  <input type="text" class="form-control" placeholder="Surname" aria-describedby="basic-addon1">
+                </div>
+
+            </div>
+          </div> <!--panel-->
+          <!-- end of Personal Details -->
+
+          <!-- Account Settings -->
+          <div class="panel panel-default">
+            <div class="panel-heading">
+
+              <!-- TODO: ** get parent personal details filled in
+                         so the parent can edit the ones he wants 
+                         then retreive all the data -->
+              <h3 class="panel-title">Account Settings</h3>
+            </div>
+            <div class="panel-body">
+              
+
+              <!-- add body here -->
+
+                <!-- Username -->
+                <div class="input-group">
+                  <span class="input-group-addon" id="basic-addon1">Parent</span>
+                  <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+                </div>
+
+                <!-- old password -->
+                <div class="input-group">
+                  <span class="input-group-addon" id="basic-addon1">*old</span>
+                  <input type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
+                </div>
+
+                <!-- new password -->
+                <div class="input-group">
+                  <span class="input-group-addon" id="basic-addon1">*new</span>
+                  <input type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
+                </div>
+
+                <!-- confirm new password -->
+                <div class="input-group">
+                  <span class="input-group-addon" id="basic-addon1">*new</span>
+                  <input type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
+                </div>
+
+            </div>
+          </div> <!--panel-->
+          <!-- end of Account Settings -->
+
+          <!-- submit or cancel buttons -->
+          <button class="btn btn-default" type="button">
+            <a class="addNewChildBtn"href="index.html">
+              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+              Cancel an Back
+            </a>
+          </button>
+
+          <button class="btn btn-default" type="button">
+          <span class="glyphicon glyphicon-check" aria-hidden="true"></span>Save changes</button>
+
+{% endblock %}
