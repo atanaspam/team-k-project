@@ -18,11 +18,11 @@ def login_view(request):
             #return HttpResponseRedirect(user.check_password("nqmaparola"))
             #return HttpResponseRedirect("/bookingsystem/index/")
             if user.groups.filter(name = 'Manager'):
-                return HttpResponseRedirect("/bookingsystem/manager/index/")
+                return HttpResponseRedirect("/bookingsystem/manager/")
             elif user.groups.filter(name = 'Coach'):
-                return HttpResponseRedirect("/bookingsystem/coach/index/")
+                return HttpResponseRedirect("/bookingsystem/coach/")
             elif user.groups.filter(name = 'Parent'):
-                return HttpResponseRedirect("/bookingsystem/parent/index/")
+                return HttpResponseRedirect("/bookingsystem/parent/")
             else:
                 return HttpResponseRedirect("Not a manager!")
         else:
