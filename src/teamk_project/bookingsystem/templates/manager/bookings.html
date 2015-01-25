@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block sidebarNav %}
+<li><a href="index.html">Home</a></li>
+<li><a href="bookings.html"><strong>Bookings</strong></a></li>
+<li><a href="coaches.html">Coaches</a></li>
+<li><a href="members.html">Children</a></li>
+<li><a href="audit.html">Financial Data</a></li>
+{% endblock %}
+<!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
+<!-- 	EACH OF THE RESULTS SHOULD BE ENCODED INTO A HIPERLINK AND  -->
+<!-- 	THIS HYPERLINK SHOULD POINT TO THE PAGE THAT IS RESPONSIBLE -->
+<!-- 	FOR THE KID's PERSONAL INFORMATION							-->
+<!-- 																-->
+<!-- 	ALSO WE NEED ALL THE BUTTONS THAT WOULD POINT TO THE REST   -->
+<!-- 	OF THE FUNCTIONALITY PLACED AND POINTING TO THE CORRECT URL -->
+<!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
+
+{% block mainArea %}
+<!-- bookings pending confirmation -->
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Pending</h3>
+  </div>
+  <div class="panel-body">
+    
+
+    <!-- add body here -->
+            <div class="list-group">
+              <a href="confirmBooking.html" class="list-group-item">George Patterson</a>
+              <a href="confirmBooking.html" class="list-group-item">Iain McColl</a>
+              <a href="confirmBooking.html" class="list-group-item">David McGregor</a>
+              <a href="confirmBooking.html" class="list-group-item">Timothy Storer</a>
+            </div>
+
+
+  </div>
+</div> <!--panel-->
+
+<!-- Confirmed bookings -->
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title"> Latest Confirmed</h3>
+  </div>
+  <div class="panel-body">
+    
+
+    <!-- add body here -->
+        <div class="list-group">
+              <a href="confirmBooking.html" class="list-group-item">Nick Holmes</a>
+              <a href="confirmBooking.html" class="list-group-item">Stieg Larsson</a>
+              <a href="confirmBooking.html" class="list-group-item">Paul Andersson</a>
+              <a href="confirmBooking.html" class="list-group-item">Scarlet Johansson</a>
+        </div>
+
+  </div>
+</div> <!--panel-->
+
+
+<!-- Waiting List -->
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title"> Waiting List</h3>
+  </div>
+  <div class="panel-body">
+    
+
+    <!-- add body here -->
+        <div class="list-group">
+              <a href="confirmbooking.html" class="list-group-item">Queue First</a>
+              <a href="confirmbooking.html" class="list-group-item">Queue Second</a>
+              <a href="confirmbooking.html" class="list-group-item">Queue Third</a>
+              <a href="confirmbooking.html" class="list-group-item">Queue Fourth</a>
+        </div>
+
+  </div>
+</div> <!--panel-->
+
+{% endblock %}

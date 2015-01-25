@@ -68,8 +68,7 @@ def coachProfile(request):
 
 def members(request):
     context = RequestContext(request)
-    users = User.objects.all()
-    context_dict={'users':users}
+    context_dict={}
     return render_to_response('manager/members.html', context_dict, context)
 
 def audit(request):

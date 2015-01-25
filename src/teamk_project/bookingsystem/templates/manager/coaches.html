@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block sidebarNav %}
+<li><a href="index.html">Home</a></li>
+<li><a href="bookings.html">Bookings</a></li>
+<li><a href="coaches.html"><strong>Coaches</strong></a></li>
+<li><a href="members.html">Children</a></li>
+<li><a href="audit.html">Financial Data</a></li>
+{% endblock %}
+<!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
+<!-- 	EACH OF THE RESULTS SHOULD BE ENCODED INTO A HIPERLINK AND  -->
+<!-- 	THIS HYPERLINK SHOULD POINT TO THE PAGE THAT IS RESPONSIBLE -->
+<!-- 	FOR THE KID's PERSONAL INFORMATION							-->
+<!-- 																-->
+<!-- 	ALSO WE NEED ALL THE BUTTONS THAT WOULD POINT TO THE REST   -->
+<!-- 	OF THE FUNCTIONALITY PLACED AND POINTING TO THE CORRECT URL -->
+<!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
+
+{% block mainArea %}
+<!-- active coaches list -->
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Active Coaches</h3>
+  </div>
+  <div class="panel-body">
+    
+
+    <!-- add body here -->
+            <div class="list-group">
+              <a href="coachProfile.html" class="list-group-item">Roger Federer</a>
+              <a href="coachProfile.html" class="list-group-item">Rafael Nadal</a>
+              <a href="coachProfile.html" class="list-group-item">Novak Djokovic</a>
+              <a href="coachProfile.html" class="list-group-item">Serena Williams</a>
+            </div>
+
+
+  </div>
+</div> <!--panel-->
+
+<!-- all coaches list -->
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">All Coaches</h3>
+  </div>
+  <div class="panel-body">
+    
+
+    <!-- add body here -->
+        <div class="list-group">
+              <a href="coachProfile.html" class="list-group-item">Maria Sharapova</a>
+              <a href="coachProfile.html" class="list-group-item">Andy Murray</a>
+              <a href="coachProfile.html" class="list-group-item">Pete Sampras</a>
+              <a href="coachProfile.html" class="list-group-item">John McEnroe</a>
+        </div>
+
+  </div>
+</div> <!--panel-->
+{% endblock %}

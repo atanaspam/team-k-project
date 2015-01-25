@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block sidebarNav %}
+<li><a href="index.html">Home</a></li>
+<li><a href="bookings.html">Bookings</a></li>
+<li><a href="coaches.html"><strong>Coaches</strong></a></li>
+<li><a href="members.html">Children</a></li>
+<li><a href="audit.html">Financial Data</a></li>
+{% endblock %}
+<!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
+<!-- 	EACH OF THE RESULTS SHOULD BE ENCODED INTO A HIPERLINK AND  -->
+<!-- 	THIS HYPERLINK SHOULD POINT TO THE PAGE THAT IS RESPONSIBLE -->
+<!-- 	FOR THE KID's PERSONAL INFORMATION							-->
+<!-- 																-->
+<!-- 	ALSO WE NEED ALL THE BUTTONS THAT WOULD POINT TO THE REST   -->
+<!-- 	OF THE FUNCTIONALITY PLACED AND POINTING TO THE CORRECT URL -->
+<!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
+
+{% block mainArea %}
+          <!-- Personal Details -->
+          <div class="panel panel-default">
+            <div class="panel-heading">
+
+              <!-- TODO: ** get Coach personal details filled in
+                         so the coach can edit the ones he wants 
+                         then retreive all the data -->
+              <h3 class="panel-title">Personal Details</h3>
+            </div>
+            <div class="panel-body">
+              
+
+              <!-- add body here -->
+
+                <!-- Name -->
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Given Name" aria-describedby="basic-addon2">
+                  <input type="text" class="form-control" placeholder="Surname" aria-describedby="basic-addon1">
+                </div>
+
+            </div>
+          </div> <!--panel-->
+          <!-- end of Personal Details -->
+
+          <!-- Contact Details -->
+          <div class="panel panel-default">
+            <div class="panel-heading">
+
+              <!-- TODO: ** get Coach personal details filled in
+                         so the coach can edit the ones he wants 
+                         then retreive all the data -->
+              <h3 class="panel-title">Contact Details</h3>
+            </div>
+            <div class="panel-body">
+              
+
+              <!-- add body here -->
+
+                <!-- phone number -->
+                <div class="input-group">
+                  <span class="input-group-addon" id="basic-addon1">#</span>
+                  <input type="text" class="form-control" placeholder="Phone Number" aria-describedby="basic-addon1">
+                </div>
+
+                <!-- e-mail -->
+                <div class="input-group">
+                  <span class="input-group-addon" id="basic-addon1">@</span>
+                  <input type="text" class="form-control" placeholder="e-mail address" aria-describedby="basic-addon1">
+                </div>
+
+            </div>
+          </div> <!--panel-->
+          <!-- end of Contact Details -->
+
+
+
+          <!-- Password -->
+          <div class="panel panel-default">
+            <div class="panel-heading">
+
+              <!-- TODO: ** get Coach personal details filled in
+                         so the coach can edit the ones he wants 
+                         then retreive all the data -->
+              <h3 class="panel-title">Password Reset</h3>
+            </div>
+            <div class="panel-body">
+              
+
+              <!-- add body here -->
+
+
+                <!-- new password -->
+                <div class="input-group">
+                  <span class="input-group-addon" id="basic-addon1">*new</span>
+                  <input type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
+                </div>
+
+                <!-- confirm new password -->
+                <div class="input-group">
+                  <span class="input-group-addon" id="basic-addon1">*new</span>
+                  <input type="Repeat" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
+                </div>
+
+            </div>
+          </div> <!--panel-->
+          <!-- end of Account Settings -->
+
+<div class="container">
+      <h2>Hours</h2>
+      <p>Summary of Coaching hours</p>                                                                                      
+      <div class="table-responsive">          
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Week</th>
+            <th>Number of Hours</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>6</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>8</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>4</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+          <!-- submit or cancel buttons -->
+          <button class="btn btn-default" type="button" onclick="window.location.href='timeable.html'; return false;">
+          <span  class="glyphicon glyphicon-calendar" aria-hidden="true"></span>View Timetable</button>
+
+          <button class="btn btn-default" type="button" onclick="window.location.href='audit.html'; return false;">
+          <span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span>Financial Data</button>
+
+{% endblock %}

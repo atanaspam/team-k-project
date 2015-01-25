@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block sidebarNav %}
+<li><a href="index.html">Home</a></li>
+<li><a href="bookings.html">Bookings</a></li>
+<li><a href="coaches.html">Coaches</a></li>
+<li><a href="members.html">Children</a></li>
+<li><a href="audit.html"><strong>Financial Data</strong></a></li>
+{% endblock %}
+<!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
+<!-- 	EACH OF THE RESULTS SHOULD BE ENCODED INTO A HIPERLINK AND  -->
+<!-- 	THIS HYPERLINK SHOULD POINT TO THE PAGE THAT IS RESPONSIBLE -->
+<!-- 	FOR THE KID's PERSONAL INFORMATION							-->
+<!-- 																-->
+<!-- 	ALSO WE NEED ALL THE BUTTONS THAT WOULD POINT TO THE REST   -->
+<!-- 	OF THE FUNCTIONALITY PLACED AND POINTING TO THE CORRECT URL -->
+<!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
+
+{% block mainArea %}
+<!-- bookings pending confirmation -->
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Incomings</h3>
+  </div>
+  <div class="panel-body">
+
+
+    <!-- add body here -->
+
+
+    <div class="table-responsive">          
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Period</th>
+            <th>Net income</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>This month's Flow</td>
+            <td>360</td>
+          </tr>
+          <tr>
+            <td>Grand total of month</td>
+            <td>1840</td>
+          </tr>
+          <tr>
+            <td>Grand Total of Year</td>
+            <td>4451</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div> <!--panel-->
+
+<!-- expenses -->
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Expenses</h3>
+  </div>
+<div class="panel-body">
+    
+
+    <!-- add body here -->
+        
+    <div class="table-responsive">          
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Cost</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Payroll</td>
+            <td>2360</td>
+          </tr>
+          <tr>
+            <td>Rent & Utilities</td>
+            <td>1840</td>
+          </tr>
+          <tr>
+            <td>Equipment</td>
+            <td>176</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div> <!--panel-->
+
+      <button class="btn btn-default" type="button" onclick="window.location.href='payroll.html'; return false;">
+<span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span>Payroll</button>
+
+                <button class="btn btn-default" type="button" onclick="window.location.href='audit.html'; return false;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>Edit</button>
+
+{% endblock %}
