@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block mainArea %}
+
           <!-- Contact Details -->
           <div class="panel panel-default">
             <div class="panel-heading">
@@ -110,4 +111,5 @@
 
           <button class="btn btn-default" type="button">
           <span class="glyphicon glyphicon-check" aria-hidden="true"></span>Save changes</button>
+
 {% endblock %}

@@ -40,6 +40,13 @@ def sessions(request):
 
 @login_required
 @user_passes_test(is_coach)
+def sessionsTimetable(request):
+	context = RequestContext(request)
+	context_dict={}
+	return render_to_response('coach/sessionsTimetable.html', context_dict, context)
+
+@login_required
+@user_passes_test(is_coach)
 def attendance(request):
 	context = RequestContext(request)
 	context_dict={}
@@ -76,10 +83,10 @@ def managerBookings(request):
 
 @login_required
 @user_passes_test(is_manager)
-def confirmbooking(request):
+def confirmBooking(request):
 	context = RequestContext(request)
 	context_dict={}
-	return render_to_response('manager/confirmbooking.html', context_dict, context)
+	return render_to_response('manager/confirmBooking.html', context_dict, context)
 
 @login_required
 @user_passes_test(is_manager)
