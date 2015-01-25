@@ -7,7 +7,12 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def index(request):
 	context = RequestContext(request)
-	context_dict={}
+	### This query gets all the "Children" of the user with UiD 1 ###
+	children = Client.objects.filter(belongsto='1')
+	### This just gets the current user (if he is not logged in he is Anonymous)
+	parent = request.user
+	context_dict = {'children': children}
+	context_dict['parent'] = parent
 	return render_to_response('index.html', context_dict, context)
 
 def coachIndex(request):
@@ -38,9 +43,7 @@ def managerIndex(request):
 def loggedin(request):
 	context = RequestContext(request)
 	# Here we have some interaction with the model
-	user = Client.objects.get(uid='4')
 	# We then plug the results of the interaction in the dictionary..
-	context_dict={'users':user}
 	return render_to_response('manager/loggedin.html', context_dict, context)
 
 def managerBookings(request):
