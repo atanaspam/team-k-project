@@ -5,7 +5,8 @@
 #   mysqldump -u root -p --compatible=ansi --skip-opt mydb > dumpfile 
 #      ^           ^                  ^                 ^       ^       
 #   command   mysql username      arguments      schema name    output file name
-# To convert it:
+#
+# To convert it: (Remember to make the script executable first using chmod)
 #   mysql-to-sqlite.sh dumpfile
 #
 # - Atanas
