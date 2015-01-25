@@ -17,5 +17,6 @@ urlpatterns = patterns('',
 
     url(r'^bookingsystem/', include('bookingsystem.urls')),
     url(r'^$', 'teamk_project.views.login', name='login'),
+    url(r'^login_view/', 'teamk_project.views.login_view', name='login_view'),
     url(r'^register/', 'teamk_project.views.register', name='register'),
 )

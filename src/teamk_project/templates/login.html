@@ -4,19 +4,20 @@
 {% endblock %}
 
 {% block mainArea %}
-	<h2>Log in</h2>
-	<p>Please enter your username and password.</p>
-	<br>
-	<form action="/bookingsystem/index/" method="post">{% csrf_token %}
-		<label for="username">Username:</label>
-		<input type="test" name="username" value="" id="username">
-		<br><br>
-		<label for="password">Password:</label>
-		<input type="password" name="password" value="" id="password">
-		<br><br>
-		<input type="submit" value="login" />
-		<br>
-		<br>
-		<a href="/register">Register</a>
-	</form>
+  {% if form.errors %}
+    <p class="error">Sorry, that's not a valid username or password</p>
+  {% endif %}
+
+  <form action="login_view/" method="post">{% csrf_token %}
+    <label for="username">User name:</label>
+    <input type="text" name="username" value="" id="username">
+    <label for="password">Password:</label>
+    <input type="password" name="password" value="" id="password">
+
+    <input type="submit" value="login" />
+    <input type="hidden" name="next" value="{{ next|escape }}" />
+  </form>
+  <br>
+  <br>
+  Click <a href="/register.html">here</a> to register.
 {% endblock %}
