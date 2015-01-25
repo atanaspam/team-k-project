@@ -7,9 +7,9 @@ Short term TODO
 ---------------
 
 * Create scripts to populate the templates with actual data from the database
-* Refine the templates
-* Create population scripts for the database
-* Start work on the report
+* Implement User Groups
+* Refine the login process
+* Start work on the report !
 
 
 Team Members
@@ -30,3 +30,10 @@ Requirements
 * Python Django 1.5.4 following http://www.tangowithdjango.com/book/chapters/requirements.html#installing-the-software 
 * Python Version 2.7.6
 * Manual setup of the database using the instructions in settings.py in src/teamk-project
+
+Django Login Details
+--------------------
+
+* Username: Your lowercase first name. eg: atanas
+* Password: Same.
+* Each Django Admin has a number of clients that are his "Children"

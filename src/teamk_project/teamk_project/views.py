@@ -12,10 +12,15 @@ def login_view(request):
     username = request.POST.get('username', '')
     password = request.POST.get('password', '')
     user = auth.authenticate(username=username, password=password)    
-    if user is not None and user.is_active:
-        auth.login(request, user)
-        return HttpResponseRedirect("index.html")
+    if user:
+        if user.is_active:
+            auth.login(request, user)
+            #return HttpResponseRedirect(user.check_password("nqmaparola"))
+            return HttpResponseRedirect("/bookingsystem/index/")
+        else:
+            return HttpResponseRedirect("This Account is Disabled")
     else:
+        #return HttpResponseRedirect("Invalid details")
         return HttpResponseRedirect("invalid.html")
             
 def register(request):

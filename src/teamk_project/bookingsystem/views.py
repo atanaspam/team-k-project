@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.template import RequestContext
 from django.shortcuts import render_to_response
-from bookingsystem.models import User
+from bookingsystem.models import Client
 from django.contrib.auth.decorators import login_required
 
 @login_required
@@ -38,7 +38,7 @@ def managerIndex(request):
 def loggedin(request):
 	context = RequestContext(request)
 	# Here we have some interaction with the model
-	user = User.objects.get(uid='4')
+	user = Client.objects.get(uid='4')
 	# We then plug the results of the interaction in the dictionary..
 	context_dict={'users':user}
 	return render_to_response('manager/loggedin.html', context_dict, context)

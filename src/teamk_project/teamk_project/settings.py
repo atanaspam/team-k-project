@@ -12,7 +12,7 @@ BS_TEMPLATE_PATH = os.path.join(PROJECT_PATH, 'bookingsystem/templates') # Booki
 
 STATIC_PATH = os.path.join(PROJECT_PATH, 'static')	# Static Path
 
-DATABASE_PATH = os.path.join(PROJECT_PATH, 'testDB.db') # Database Path
+DATABASE_PATH = os.path.join(PROJECT_PATH, 'Database.db') # Database Path
 
 
 DEBUG = True
@@ -145,7 +145,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
+    'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'bookingsystem',
