@@ -36,11 +36,17 @@
               <!-- add body here -->
               <div id="groupOfChildren" class="list-group">
                 {% if children %}
-                    <ul>
                     {% for child in children %}
-                        <a href="childProfile.html" class="list-group-item">{{ child.firstname }}</a>
-                        {% endfor %}
+                    {% with child.uid as id %}
+                    {% with id|stringformat:'s' as ID %}
+                    {% url 'bookingsystem.views.childProfile' as uurl %}
+                    <!-- {{ uurl|add:ID }} THIS PRINTS THE CURRENT LINK -->
+                    <ul>
+                        <a href={{ uurl|add:ID }} class="list-group-item">{{ child.firstname }}</a>
                     </ul>
+                     {% endwith%}
+                     {% endwith%}
+                     {% endfor %}
                 {% else %}
                     <a href="childProfile.html" class="list-group-item">You have no Children. Press Add child to add.</a>
                 {% endif %}
