@@ -86,6 +86,14 @@ def managerBookings(request):
 	context_dict={}
 	return render_to_response('manager/bookings.html', context_dict, context)
 
+def managerSessions(request):
+	context = RequestContext(request)
+	context_dict={}
+	return render_to_response('manager/bookings.html', context_dict, context)
+
+@login_required
+@user_passes_test(is_manager)
+
 @login_required
 @user_passes_test(is_manager)
 def confirmbooking(request):
@@ -223,12 +231,12 @@ def sessionsTimetable(request):
 
 
 def applicationApproved(request):
-	print AAA
+	print 'AAA'
 	context = RequestContext(request)
 	sessionID = None
 	if request.method == 'GET':
 		sessionID = request.GET['session_sessionid']
-		print AAA
+		print 'AAA'
 
 		if sessionID:
 			session = Category.objects.get(sessionid = int(sessionID))
@@ -236,7 +244,7 @@ def applicationApproved(request):
 	    		flag = 'C'
 	    		session.status = flag
 	    		session.save()
-	return HttpResponse(Success)
+	return HttpResponse('Success!')
 
 
 	
