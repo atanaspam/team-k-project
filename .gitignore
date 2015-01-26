@@ -52,3 +52,5 @@ docs/_build/
 
 # PyBuilder
 target/
+
+src/teamk_project/Database.db
