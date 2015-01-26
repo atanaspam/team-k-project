@@ -86,13 +86,12 @@ def managerBookings(request):
 	context_dict={}
 	return render_to_response('manager/bookings.html', context_dict, context)
 
+@login_required
+@user_passes_test(is_manager)
 def managerSessions(request):
 	context = RequestContext(request)
 	context_dict={}
 	return render_to_response('manager/bookings.html', context_dict, context)
-
-@login_required
-@user_passes_test(is_manager)
 
 @login_required
 @user_passes_test(is_manager)
