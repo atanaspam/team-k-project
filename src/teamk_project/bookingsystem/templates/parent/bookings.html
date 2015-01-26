@@ -2,8 +2,8 @@
 
 {% block sidebarNav %}
 <li><a href="index.html">Home</a></li>
-<li><a href="bookings.html">Bookings</a></li>
-<li><a href="childrenList.html"><strong>Children</strong></a></li>
+<li><a href="bookings.html"><strong>Bookings</strong></a></li>
+<li><a href="childrenList.html">Children</a></li>
 <li><a href="payments.html">Payments</a></li>
 <li><a href="editProfile.html">Edit Profile</a></li>
 {% endblock %}
@@ -28,7 +28,7 @@
             </div>
           </div>
           
-                    <!-- select preset block of sessions -->
+         <!-- select preset block of sessions -->
           <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title">Select Block of sessions</h3>
@@ -41,8 +41,11 @@
                 <label><input type="checkbox" value="">Plus Evenings</label>
               </div>
 
-          </div>
+            </div> <!-- end panel body -->
+          </div> <!-- end panel block of sessions -->
+
           <!-- select bookings checkboxes --> 
+          <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title">View/Modify Schedule (Morning or Full Days)</h3>
             </div>
@@ -236,7 +239,7 @@
         </div><!-- /.col-xs-12 main -->
       
       <button class="btn btn-default" type="button">
-          <a class="addNewChildBtn"href="index.html">
+          <a class="studentLabel"href="index.html">
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
             Cancel
           </a>

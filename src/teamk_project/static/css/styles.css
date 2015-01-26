@@ -2,7 +2,17 @@ html,body {
   height: 100%;
 }
 
-/* atteendance for sessions student label */
+.textCentered{
+  text-align: center;
+}
+
+/* grey text */
+.greylabel{
+  color: #807E7E;
+  text-align: left;
+}
+
+/* dark text */
 .studentLabel{
   color: #202020;
   text-align: left;
