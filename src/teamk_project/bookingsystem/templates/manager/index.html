@@ -19,8 +19,8 @@
 
 {% block mainArea %}
 
-	{% if manager %}
-			<h2>Welcome, {{manager.first_name}}</h2>
+	{% if parent %}
+			<h2>Welcome, {{parent.first_name}}</h2>
         {% else %}
             <h2>Welcome !</h2>
         {% endif %}
@@ -35,11 +35,17 @@
 
     <!-- add body here -->
             <div class="list-group">
+
+            
+                {% if sessions %}
+                    {% for session in sessions %}
+                        {% if users %}
+                            {% for user in users %}
                 
                 <!-- list item -->
                 <a href="#" class="list-group-item clearfix">
                   <span class="glyphicon glyphicon-file"></span>
-                    Golliver Strangenous
+                    {{ session.begintime}} {{user.firstname}}
                   <span class="pull-right">
                     <button class="btn btn-xs btn-warning">
                       <span class="glyphicon glyphicon-time"></span>
@@ -52,59 +58,14 @@
                     </button>
                   </span>
                 </a> <!-- end of list group item -->
+                   {% endfor %}
+                        {% endif %}
+                {% endfor %}
+             {% else %}
+                <strong>There are no categories present.</strong>
+            {% endif %}
 
-                <!-- list item -->
-                <a href="#" class="list-group-item clearfix">
-                  <span class="glyphicon glyphicon-file"></span>
-                    Iain McColl
-                  <span class="pull-right">
-                    <button class="btn btn-xs btn-warning">
-                      <span class="glyphicon glyphicon-time"></span>
-                    </button>
-                    <button class="btn btn-xs btn-info">
-                      <span class="glyphicon glyphicon-info-sign"></span>
-                    </button>
-                    <button class="btn btn-xs btn-success">
-                      <span class="glyphicon glyphicon-ok"></span>
-                    </button>
-                  </span>
-                </a> <!-- end of list group item -->
-
-                <!-- list item -->
-                <a href="#" class="list-group-item clearfix">
-                  <span class="glyphicon glyphicon-file"></span>
-                    David McGregor
-                  <span class="pull-right">
-                    <button class="btn btn-xs btn-warning">
-                      <span class="glyphicon glyphicon-time"></span>
-                    </button>
-                    <button class="btn btn-xs btn-info">
-                      <span class="glyphicon glyphicon-info-sign"></span>
-                    </button>
-                    <button class="btn btn-xs btn-success">
-                      <span class="glyphicon glyphicon-ok"></span>
-                    </button>
-                  </span>
-                </a> <!-- end of list group item -->
-
-                <!-- list item -->
-                <a href="#" class="list-group-item clearfix">
-                  <span class="glyphicon glyphicon-file"></span>
-                    Timothy Storer
-                  <span class="pull-right">
-                    <button class="btn btn-xs btn-warning">
-                      <span class="glyphicon glyphicon-time"></span>
-                    </button>
-                    <button class="btn btn-xs btn-info">
-                      <span class="glyphicon glyphicon-info-sign"></span>
-                    </button>
-                    <button class="btn btn-xs btn-success">
-                      <span class="glyphicon glyphicon-ok"></span>
-                    </button>
-                  </span>
-                </a> <!-- end of list group item -->
-          
-            </div> <!-- end of list group-->
+            
 
 
 

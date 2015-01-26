@@ -3,6 +3,7 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 from bookingsystem.models import Client, Session as dbtable
 from bookingsystem.models import Block
+from bookingsystem.models import UserSelectsSession
 from django.contrib.auth.decorators import login_required, user_passes_test
 import datetime
 
@@ -42,13 +43,6 @@ def sessions(request):
 
 @login_required
 @user_passes_test(is_coach)
-def sessionsTimetable(request):
-	context = RequestContext(request)
-	context_dict={}
-	return render_to_response('coach/sessionsTimetable.html', context_dict, context)
-
-@login_required
-@user_passes_test(is_coach)
 def attendance(request):
 	context = RequestContext(request)
 	context_dict={}
@@ -65,14 +59,23 @@ def coachEditProfile(request):
 @user_passes_test(is_manager)
 def managerIndex(request):
 	context = RequestContext(request)
-	context_dict={}
+	parent = request.user
+	context_dict={'parent':parent}
+	sessions = UserSelectsSession.objects.filter(status = 'P').values_list('user_uid')
+	sessions1 = UserSelectsSession.objects.filter(status = 'P').values_list('session_sessionid')
+	users = Client.objects.filter(uid__in=sessions) 
+	sessionDetails = dbtable.objects.filter(sessionid__in = sessions1)
+	pending = UserSelectsSession.objects.filter(status = 'P')
+	context_dict['pending'] = pending
+	context_dict['users'] = users
+	context_dict['sessions'] = sessionDetails
 	return render_to_response('manager/index.html', context_dict, context)
 
 @login_required
 @user_passes_test(is_manager)
 def loggedin(request):
 	context = RequestContext(request)
-	# Here we have some interaction with the model
+	# Here we have some interaction with the model7
 	# We then plug the results of the interaction in the dictionary..
 	return render_to_response('manager/loggedin.html', context_dict, context)
 
@@ -85,10 +88,10 @@ def managerBookings(request):
 
 @login_required
 @user_passes_test(is_manager)
-def confirmBooking(request):
+def confirmbooking(request):
 	context = RequestContext(request)
 	context_dict={}
-	return render_to_response('manager/confirmBooking.html', context_dict, context)
+	return render_to_response('manager/confirmbooking.html', context_dict, context)
 
 @login_required
 @user_passes_test(is_manager)
@@ -150,7 +153,7 @@ def childProfile(request):
 	context = RequestContext(request)
 	child = request.user
 	today = datetime.datetime.today()
-	print 'BBB'
+	print 'No Argument'
 	### This query gets all the "Children" of the user with UiD 1 ###
 	children = Client.objects.filter(belongsto='1')
 	### This just gets the current user (if he is not logged in he is Anonymous)
@@ -167,7 +170,7 @@ def childProfile1(request, num):
 	### This query gets all the "Children" of the user with UiD 1 ###
 	#Sessions = Block.objects.filter(blockid = '40')
 	sessions = dbtable.objects.filter(begintime__range = ['2015-01-25', '2015-01-31'])
-	print sessions 
+	print '1 Argument' 
 	### This just gets the current user (if he is not logged in he is Anonymous)
 	context_dict = {'dbsessions': sessions}
 	#context_dict['parent'] = parent
@@ -177,12 +180,14 @@ login_required
 @user_passes_test(is_parent)
 def childProfile2(request, num):
 	context = RequestContext(request)
-	child = request.user
-	print 'CCC'
+	child = Client.objects.get(uid = num)
+	today = datetime.datetime.now()
 	### This query gets all the "Children" of the user with UiD 1 ###
-	children = Client.objects.filter(belongsto='1')
+	#Sessions = Block.objects.filter(blockid = '40')
+	sessions = dbtable.objects.filter(begintime__range = ['2015-01-25', '2015-01-31'])
+	print '2 Arguments' 
 	### This just gets the current user (if he is not logged in he is Anonymous)
-	context_dict = {'children': children}
+	context_dict = {'dbsessions': sessions}
 	#context_dict['parent'] = parent
 	return render_to_response('parent/childProfile.html', context_dict, context)
 
@@ -206,6 +211,13 @@ def parentEditProfile(request):
 	context = RequestContext(request)
 	context_dict={}
 	return render_to_response('parent/editProfile.html', context_dict, context)
+
+@login_required
+@user_passes_test(is_parent)
+def sessionsTimetable(request):
+	context = RequestContext(request)
+	context_dict={}
+	return render_to_response('coach/sessionsTimetable.html', context_dict, context)
 
 
 
