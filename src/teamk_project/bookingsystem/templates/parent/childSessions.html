@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block sidebarNav %}
+<li><a href="index.html">Home</a></li>
+<li><a href="bookings.html">Bookings</a></li>
+<li><a href="childrenList.html"><strong>Children</strong></a></li>
+<li><a href="payments.html">Payments</a></li>
+<li><a href="editProfile.html">Edit Profile</a></li>
+{% endblock %}
+
+  <!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
+  <!--  EACH OF THE RESULTS SHOULD BE ENCODED INTO A HIPERLINK AND  -->
+  <!--  THIS HYPERLINK SHOULD POINT TO THE PAGE THAT IS RESPONSIBLE -->
+  <!--  FOR THE KID's PERSONAL INFORMATION              -->
+  <!--                                -->
+  <!--  ALSO WE NEED ALL THE BUTTONS THAT WOULD POINT TO THE REST   -->
+  <!--  OF THE FUNCTIONALITY PLACED AND POINTING TO THE CORRECT URL -->
+  <!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
+
+  {% block mainArea %}
+
+  <!-- main area -->
+
+  <!-- TODO: get the childs specific sessions 
+              ** add name of the block-->
+
+  <!-- sessions -->
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Session List In Block **</h3>
+    </div>
+    <div class="panel-body">
+      <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Begin</th>
+            <th>End</th>
+            <th>Skill</th>
+            <th>Places left</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% if dbsessions %}
+          {% for session in dbsessions %}
+          <tr class="greylabel">
+            <td>{{session.begintime}}</td>
+            <td>{{session.begintime}}</td>
+            <td>{{session.duration}}</td>
+            <td>{{session.skillgroup}}</td>
+            <td>{{session.capacity}}</td>
+          </tr>
+          {% endfor %}
+          {% else %}
+          <strong>There are no categories present.</strong>
+          {% endif %}
+        </tbody>
+      </table>
+
+    </div> <!-- end panel body -->
+  </div> <!-- end panel Session List -->
+
+
+
+            <button class="btn btn-default" type="button">
+              <a class="studentLabel"href="childProfile.html">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                Back
+              </a>
+            </button>
+
+{% endblock %}
+

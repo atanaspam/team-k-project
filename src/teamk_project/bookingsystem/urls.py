@@ -30,6 +30,8 @@ urlpatterns = patterns('',
 	url(r'^parent/payments', views.payments, name='payments'),
 	url(r'^parent/editProfile', views.parentEditProfile, name='parentEditProfile'),
 	#url(r'^manager/applicationApproved/$', views.applicationApproved, name='applicationApproved'),
+	url(r'^parent/childSessions', views.childSessions, name='childSessions'),
+	url(r'^parent/bookSessions', views.bookSessions, name='bookSessions'),
 
 	)
 	
