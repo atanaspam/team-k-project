@@ -10,14 +10,7 @@ import datetime
 
 @login_required
 def index(request):
-	context = RequestContext(request)
-	### This query gets all the "Children" of the user with UiD 1 ###
-	children = Client.objects.filter(belongsto='1')
-	### This just gets the current user (if he is not logged in he is Anonymous)
-	parent = request.user
-	context_dict = {'children': children}
-	context_dict['parent'] = parent
-	return render_to_response('index.html', context_dict, context)
+	return render('index.html')
 
 def is_manager(user):
     return user.groups.filter(name='Manager').exists()

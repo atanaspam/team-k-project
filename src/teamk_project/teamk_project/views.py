@@ -6,7 +6,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import auth
 
 def login(request):
-    return render(request, "login.html")
+    if request.user.is_authenticated():
+        return render(request, "index.html")
+    else:
+        return render(request, "login.html")
+        
 
 def login_view(request):
     username = request.POST.get('username', '')

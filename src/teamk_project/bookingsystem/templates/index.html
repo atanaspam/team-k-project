@@ -1,7 +1,5 @@
 {% extends "base.html" %}
 
-{% block sidebarNav %}
-{% endblock %}
 <!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
 <!-- 	EACH OF THE RESULTS SHOULD BE ENCODED INTO A HIPERLINK AND  -->
 <!-- 	THIS HYPERLINK SHOULD POINT TO THE PAGE THAT IS RESPONSIBLE -->
@@ -12,22 +10,5 @@
 <!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
 
 {% block mainArea %}
-	{% if parent %}
-			<h2>Hello, {{parent.first_name}}</h2>
-        {% else %}
-            <h2>Hello !</h2>
-        {% endif %}
-	
-	<p>Currently there are not available sessions.</p>
-	
-	<h2>All your Children:</h2>
-	{% if children %}
-            <ul>
-                {% for child in children %}
-                <li>{{ child.firstname }}</li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <strong>There are no categories present.</strong>
-        {% endif %}
+	<h1>Overview</h1>
 {% endblock %}
