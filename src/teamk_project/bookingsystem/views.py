@@ -4,6 +4,7 @@ from django.shortcuts import render_to_response
 from bookingsystem.models import Client, Session as dbtable
 from bookingsystem.models import Block
 from bookingsystem.models import UserSelectsSession
+from bookingsystem.models import Payment
 from django.contrib.auth.decorators import login_required, user_passes_test
 import datetime
 
@@ -60,15 +61,23 @@ def coachEditProfile(request):
 def managerIndex(request):
 	context = RequestContext(request)
 	parent = request.user
-	context_dict={'parent':parent}
+	##			PENDING SESSIONS RETRIEVAL		##
 	sessions = UserSelectsSession.objects.filter(status = 'P').values_list('user_uid')
 	sessions1 = UserSelectsSession.objects.filter(status = 'P').values_list('session_sessionid')
 	users = Client.objects.filter(uid__in=sessions) 
 	sessionDetails = dbtable.objects.filter(sessionid__in = sessions1)
-	pending = UserSelectsSession.objects.filter(status = 'P')
-	context_dict['pending'] = pending
+	pendingSessions = UserSelectsSession.objects.filter(status = 'P')
+	##			PENDING PAYERS RETRIEVAL		##
+	nonPaidUsers = Payment.objects.filter(haspayed = '0').values_list('usertopay')
+	pendingUsers = Client.objects.filter(uid__in=nonPaidUsers)
+	paymentInfo = Payment.objects.filter(haspayed = '0')
+	## 			DATA COMMUNICATION				##
+	context_dict={'parent':parent}
+	context_dict['pending'] = pendingSessions
 	context_dict['users'] = users
 	context_dict['sessions'] = sessionDetails
+	context_dict['pendingusers'] = pendingUsers
+	context_dict['pendingpayments'] = paymentInfo
 	return render_to_response('manager/index.html', context_dict, context)
 
 @login_required
