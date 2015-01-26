@@ -126,8 +126,10 @@ def audit(request):
 def parentIndex(request):
 	context = RequestContext(request)
 	parent = request.user
+	parent1 = request.user.id
+	print parent1
 	### This query gets all the "Children" of the user with UiD 1 ###
-	children = Client.objects.filter(belongsto='1')
+	children = Client.objects.filter(belongsto=parent1)
 	### This just gets the current user (if he is not logged in he is Anonymous)
 	context_dict = {'children': children}
 	context_dict['parent'] = parent
@@ -218,6 +220,30 @@ def sessionsTimetable(request):
 	context = RequestContext(request)
 	context_dict={}
 	return render_to_response('coach/sessionsTimetable.html', context_dict, context)
+
+
+def applicationApproved(request):
+	print AAA
+	context = RequestContext(request)
+	sessionID = None
+	if request.method == 'GET':
+		sessionID = request.GET['session_sessionid']
+		print AAA
+
+		if sessionID:
+			session = Category.objects.get(sessionid = int(sessionID))
+	    	if session:
+	    		flag = 'C'
+	    		session.status = flag
+	    		session.save()
+	return HttpResponse(Success)
+
+
+	
+
+
+
+
 
 
 

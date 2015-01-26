@@ -26,5 +26,8 @@ urlpatterns = patterns('',
 	url(r'^parent/childProfile', views.childProfile, name='childProfile'), ##########  Remove that later
 	url(r'^parent/addNewChild', views.addNewChild, name='addNewChild'),
 	url(r'^parent/payments', views.payments, name='payments'),
-	url(r'^parent/editProfile', views.parentEditProfile, name='parentEditProfile'))
+	url(r'^parent/editProfile', views.parentEditProfile, name='parentEditProfile'),
+	url(r'^applicationApproved', views.applicationApproved, name='applicationApproved'),
+
+	)
 	
