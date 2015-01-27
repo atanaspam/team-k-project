@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.template import RequestContext
 from django.shortcuts import render_to_response
-from bookingsystem.models import Client, Session as dbtable
+from bookingsystem.models import Client, Session
 from bookingsystem.models import Block
 from bookingsystem.models import UserSelectsSession
 from bookingsystem.models import Payment
@@ -58,7 +58,7 @@ def managerIndex(request):
 	sessions = UserSelectsSession.objects.filter(status = 'P').values_list('user_uid')
 	sessions1 = UserSelectsSession.objects.filter(status = 'P').values_list('session_sessionid')
 	users = Client.objects.filter(uid__in=sessions) 
-	sessionDetails = dbtable.objects.filter(sessionid__in = sessions1)
+	sessionDetails = Session.objects.filter(sessionid__in = sessions1)
 	pendingSessions = UserSelectsSession.objects.filter(status = 'P')
 	##			PENDING PAYERS RETRIEVAL		##
 	nonPaidUsers = Payment.objects.filter(haspayed = '0').values_list('usertopay')
@@ -134,14 +134,14 @@ def audit(request):
 @user_passes_test(is_parent)
 def parentIndex(request):
 	context = RequestContext(request)
-	parent = request.user
-	parent1 = request.user.id
-	print parent1
+	user = request.user
 	### This query gets all the "Children" of the user with UiD 1 ###
-	children = Client.objects.filter(belongsto=parent1)
+	children = Client.objects.filter(belongsto=user.id)
 	### This just gets the current user (if he is not logged in he is Anonymous)
+	moneyToPay = Payment.objects.filter(usertopay__in=children)
 	context_dict = {'children': children}
-	context_dict['parent'] = parent
+	context_dict['parent'] = user
+	context_dict['payments'] = moneyToPay
 	return render_to_response('parent/index.html', context_dict, context)
 
 @login_required
@@ -194,7 +194,7 @@ def childProfile1(request, num):
 	today = datetime.datetime.now()
 	### This query gets all the "Children" of the user with UiD 1 ###
 	#Sessions = Block.objects.filter(blockid = '40')
-	sessions = dbtable.objects.filter(begintime__range = ['2015-01-25', '2015-01-31'])
+	sessions = Session.objects.filter(begintime__range = ['2015-01-25', '2015-01-31'])
 	print '1 Argument' 
 	### This just gets the current user (if he is not logged in he is Anonymous)
 	context_dict = {'dbsessions': sessions}
@@ -209,7 +209,7 @@ def childProfile2(request, num):
 	today = datetime.datetime.now()
 	### This query gets all the "Children" of the user with UiD 1 ###
 	#Sessions = Block.objects.filter(blockid = '40')
-	sessions = dbtable.objects.filter(begintime__range = ['2015-01-25', '2015-01-31'])
+	sessions = Session.objects.filter(begintime__range = ['2015-01-25', '2015-01-31'])
 	print '2 Arguments' 
 	### This just gets the current user (if he is not logged in he is Anonymous)
 	context_dict = {'dbsessions': sessions}

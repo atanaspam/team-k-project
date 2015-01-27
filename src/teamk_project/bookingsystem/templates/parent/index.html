@@ -9,12 +9,12 @@
 {% endblock %}
 
 <!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
-<!-- 	EACH OF THE RESULTS SHOULD BE ENCODED INTO A HIPERLINK AND  -->
-<!-- 	THIS HYPERLINK SHOULD POINT TO THE PAGE THAT IS RESPONSIBLE -->
-<!-- 	FOR THE KID's PERSONAL INFORMATION							-->
-<!-- 																-->
-<!-- 	ALSO WE NEED ALL THE BUTTONS THAT WOULD POINT TO THE REST   -->
-<!-- 	OF THE FUNCTIONALITY PLACED AND POINTING TO THE CORRECT URL -->
+<!-- 	            QUOTES IN NAMES SHOULD BE REMOVED.                -->
+<!-- 	                                                              -->
+<!-- 	THE TOTAL OF ALL THE PAYMENTS PENDINF SGOULD BE CALCULATED		-->
+<!-- 									                                							-->
+<!-- 	                                                              -->
+<!--                            ATANAS                              -->
 <!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
 
 {% block mainArea %}
@@ -37,15 +37,15 @@
               <div id="groupOfChildren" class="list-group">
                 {% if children %}
                     {% for child in children %}
-                    {% with child.uid as id %}
-                    {% with id|stringformat:'s' as ID %}
-                    {% url 'bookingsystem.views.childProfile' as uurl %}
-                    <!-- {{ uurl|add:ID }} THIS PRINTS THE CURRENT LINK -->
-                    <ul>
-                        <a href={{ uurl|add:ID }} class="list-group-item">{{ child.firstname }}</a>
-                    </ul>
-                     {% endwith%}
-                     {% endwith%}
+                      {% with child.uid as id %}
+                      {% with id|stringformat:'s' as ID %}
+                      {% url 'bookingsystem.views.childProfile' as uurl %}
+                      <!-- {{ uurl|add:ID }} THIS PRINTS THE CURRENT LINK -->
+                      <ul>
+                          <a href={{ uurl|add:ID }} class="list-group-item">{{ child.firstname }}</a>
+                      </ul>
+                      {% endwith %}
+                      {% endwith %}
                      {% endfor %}
                 {% else %}
                     <a href="childProfile.html" class="list-group-item">You have no Children. Press Add child to add.</a>
@@ -68,15 +68,27 @@
           <!-- select student checkboxes -->
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title">Select Student (Make it load names from Db)</h3>
+              <h3 class="panel-title">Payments</h3>
             </div>
             <div class="panel-body">
-              <div class="checkbox">
-                <label><input type="checkbox" value="">Nellie   | total: 200.00£</label>
-              </div>
-              <div class="checkbox">
-                <label><input type="checkbox" value="">Julio    | total: 105.00£</label>
-              </div>
+              {% if payments %}
+                {% for payment in payments %}
+                  {% if children %}
+                    {% for child in children %}
+                      {% if payment.usertopay == child.uid %}
+                        {% with payment.amount as amount %}
+                        <div class="checkbox">
+                          <label><input type="checkbox" value="">{{child.firstname}}   | total: {{amount}}£</label>
+                        </div>
+                        {% endwith %}
+                      {% endif %}
+                    {% endfor %}
+                  {% endif %}
+                {% endfor %}
+              {% else %}
+                You have no registered children.
+              {% endif %}
+
               <div class="checkbox">
                 <label> total: 305.00£</label>
               </div>
