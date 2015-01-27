@@ -9,23 +9,27 @@
   {% endif %}
 
 <!-- login panel -->
-          <div class="panel panel-default">
+          <div class="panel panel-default" align="center">
             <div class="panel-body">
-            
                 <form action="login_view/" method="post">{% csrf_token %}
-                  <label for="username">User name:</label>
-                  <input class="studentLabel" type="text" name="username" value="" id="username" >
-                  <label for="password">Password:</label>
-                  <input class="studentLabel" type="password" name="password" value="" id="password">
-
-                  <input class="btn btn-default" type="submit" value="Login" />
-                  <input type="hidden" name="next" value="{{ next|escape }}" />
+					<table cellpadding="10">
+						<tr>
+							<td><label for="username">User name:</label></td>
+							<td><input class="studentLabel" type="text" name="username" value="" id="username" ></td>
+						</tr>
+						<tr>
+							<td><label for="password">Password:</label></td>
+					  		<td><input class="studentLabel" type="password" name="password" value="" id="password"></td>
+						</tr>
+					</table>
+					<br>
+                  	<input class="btn btn-default" type="submit" value="Login" />
+                  	<input type="hidden" name="next" value="{{ next|escape }}" />
                 </form>
                 <br>
                 <br>
                 Click <a href="/register.html">here</a> to register.
-
               </div>
           </div> <!--panel-->
-          <!-- end of login panel -->
+<!-- end of login panel -->
 {% endblock %}

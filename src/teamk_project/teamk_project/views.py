@@ -7,7 +7,14 @@ from django.contrib import auth
 
 def login(request):
     if request.user.is_authenticated():
-        return render(request, "index.html")
+        if request.user.groups.filter(name = 'Manager'):
+            return HttpResponseRedirect("/bookingsystem/manager/")
+        elif request.user.groups.filter(name = 'Coach'):
+            return HttpResponseRedirect("/bookingsystem/coach/")
+        elif request.user.groups.filter(name = 'Parent'):
+            return HttpResponseRedirect("/bookingsystem/parent/")
+        else:
+            return HttpResponseRedirect("/")
     else:
         return render(request, "login.html")
         
@@ -19,8 +26,6 @@ def login_view(request):
     if user:
         if user.is_active:
             auth.login(request, user)
-            #return HttpResponseRedirect(user.check_password("nqmaparola"))
-            #return HttpResponseRedirect("/bookingsystem/index/")
             if user.groups.filter(name = 'Manager'):
                 return HttpResponseRedirect("/bookingsystem/manager/")
             elif user.groups.filter(name = 'Coach'):
@@ -28,11 +33,11 @@ def login_view(request):
             elif user.groups.filter(name = 'Parent'):
                 return HttpResponseRedirect("/bookingsystem/parent/")
             else:
-                return HttpResponseRedirect("Not a manager!")
+                return HttpResponseRedirect("/")
         else:
             return HttpResponseRedirect("This Account is Disabled")
     else:
-        #return HttpResponseRedirect("Invalid details")
+        # Invalid details. Incorrect Username/Password
         return HttpResponseRedirect("/invalid.html")
             
 def register(request):
