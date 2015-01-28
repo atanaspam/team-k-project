@@ -46,7 +46,7 @@
                         {% endif %}
                     {% endfor %}
                 {% else %}
-                    <strong>There unconfirmed bookings.</strong>
+                    <strong>There no pending reservations.</strong>
                 {% endif %}
           
             </div> <!-- end of list group-->
@@ -68,6 +68,7 @@
 
     <!-- add body here -->
         <div class="list-group">
+		{% if history %}
           {% for item in history %}
             {% if item.session_sessionid %}
                 <!-- list item -->
@@ -80,10 +81,11 @@
                     </button>
                   </span>
                 </a> <!-- end of list group item -->
-          {% else %}
-            There are no recent confirmations.
           {% endif %}
         {% endfor %}
+		{% else %}
+            There are no recent confirmations.
+		{% endif %}
 
         </div> <!-- end of list group-->
 
