@@ -14,15 +14,11 @@
 <!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
 
 {% block mainArea %}
-	{% if parent %}
-			<h2>Hello, {{parent.first_name}}</h2>
-        {% else %}
-            <h2>Hello !</h2>
-        {% endif %}
-	
-	<p>Currently there are not available sessions.</p>
-	<a href="/bookingsystem/coach/sessions">here</a>
-	<h2>All your Children:</h2>
+
+	<p/>
+	<p> </p>
+
+	<h3><strong><u>Today's Class List</u></strong></h3>
 	{% if children %}
             <ul>
                 {% for child in children %}
@@ -30,6 +26,6 @@
                 {% endfor %}
             </ul>
         {% else %}
-            <strong>There are no categories present.</strong>
+            <i> - You have no classes assigned.</i>
         {% endif %}
 {% endblock %}
