@@ -58,9 +58,9 @@
 							{% if user|is_manager %}<li><a href="/bookingsystem/manager">Manager</a></li>{% endif %}
 							{% if user|is_coach %}<li><a href="/bookingsystem/coach">Coach</a></li>{% endif %}
 							{% if user|is_parent %}<li><a href="/bookingsystem/parent">Parent</a></li>{% endif %}
-							{% endif %}
+							
 						</ul>
-					</div>
+					</div>{% endif %}
 					
 					<div style="position: absolute; right:75px; top:17px;">Hello,{% if user.is_authenticated %} <strong>{{ user.get_short_name }}</strong>.    <u><i><a href="/logout">Logout</i></u></a>{% else %}{% if user.is_authenticated != True %} please log in.{% endif %}{% endif %}</div>
 				</div>
