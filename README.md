@@ -6,10 +6,10 @@ A web app to manage the running and management of sports facilities and camps ov
 Short term TODO
 ---------------
 
-* Create scripts to populate the templates with actual data from the database
-* Implement User Groups
-* Refine the login process
-* Start work on the report !
+* Implement the confirmation of a pendong session and the booking of a session
+* Fix the Database entries so that they have no quotes
+* Start work on the report !!
+* If you dont know what to do, browse the html headers and you will find the TODOS for those pages.
 
 
 Team Members
@@ -34,6 +34,8 @@ Requirements
 Django Login Details
 --------------------
 
-* Username: Your lowercase first name. eg: atanas
-* Password: Same.
+* karl/karl - manager
+* zoe/zoe - parent
+* pedro/pedro - coach
+* atanas/atanas manager
 * Each Django Admin has a number of clients that are his "Children"

@@ -13,6 +13,7 @@
 <!-- 	                                                              -->
 <!-- 	THE TOTAL OF ALL THE PAYMENTS PENDINF SGOULD BE CALCULATED		-->
 <!-- 									                                							-->
+<!--      THE PENDING PAYMENTS RETRIEVAL IS O(n)^2  :(              -->
 <!-- 	                                                              -->
 <!--                            ATANAS                              -->
 <!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
@@ -78,7 +79,7 @@
                       {% if payment.usertopay == child.uid %}
                         {% with payment.amount as amount %}
                         <div class="checkbox">
-                          <label><input type="checkbox" value="">{{child.firstname}}   | total: {{amount}}£</label>
+                          <label><input type="checkbox" value="">{{child.firstname}}  | due: {{amount}}£</label>
                         </div>
                         {% endwith %}
                       {% endif %}

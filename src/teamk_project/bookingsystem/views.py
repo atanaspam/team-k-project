@@ -77,8 +77,6 @@ def managerIndex(request):
 @user_passes_test(is_manager)
 def loggedin(request):
 	context = RequestContext(request)
-	# Here we have some interaction with the model7
-	# We then plug the results of the interaction in the dictionary..
 	return render_to_response('manager/loggedin.html', context_dict, context)
 
 @login_required
@@ -185,8 +183,10 @@ def childProfile(request):
 	context_dict = {'children': children}
 	#context_dict['parent'] = parent
 	return render_to_response('parent/childProfile.html', context_dict, context)
-
-login_required
+###################################################################################
+####				Child Profiles depening on the uid passed					###
+###################################################################################
+@login_required
 @user_passes_test(is_parent)
 def childProfile1(request, num):
 	context = RequestContext(request)
@@ -198,6 +198,7 @@ def childProfile1(request, num):
 	print '1 Argument' 
 	### This just gets the current user (if he is not logged in he is Anonymous)
 	context_dict = {'dbsessions': sessions}
+	context_dict['child'] = child
 	#context_dict['parent'] = parent
 	return render_to_response('parent/childProfile.html', context_dict, context)
 
@@ -215,6 +216,7 @@ def childProfile2(request, num):
 	context_dict = {'dbsessions': sessions}
 	#context_dict['parent'] = parent
 	return render_to_response('parent/childProfile.html', context_dict, context)
+####################################################################################
 
 @login_required
 @user_passes_test(is_parent)
@@ -244,6 +246,8 @@ def sessionsTimetable(request):
 	context_dict={}
 	return render_to_response('coach/sessionsTimetable.html', context_dict, context)
 
+#####################################################################################
+######							Not used yet									#####
 
 def applicationApproved(request):
 	print 'AAA'

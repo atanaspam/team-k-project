@@ -9,25 +9,25 @@
 {% endblock %}
 
   <!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
-  <!--  EACH OF THE RESULTS SHOULD BE ENCODED INTO A HIPERLINK AND  -->
-  <!--  THIS HYPERLINK SHOULD POINT TO THE PAGE THAT IS RESPONSIBLE -->
-  <!--  FOR THE KID's PERSONAL INFORMATION              -->
-  <!--                                -->
-  <!--  ALSO WE NEED ALL THE BUTTONS THAT WOULD POINT TO THE REST   -->
-  <!--  OF THE FUNCTIONALITY PLACED AND POINTING TO THE CORRECT URL -->
+  <!-- QUERY THE DATABASE WITH THE BLOCKS FOR THE CORRESPONDING CHILD -->
+  <!-- POPULATE THE TABLE VIEW WITH AND MAKE EACH BLOCK LINK TO A PAGE-->
+  <!--                                                                -->
+  <!--      MAKE THE CHILD NAME APPEAR IN A BETTER WAY - LINE 23      -->
+  <!--  ALSO WE NEED TO CHANGE THE PLACE FOR THE PERSONAL INFORMATION -->
+  <!--                                                                -->
+  <!--                           ATANAS                               -->
   <!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
 
   {% block mainArea %}
 
   <!-- main area -->
-
+  {{child.firstname}} {{child.lastname}}
   <!-- view Status --> 
   <div class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title">Status</h3>
     </div>
     <div class="panel-body">
-
       <div class="alert alert-success" role="alert">Booking Successfully Confirmed</div>
                 <!-- possible alerts
                 <div class="alert alert-info" role="alert">Booking Pending Confirmation</div>
