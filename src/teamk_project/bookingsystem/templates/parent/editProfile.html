@@ -1,11 +1,7 @@
 {% extends "base.html" %}
 
 {% block sidebarNav %}
-<li><a href="index.html">Home</a></li>
-<li><a href="bookings.html">Bookings</a></li>
-<li><a href="childrenList.html">Children</a></li>
-<li><a href="payments.html">Payments</a></li>
-<li><a href="editProfile.html"><strong>Edit Profile</strong></a></li>
+{% include "sidebarNav/parent.html" %}
 {% endblock %}
 
 {% block mainArea %}

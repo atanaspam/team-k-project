@@ -1,10 +1,7 @@
 {% extends "base.html" %}
 
 {% block sidebarNav %}
-<li><a href="index.html"><strong>Home</strong></a></li>
-<li><a href="sessions.html">Attendace</a></li>
-<li><a href="sessionsTimetable.html">Schedule</a></li>
-<li><a href="editProfile.html">Edit Profile</a></li>
+{% include "sidebarNav/coach.html" %}
 {% endblock %}
 
 {% block mainArea %}

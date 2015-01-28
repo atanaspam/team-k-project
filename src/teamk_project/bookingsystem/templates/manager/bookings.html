@@ -1,12 +1,7 @@
 {% extends "base.html" %}
 
 {% block sidebarNav %}
-<li><a href="index.html">Home</a></li>
-<li><a href="bookings.html"><strong>Bookings</strong></a></li>
-<li><a href="coaches.html">Coaches</a></li>
-<li><a href="members.html">Children</a></li>
-<li><a href="sessions.html">Sessions</a></li>
-<li><a href="audit.html">Financial Data</a></li>
+{% include "sidebarNav/manager.html" %}
 {% endblock %}
 <!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
 <!--              REPETATIVE CODE WITH MANAGER INDEX PAGE           -->

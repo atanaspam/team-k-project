@@ -39,11 +39,12 @@
 		           		</button>
 		    		</div>
 		   	   	 	<span class="navbar-header"><a class="navbar-brand" href="http://127.0.0.1:8000/">Western Tennis Club  
-						{% if user.is_authenticated %}
-					  		{% if user|is_manager %}| Manager{% endif %}
-					    	{% if user|is_coach %}| Coach{% endif %}
-					     	{% if user|is_parent %}| Parent{% endif %}
+						{% if user.is_authenticated %}			
+					  		{% if user|is_manager %} | Manager
+					    	{% elif user|is_coach %} | Coach
+					     	{% elif user|is_parent %} | Parent{% endif %}
 						{% endif %}
+
 					</a><div style="position: absolute; right: 0;">Hello,{% if user.is_authenticated %} {{ user.get_short_name }} .    <strong><a href="/logout">Logout</strong></a>{% else %}{% if user.is_authenticated != True %} please log in.{% endif %}{% endif %}</div></span>
 				</div>
 		    </div>
@@ -55,19 +56,26 @@
 			        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
 			        	<div data-spy="affix" data-offset-top="45" data-offset-bottom="90">
 			            	<ul class="nav" id="sidebar-nav">
+				
+
+				
+									{% if user.is_authenticated %}<div class="btn-group">
+									  <button type="button" class="btn btn-danger">Select View</button>
+									  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+									    <span class="caret"></span>
+									    <span class="sr-only">Toggle Dropdown</span>
+									  </button>
+									  <ul class="dropdown-menu" role="menu">			
+								  		{% if user|is_manager %}<li><a href="http://127.0.0.1:8000/bookingsystem/manager">Manager</a></li>{% endif %}
+								    	{% if user|is_coach %}<li><a href="http://127.0.0.1:8000/bookingsystem/coach">Coach</a></li>{% endif %}
+								     	{% if user|is_parent %}<li><a href="http://127.0.0.1:8000/bookingsystem/parent">Parent</a></li>{% endif %}
+									{% endif %}
+								</ul>
+								</div>
 								{% if user.is_authenticated %}
-							  		{% if user|is_manager %}
-										<h2>Manager</h2>
-							        	{% include "sidebarNav/manager.html" %}
-									{% endif %}
-							    	{% if user|is_coach %}
-										<h2>Coach</h2>
-							        	{% include "sidebarNav/coach.html" %}
-									{% endif %}
-							     	{% if user|is_parent %}
-										<h2>Parent</h2>
-							         	{% include "sidebarNav/parent.html" %}
-									{% endif %}
+								{% block sidebarNav %}
+							  	{% endblock %}
+
 							  {% endif %}
 			            	</ul>
 		              	  	<span class="navbar-header"><a class="navbar-brand" href="#"><img src="{% static "Western Tennis Club tsp.png" %}" width="88" height="88"></a></span>							
