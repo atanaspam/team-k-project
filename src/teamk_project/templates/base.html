@@ -38,11 +38,11 @@
 		             		<span class="icon-bar"></span>
 		           		</button>
 		    		</div>
-		   	   	 	<span class="navbar-header"><a class="navbar-brand" href="#">Western Tennis Club | 
+		   	   	 	<span class="navbar-header"><a class="navbar-brand" href="http://127.0.0.1:8000/">Western Tennis Club  
 						{% if user.is_authenticated %}
-					  		{% if user|is_manager %}Manager{% endif %}
-					    	{% if user|is_coach %}Coach{% endif %}
-					     	{% if user|is_parent %}Parent{% endif %}
+					  		{% if user|is_manager %}| Manager{% endif %}
+					    	{% if user|is_coach %}| Coach{% endif %}
+					     	{% if user|is_parent %}| Parent{% endif %}
 						{% endif %}
 					</a><div style="position: absolute; right: 0;">Hello,{% if user.is_authenticated %} {{ user.get_short_name }} .    <strong><a href="/logout">Logout</strong></a>{% else %}{% if user.is_authenticated != True %} please log in.{% endif %}{% endif %}</div></span>
 				</div>

@@ -4,5 +4,30 @@
 {% endblock %}
 
 {% block mainArea %}
-INVALID!
+
+<!-- login panel -->
+          <div class="panel panel-default" align="center">
+            <div class="panel-body">
+                <form action="login_view/" method="post">{% csrf_token %}
+					<table cellpadding="10">
+						Incorrect input, Please try again.
+						<tr>
+							<td><label for="username">Username: </label></td>
+							<td><input class="studentLabel" type="text" name="username" value="" id="username" ></td>
+						</tr>
+						<tr>
+							<td><label for="password">Password: </label></td>
+					  		<td><input class="studentLabel" type="password" name="password" value="" id="password"></td>
+						</tr>
+					</table>
+					<br>
+                  	<input class="btn btn-default" type="submit" value="Login" />
+                  	<input type="hidden" name="next" value="{{ next|escape }}" />
+                </form>
+                <br>
+                <br>
+                Click <a href="/register.html">here</a> to register.
+              </div>
+          </div> <!--panel-->
+<!-- end of login panel -->
 {% endblock %}

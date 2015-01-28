@@ -18,6 +18,19 @@ def login(request):
     else:
         return render(request, "login.html")
         
+def invalid(request):
+    if request.user.is_authenticated():
+        if request.user.groups.filter(name = 'Manager'):
+            return HttpResponseRedirect("/bookingsystem/manager/")
+        elif request.user.groups.filter(name = 'Coach'):
+            return HttpResponseRedirect("/bookingsystem/coach/")
+        elif request.user.groups.filter(name = 'Parent'):
+            return HttpResponseRedirect("/bookingsystem/parent/")
+        else:
+            return HttpResponseRedirect("/")
+    else:
+        return render(request, "invalid.html")
+
 
 def login_view(request):
     username = request.POST.get('username', '')

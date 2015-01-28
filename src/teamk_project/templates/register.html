@@ -3,10 +3,16 @@
 {% block title %}Create an account{% endblock %}
 
 {% block mainArea %}
-  <h1>Create an account</h1>
+  <div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Registration form</h3>
+  </div>
+  <div class="panel-body">
   
   <form action="" method="post">{% csrf_token %} 
       {{ form.as_p }}
       <input type="submit" value="Create the account">
   </form>
+
+</div>
 {% endblock %}

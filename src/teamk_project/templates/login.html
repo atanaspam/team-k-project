@@ -4,21 +4,19 @@
 {% endblock %}
 
 {% block mainArea %}
-  {% if form.errors %}
-    <p class="error">Sorry, that's not a valid username or password</p>
-  {% endif %}
 
 <!-- login panel -->
           <div class="panel panel-default" align="center">
             <div class="panel-body">
                 <form action="login_view/" method="post">{% csrf_token %}
 					<table cellpadding="10">
+						Please enter your credentials.
 						<tr>
-							<td><label for="username">User name:</label></td>
+							<td><label for="username">Username: </label></td>
 							<td><input class="studentLabel" type="text" name="username" value="" id="username" ></td>
 						</tr>
 						<tr>
-							<td><label for="password">Password:</label></td>
+							<td><label for="password">Password: </label></td>
 					  		<td><input class="studentLabel" type="password" name="password" value="" id="password"></td>
 						</tr>
 					</table>
