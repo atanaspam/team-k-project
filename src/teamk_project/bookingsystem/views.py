@@ -7,6 +7,8 @@ from bookingsystem.models import UserSelectsSession
 from bookingsystem.models import Payment
 from django.contrib.auth.decorators import login_required, user_passes_test
 import datetime
+from django.db.models import Q
+from django.db.models import F
 
 @login_required
 def index(request):
@@ -246,10 +248,11 @@ def parentEditProfile(request):
 def sessionsTimetable(request):
 	context = RequestContext(request)
 	context_dict={}
-	return render_to_response('coach/sessionsTimetable.html', context_dict, context)
+	return render_to_response('parent/sessionsTimetable.html', context_dict, context)
 
 #####################################################################################
 ######							Not used yet									#####
+
 
 def applicationApproved(request):
 	print 'AAA'
@@ -257,14 +260,16 @@ def applicationApproved(request):
 	sessionID = None
 	if request.method == 'GET':
 		sessionID = request.GET['session_sessionid']
-		print 'AAA'
+		user = request.GET['userid']
+		#print sessionID
 
 		if sessionID:
-			session = Category.objects.get(sessionid = int(sessionID))
+			session = UserSelectsSession.objects.get( Q(session_sessionid = sessionID) & Q(user_uid = user) )
 	    	if session:
-	    		flag = 'C'
-	    		session.status = flag
-	    		session.save()
+	    		#print session.session_sessionid
+	    		#flag = 'C'
+	    		session.status = 'C'
+	    		#session.save()
 	return HttpResponse('Success!')
 
 
