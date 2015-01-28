@@ -70,18 +70,20 @@
 		    	<div class="row row-offcanvas row-offcanvas-left">
 		        	
 					<!-- sidebar -->
+					{% if user.is_authenticated %}
 					<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
 						<div data-spy="affix" data-offset-top="45" data-offset-bottom="90">
 							<ul class="nav" id="sidebar-nav">
-								{% if user.is_authenticated %}
+								
 								{% block sidebarNav %}
 								{% endblock %}
 
 
 							</ul>
-							<span class="navbar-header"><a class="navbar-brand" href="#"><img src="{% static "Western Tennis Club tsp.png" %}" width="88" height="88"></a></span>	{% endif %}						
+							<span class="navbar-header"><a class="navbar-brand" href="#"><img src="{% static "Western Tennis Club tsp.png" %}" width="88" height="88"></a></span>						
 						</div>
 					</div>
+					{% endif %}	
 
 			        <!-- main area -->
 			        <div class="col-xs-12 col-sm-9" data-spy="scroll" data-target="#sidebar-nav">
