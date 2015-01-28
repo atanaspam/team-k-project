@@ -265,11 +265,12 @@ def applicationApproved(request):
 
 		if sessionID:
 			session = UserSelectsSession.objects.get( Q(session_sessionid = sessionID) & Q(user_uid = user) )
+			sessionOld = session;
 	    	if session:
 	    		#print session.session_sessionid
 	    		#flag = 'C'
 	    		session.status = 'C'
-	    		#session.save()
+	    		session.save()
 	return HttpResponse('Success!')
 
 

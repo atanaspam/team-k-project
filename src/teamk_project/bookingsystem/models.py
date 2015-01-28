@@ -135,7 +135,7 @@ class SubvenueUsedforSession(models.Model):
 
 class UserSelectsSession(models.Model):
     user_uid = models.IntegerField(primary_key=True, db_column='User_uID') # Field name made lowercase.
-    session_sessionid = models.IntegerField(db_column='Session_sessionID') # Field name made lowercase.
+    session_sessionid = models.IntegerField(primary_key=True, db_column='Session_sessionID') # Field name made lowercase.
     status = models.CharField(max_length=1, blank=True)
     class Meta:
         db_table = 'user_selects_session'
