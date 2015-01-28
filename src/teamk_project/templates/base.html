@@ -38,14 +38,31 @@
 		             		<span class="icon-bar"></span>
 		           		</button>
 		    		</div>
-		   	   	 	<span class="navbar-header"><a class="navbar-brand" href="http://127.0.0.1:8000/">Western Tennis Club  
+		   	   	 	<span class="navbar-header"><a class="navbar-brand" href="/">Western Tennis Club  
 						{% if user.is_authenticated %}			
 					  		{% if user|is_manager %} | Manager
 					    	{% elif user|is_coach %} | Coach
 					     	{% elif user|is_parent %} | Parent{% endif %}
 						{% endif %}
 
-					</a><div style="position: absolute; right: 0;">Hello,{% if user.is_authenticated %} {{ user.get_short_name }} .    <strong><a href="/logout">Logout</strong></a>{% else %}{% if user.is_authenticated != True %} please log in.{% endif %}{% endif %}</div></span>
+					</a></span>
+					
+					{% if user.is_authenticated %}
+					<div class="btn-group" style="position: absolute; right:225px; top:8px;">
+						<button type="button" class="btn btn-warning">Select View</button>
+						<button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+							<span class="caret"></span>
+							<span class="sr-only">Toggle Dropdown</span>
+						</button>
+						<ul class="dropdown-menu" role="menu">			
+							{% if user|is_manager %}<li><a href="/bookingsystem/manager">Manager</a></li>{% endif %}
+							{% if user|is_coach %}<li><a href="/bookingsystem/coach">Coach</a></li>{% endif %}
+							{% if user|is_parent %}<li><a href="/bookingsystem/parent">Parent</a></li>{% endif %}
+							{% endif %}
+						</ul>
+					</div>
+					
+					<div style="position: absolute; right:75px; top:17px;">Hello,{% if user.is_authenticated %} <strong>{{ user.get_short_name }}</strong>.    <u><i><a href="/logout">Logout</i></u></a>{% else %}{% if user.is_authenticated != True %} please log in.{% endif %}{% endif %}</div>
 				</div>
 		    </div>
       
@@ -53,34 +70,18 @@
 		    	<div class="row row-offcanvas row-offcanvas-left">
 		        	
 					<!-- sidebar -->
-			        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
-			        	<div data-spy="affix" data-offset-top="45" data-offset-bottom="90">
-			            	<ul class="nav" id="sidebar-nav">
-				
-
-				
-									{% if user.is_authenticated %}<div class="btn-group">
-									  <button type="button" class="btn btn-danger">Select View</button>
-									  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-									    <span class="caret"></span>
-									    <span class="sr-only">Toggle Dropdown</span>
-									  </button>
-									  <ul class="dropdown-menu" role="menu">			
-								  		{% if user|is_manager %}<li><a href="/bookingsystem/manager">Manager</a></li>{% endif %}
-								    	{% if user|is_coach %}<li><a href="/bookingsystem/coach">Coach</a></li>{% endif %}
-								     	{% if user|is_parent %}<li><a href="/bookingsystem/parent">Parent</a></li>{% endif %}
-									{% endif %}
-								</ul>
-								</div>
+					<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+						<div data-spy="affix" data-offset-top="45" data-offset-bottom="90">
+							<ul class="nav" id="sidebar-nav">
 								{% if user.is_authenticated %}
 								{% block sidebarNav %}
-							  	{% endblock %}
+								{% endblock %}
 
-							  
-			            	</ul>
-		              	  	<span class="navbar-header"><a class="navbar-brand" href="#"><img src="{% static "Western Tennis Club tsp.png" %}" width="88" height="88"></a></span>	{% endif %}						
-			           	</div>
-			        </div>
+
+							</ul>
+							<span class="navbar-header"><a class="navbar-brand" href="#"><img src="{% static "Western Tennis Club tsp.png" %}" width="88" height="88"></a></span>	{% endif %}						
+						</div>
+					</div>
 
 			        <!-- main area -->
 			        <div class="col-xs-12 col-sm-9" data-spy="scroll" data-target="#sidebar-nav">
