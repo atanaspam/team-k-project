@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+	
     $('.approveButton').click(function() {
     	console.log("NASKOOOOO");
         var catid;

@@ -10,8 +10,6 @@
 {% endblock %}
 <!--!!!!!      ---------------- -TODO- ------------------     !!!!! -->
 <!--                            ATANAS                              -->
-<!--                                                                -->
-<!-- 	FIX THE BUTTONS FOR CONFIRMATION OF PENDING BOOKINGS        -->
 <!-- 	                                                            -->
 <!-- 	      ALLIGN THE PLACES LEFT ATTRIBUTE PROPERLY	 	    	-->
 <!-- 																-->
@@ -95,8 +93,7 @@
                     {% if pendingpayments %}
                         {% for pendingpayment in pendingpayments %}
                             <tbody>
-                            <tr class="studentLabel">
-                                <td><a class="studentLabel" href="childProfile.html">Tiger Nixon</a></td>
+                            <tr class="studentLabel">   
                                 <td>{{pendinguser.firstname}} {{pendinguser.lastname}}</td>
                                 <td>{{pendingpayment.amount}}</td>
                                 <td>TODO</td>
