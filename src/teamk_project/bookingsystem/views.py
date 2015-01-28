@@ -182,6 +182,21 @@ def childSessions(request):
 def bookSessions(request):
 	context = RequestContext(request)
 	context_dict={}
+	return render_to_response('parameterent/bookSessions.html', context_dict, context)
+
+def bookSessions1(request, num):
+ 	context = RequestContext(request)
+	owner = Block.objects.get(blockid=num)
+ 	sessions = Session.objects.filter( Q(begintime__gte=datetime.datetime.now() ) & Q(begintime__lte=owner.enddate)) 
+ 	print sessions
+ 	context_dict = {'sessions': sessions}
+ 	return render_to_response('parent/bookSessions.html', context_dict, context)
+
+def bookSessions2(request, num):
+	context = RequestContext(request)
+	owner = Block.objects.get(blockid=num)
+	sessions = Session.objects.filter( Q(begintime__gte=datetime.datetime.now() ) & Q(begintime__lte=owner.enddate)) 
+	context_dict = {'sessions': sessions}
 	return render_to_response('parent/bookSessions.html', context_dict, context)
 
 @login_required
