@@ -31,55 +31,30 @@
                 </div>
                 <div class="panel-body">
                   <div class="list-group">
-                          
+                    {% for block in blocks %}
+                        {% with block.blockid as id %}
+                        {% with id|stringformat:'s' as ID %}
+                        {% url 'bookingsystem.views.bookSessions' as uurl %}
                           <!-- list item -->
-                          <a href="bookSessions.html" class="list-group-item clearfix">
+                          <a href={{uurl|add:ID}} class="list-group-item clearfix">
                             <span class="glyphicon glyphicon-file"></span>
-                              Block of Sessions 1
+                              Week beginning: {{block.begindate}}
                             <span class="pull-right">
                               <button class="btn btn-xs btn-warning">
                                 <span class="glyphicon glyphicon-calendar"></span>
                               </button>
                             </span>
                           </a> <!-- end of list group item -->
+                        {% endwith %}
+                        {% endwith %}
+                    {% endfor %}
 
-                          <!-- list item -->
-                          <a href="bookSessions.html" class="list-group-item clearfix">
-                            <span class="glyphicon glyphicon-file"></span>
-                              Block of Sessions 2
-                            <span class="pull-right">
-                              <button class="btn btn-xs btn-warning">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                              </button>
-                            </span>
-                          </a> <!-- end of list group item -->
 
-                          <!-- list item -->
-                          <a href="bookSessions.html" class="list-group-item clearfix">
-                            <span class="glyphicon glyphicon-file"></span>
-                              Block of Sessions 3
-                            <span class="pull-right">
-                              <button class="btn btn-xs btn-warning">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                              </button>
-                            </span>
-                          </a> <!-- end of list group item -->
-
-                          <!-- list item -->
-                          <a href="bookSessions.html" class="list-group-item clearfix">
-                            <span class="glyphicon glyphicon-file"></span>
-                              Block of Sessions 4
-                            <span class="pull-right">
-                              <button class="btn btn-xs btn-warning">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                              </button>
-                            </span>
-                          </a> <!-- end of list group item -->
                     
                       </div> <!-- end of list group-->
 
                     </div> <!-- end panel body -->
-                  </div> <!!-- end panel blocks -->
+                  </div> <!-- end panel blocks -->
       
       <button class="btn btn-default" type="button">
           <a class="studentLabel"href="index.html">

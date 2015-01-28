@@ -131,7 +131,8 @@ def coachProfile(request):
 @user_passes_test(is_manager)
 def members(request):
     context = RequestContext(request)
-    context_dict={}
+    clients = Client.objects.all()
+    context_dict={'clients':clients}
     return render_to_response('manager/members.html', context_dict, context)
 
 @login_required
@@ -159,7 +160,14 @@ def parentIndex(request):
 @user_passes_test(is_parent)
 def parentBookings(request):
 	context = RequestContext(request)
-	context_dict={}
+	today = datetime.date.today()
+	monday = today - datetime.timedelta(days=today.weekday())
+	user = request.user
+	children = Client.objects.filter(belongsto=user.id)
+	blocks = Block.objects.filter(Q(type='Week') & Q(begindate__gte=monday))
+
+	context_dict = {'children': children}
+	context_dict['blocks'] = blocks
 	return render_to_response('parent/bookings.html', context_dict, context)
 
 @login_required
