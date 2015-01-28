@@ -90,25 +90,24 @@
             </thead>
         </div>
  
-        <tbody>
-            {% if pendingusers %}
+        {% if pendingusers %}
                 {% for pendinguser in pendingusers %}
                     {% if pendingpayments %}
                         {% for pendingpayment in pendingpayments %}
+                            <tbody>
                             <tr class="studentLabel">
                                 <td><a class="studentLabel" href="childProfile.html">Tiger Nixon</a></td>
                                 <td>{{pendinguser.firstname}} {{pendinguser.lastname}}</td>
-                                <td>pendingpayment.amount</td>
+                                <td>{{pendingpayment.amount}}</td>
                                 <td>TODO</td>
                             </tr>
+                            </tbody>
                         {% endfor %}
                     {% endif %}
                 {% endfor %}
             {% else %}
                 <strong>There are no outstanding payments.</strong>
             {% endif %}
-
-        </tbody>
     </table>
 </div> <!--panel members list-->
 {% endblock %}

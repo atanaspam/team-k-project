@@ -170,9 +170,13 @@ def childrenList(request):
 	context_dict={}
 	return render_to_response('parent/childrenList.html', context_dict, context)
 
+###################################################################################
+####				Child Profiles depening on the uid passed					###
+###################################################################################
+
 @login_required
 @user_passes_test(is_parent)
-def childProfile(request):
+def childProfile(request):  ## No parameter
 	context = RequestContext(request)
 	child = request.user
 	today = datetime.datetime.today()
@@ -183,12 +187,10 @@ def childProfile(request):
 	context_dict = {'children': children}
 	#context_dict['parent'] = parent
 	return render_to_response('parent/childProfile.html', context_dict, context)
-###################################################################################
-####				Child Profiles depening on the uid passed					###
-###################################################################################
+
 @login_required
 @user_passes_test(is_parent)
-def childProfile1(request, num):
+def childProfile1(request, num): ## A single digit uID as a parameter
 	context = RequestContext(request)
 	child = Client.objects.get(uid = num)
 	today = datetime.datetime.now()
@@ -204,7 +206,7 @@ def childProfile1(request, num):
 
 login_required
 @user_passes_test(is_parent)
-def childProfile2(request, num):
+def childProfile2(request, num): ## a two-digit uiD as a paramaeter
 	context = RequestContext(request)
 	child = Client.objects.get(uid = num)
 	today = datetime.datetime.now()
