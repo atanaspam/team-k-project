@@ -6,21 +6,21 @@
 
 {% block mainArea %}
 
-          <!-- select student checkboxes -->
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">To begin please select a student.</h3>
-            </div>
-            <div class="panel-body">
-              <div class="list-group">
-              {% for child in children %}
-                {% with child.uid as uid %}
-                {% with uid|stringformat:'s' as uID %}
-                {% url 'bookingsystem.views.userBookings' as uurl %}
-                <!-- list item -->
-                <a href={{uurl|add:uID}} class="list-group-item clearfix">
+          
+        <!-- Block of Sessions to select from -->
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Blocks Available to Enroll</h3>
+          </div>
+          <div class="panel-body">
+            <div class="list-group">
+              {% for block in blocks %}
+                {% with block.blockid|stringformat:'s' as ID %}
+                {% with child.uid|stringformat:'s' as uid %}
+                {% url 'bookingsystem.views.bookSessions' as uurl %}
+                <a href={{uurl|add:ID|add:"/"|add:uid}} class="list-group-item clearfix">
                   <span class="glyphicon glyphicon-file"></span> 
-                  {{child.firstname}} {{child.lastname}} 
+                  Week beginning: {{block.begindate}}
                   <span class="pull-right">
                     <button class="btn btn-xs btn-warning">
                       <span class="glyphicon glyphicon-calendar"></span>
@@ -31,8 +31,9 @@
                 {% endwith %}
               {% endfor %}
             </div> <!-- end of list group-->
-            </div>
-          </div>
+
+          </div> <!-- end panel body -->
+        </div> <!-- end panel blocks -->
       
       <button class="btn btn-default" type="button">
           <a class="studentLabel"href="index.html">
