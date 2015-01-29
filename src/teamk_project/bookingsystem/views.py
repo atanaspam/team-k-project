@@ -58,7 +58,7 @@ def managerIndex(request):
 	##			PENDING SESSIONS RETRIEVAL		##
 	sessions = UserSelectsSession.objects.filter(status = 'P').values_list('user_uid')
 	sessions1 = UserSelectsSession.objects.filter(status = 'P').values_list('session_sessionid')
-	users = Client.objects.filter(uid__in=sessions) 
+	users = Client.objects.filter(uid__in=sessions)
 	sessionDetails = Session.objects.filter(sessionid__in = sessions1)
 	pendingSessions = UserSelectsSession.objects.filter(status = 'P')
 	##			PENDING PAYERS RETRIEVAL		##
@@ -88,10 +88,10 @@ def managerBookings(request):																	#### WARNING: Repetative code:Line
 	##			PENDING SESSIONS RETRIEVAL		##
 	sessions = UserSelectsSession.objects.filter(status = 'P').values_list('user_uid')
 	sessions1 = UserSelectsSession.objects.filter(status = 'P').values_list('session_sessionid')
-	users = Client.objects.filter(uid__in=sessions) 
+	users = Client.objects.filter(uid__in=sessions)
 	sessionDetails = Session.objects.filter(sessionid__in = sessions1)
 	pendingSessions = UserSelectsSession.objects.filter(status = 'P')
-	
+
 	## 			DATA COMMUNICATION				##
 	context_dict={'parent':parent}
 	context_dict['pending'] = pendingSessions
@@ -142,7 +142,7 @@ def audit(request):
  	context = RequestContext(request)
  	context_dict={}
  	return render_to_response('manager/audit.html', context_dict, context)
- 	
+
 @login_required
 @user_passes_test(is_parent)
 def parentIndex(request):
@@ -161,13 +161,9 @@ def parentIndex(request):
 @user_passes_test(is_parent)
 def parentBookings(request):
 	context = RequestContext(request)
-	#today = datetime.date.today()
-	#monday = today - datetime.timedelta(days=today.weekday())
 	user = request.user
 	children = Client.objects.filter(belongsto=user.id)
-	#blocks = Block.objects.filter(Q(type='Week') & Q(begindate__gte=monday))	
 	context_dict = {'children': children}
-	#context_dict['blocks'] = blocks
 	return render_to_response('parent/bookings.html', context_dict, context)
 
 
@@ -178,7 +174,7 @@ def userBookings(request, num):
 	child = Client.objects.get(uid=num)
 	today = datetime.date.today()
 	monday = today - datetime.timedelta(days=today.weekday())
-	blocks = Block.objects.filter(Q(type='Week') & Q(begindate__gte=monday))	
+	blocks = Block.objects.filter(Q(type='Week') & Q(begindate__gte=monday))
 	context_dict = {'blocks': blocks}
 	context_dict['child'] = child
 	return render_to_response('parent/userBookings.html', context_dict, context)
@@ -190,7 +186,7 @@ def userBookings1(request, num):
 	context = RequestContext(request)
 	today = datetime.date.today()
 	monday = today - datetime.timedelta(days=today.weekday())
-	blocks = Block.objects.filter(Q(type='Week') & Q(begindate__gte=monday))	
+	blocks = Block.objects.filter(Q(type='Week') & Q(begindate__gte=monday))
 	context_dict = {'blocks': blocks}
 	context_dict['child'] = child
 	return render_to_response('parent/userBookings.html', context_dict, context)
@@ -209,11 +205,11 @@ def confirmBookings(request, uID):
 				status='P'
 				)
 			t.save()
-			print item	
+			print item
 	context_dict = {'checked': checked}
 	return render_to_response('parent/bookings.html', context_dict, context)
-	
-	
+
+
 @login_required
 @user_passes_test(is_parent)
 def childSessions(request):
@@ -232,15 +228,15 @@ def bookSessions1(request, blockID, uID):
  	context = RequestContext(request)
  	child = Client.objects.get(uid=uID)
 	owner = Block.objects.get(blockid=blockID)
- 	sessions = Session.objects.filter( Q(begintime__gte=datetime.datetime.now() ) & Q(begintime__lte=owner.enddate)) 
+ 	sessions = Session.objects.filter( Q(begintime__gte=datetime.datetime.now() ) & Q(begintime__lte=owner.enddate))
  	context_dict = {'sessions': sessions}
- 	context_dict['child'] = child 
+ 	context_dict['child'] = child
  	return render_to_response('parent/bookSessions.html', context_dict, context)
 
 # def bookSessions2(request, num):
 # 	context = RequestContext(request)
 # 	owner = Block.objects.get(blockid=num)
-# 	sessions = Session.objects.filter( Q(begintime__gte=datetime.datetime.now() ) & Q(begintime__lte=owner.enddate)) 
+# 	sessions = Session.objects.filter( Q(begintime__gte=datetime.datetime.now() ) & Q(begintime__lte=owner.enddate))
 # 	context_dict = {'sessions': sessions}
 # 	return render_to_response('parent/bookSessions.html', context_dict, context)
 
@@ -272,8 +268,8 @@ def childProfile1(request, num): ## A single digit uID as a parameter
 	context = RequestContext(request)
 	child = Client.objects.get(uid = num)
 	today = datetime.datetime.now()
-	sessions = Session.objects.filter(begintime__range = ['2015-01-25', '2015-01-31']) 			#### TODO #### Fix Hardcoding
-	context_dict = {'dbsessions': sessions}
+	bookedSessions = UserSelectsSession.objects.filter(Q(status='C') & Q(user_uid=num))
+	context_dict = {'sessions': bookedSessions}
 	context_dict['child'] = child
 	return render_to_response('parent/childProfile.html', context_dict, context)
 
@@ -283,9 +279,10 @@ def childProfile2(request, num): ## a two-digit uiD as a paramaeter
 	context = RequestContext(request)
 	child = Client.objects.get(uid = num)
 	today = datetime.datetime.now()
-	sessions = Session.objects.filter(begintime__range = ['2015-01-25', '2015-01-31']) 			#### TODO #### Fix Hardcoding
-	context_dict = {'dbsessions': sessions}
-	context_dict = {'dbsessions': sessions}
+	bookedSessions = UserSelectsSession.objects.filter(Q(status='C') & Q(user_uid=num))
+	context_dict = {'sessions': bookedSessions}
+	context_dict['child'] = child
+
 	return render_to_response('parent/childProfile.html', context_dict, context)
 
 ####################################################################################
@@ -337,7 +334,7 @@ def applicationApproved(request):
 	return HttpResponse('Success!')
 
 
-	
+
 
 
 
