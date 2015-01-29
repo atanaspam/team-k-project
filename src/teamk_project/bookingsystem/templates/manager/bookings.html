@@ -5,7 +5,7 @@
 {% endblock %}
 <!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
 <!--              REPETATIVE CODE WITH MANAGER INDEX PAGE           -->
-<!--                        WAITING LIST                          
+<!--                        WAITING LIST
 <!--                                                                -->
 <!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
 
@@ -16,39 +16,34 @@
     <h3 class="panel-title">Pending</h3>
   </div>
   <div class="panel-body">
-    
 
-    <!-- add body here -->
-            <div class="list-group">
-                
-                {% if sessions %}
-                    {% for session in sessions %}
-                        {% if users %}
-                            {% for user in users %}
 
-                                <!-- list item -->
-                                <a href="#" class="list-group-item clearfix">
-                                  <span class="glyphicon glyphicon-file"></span>
-                                    {{session.begintime|date:"d M y"}} - {{session.begintime|time:"H i"}} , {{user.firstname}} {{user.lastname}} Places Left: {{session.capacity}}
-                                  <span class="pull-right">
-                                    <button class="btn btn-xs btn-warning">
-                                      <span class="glyphicon glyphicon-time"></span>
-                                    </button>
-                                    <button class="btn btn-xs btn-info">
-                                      <span class="glyphicon glyphicon-info-sign"></span>
-                                    </button>
-                                    <button class="btn btn-xs btn-success approveButton" id ="approve" data-catid="{{session.sessionid}}" user="{{user.uid}}">
-                                      <span class="glyphicon glyphicon-ok"></span>
-                                    </button>
-                                  </span>
-                                </a> <!-- end of list group item -->
-                            {% endfor %}
-                        {% endif %}
-                    {% endfor %}
-                {% else %}
-                    <strong>There no pending reservations.</strong>
-                {% endif %}
-          
+
+
+                <!-- add body here -->
+    <div class="list-group">
+      {% if sessions %}
+          {% for session in sessions %}
+                      <a href="#" class="list-group-item clearfix">
+                        <span class="glyphicon glyphicon-file"></span>
+                          {{session.begintime|date:"d M y"}} - {{session.begintime|time:"H i"}} , Places Left: {{session.capacity}}
+                        <span class="pull-right">
+                          <button class="btn btn-xs btn-warning">
+                            <span class="glyphicon glyphicon-time"></span>
+                          </button>
+                          <button class="btn btn-xs btn-info">
+                            <span class="glyphicon glyphicon-info-sign"></span>
+                          </button>
+                          <button class="btn btn-xs btn-success approveButton" id ="approve" data-catid="{{session.sessionid}}" user="{{user.uid}}">
+                            <span class="glyphicon glyphicon-ok"></span>
+                          </button>
+                        </span>
+                      </a> <!-- end of list group item -->
+          {% endfor %}
+      {% else %}
+          <strong>There unconfirmed bookings.</strong>
+      {% endif %}
+
             </div> <!-- end of list group-->
 
 
@@ -64,7 +59,7 @@
     <h3 class="panel-title"> Latest Confirmed</h3>
   </div>
   <div class="panel-body">
-    
+
 
     <!-- add body here -->
         <div class="list-group">
@@ -99,7 +94,7 @@
     <h3 class="panel-title"> Waiting List</h3>
   </div>
   <div class="panel-body">
-    
+
 
     <!-- add body here -->
         <div class="list-group">

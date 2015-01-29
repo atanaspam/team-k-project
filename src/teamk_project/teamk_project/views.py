@@ -1,4 +1,6 @@
 from django import forms
+from django.template import RequestContext
+from django.shortcuts import render_to_response
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -48,10 +50,12 @@ def login_view(request):
             else:
                 return HttpResponseRedirect("/")
         else:
-            return HttpResponseRedirect("This Account is Disabled")
+            return HttpResponseRedirect("This Account is Disabled. Please contact support!")
     else:
-        # Invalid details. Incorrect Username/Password
-        return HttpResponseRedirect("/invalid.html")
+        context = RequestContext(request)
+    	context_dict={}
+        context_dict["passed"] = "False"
+    	return HttpResponseRedirect('/invalid.html')
             
 def register(request):
     if request.method == 'POST':

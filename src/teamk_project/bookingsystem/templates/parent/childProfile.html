@@ -17,77 +17,37 @@
   {% block mainArea %}
 
   <!-- main area -->
-  {{child.firstname}} {{child.lastname}}
-  <!-- view Status --> 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">Status</h3>
-    </div>
-    <div class="panel-body">
-      <div class="alert alert-success" role="alert">Booking Successfully Confirmed</div>
-                <!-- possible alerts
-                <div class="alert alert-info" role="alert">Booking Pending Confirmation</div>
-                <div class="alert alert-warning" role="alert">Booking Pending Payment</div>
-                <div class="alert alert-danger" role="alert">No Bookings Requested.</div>
-              -->
-    </div> <!-- end panel body -->
-  </div> <!-- end panel Status -->
+
+  <!-- view Status -->
+
 
 <!-- Bocks of Sessions-->
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title">Blocks Enrolled In</h3>
+    <h3 class="panel-title">Sessions Enrolled In</h3>
   </div>
   <div class="panel-body">
-    
+
 
     <!-- add body here -->
             <div class="list-group">
-                
+            {% if sessions %}
+              {% for session in sessions %}
                 <!-- list item -->
                 <a href="childSessions.html" class="list-group-item clearfix">
                   <span class="glyphicon glyphicon-file"></span>
-                    Block of Sessions 1
+                    {{session.begintime|date:"d M y"}} {{session.begintime|date:"d M y"}} - {{session.begintime|time:"H i"}} , {{user.firstname}}
                   <span class="pull-right">
                     <button class="btn btn-xs btn-warning">
                       <span class="glyphicon glyphicon-calendar"></span>
                     </button>
                   </span>
                 </a> <!-- end of list group item -->
-
-                <!-- list item -->
-                <a href="childSessions.html" class="list-group-item clearfix">
-                  <span class="glyphicon glyphicon-file"></span>
-                    Block of Sessions 2
-                  <span class="pull-right">
-                    <button class="btn btn-xs btn-warning">
-                      <span class="glyphicon glyphicon-calendar"></span>
-                    </button>
-                  </span>
-                </a> <!-- end of list group item -->
-
-                <!-- list item -->
-                <a href="childSessions.html" class="list-group-item clearfix">
-                  <span class="glyphicon glyphicon-file"></span>
-                    Block of Sessions 3
-                  <span class="pull-right">
-                    <button class="btn btn-xs btn-warning">
-                      <span class="glyphicon glyphicon-calendar"></span>
-                    </button>
-                  </span>
-                </a> <!-- end of list group item -->
-
-                <!-- list item -->
-                <a href="childSessions.html" class="list-group-item clearfix">
-                  <span class="glyphicon glyphicon-file"></span>
-                    Block of Sessions 4
-                  <span class="pull-right">
-                    <button class="btn btn-xs btn-warning">
-                      <span class="glyphicon glyphicon-calendar"></span>
-                    </button>
-                  </span>
-                </a> <!-- end of list group item -->
-          
+              {% endfor %}
+            {% else %}
+            This child is not enrolled in any sessions.
+            To enroll please go to Bookings.
+            {% endif %}
             </div> <!-- end of list group-->
 
 
@@ -95,7 +55,7 @@
   </div>
 </div> <!--panel-->
 
-            <!-- TODO: ** add id's to retrieve data from textfields 
+            <!-- TODO: ** add id's to retrieve data from textfields
             make sure the format of input is correct
             ** fill textfields with child's information
             so the parent can edit them if needed-->
@@ -112,14 +72,14 @@
                 <!-- add body here -->
                 <!-- Name -->
                 <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Given Name" aria-describedby="basic-addon2">
-                  <input type="text" class="form-control" placeholder="Surname" aria-describedby="basic-addon1">
+                  <input type="text" class="form-control" placeholder="Given Name" value={{child.firstname}} aria-describedby="basic-addon2">
+                  <input type="text" class="form-control" placeholder="Surname" value={{child.lastname}} aria-describedby="basic-addon1">
                 </div>
 
                 <!-- Date of Birth -->
                 <div class="input-group">
-                  <span class="input-group-addon" id="basic-addon1">yyyy/mm/dd</span>
-                  <input type="text" class="form-control" placeholder="Date Of Birth" aria-describedby="basic-addon1">
+                  <span class="input-group-addon" id="basic-addon1">yyyy/mm/dd </span>
+                  <input type="text" class="form-control" placeholder="Date Of Birth"  aria-describedby="basic-addon1">
                 </div>
 
               </div> <!-- /.body -->
@@ -140,13 +100,13 @@
                 <!-- phone number -->
                 <div class="input-group">
                   <span class="input-group-addon" id="basic-addon1">#</span>
-                  <input type="text" class="form-control" placeholder="Phone Number" aria-describedby="basic-addon1">
+                  <input type="text" class="form-control" placeholder="Phone Number" value={{child.telephone}} aria-describedby="basic-addon1">
                 </div>
 
                 <!-- e-mail -->
                 <div class="input-group">
                   <span class="input-group-addon" id="basic-addon1">@</span>
-                  <input type="text" class="form-control" placeholder="e-mail address" aria-describedby="basic-addon1">
+                  <input type="text" class="form-control" placeholder="e-mail address" value={{child.email}} aria-describedby="basic-addon1">
                 </div>
 
               </div>

@@ -1,33 +1,29 @@
 {% extends "base.html" %}
 
-{% block sidebarNav %}
-{% endblock %}
-
 {% block mainArea %}
-
 <!-- login panel -->
-          <div class="panel panel-default" align="center">
-            <div class="panel-body">
-                <form action="login_view/" method="post">{% csrf_token %}
-					<table cellpadding="10">
-						Please enter your credentials.
-						<tr>
-							<td><label for="username">Username: </label></td>
-							<td><input class="studentLabel" type="text" name="username" value="" id="username" ></td>
-						</tr>
-						<tr>
-							<td><label for="password">Password: </label></td>
-					  		<td><input class="studentLabel" type="password" name="password" value="" id="password"></td>
-						</tr>
-					</table>
-					<br>
-                  	<input class="btn btn-default" type="submit" value="Login" />
-                  	<input type="hidden" name="next" value="{{ next|escape }}" />
-                </form>
-                <br>
-                <br>
-                Click <a href="/register.html">here</a> to register.
-              </div>
-          </div> <!--panel-->
+<div class="panel">
+	<div class="panel-body" align="center">
+		<form action="login_view/" method="post">{% csrf_token %}
+			<h2>Login</h2>
+
+			<p><td><label for="username">Username</label></p>
+			<p><td><input class="studentLabel" type="text" name="username" value="" id="username" ></p>
+			<p><label for="password">Password</label><br></p>
+			<p><input class="studentLabel" type="password" name="password" value="" id="password"></p>
+			<br>
+            <input class="btn btn-default" type="submit" value="Login" />
+            <input type="hidden" name="next" value="{{ next|escape }}" />
+
+  			<button class="btn btn-default" type="button">
+				<a class="studentLabel" style="text-decoration:none" href="/register.html">
+           			Register
+           		</a>
+       	 	</button>
+		</form>		
+
+		<br>
+	</div>
+</div> <!--panel-->
 <!-- end of login panel -->
 {% endblock %}
