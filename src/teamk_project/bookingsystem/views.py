@@ -269,7 +269,8 @@ def childProfile1(request, num): ## A single digit uID as a parameter
 	child = Client.objects.get(uid = num)
 	today = datetime.datetime.now()
 	bookedSessions = UserSelectsSession.objects.filter(Q(status='C') & Q(user_uid=num))
-	context_dict = {'sessions': bookedSessions}
+	actualSessions = Session.objects.filter(sessionid__in=bookedSessions)
+	context_dict = {'sessions': actualSessions}
 	context_dict['child'] = child
 	return render_to_response('parent/childProfile.html', context_dict, context)
 
@@ -323,6 +324,10 @@ def applicationApproved(request):
 	if request.method == 'GET':
 		sessionID = request.GET['session_sessionid']
 		user = request.GET['userid']
+		print 'AAAA'
+		print user
+		print 'BBB'
+		print sessionID
 		if sessionID:
 			session = UserSelectsSession.objects.get( Q(session_sessionid = sessionID) & Q(user_uid = user) )
 	    	if session:
