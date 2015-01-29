@@ -19,8 +19,8 @@
                 {% url 'bookingsystem.views.userBookings' as uurl %}
                 <!-- list item -->
                 <a href={{uurl|add:uID}} class="list-group-item clearfix">
-                  <span class="glyphicon glyphicon-file"></span> 
-                  {{child.firstname}} {{child.lastname}} 
+                  <span class="glyphicon glyphicon-file"></span>
+                  {{child.firstname}} {{child.lastname}}
                   <span class="pull-right">
                     <button class="btn btn-xs btn-warning">
                       <span class="glyphicon glyphicon-calendar"></span>
@@ -33,7 +33,7 @@
             </div> <!-- end of list group-->
             </div>
           </div>
-      
+
       <button class="btn btn-default" type="button">
           <a class="studentLabel"href="index.html">
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
@@ -43,8 +43,8 @@
 
       <button class="btn btn-default" type="button">
       <span class="glyphicon glyphicon-check" aria-hidden="true"></span>Submit</button>
-	  
-	  <br>
-	  
 
-{% endblock %}  
+	  <br>
+
+
+{% endblock %}
