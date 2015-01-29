@@ -166,10 +166,11 @@ def parentBookings(request):
 	children = Client.objects.filter(belongsto=user.id)
 	blocks = Block.objects.filter(Q(type='Week') & Q(begindate__gte=monday))	
 	checked = request.POST.getlist('checked')
+	print checked
 	context_dict = {'checked': checked}
-	context_dict = {'children': children}
+	context_dict['children'] = children
 	context_dict['blocks'] = blocks
-	context_dict['checked'] = checked
+	#context_dict['checked'] = checked
 	return render_to_response('parent/bookings.html', context_dict, context)
 
 @login_required
