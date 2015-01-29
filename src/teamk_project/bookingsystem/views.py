@@ -271,7 +271,7 @@ def parentEditProfile(request):
 def sessionsTimetable(request):
 	context = RequestContext(request)
 	context_dict={}
-	return render_to_response('parent/sessionsTimetable.html', context_dict, context)
+	return render_to_response('coach/sessionsTimetable.html', context_dict, context)
 
 @user_passes_test(is_manager)
 def applicationApproved(request):
