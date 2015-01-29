@@ -27,13 +27,17 @@
                 <th>Due To Pay</th>
             </tr>
         </thead>
-        {% for child in children %}
+        {% for child in clients %}
         <tbody>
             <tr class="studentLabel">
-                <td><a class="studentLabel" href="childProfile.html">Tiger Nixon</a></td>
-                <td>{{child.firstname}} {{child.lastname}} </td>
+                <td><a class="studentLabel" href="childProfile.html"> {{child.firstname}} {{child.lastname}} </a></td>
                 <td>{{child.email}}</td>
-                <td>{{child.genderid}}</td>
+                {% if child.genderid %}
+                  <td>Male</td>
+                {% else %}
+                  <td>Female</td>
+                {% endif %}
+                <td>{{child.age}}</td>
                 <td>{{child.experiencelevel}}</td>
                 <td>Money to be payed</td>
             </tr>
