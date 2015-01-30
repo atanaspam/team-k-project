@@ -6,155 +6,121 @@
 <!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
 <!--              REPETATIVE CODE WITH MANAGER INDEX PAGE           -->
 <!--                        WAITING LIST
-<!--                                                                -->
-<!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
+  <!--                                                                -->
+  <!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
 
-{% block mainArea %}
-<!-- bookings pending confirmation -->
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Pending</h3>
-  </div>
-  <div class="panel-body">
-
-
-
-
-                <!-- add body here -->
-    <div class="list-group">
-      {% if sessions %}
-          {% for session in sessions %}
-                      <a href="#" class="list-group-item clearfix">
-                        <span class="glyphicon glyphicon-file"></span>
-                          {{session.begintime|date:"d M y"}} - {{session.begintime|time:"H i"}} , Places Left: {{session.capacity}}
-                        <span class="pull-right">
-                          <button class="btn btn-xs btn-warning">
-                            <span class="glyphicon glyphicon-time"></span>
-                          </button>
-                          <button class="btn btn-xs btn-info">
-                            <span class="glyphicon glyphicon-info-sign"></span>
-                          </button>
-                          <button class="btn btn-xs btn-success approveButton" id ="approve" data-catid="{{session.sessionid}}" user="{{user.uid}}">
-                            <span class="glyphicon glyphicon-ok"></span>
-                          </button>
-                        </span>
-                      </a> <!-- end of list group item -->
-          {% endfor %}
-      {% else %}
-          <strong>There unconfirmed bookings.</strong>
-      {% endif %}
-
-            </div> <!-- end of list group-->
+  {% block mainArea %}
+  <!-- bookings pending confirmation -->
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Pending</h3>
+    </div>
+    <div class="panel-body">
 
 
 
-  </div>
-</div> <!--panel-->
+
+      <!-- add body here -->
+      <div class="list-group">
+        {% if sessions %}
+        {% for session in sessions %}
+        <a href="#" class="list-group-item clearfix">
+          <span class="glyphicon glyphicon-file"></span>
+          {{session.begintime|date:"d M y"}} - {{session.begintime|time:"H i"}} , Places Left: {{session.capacity}}
+          <span class="pull-right">
+            <button class="btn btn-xs btn-warning">
+              <span class="glyphicon glyphicon-time"></span>
+            </button>
+            <button class="btn btn-xs btn-info">
+              <span class="glyphicon glyphicon-info-sign"></span>
+            </button>
+            <button class="btn btn-xs btn-success approveButton" id ="approve" data-catid="{{session.sessionid}}" user="{{user.uid}}">
+              <span class="glyphicon glyphicon-ok"></span>
+            </button>
+          </span>
+        </a> <!-- end of list group item -->
+        {% endfor %}
+        {% else %}
+        <strong>There unconfirmed bookings.</strong>
+        {% endif %}
+
+      </div> <!-- end of list group-->
 
 
 
-<!-- Confirmed bookings -->
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title"> Latest Confirmed</h3>
-  </div>
-  <div class="panel-body">
+    </div>
+  </div> <!--panel-->
 
 
-    <!-- add body here -->
-        <div class="list-group">
-		{% if history %}
+
+  <!-- Confirmed bookings -->
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"> Latest Confirmed</h3>
+    </div>
+    <div class="panel-body">
+
+
+      <!-- add body here -->
+      <div class="list-group">
+        {% if history %}
           {% for item in history %}
             {% if item.session_sessionid %}
-                <!-- list item -->
-                <a href="#" class="list-group-item clearfix">
-                  <span class="glyphicon glyphicon-file"></span>
-                    {{item.session_sessionid}}
-                  <span class="pull-right">
-                    <button class="btn btn-xs btn-info">
-                      <span class="glyphicon glyphicon-info-sign"></span>
-                    </button>
-                  </span>
-                </a> <!-- end of list group item -->
+              <!-- list item -->
+              <a href="#" class="list-group-item clearfix">
+                <span class="glyphicon glyphicon-file"></span>
+                  {{item.session_sessionid}}
+                <span class="pull-right">
+                  <button class="btn btn-xs btn-info">
+                    <span class="glyphicon glyphicon-info-sign"></span>
+                  </button>
+                </span>
+                {% else %}
+                  There are no recent confirmations.
+                {% endif %}
+              {% endfor %}
+            {% else %}
+              There are no recent confirmations.
+            {% endif %}
+          </a> <!-- end of list group item -->
+
+
+    </div> <!--panel body -->
+  </div> <!--panel-->
+   </div> <!--panel-->
+
+
+  <!-- Waiting List -->
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"> Waiting List</h3>
+    </div>
+    <div class="panel-body">
+
+
+     <div class="list-group">
+      {% if history %}
+        {% for item in history %}
+          {% if item %}
+            <a href="#" class="list-group-item clearfix">
+              <span class="glyphicon glyphicon-file"></span>
+              {% if item %}
+                {{item.begintime|date:"d M y"}} - {{item.begintime|time:"H i"}} , Places Left: {{item.capacity}}
+              <span class="pull-right">
+                <button class="btn btn-xs btn-info">
+                  <span class="glyphicon glyphicon-info-sign"></span>
+                </button>
+              </span>
+            </a> <!-- end of list group item -->
+          {% else %}
+          There are no rejected bookings.
           {% endif %}
         {% endfor %}
-		{% else %}
-            There are no recent confirmations.
-		{% endif %}
+      {% else %}
+        There are no rejected bookings..
+      {% endif %}
 
-        </div> <!-- end of list group-->
-
-  </div> <!--panel body -->
-</div> <!--panel-->
-
-
-<!-- Waiting List -->
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title"> Waiting List</h3>
-  </div>
-  <div class="panel-body">
-
-
-    <!-- add body here -->
-        <div class="list-group">
-
-              <!-- list item -->
-                <a href="confirmbooking.html" class="list-group-item clearfix">
-                  <span class="glyphicon glyphicon-file"></span>
-                    Queue First
-                  <span class="pull-right">
-                    <button class="btn btn-xs btn-info">
-                      <span class="glyphicon glyphicon-info-sign"></span>
-                    </button>
-                    <button class="btn btn-xs btn-success">
-                      <span class="glyphicon glyphicon-ok"></span>
-                    </button>
-                  </span>
-                </a> <!-- end of list group item -->
-
-                <!-- list item -->
-                <a href="confirmbooking.html" class="list-group-item clearfix">
-                  <span class="glyphicon glyphicon-file"></span>
-                    Queue Second
-                  <span class="pull-right">
-                    <button class="btn btn-xs btn-info">
-                      <span class="glyphicon glyphicon-info-sign"></span>
-                    </button>
-                    <button class="btn btn-xs btn-success">
-                      <span class="glyphicon glyphicon-ok"></span>
-                    </button>
-                  </span>
-                </a> <!-- end of list group item -->
-
-                <!-- list item -->
-                <a href="confirmbooking.html" class="list-group-item clearfix">
-                  <span class="glyphicon glyphicon-file"></span>
-                    Queue Third
-                  <span class="pull-right">
-                    <button class="btn btn-xs btn-info">
-                      <span class="glyphicon glyphicon-info-sign"></span>
-                    </button>
-                    <button class="btn btn-xs btn-success">
-                      <span class="glyphicon glyphicon-ok"></span>
-                    </button>
-                  </span>
-                </a> <!-- end of list group item -->
-
-                <!-- list item -->
-                <a href="confirmbooking.html" class="list-group-item clearfix">
-                  <span class="glyphicon glyphicon-file"></span>
-                    Queue Fourth
-                  <span class="pull-right">
-                    <button class="btn btn-xs btn-info">
-                      <span class="glyphicon glyphicon-info-sign"></span>
-                    </button>
-                    <button class="btn btn-xs btn-success">
-                      <span class="glyphicon glyphicon-ok"></span>
-                    </button>
-                  </span>
-                </a> <!-- end of list group item -->
-        </div>
+    </div> <!-- end of list group-->
 
   </div>
 </div> <!--panel-->

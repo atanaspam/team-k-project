@@ -91,6 +91,7 @@ def managerBookings(request):																	#### WARNING: Repetative code:Line
 	users = Client.objects.filter(uid__in=sessions)
 	sessionDetails = Session.objects.filter(sessionid__in = sessions1)
 	pendingSessions = UserSelectsSession.objects.filter(status = 'P')
+	declinedSessions = Session.objects.filter(sessionid__in=UserSelectsSession.objects.filter(status = 'R').values_list('session_sessionid'))
 
 	## 			DATA COMMUNICATION				##
 	context_dict={'parent':parent}
@@ -98,6 +99,7 @@ def managerBookings(request):																	#### WARNING: Repetative code:Line
 	context_dict['users'] = users
 	context_dict['sessions'] = sessionDetails
 	context_dict['history'] = approvalHistory
+	context_dict['declined'] = declinedSessions
 	return render_to_response('manager/bookings.html', context_dict, context)
 
 @login_required
