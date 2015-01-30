@@ -3,12 +3,12 @@ Sports Facilities Management <sup>pending better name</sup>
 
 A web app to manage the running and management of sports facilities and camps over varying periods of time.
 
-Short term TODO
----------------
+Short term TODO's
+-----------------
 
-* Implement the confirmation of a pendong session and the booking of a session
-* Fix the Database entries so that they have no quotes
-* Start work on the report !!
+* Refer to the tickets and report any issues using the ticket system
+* Improve the confirmation of a pending session and the booking of a session
+* Start work on the report !!!
 * If you dont know what to do, browse the html headers and you will find the TODOS for those pages.
 
 
@@ -26,8 +26,8 @@ Team Members
 Requirements
 ------------
 
-* Python Virtualenv
-* Python Django 1.5.4 following http://www.tangowithdjango.com/book/chapters/requirements.html#installing-the-software 
+* Python Virtualenv (NOT)
+* Python Django 1.5.4 following http://www.tangowithdjango.com/book/chapters/requirements.html#installing-the-software
 * Python Version 2.7.6
 * Manual setup of the database using the instructions in settings.py in src/teamk-project
 
@@ -39,3 +39,7 @@ Django Login Details
 * pedro/pedro - coach
 * atanas/atanas manager
 * Each Django Admin has a number of clients that are his "Children"
+
+Reminder
+--------
+* Please do NOT commit changes to the database unless you have implicitly changed something.
