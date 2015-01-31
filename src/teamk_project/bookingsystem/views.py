@@ -161,6 +161,20 @@ def parentIndex(request):
 
 @login_required
 @user_passes_test(is_parent)
+def childrenList(request):
+	context = RequestContext(request)
+	user = request.user
+	### This query gets all the "Children" of the user with UiD 1 ###
+	children = Client.objects.filter(belongsto=user.id)
+	### This just gets the current user (if he is not logged in he is Anonymous)
+	moneyToPay = Payment.objects.filter(usertopay__in=children)
+	context_dict = {'children': children}
+	context_dict['parent'] = user
+	context_dict['payments'] = moneyToPay
+	return render_to_response('parent/childrenList.html', context_dict, context)
+
+@login_required
+@user_passes_test(is_parent)
 def parentBookings(request):
 	context = RequestContext(request)
 	user = request.user
@@ -241,13 +255,6 @@ def bookSessions1(request, blockID, uID):
 # 	sessions = Session.objects.filter( Q(begintime__gte=datetime.datetime.now() ) & Q(begintime__lte=owner.enddate))
 # 	context_dict = {'sessions': sessions}
 # 	return render_to_response('parent/bookSessions.html', context_dict, context)
-
-@login_required
-@user_passes_test(is_parent)
-def childrenList(request):
-	context = RequestContext(request)
-	context_dict={}
-	return render_to_response('parent/childrenList.html', context_dict, context)
 
 ###################################################################################
 ####				Child Profiles depening on the uid passed					###
