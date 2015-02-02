@@ -3,12 +3,12 @@
 #               Based on the ER Diagram and Django's DB interaction         #
 #                                                                           #
 #   See http://www.tangowithdjango.com/book/chapters/models.html            #
-#                                                                           #   
+#                                                                           #
 # This file defines the Tables's names for internal (within django) usage   #
 # as well as defines the names and types of the tables attributes. Primary  #
 # and foreign keys are defined using this module as well as some other shit #
-#                                                                           # 
-# A whole new version with a lot of tables removed and multoiple fields     # 
+#                                                                           #
+# A whole new version with a lot of tables removed and multoiple fields     #
 # optimised.                                                                #
 # -Atanas                                                                   #
 #                                                                           #
@@ -41,7 +41,7 @@ class BtmRank(models.Model):
     membershipnum = models.IntegerField(null=True, db_column='membershipNum', blank=True) # Field name made lowercase.
     numofponts = models.IntegerField(null=True, db_column='numOfPonts', blank=True) # Field name made lowercase.
     class Meta:
-        db_table = 'btm rank'
+        db_table = 'btm_rank'
 
 class Client(models.Model):
     uid = models.IntegerField(primary_key=True, db_column='uID') # Field name made lowercase.
@@ -89,7 +89,7 @@ class Notes(models.Model):
 
 class Payment(models.Model):
     paymentid = models.IntegerField(primary_key=True, db_column='paymentID') # Field name made lowercase.
-    usertopay = models.IntegerField(db_column='userToPay') # Field name made lowercase.
+    usertopay = models.ForeignKey(Client, db_column='userToPay') # Field name made lowercase.
     paymenttype = models.IntegerField(db_column='paymentType') # Field name made lowercase.
     amount = models.IntegerField(null=True, blank=True)
     label = models.CharField(max_length=45, blank=True)
@@ -106,11 +106,11 @@ class Paymenttype(models.Model):
         db_table = 'paymenttype'
 
 class Session(models.Model):
-    sessionid = models.IntegerField(primary_key=True, db_column='sessionID') # Field name made lowercase.
+    sessionid = models.IntegerField(primary_key=True, db_column='sessionID') # Field name made lowercase
     duration = models.CharField(max_length=45, blank=True)
     begintime = models.DateTimeField(null=True, db_column='beginTime', blank=True) # Field name made lowercase.
     endtime = models.DateTimeField(null=True, db_column='endTime', blank=True) # Field name made lowercase.
-    block_blockid = models.IntegerField(db_column='Block_BlockID') # Field name made lowercase.
+    block_blockid = models.ForeignKey(Block, db_column='Block_BlockID') # Field name made lowercase.
     capacity = models.IntegerField(null=True, blank=True)
     agegroup = models.CharField(max_length=45, db_column='ageGroup', blank=True) # Field name made lowercase.
     skillgroup = models.CharField(max_length=45, db_column='skillGroup', blank=True) # Field name made lowercase.
@@ -118,24 +118,9 @@ class Session(models.Model):
     class Meta:
         db_table = 'session'
 
-class Subvenue(models.Model):
-    subvenueid = models.IntegerField(primary_key=True, db_column='subVenueID') # Field name made lowercase.
-    label = models.CharField(max_length=45, blank=True)
-    capacity = models.CharField(max_length=45, blank=True)
-    ownervenue = models.IntegerField(db_column='ownerVenue') # Field name made lowercase.
-    class Meta:
-        db_table = 'subvenue'
-
-class SubvenueUsedforSession(models.Model):
-    session_sessionid = models.IntegerField(primary_key=True, db_column='Session_sessionID') # Field name made lowercase.
-    subvenue_subvenueid = models.IntegerField(db_column='SubVenue_subVenueID') # Field name made lowercase. , related_name='subvenue_id'
-    subvenue_ownervenue = models.IntegerField(db_column='SubVenue_ownerVenue') # Field name made lowercase. , related_name='subvenue_owner'
-    class Meta:
-        db_table = 'subvenue_usedfor_session'
-
 class UserSelectsSession(models.Model):
-    user_uid = models.IntegerField(primary_key=True, db_column='User_uID') # Field name made lowercase.
-    session_sessionid = models.IntegerField(primary_key=True, db_column='Session_sessionID') # Field name made lowercase.
+    user_uid = models.ForeignKey(Client, primary_key=True, db_column='User_uID') # Field name made lowercase.
+    session_sessionid = models.ForeignKey(Session, primary_key=True, db_column='Session_sessionID') # Field name made lowercase.
     status = models.CharField(max_length=1, blank=True)
     class Meta:
         db_table = 'user_selects_session'
@@ -146,7 +131,23 @@ class Venue(models.Model):
     name = models.CharField(max_length=45, blank=True)
     load = models.IntegerField(null=True, blank=True)
     manager = models.IntegerField(db_column='Manager') # Field name made lowercase.
-    address_addressid = models.IntegerField(db_column='Address_addressID') # Field name made lowercase.
+    address_addressid = models.ForeignKey(Address,db_column='Address_addressID') # Field name made lowercase.
     class Meta:
         db_table = 'venue'
+
+class Subvenue(models.Model):
+    subvenueid = models.IntegerField(primary_key=True, db_column='subVenueID') # Field name made lowercase.
+    label = models.CharField(max_length=45, blank=True)
+    capacity = models.CharField(max_length=45, blank=True)
+    ownervenue = models.ForeignKey(Venue, db_column='ownerVenue') # Field name made lowercase.
+    class Meta:
+        db_table = 'subvenue'
+
+class SubvenueUsedforSession(models.Model):
+    session_sessionid = models.ForeignKey(Session, db_column='Session_sessionID') # Field name made lowercase.
+    subvenue_subvenueid = models.ForeignKey(Subvenue, db_column='SubVenue_subVenueID') # Field name made lowercase. , related_name='subvenue_id'
+    subvenue_ownervenue = models.IntegerField(db_column='SubVenue_ownerVenue') # Field name made lowercase. , related_name='subvenue_owner'
+    class Meta:
+        db_table = 'subvenue_usedfor_session'
+
 

@@ -31,29 +31,24 @@
     <!-- add body here -->
             <div class="list-group">
 
-                {% if sessions %}
-                    {% for session in sessions %}
-                        {% if users %}
-                            {% for user in users %}
-
+                {% if pending %}
+                    {% for session in pending %}
                                 <!-- list item -->
                                 <a href="#" class="list-group-item clearfix">
                                   <span class="glyphicon glyphicon-file"></span>
-                                    {{session.begintime|date:"d M y"}} - {{session.begintime|time:"H i"}} , {{user.firstname}} {{user.lastname}} 
-                                  <span class="pull-right">Places Left: {{session.capacity}}
+                                    {{session.session_sessionid.begintime|date:"d M y"}} - {{session.session_sessionid.begintime|time:"H i"}} , {{session.user_uid.firstname}} {{session.user_uid.lastname}}
+                                  <span class="pull-right">Places Left: {{session.session_sessionid.capacity}}
                                     <button class="btn btn-xs btn-warning">
                                       <span class="glyphicon glyphicon-time"></span>
                                     </button>
                                     <button class="btn btn-xs btn-info">
                                       <span class="glyphicon glyphicon-info-sign"></span>
                                     </button>
-                                    <button class="btn btn-xs btn-success approveButton" id ="approve" data-catid="{{session.sessionid}}" user="{{user.uid}}">
+                                    <button class="btn btn-xs btn-success approveButton" id ="approve" data-catid="{{session.sessionid}}" user="{{session.user_uid.uid}}">
                                       <span class="glyphicon glyphicon-ok"></span>
                                     </button>
                                   </span>
                                 </a> <!-- end of list group item -->
-                            {% endfor %}
-                        {% endif %}
                     {% endfor %}
                 {% else %}
                     <strong>There unconfirmed bookings.</strong>
@@ -84,23 +79,19 @@
             </thead>
         </div>
 
-        {% if pendingusers %}
-                {% for pendinguser in pendingusers %}
-                    {% if pendingpayments %}
-                        {% for pendingpayment in pendingpayments %}
+                    {% if payments %}
+                        {% for pendingpayment in payments %}
                             <tbody>
                             <tr class="studentLabel">
-                                <td>{{pendinguser.firstname}} {{pendinguser.lastname}}</td>
+                                <td>{{pendingpayment.usertopay.firstname}} {{pendingpayment.usertopay.lastname}}</td>
                                 <td>{{pendingpayment.amount}}</td>
                                 <td>TODO</td>
                             </tr>
                             </tbody>
                         {% endfor %}
+                     	{% else %}
+                     		There are no users to pay.
                     {% endif %}
-                {% endfor %}
-            {% else %}
-                <strong>There are no outstanding payments.</strong>
-            {% endif %}
     </table>
 </div>
 	<button class="btn btn-default" type="button" onclick="printContent('printPayments')">Print</button>

@@ -56,22 +56,23 @@ def managerIndex(request):
 	context = RequestContext(request)
 	parent = request.user
 	##			PENDING SESSIONS RETRIEVAL		##
-	sessions = UserSelectsSession.objects.filter(status = 'P').values_list('user_uid')
-	sessions1 = UserSelectsSession.objects.filter(status = 'P').values_list('session_sessionid')
-	users = Client.objects.filter(uid__in=sessions)
-	sessionDetails = Session.objects.filter(sessionid__in = sessions1)
+		#sessions = UserSelectsSession.objects.filter(status = 'P').values_list('user_uid')
+		#sessions1 = UserSelectsSession.objects.filter(status = 'P').values_list('session_sessionid')
+		#users = Client.objects.filter(uid__in=sessions)
+		#sessionDetails = Session.objects.filter(sessionid__in = sessions1)
 	pendingSessions = UserSelectsSession.objects.filter(status = 'P')
 	##			PENDING PAYERS RETRIEVAL		##
-	nonPaidUsers = Payment.objects.filter(haspayed = '0').values_list('usertopay')
-	pendingUsers = Client.objects.filter(uid__in=nonPaidUsers)
-	paymentInfo = Payment.objects.filter(haspayed = '0')
+	pendingPayments = Payment.objects.filter(haspayed=0)
+	pendingUsers = pendingPayments.values_list('usertopay')
+	nextArrivalDay = UserSelectsSession.objects.filter(user_uid__in=pendingUsers)
+		#pendingUsers = Client.objects.filter(payment__usertopay=nonPaidUsers).select_related()
+		#paymentInfo = Payment.objects.filter(haspayed = '0')
+
 	## 			DATA COMMUNICATION				##
 	context_dict={'parent':parent}
 	context_dict['pending'] = pendingSessions
-	context_dict['users'] = users
-	context_dict['sessions'] = sessionDetails
-	context_dict['pendingusers'] = pendingUsers
-	context_dict['pendingpayments'] = paymentInfo
+	context_dict['nextarrivalday'] = nextArrivalDay
+	context_dict['payments'] = pendingPayments
 	return render_to_response('manager/index.html', context_dict, context)
 
 @login_required
@@ -86,18 +87,12 @@ def managerBookings(request):																	#### WARNING: Repetative code:Line
 	context = RequestContext(request)
 	parent = request.user
 	##			PENDING SESSIONS RETRIEVAL		##
-	sessions = UserSelectsSession.objects.filter(status = 'P').values_list('user_uid')
-	sessions1 = UserSelectsSession.objects.filter(status = 'P').values_list('session_sessionid')
-	users = Client.objects.filter(uid__in=sessions)
-	sessionDetails = Session.objects.filter(sessionid__in = sessions1)
 	pendingSessions = UserSelectsSession.objects.filter(status = 'P')
 	declinedSessions = Session.objects.filter(sessionid__in=UserSelectsSession.objects.filter(status = 'R').values_list('session_sessionid'))
 
 	## 			DATA COMMUNICATION				##
 	context_dict={'parent':parent}
 	context_dict['pending'] = pendingSessions
-	context_dict['users'] = users
-	context_dict['sessions'] = sessionDetails
 	context_dict['history'] = approvalHistory
 	context_dict['declined'] = declinedSessions
 	return render_to_response('manager/bookings.html', context_dict, context)
@@ -135,7 +130,6 @@ def coachProfile(request):
 def members(request):
     context = RequestContext(request)
     clients = Client.objects.all()
-    context_dict={'clients':clients}
     return render_to_response('manager/members.html', context_dict, context)
 
 @login_required
