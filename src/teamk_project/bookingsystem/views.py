@@ -129,7 +129,8 @@ def coachProfile(request):
 @user_passes_test(is_manager)
 def members(request):
     context = RequestContext(request)
-    clients = Client.objects.all()
+    clients = Client.objects.all().select_related('payment__usertopay')
+    context_dict={'clients':clients}
     return render_to_response('manager/members.html', context_dict, context)
 
 @login_required
