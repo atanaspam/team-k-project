@@ -328,7 +328,6 @@ def applicationApproved(request):
 	if request.method == 'GET':
 		sessionID = request.GET['session_sessionid']
 		user = request.GET['userid']
-		print 'AAAA'
 		print user
 		print 'BBB'
 		print sessionID
