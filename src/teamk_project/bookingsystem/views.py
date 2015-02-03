@@ -3,7 +3,7 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 from bookingsystem.models import Client, Session, Block, UserSelectsSession, Payment
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.db.models import Q
+from django.db.models import Q, Sum
 import datetime
 
 approvalHistory = [10]
@@ -152,6 +152,7 @@ def parentIndex(request):
 	context_dict = {'children': children}
 	context_dict['parent'] = user
 	context_dict['payments'] = moneyToPay
+	context_dict['totalDue'] = moneyToPay.filter(haspayed=False).aggregate(Sum('amount'))['amount__sum']
 	return render_to_response('parent/index.html', context_dict, context)
 
 @login_required
