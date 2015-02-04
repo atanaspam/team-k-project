@@ -341,6 +341,25 @@ def applicationApproved(request):
 	    		session.save()
 	return HttpResponse('Success!')
 
+################################################################################
+#													Not Yet Working																			 #
+################################################################################
+@user_passes_test(is_manager)
+def sessionInfo(request):
+	print request
+	context = RequestContext(request)
+	sessionID = None
+	if request.method == 'GET':
+		sessionID = request.GET['session_sessionid']
+		#print sessionID
+		if sessionID:
+			session = Session.objects.get(sessionid=sessionID)
+			print session
+	    	if session:
+	    		#print session.session_sessionid
+	    		context_dict={'session':session}
+	return render_to_response('manager/sessionInfo.html', context_dict, context)
+
 
 
 

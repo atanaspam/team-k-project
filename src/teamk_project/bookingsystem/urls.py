@@ -33,7 +33,7 @@ urlpatterns = patterns('',
 	url(r'^parent/userBookings', views.userBookings, name='userBookings'),
 	url(r'^parent/confirmBookings(\d{2})', views.confirmBookings, name='confirmBookings'),
 	url(r'^parent/confirmBookings(\d{1})', views.confirmBookings, name='confirmBookings'),
-	url(r'^parent/confirmBookings', views.confirmBookings, name='confirmBookings'),	
+	url(r'^parent/confirmBookings', views.confirmBookings, name='confirmBookings'),
 	url(r'^parent/childrenList', views.childrenList, name='childrenList'),
 	url(r'^parent/childProfile(\d{1})', views.childProfile1, name='childProfile1'),
 	url(r'^parent/childProfile(\d{2})', views.childProfile2, name='childProfile2'),
@@ -43,6 +43,7 @@ urlpatterns = patterns('',
 	url(r'^parent/editProfile', views.parentEditProfile, name='parentEditProfile'),
 	#url(r'^manager/applicationApproved/$', views.applicationApproved, name='applicationApproved'),
 	url(r'^parent/childSessions', views.childSessions, name='childSessions'),
+	url(r'^manager/sessionInfo', views.sessionInfo, name='sessionInfo')
 
 	)
-	
+
