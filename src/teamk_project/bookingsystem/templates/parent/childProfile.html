@@ -28,21 +28,21 @@
   	</div>
 	<div class="panel-body">
 		<!-- add body here -->
-        <div class="list-group">	
+        <div class="list-group">
             {% if sessions %}
             	{% for session in sessions %}
                 	<!-- list item -->
                 	<a href="childSessions.html" class="list-group-item clearfix">
                   		<span class="glyphicon glyphicon-file"></span>
-                    	{{session.begintime|date:"d M y"}} {{session.begintime|date:"d M y"}} - {{session.begintime|time:"H i"}} , {{child.firstname}}
+                    	{{session.begintime|date:"d M y"}} {{session.begintime|date:"d M y"}} - {{session.begintime|time:"H:i"}} , {{child.firstname}}
                   	  	<span class="pull-right">
                     		<button class="btn btn-xs btn-warning">
                       			<span class="glyphicon glyphicon-calendar"></span>
                     		</button>
                   	  	</span>
                 	</a> <!-- end of list group item -->
-				{% endfor %}
-			{% else %}
+						{% endfor %}
+					{% else %}
             	This child is not enrolled in any sessions.
             	To enroll please go to Bookings.
             {% endif %}
@@ -59,7 +59,7 @@ so the parent can edit them if needed-->
 			<div class="panel-heading">
 				<h3 class="panel-title">Personal Details</h3>
 			</div>
-		
+
 		    <form action="/bookingsystem/parent/addNew.html" method="post">{% csrf_token %}
 			<div class="panel-body"><!-- fields -->
 				<!-- Name -->
@@ -67,7 +67,7 @@ so the parent can edit them if needed-->
 					<input type="text" class="form-control" name="firstname" value="{{ child.firstname }}" aria-describedby="basic-addon2">
 					<input type="text" class="form-control" name="lastname" value="{{ child.lastname }}" aria-describedby="basic-addon1">
 				</div>
-				
+
 				<div class="input-group">
 					<span class="input-group-addon">Gender</span>
 					<select name="genderid">
@@ -80,7 +80,7 @@ so the parent can edit them if needed-->
 						{% endif %}
 					</select>
 				</div>
-			
+
 				<!-- Date of Birth -->
 				<div class="input-group">
 					<span class="input-group-addon" id="basic-addon1">Age</span>
@@ -110,14 +110,14 @@ so the parent can edit them if needed-->
 
 			</div>
 		</div> <!-- end of Contact Details -->
-	
+
 
 		<!-- Medical Conditions -->
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title">Medical Conditions</h3>
 			</div>
-		
+
 			<div class="panel-body">
 				<!-- TODO: have to make this button add items-->
 				<!-- add body here -->
@@ -131,12 +131,12 @@ so the parent can edit them if needed-->
 		</div><!-- end of Medical Conditions -->
 
 		<!-- submit or cancel buttons -->
-		
+
 		<input type="hidden" name="uid" value={{ child.uid }}>
-		
+
 		<INPUT Type="button" class="btn btn-default" VALUE="Cancle" ONCLICK="window.location.href='childrenList.html'"/>
 		<INPUT Type="submit" class="btn btn-default" VALUE="Submit"/>
-		
-		
+
+
 	</forms>
 {% endblock %}

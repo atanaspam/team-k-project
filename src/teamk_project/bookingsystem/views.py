@@ -2,14 +2,14 @@ from django.http import HttpResponse
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.shortcuts import redirect
-from bookingsystem.models import Client, Session, Block, UserSelectsSession, Payment
+from bookingsystem.models import Client, Session, Block, UserSelectsSession, Payment, SubvenueUsedforSession
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Q
 from django.db import models
 from django.db.models import Max
 import datetime
 
-approvalHistory = [10]
+approvalHistory = []
 i = 0
 
 lastID = -1
@@ -88,7 +88,7 @@ def loggedin(request):
 
 @login_required
 @user_passes_test(is_manager)
-def managerBookings(request):																	#### WARNING: Repetative code:Line 51
+def managerBookings(request):																	#### WARNING: Repetitive code:Line 51
 	context = RequestContext(request)
 	parent = request.user
 	##			PENDING SESSIONS RETRIEVAL		##
@@ -106,8 +106,11 @@ def managerBookings(request):																	#### WARNING: Repetative code:Line
 @user_passes_test(is_manager)
 def managerSessions(request):
 	context = RequestContext(request)
-	context_dict={}
-	return render_to_response('manager/bookings.html', context_dict, context)
+	sessionInfo = Session.objects.all()
+	venueInfo = SubvenueUsedforSession.objects.filter(session_sessionid__in=sessionInfo.values_list('sessionid'))
+	#info = sessionInfo | venueInfo
+	context_dict={'sessions':sessionInfo}
+	return render_to_response('manager/sessions.html', context_dict, context)
 
 @login_required
 @user_passes_test(is_manager)
@@ -215,9 +218,12 @@ def confirmBookings(request, uID):
 	checked = request.POST.getlist("checked")
 	if checked:
 		for item in checked:
+			print item
+			user = Client.objects.get(uid=uID)
+			session = Session.objects.get(sessionid=item)
 			t = UserSelectsSession(
-				session_sessionid=item,
-				user_uid=uID,
+				session_sessionid=session,
+				user_uid=user,
 				status='P'
 				)
 			t.save()
@@ -363,9 +369,9 @@ def applicationApproved(request):
 	if request.method == 'GET':
 		sessionID = request.GET['session_sessionid']
 		user = request.GET['userid']
-		print user
-		print 'BBB'
-		print sessionID
+		#print user
+		#print 'BBB'
+		#print sessionID
 		if sessionID:
 			session = UserSelectsSession.objects.get( Q(session_sessionid = sessionID) & Q(user_uid = user) )
 	    	if session:

@@ -5,22 +5,22 @@
 {% endblock %}
 
 {% block mainArea %}
-	<!-- TODO: ** add id's to retrieve data from textfields 
+	<!-- TODO: ** add id's to retrieve data from textfields
 		make sure the format of input is correct-->
 	<form action="/bookingsystem/parent/addChild.html" method="post">{% csrf_token %}
 		<div class="panel panel-default"><!-- Personal Details -->
 			<div class="panel-heading">
 				<h3 class="panel-title">Personal Details</h3>
 			</div>
-		
+
 		    <form action="/bookingsystem/parent/addNew.html" method="post">{% csrf_token %}
 			<div class="panel-body"><!-- fields -->
 				<!-- Name -->
 				<div class="input-group">
-					<input type="text" class="form-control" name="firstname" placeholder="Given Name" aria-describedby="basic-addon2">
-					<input type="text" class="form-control" name="lastname" placeholder="Surname" aria-describedby="basic-addon1">
+					<input type="text" class="form-control" name="firstname" placeholder="First Name" aria-describedby="basic-addon2">
+					<input type="text" class="form-control" name="lastname" placeholder="Last Name" aria-describedby="basic-addon1">
 				</div>
-				
+
 				<div class="input-group">
 					<span class="input-group-addon">Gender</span>
 					<select name="genderid">
@@ -29,7 +29,7 @@
 					  	<option value=1>Male</option>
 					</select>
 				</div>
-			
+
 				<!-- Date of Birth -->
 				<div class="input-group">
 					<span class="input-group-addon" id="basic-addon1">Age</span>
@@ -54,19 +54,19 @@
 				<!-- e-mail -->
 				<div class="input-group">
 					<span class="input-group-addon" id="basic-addon1">@</span>
-					<input type="text" class="form-control" name="email" placeholder="e-mail address" aria-describedby="basic-addon1">
+					<input type="text" class="form-control" name="email" placeholder="e-mail" aria-describedby="basic-addon1">
 				</div>
 
 			</div>
 		</div> <!-- end of Contact Details -->
-	
+
 
 		<!-- Medical Conditions -->
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title">Medical Conditions</h3>
 			</div>
-		
+
 			<div class="panel-body">
 				<!-- TODO: have to make this button add items-->
 				<!-- add body here -->
@@ -74,16 +74,16 @@
 					<span class="input-group-btn">
 						<button class="btn btn-default" type="button">+</button>
 					</span>
-					<input type="text" class="form-control" name="medicalconditions" placeholder="add New Medical Condition">
+					<input type="text" class="form-control" name="medicalconditions" placeholder="Add New Medical Condition">
 				</div><!-- /input-group -->
 			</div>
 		</div><!-- end of Medical Conditions -->
 
 		<!-- submit or cancel buttons -->
-		
-		<INPUT Type="button" class="btn btn-default" VALUE="Cancle" ONCLICK="window.location.href='childrenList.html'"/>
+
+		<INPUT Type="button" class="btn btn-default" VALUE="Cancel" ONCLICK="window.location.href='childrenList.html'"/>
 		<INPUT Type="submit" class="btn btn-default" VALUE="Submit"/>
-		
-		
+
+
 	</forms>
 {% endblock %}
