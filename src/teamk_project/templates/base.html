@@ -65,7 +65,7 @@
 						</ul>
 					</div>{% endif %}
 
-					<div style="position: absolute; right:75px; top:17px;">Hello,{% if user.is_authenticated %} <strong>{{ user.get_short_name }}</strong>.    <u><i><a href="/logout">Log out</i></u></a>{% else %}{% if user.is_authenticated != True %} please log in.{% endif %}{% endif %}</div>
+					<div style="position: absolute; right:75px; top:17px; color:#FFFFFF">Hello,{% if user.is_authenticated %} <strong>{{ user.get_short_name }}</strong>.    <u><i><a href="/logout">Log out</i></u></a>{% else %}{% if user.is_authenticated != True %} please log in.{% endif %}{% endif %}</div>
 				</div>
 		    </div>
 
