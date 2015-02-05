@@ -35,15 +35,13 @@ urlpatterns = patterns('',
 	url(r'^parent/confirmBookings(\d{1})', views.confirmBookings, name='confirmBookings'),
 	url(r'^parent/confirmBookings', views.confirmBookings, name='confirmBookings'),
 	url(r'^parent/childrenList', views.childrenList, name='childrenList'),
-	url(r'^parent/childProfile(\d{1})', views.childProfile1, name='childProfile1'),
-	url(r'^parent/childProfile(\d{2})', views.childProfile2, name='childProfile2'),
-	url(r'^parent/childProfile', views.childProfile, name='childProfile'), ##########  Remove that later
+    url(r'^parent/childProfile/(?P<id>\d+)?', views.childProfile, name='childProfile'),
+    url(r'^parent/changeChild', views.changeChild, name='changeChild'),
 	url(r'^parent/addNewChild', views.addNewChild, name='addNewChild'),
+    url(r'^parent/addChild', views.addChild, name='addChild'),
 	url(r'^parent/payments', views.payments, name='payments'),
 	url(r'^parent/editProfile', views.parentEditProfile, name='parentEditProfile'),
 	#url(r'^manager/applicationApproved/$', views.applicationApproved, name='applicationApproved'),
 	url(r'^parent/childSessions', views.childSessions, name='childSessions'),
 	url(r'^manager/sessionInfo', views.sessionInfo, name='sessionInfo')
-
 	)
-

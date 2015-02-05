@@ -44,7 +44,7 @@ class BtmRank(models.Model):
         db_table = 'btm_rank'
 
 class Client(models.Model):
-    uid = models.IntegerField(primary_key=True, db_column='uID') # Field name made lowercase.
+    uid = models.AutoField(primary_key=True, db_column='uID') # Field name made lowercase.
     firstname = models.CharField(max_length=45, db_column='firstName', blank=True) # Field name made lowercase.
     lastname = models.CharField(max_length=45, db_column='lastName', blank=True) # Field name made lowercase.
     email = models.CharField(max_length=45, blank=True)
@@ -149,5 +149,3 @@ class SubvenueUsedforSession(models.Model):
     subvenue_ownervenue = models.IntegerField(db_column='SubVenue_ownerVenue') # Field name made lowercase. , related_name='subvenue_owner'
     class Meta:
         db_table = 'subvenue_usedfor_session'
-
-
