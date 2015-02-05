@@ -218,7 +218,7 @@ def confirmBookings(request, uID):
 	checked = request.POST.getlist("checked")
 	if checked:
 		for item in checked:
-			print item
+			#print item
 			user = Client.objects.get(uid=uID)
 			session = Session.objects.get(sessionid=item)
 			t = UserSelectsSession(
@@ -227,7 +227,6 @@ def confirmBookings(request, uID):
 				status='P'
 				)
 			t.save()
-			print item
 	context_dict = {'checked': checked}
 	return render_to_response('parent/bookings.html', context_dict, context)
 
@@ -308,7 +307,7 @@ def addNewChild(request):
 	context = RequestContext(request)
 	context_dict={}
 	context_dict = {'parent': request.user}
-	print lastID
+	#print lastID
 	return render_to_response('parent/addnewChild.html', context_dict, context)
 
 @login_required
@@ -370,8 +369,6 @@ def applicationApproved(request):
 		sessionID = request.GET['session_sessionid']
 		user = request.GET['userid']
 		#print user
-		#print 'BBB'
-		#print sessionID
 		if sessionID:
 			session = UserSelectsSession.objects.get( Q(session_sessionid = sessionID) & Q(user_uid = user) )
 	    	if session:
@@ -387,7 +384,7 @@ def applicationApproved(request):
 ################################################################################
 @user_passes_test(is_manager)
 def sessionInfo(request, sessionID):
-	print sessionID
+	#print sessionID
 	context = RequestContext(request)
 	user = request.user
 	# sessionID = None
@@ -401,7 +398,7 @@ def sessionInfo(request, sessionID):
 	#     		#print session.session_sessionid
 	#     		context_dict={'session':session}
 	sessionDetails = Session.objects.get(sessionid=sessionID)
-	sessionUsers = UserSelectsSession.objects.filter(session_sessionid=sessionDetails.values_list('sessionid'))
+	sessionUsers = UserSelectsSession.objects.filter(session_sessionid=sessionDetails.sessionid)
 	context_dict={'details': sessionDetails}
 	context_dict['users'] = sessionUsers
 	return render_to_response('manager/sessionInfo.html', context_dict, context)
