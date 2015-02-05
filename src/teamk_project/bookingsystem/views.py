@@ -310,13 +310,13 @@ def addNewChild(request):
 def addChild(request):
 	if request.method == "POST":
 		global lastID
-		
+
 		# THIS NEED TO BE CHANGED TO AUTOINCREMENT IN THE DATABASE!
 		if (lastID == -1):
 			lastID = Client.objects.all().aggregate(Max('uid')).get("uid__max")
-		
+
 		lastID = lastID + 1
-		
+
 		f_uid = lastID
 		f_firstname = request.POST.get("firstname", "")
 		f_lastname = request.POST.get("lastname", "")
@@ -380,19 +380,24 @@ def applicationApproved(request):
 #													Not Yet Working																			 #
 ################################################################################
 @user_passes_test(is_manager)
-def sessionInfo(request):
-	print request
+def sessionInfo(request, sessionID):
+	print sessionID
 	context = RequestContext(request)
-	sessionID = None
-	if request.method == 'GET':
-		sessionID = request.GET['session_sessionid']
-		#print sessionID
-		if sessionID:
-			session = Session.objects.get(sessionid=sessionID)
-			print session
-	    	if session:
-	    		#print session.session_sessionid
-	    		context_dict={'session':session}
+	user = request.user
+	# sessionID = None
+	# if request.method == 'GET':
+	# 	sessionID = request.GET['session_sessionid']
+	# 	#print sessionID
+	# 	if sessionID:
+	# 		session = Session.objects.get(sessionid=sessionID)
+	# 		print session
+	#     	if session:
+	#     		#print session.session_sessionid
+	#     		context_dict={'session':session}
+	sessionDetails = Session.objects.get(sessionid=sessionID)
+	sessionUsers = UserSelectsSession.objects.filter(session_sessionid=sessionDetails.values_list('sessionid'))
+	context_dict={'details': sessionDetails}
+	context_dict['users'] = sessionUsers
 	return render_to_response('manager/sessionInfo.html', context_dict, context)
 
 

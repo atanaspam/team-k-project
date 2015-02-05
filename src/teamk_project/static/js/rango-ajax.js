@@ -15,18 +15,4 @@ $(document).ready(function() {
         });
     });
 
-    // Not working for some reason :(
-    $('.infoButton').click(function() {
-        console.log("This is not a viable solution to get the session info.");
-        var catid;
-        catid = $(this).attr("data-sessionid");
-        $.get('/bookingsystem/manager/sessionInfo/', {
-            session_sessionid: catid,
-        }, function(data) {
-
-            //$('.infoButton[data-catid='+catid+']').html(data);
-            //$('#approve').hide();
-        });
-    });
-
 });
