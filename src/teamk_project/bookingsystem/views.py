@@ -305,6 +305,17 @@ def addNewChild(request):
 def payments(request):
 	context = RequestContext(request)
 	context_dict={}
+	
+	user = request.user
+	### This query gets all the "Children" of the user with UiD 1 ###
+	children = Client.objects.filter(belongsto=user.id)
+	### This just gets the current user (if he is not logged in he is Anonymous)
+	moneyToPay = Payment.objects.filter(usertopay__in=children)
+
+	context_dict['children'] = children
+	context_dict['parent'] = user
+	context_dict['payments'] = moneyToPay
+	context_dict['totalDue'] = moneyToPay.filter(haspayed=False).aggregate(Sum('amount'))['amount__sum']
 	return render_to_response('parent/payments.html', context_dict, context)
 
 @login_required

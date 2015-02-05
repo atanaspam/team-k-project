@@ -9,9 +9,10 @@
          <!-- select student checkboxes -->
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title">Select Student (Make it load names from Db)</h3>
+              <h3 class="panel-title">Pay selected balance</h3>
             </div>
             <div class="panel-body">
+              <!--
               <div class="checkbox">
                 <label><input type="checkbox" value="">Pedro    | total: 200.00£</label>
               </div>
@@ -24,6 +25,25 @@
               <div class="checkbox">
                 <label> total: 605.00£</label>
               </div>
+            -->
+            {% if children %}
+                {% for child in children %}
+                  {% with child.uid as id %}
+                  {% if payments %}
+                    {% with id|stringformat:'s' as ID %}
+                    {% url 'bookingsystem.views.childProfile' as uurl %}
+                    <!-- {{ uurl|add:ID }} THIS PRINTS THE CURRENT LINK -->
+                    <ul>
+                        <span class="list-group-item">{{ child.firstname }}</span>
+                    </ul>
+                    {% endwith %}
+                  {% endif %}
+                  {% endwith %}
+                {% endfor %}
+            {% else %}
+                <a href="childProfile.html" class="list-group-item">You have no Children. Press Add child to add.</a>
+            {% endif %}
+
             </div>
           </div>
           
