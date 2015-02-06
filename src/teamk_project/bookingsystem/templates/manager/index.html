@@ -35,25 +35,23 @@
                     {% for session in pending %}
                                 <!-- list item -->
                                  {% url 'bookingsystem.views.sessionInfo' session.session_sessionid.sessionid as uurl %}
-                                <a href={{ uurl }} class="list-group-item clearfix">
-                                  <span class="glyphicon glyphicon-file"></span>
+                                <span class="list-group-item clearfix" style="color: #000;">
+                                  <span class="glyphicon glyphicon-file" style="color: #4179FA;"></span>
                                     {{session.session_sessionid.begintime|date:"d M"}} - {{session.session_sessionid.begintime|time:"H:i"}}, {{session.user_uid.firstname}} {{session.user_uid.lastname}}
                                   <span class="pull-right">Places Left: {{session.session_sessionid.capacity}}
                                     <button class="btn btn-xs btn-warning">
                                       <span class="glyphicon glyphicon-time"></span>
                                     </button>
-                                    
-                                <!-- old info button
-                                    <button class="btn btn-xs btn-info" id ="info" href={{ uurl }}>
+                                
+                                     <a href={{ uurl }} class="btn btn-xs btn-info" id ="info">
                                       <span class="glyphicon glyphicon-info-sign"></span>
-                                    </button>
-                                -->
+                                    </a>
 
                                     <button class="btn btn-xs btn-success approveButton" id ="approve" data-catid="{{session.session_sessionid.sessionid}}" user="{{session.user_uid.uid}}">
                                       <span class="glyphicon glyphicon-ok"></span>
                                     </button>
                                   </span>
-                                </a> <!-- end of list group item -->
+                                </span> <!-- end of list group item -->
                     {% endfor %}
                 {% else %}
                     <strong>There unconfirmed bookings.</strong>
