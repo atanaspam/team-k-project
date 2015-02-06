@@ -208,6 +208,13 @@ def audit(request):
  	return render_to_response('manager/audit.html', context_dict, context)
 
 @login_required
+@user_passes_test(is_manager)
+def success(request):
+ 	context = RequestContext(request)
+ 	context_dict={}
+ 	return render_to_response('manager/success.html', context_dict, context)
+
+@login_required
 @user_passes_test(is_parent)
 def parentIndex(request):
 	context = RequestContext(request)
@@ -316,7 +323,7 @@ def userBookings1(request, num):
 def confirmBookings(request, uID):
 	context = RequestContext(request)
 	checked = request.POST.getlist("checked")
-	if checked: 
+	if checked:
 		for item in checked:
 			#print item
 			user = Client.objects.get(uid=uID)
@@ -444,7 +451,7 @@ def addChild(request):
 def payments(request):
 	context = RequestContext(request)
 	context_dict={}
-	
+
 	user = request.user
 	### This query gets all the "Children" of the user with UiD 1 ###
 	children = Client.objects.filter(belongsto=user.id)
@@ -514,6 +521,32 @@ def sessionInfo(request, sessionID):
 	context_dict['users'] = sessionUsers
 	return render_to_response('manager/sessionInfo.html', context_dict, context)
 
+
+@login_required
+@user_passes_test(is_manager)
+def addSession(request):
+	if request.method == "POST":
+		global lastSessionID
+
+		# THIS NEED TO BE CHANGED TO AUTOINCREMENT IN THE DATABASE!
+		if (lastSessionID == -1):
+			lastSessionID = Session.objects.all().aggregate(Max('sessionid')).get("sessionid__max")
+
+		lastSessionID = lastSessionID + 1
+
+		f_sessionID = lastSessionID
+		f_duration = request.POST.get("duration", "")
+		f_begintime = request.POST.get("begintime", "")
+		f_endtime = request.POST.get("endtime", "")
+		f_block_blockid = int(request.POST.get("block_blockid", ""))
+		f_capacity = request.POST.get("capacity", "")
+		f_agegroup = request.POST.get("agegroup", "")
+		f_skillgroup = request.POST.get("skillgroup", "")
+		f_isfull = request.POST.get("isfull", "")
+		# VALIDATION HERE!!!
+
+		p = Client.objects.get_or_create(sessionid=f_sessionid, duration=f_duration, begintime=f_begintime, endtime=f_endtime, block_blockid=f_block_blockid, capacity=f_capacity, agegroup=f_agegroup, skillgroup=f_skillgroup, isfull=f_isfull )
+	return redirect('/bookingsystem/manager/confirmed.html')
 
 
 

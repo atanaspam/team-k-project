@@ -44,5 +44,6 @@ urlpatterns = patterns('',
 	url(r'^parent/editProfile', views.parentEditProfile, name='parentEditProfile'),
 	#url(r'^manager/applicationApproved/$', views.applicationApproved, name='applicationApproved'),
 	url(r'^parent/childSessions', views.childSessions, name='childSessions'),
-	url(r'^manager/sessionInfo(\d{1,5})', views.sessionInfo, name='sessionInfo')
+	url(r'^manager/sessionInfo(\d{1,5})', views.sessionInfo, name='sessionInfo'),
+	url(r'^manager/success', views.success, name='success')
 	)

@@ -29,7 +29,7 @@
         {% for child in clients %}
         <tbody>
             <tr class="studentLabel">
-                <td><a class="studentLabel" href="childProfile.html"> {{child.firstname}} {{child.lastname}} </a></td>
+                <td><a class="studentLabel" href={% url 'bookingsystem.views.childProfile' child.uid %}> {{child.firstname}} {{child.lastname}} </a></td>
                 <td>{{child.email}}</td>
                 {% if child.genderid %}
                   <td>Male</td>
