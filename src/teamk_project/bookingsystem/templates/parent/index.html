@@ -65,23 +65,7 @@
               <h3 class="panel-title">Payments</h3>
             </div>
             <div class="panel-body">
-              {% if payments %}
-                {% for payment in payments %}
-                  {% if children %}
-                    {% for child in children %}
-                      {% if payment.usertopay == child.uid %}
-                        {% with payment.amount as amount %}
-                        <div class="checkbox">
-                          <label><input type="checkbox" value="">{{child.firstname}}  | due: {{amount}}£</label>
-                        </div>
-                        {% endwith %}
-                      {% endif %}
-                    {% endfor %}
-                  {% endif %}
-                {% endfor %}
-              {% else %}
-                You have no registered children.
-              {% endif %}
+              {% if totalDue > 0 %}
 
               <div class="checkbox">
                 <label>Total Due: £{{ totalDue }}</label>
@@ -94,6 +78,9 @@
                 Make Payment
               </a>
               </button>
+              {% else %}
+                You have no payments due
+              {% endif %}
 
             </div> <!--panel body-->
           </div> <!--panel-->

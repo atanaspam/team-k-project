@@ -9,7 +9,7 @@
          <!-- select student checkboxes -->
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title">Pay selected balance</h3>
+              <h3 class="panel-title">Payment</h3>
             </div>
             <div class="panel-body">
               <!--
@@ -26,33 +26,24 @@
                 <label> total: 605.00£</label>
               </div>
             -->
-            {% if children %}
-                {% for child in children %}
-                  {% with child.uid as id %}
-                  {% if payments %}
-                    {% with id|stringformat:'s' as ID %}
-                    {% url 'bookingsystem.views.childProfile' as uurl %}
-                    <!-- {{ uurl|add:ID }} THIS PRINTS THE CURRENT LINK -->
-                    <ul>
-                        <span class="list-group-item">{{ child.firstname }}</span>
-                    </ul>
-                    {% endwith %}
-                  {% endif %}
-                  {% endwith %}
-                {% endfor %}
+            {% if totalDue %}
+              <span class="">Balance to pay: £  {{totalDue}} </span>
+
+              <br /><br />
+
+              <!-- TODO: add paypal -->
+              <button class="btn btn-default" type="button">
+              <a class="studentLabel"href="paypalConfirm?id={{user.id}}">
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                Pay with PayPal
+              </a>
+              </button>
+
             {% else %}
-                <a href="childProfile.html" class="list-group-item">You have no Children. Press Add child to add.</a>
-            {% endif %}
+              <span class="">Oustanding Balance: £0</span>
+            {%endif%}
 
             </div>
           </div>
-          
-          <!-- TODO: add paypal -->
-          <button class="btn btn-default" type="button">
-          <a class="studentLabel"href="">
-            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-            Process Payment
-          </a>
-          </button>
 
 {% endblock %}

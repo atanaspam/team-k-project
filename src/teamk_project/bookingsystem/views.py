@@ -1,9 +1,12 @@
 from django.http import HttpResponse
 from django.template import RequestContext
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from bookingsystem.models import Client, Session, Block, UserSelectsSession, Payment
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Q, Sum
+from django.views.decorators.csrf import csrf_exempt
+from django import forms
+from django.contrib.auth import logout
 import datetime
 
 approvalHistory = [10]
@@ -73,6 +76,50 @@ def managerIndex(request):
 	context_dict['pending'] = pendingSessions
 	context_dict['nextarrivalday'] = nextArrivalDay
 	context_dict['payments'] = pendingPayments
+	return render_to_response('manager/index.html', context_dict, context)
+
+
+@login_required
+@csrf_exempt
+@user_passes_test(is_manager)
+def markPaid(request):
+	context = RequestContext(request)
+	parent = request.user
+	context_dict = {}
+
+
+	if request.method == 'POST':
+		for i in request.POST.getlist('kidPaid'):
+			Payment.objects.filter(usertopay=i).update(haspayed=True)
+			print i
+
+
+		context_dict['paymentMade'] = True;
+
+
+	##			PENDING SESSIONS RETRIEVAL		##
+		#sessions = UserSelectsSession.objects.filter(status = 'P').values_list('user_uid')
+		#sessions1 = UserSelectsSession.objects.filter(status = 'P').values_list('session_sessionid')
+		#users = Client.objects.filter(uid__in=sessions)
+		#sessionDetails = Session.objects.filter(sessionid__in = sessions1)
+	pendingSessions = UserSelectsSession.objects.filter(status = 'P')
+	##			PENDING PAYERS RETRIEVAL		##
+	pendingPayments = Payment.objects.filter(haspayed=0)
+	pendingUsers = pendingPayments.values_list('usertopay')
+	nextArrivalDay = UserSelectsSession.objects.filter(user_uid__in=pendingUsers)
+		#pendingUsers = Client.objects.filter(payment__usertopay=nonPaidUsers).select_related()
+		#paymentInfo = Payment.objects.filter(haspayed = '0')
+
+	## 			DATA COMMUNICATION				##
+	context_dict['parent'] = parent
+	context_dict['pending'] = pendingSessions
+	context_dict['nextarrivalday'] = nextArrivalDay
+	context_dict['payments'] = pendingPayments
+	checked = request.POST.getlist("checked")
+
+
+
+
 	return render_to_response('manager/index.html', context_dict, context)
 
 @login_required
@@ -155,6 +202,46 @@ def parentIndex(request):
 	context_dict['totalDue'] = moneyToPay.filter(haspayed=False).aggregate(Sum('amount'))['amount__sum']
 	return render_to_response('parent/index.html', context_dict, context)
 
+
+@login_required
+@user_passes_test(is_parent)
+def paypalConfirm(request):
+	context = RequestContext(request)
+	user = request.user
+	context_dict = {}
+
+	### This query gets all the "Children" of the user with UiD 1 ###
+	children = Client.objects.filter(belongsto=user.id)
+	### This just gets the current user (if he is not logged in he is Anonymous)
+	context_dict['children']= children
+	context_dict['parent'] = user
+
+
+
+	## !!!!!kick any user out that shouldn't be here
+	#if request.META['HTTP_REFERER'] != "paypal.com":
+	#	logout(request)
+	#	return redirect("/")
+	## !!!!!!!!!!!!!!!disabled for the demo #################
+
+	if request.method == 'GET':
+		#for i in request.GET.getlist('kidPaid'):
+		i = Client.objects.filter(belongsto=request.GET['id'])
+		if i:
+			Payment.objects.filter(usertopay__in=i).update(haspayed=True)
+			return render_to_response('parent/index.html', context_dict, context)
+
+
+
+
+	moneyToPay = Payment.objects.filter(usertopay__in=children)
+
+	context_dict['payments'] = moneyToPay
+	context_dict['totalDue'] = moneyToPay.filter(haspayed=False).aggregate(Sum('amount'))['amount__sum']
+
+
+	return render_to_response('parent/index.html', context_dict, context)
+
 @login_required
 @user_passes_test(is_parent)
 def childrenList(request):
@@ -209,7 +296,7 @@ def userBookings1(request, num):
 def confirmBookings(request, uID):
 	context = RequestContext(request)
 	checked = request.POST.getlist("checked")
-	if checked:
+	if checked: 
 		for item in checked:
 			t = UserSelectsSession(
 				session_sessionid=item,
