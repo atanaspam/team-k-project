@@ -183,8 +183,21 @@ def coachProfile(request):
 @user_passes_test(is_manager)
 def members(request):
     context = RequestContext(request)
-    clients = Client.objects.all().select_related('payment__usertopay')
+    #clients = Client.objects.select_related('payment__usertopay')
+    clients = Client.objects.raw('''
+    	SELECT client.*, payment.amount 
+    	FROM client 
+    	LEFT JOIN payment
+    	ON client.uID = payment.usertopay;
+    	''')
+    #print clients.query, "\n"
     context_dict={'clients':clients}
+
+    for i in clients:
+    	print i.amount
+
+    #print clients.values_list()
+    #context_dict['payments'] = Payment.objects.filter(haspayed=0)
     return render_to_response('manager/members.html', context_dict, context)
 
 @login_required

@@ -38,7 +38,14 @@
                 {% endif %}
                 <td>{{child.age}}</td>
                 <td>{{child.experiencelevel}}</td>
-                <td>TODO</td>
+                <td>
+                    
+                {% if child.amount != none %}
+                    £{{ child.amount }}
+                {% else %}
+                    £0
+                {% endif %}
+                </td>
             </tr>
         {% endfor %}
 
