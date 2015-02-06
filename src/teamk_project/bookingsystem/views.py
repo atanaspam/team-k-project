@@ -3,6 +3,7 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Q, Sum
+from bookingsystem.models import Client, Session, Block, UserSelectsSession, Payment, SubvenueUsedforSession
 from django.views.decorators.csrf import csrf_exempt
 from django import forms
 from django.contrib.auth import logout
