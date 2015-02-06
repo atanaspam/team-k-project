@@ -130,11 +130,16 @@ so the parent can edit them if needed-->
 			</div>
 		</div><!-- end of Medical Conditions -->
 
-		<!-- submit or cancel buttons -->
-
 		<input type="hidden" name="uid" value={{ child.uid }}>
 
-		<INPUT Type="button" class="btn btn-default" VALUE="Cancle" ONCLICK="window.location.href='childrenList.html'"/>
+		<!-- submit or cancel buttons -->
+		<!-- <INPUT Type="button" class="btn btn-default" VALUE="Cancel" ONCLICK="window.location.href='childrenList.html'"/> -->
+		<button class="btn btn-default" type="button">
+          <a class="studentLabel"href="index.html">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            Cancel
+          </a>
+      	</button>
 		<INPUT Type="submit" class="btn btn-default" VALUE="Submit"/>
 
 
