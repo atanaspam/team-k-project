@@ -17,5 +17,7 @@ urlpatterns = patterns('',
     url(r'^register', 'teamk_project.views.register', name='register'),
     url(r'^logout/', 'teamk_project.views.logout', name='logout'),
     url(r'^invalid', 'teamk_project.views.invalid', name='invalid'),
-    
+    url(r'^fail', 'teamk_project.views.fail', name='fail'),
+    url(r'^success', 'teamk_project.views.success', name='success')
+
 )

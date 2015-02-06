@@ -19,7 +19,7 @@ def login(request):
             return HttpResponseRedirect("/")
     else:
         return render(request, "login.html")
-        
+
 def invalid(request):
     if request.user.is_authenticated():
         if request.user.groups.filter(name = 'Manager'):
@@ -37,7 +37,7 @@ def invalid(request):
 def login_view(request):
     username = request.POST.get('username', '')
     password = request.POST.get('password', '')
-    user = auth.authenticate(username=username, password=password)    
+    user = auth.authenticate(username=username, password=password)
     if user:
         if user.is_active:
             auth.login(request, user)
@@ -56,7 +56,7 @@ def login_view(request):
     	context_dict={}
         context_dict["passed"] = "False"
     	return HttpResponseRedirect('/invalid.html')
-            
+
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -72,3 +72,14 @@ def register(request):
 def logout(request):
     auth.logout(request)
     return HttpResponseRedirect("/")
+
+def success(request):
+    context = RequestContext(request)
+    context_dict={}
+    return render_to_response('success.html', context_dict, context)
+
+
+def fail(request):
+    context = RequestContext(request)
+    context_dict={}
+    return render_to_response('fail.html', context_dict, context)
