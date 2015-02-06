@@ -13,7 +13,7 @@ import datetime
 
 approvalHistory = []
 i = 0
-
+lastSessionID = -1
 lastID = -1
 
 @login_required
@@ -185,8 +185,8 @@ def members(request):
     context = RequestContext(request)
     #clients = Client.objects.select_related('payment__usertopay')
     clients = Client.objects.raw('''
-    	SELECT client.*, payment.amount 
-    	FROM client 
+    	SELECT client.*, payment.amount
+    	FROM client
     	LEFT JOIN payment
     	ON client.uID = payment.usertopay;
     	''')
@@ -527,9 +527,8 @@ def sessionInfo(request, sessionID):
 def addSession(request):
 	context = RequestContext(request)
 	context_dict={}
-	context_dict={}
+	year_dropdown = []
 
-	
 	if request.method == "POST":
 		global lastSessionID
 
@@ -539,18 +538,19 @@ def addSession(request):
 
 		lastSessionID = lastSessionID + 1
 
-		f_sessionID = lastSessionID
+		f_sessionid = lastSessionID
 		f_duration = request.POST.get("duration", "")
 		f_begintime = request.POST.get("begintime", "")
 		f_endtime = request.POST.get("endtime", "")
-		f_block_blockid = int(request.POST.get("block_blockid", ""))
+		block_blockid = int(request.POST.get("block_blockid", ""))
+		f_block_blockid = Block.objects.get(blockid=block_blockid)
 		f_capacity = request.POST.get("capacity", "")
 		f_agegroup = request.POST.get("agegroup", "")
 		f_skillgroup = request.POST.get("skillgroup", "")
 		f_isfull = request.POST.get("isfull", "")
 		# VALIDATION HERE!!!
 
-		p = Client.objects.get_or_create(sessionid=f_sessionid, duration=f_duration, begintime=f_begintime, endtime=f_endtime, block_blockid=f_block_blockid, capacity=f_capacity, agegroup=f_agegroup, skillgroup=f_skillgroup, isfull=f_isfull )
+		p = Session.objects.get_or_create(sessionid=f_sessionid, duration=f_duration, begintime=f_begintime, endtime=f_endtime, block_blockid=f_block_blockid, capacity=f_capacity, agegroup=f_agegroup, skillgroup=f_skillgroup, isfull=f_isfull )
 	#return redirect('/bookingsystem/manager/confirmed.html')
 
 	return render_to_response('manager/addSession.html', context_dict, context)
