@@ -33,14 +33,25 @@
 				<div class="container">
 		    		<div class="navbar-header">
 
-		    			<a class="navbar-brand" href="/">Western Tennis Club
-						{% if user.is_authenticated %}
-					  		{% if user|is_manager %} | Manager
-					    	{% elif user|is_coach %} | Coach
-					     	{% elif user|is_parent %} | Parent{% endif %}
-						{% endif %}
+		    			<a class="navbar-brand" href="/">Western Tennis Club</a>
+						{% if user.is_authenticated %}  
+						<div class="btn-group" style="position: absolute; top:8px;">
+					  		{% if user|is_manager %} <button type="button" class="btn btn-primary">Manager</button>
+					    	{% elif user|is_coach %} <button type="button" class="btn btn-primary">Coach</button>
+					     	{% elif user|is_parent %} <button type="button" class="btn btn-primary">Parent</button>{% endif %}
+							<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+								<span class="caret"></span>
+								<span class="sr-only">Toggle Dropdown</span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								{% if user|is_manager %}<li><a href="/bookingsystem/manager">Manager</a></li>{% endif %}
+								{% if user|is_coach %}<li><a href="/bookingsystem/coach">Coach</a></li>{% endif %}
+								{% if user|is_parent %}<li><a href="/bookingsystem/parent">Parent</a></li>{% endif %}
 
-						</a>
+							</ul>
+						</div>{% endif %}
+
+						
 
 						<button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".sidebar-nav">
 		             		<span class="icon-bar"></span>
@@ -51,21 +62,12 @@
 
 
 					{% if user.is_authenticated %}
-					<div class="btn-group" style="position: absolute; right:225px; top:8px;">
-						<button type="button" class="btn btn-primary">Select View</button>
-						<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-							<span class="caret"></span>
-							<span class="sr-only">Toggle Dropdown</span>
-						</button>
-						<ul class="dropdown-menu" role="menu">
-							{% if user|is_manager %}<li><a href="/bookingsystem/manager">Manager</a></li>{% endif %}
-							{% if user|is_coach %}<li><a href="/bookingsystem/coach">Coach</a></li>{% endif %}
-							{% if user|is_parent %}<li><a href="/bookingsystem/parent">Parent</a></li>{% endif %}
+					<div class="btn-group" style="position: absolute; right:145px; top:8px;">
+						
 
-						</ul>
 					</div>{% endif %}
 
-					<div style="position: absolute; right:75px; top:17px; color:#FFFFFF">Hello,{% if user.is_authenticated %} <strong>{{ user.get_short_name }}</strong>.    <u><i><a href="/logout">Log out</i></u></a>{% else %}{% if user.is_authenticated != True %} please log in.{% endif %}{% endif %}</div>
+					<div style="position: absolute; right:62px; top:7px;">Hello,{% if user.is_authenticated %} <strong>{{ user.get_short_name }}</strong>.</div><div style="position: absolute; right:65px; top:26px; font-size:11px; color:#FFFFFF"><u><i><a href="/logout">Log out</i></u></a>{% else %}{% if user.is_authenticated != True %} please log in.{% endif %}{% endif %}</div>
 				</div>
 		    </div>
 
