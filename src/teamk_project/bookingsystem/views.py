@@ -525,6 +525,11 @@ def sessionInfo(request, sessionID):
 @login_required
 @user_passes_test(is_manager)
 def addSession(request):
+	context = RequestContext(request)
+	context_dict={}
+	context_dict={}
+
+	
 	if request.method == "POST":
 		global lastSessionID
 
@@ -546,9 +551,9 @@ def addSession(request):
 		# VALIDATION HERE!!!
 
 		p = Client.objects.get_or_create(sessionid=f_sessionid, duration=f_duration, begintime=f_begintime, endtime=f_endtime, block_blockid=f_block_blockid, capacity=f_capacity, agegroup=f_agegroup, skillgroup=f_skillgroup, isfull=f_isfull )
-	return redirect('/bookingsystem/manager/confirmed.html')
+	#return redirect('/bookingsystem/manager/confirmed.html')
 
-
+	return render_to_response('manager/addSession.html', context_dict, context)
 
 
 

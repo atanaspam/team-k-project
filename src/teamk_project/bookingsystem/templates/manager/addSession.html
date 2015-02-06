@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block sidebarNav %}
+{% include "sidebarNav/manager.html" %}
+{% endblock %}
+
+{% block mainArea %}
+
+	<form action="/bookingsystem/parent/addChild.html" method="post">{% csrf_token %}
+		<div class="panel panel-default"><!-- Personal Details -->
+			<div class="panel-heading">
+				<h3 class="panel-title">Session Details</h3>
+			</div>
+
+		    <form action="/bookingsystem/manager/addSession.html" method="post">{% csrf_token %}
+			<div class="panel-body"><!-- fields -->
+				<div class="input-group">
+					
+					<input type="text" class="form-control" name="begintime" placeholder="Begin Time" aria-describedby="basic-addon1">
+					<input type="text" class="form-control" name="endtime" placeholder="End Time" aria-describedby="basic-addon2">
+					<input type="text" class="form-control" name="duration" placeholder="Duration" aria-describedby="basic-addon2">
+					<input type="text" class="form-control" name="block_blockid" placeholder="Block ID" aria-describedby="basic-addon2">
+					<input type="text" class="form-control" name="agegroup" placeholder="Age Group" aria-describedby="basic-addon1">
+					<input type="text" class="form-control" name="skillgroup" placeholder="Skill Group" aria-describedby="basic-addon2">
+					<input type="text" class="form-control" name="capacity" placeholder="Capacity" aria-describedby="basic-addon2">
+					<input type="text" class="form-control" name="isfull" placeholder="Session Full?" aria-describedby="basic-addon1">
+
+					
+				</div>
+
+			</div>
+		</div> <!-- end of Session Details -->
+
+
+
+		<!-- Submit Button Not Working, copied from Karl -->
+		<INPUT Type="button" class="btn btn-default" VALUE="Cancel" ONCLICK="window.location.href='sessions.html'"/>
+		<button class="btn btn-default"> Submit</button>
+
+
+	</forms>
+{% endblock %}
