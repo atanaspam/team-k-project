@@ -37,40 +37,45 @@
           <th>List of Members</th>
         </tr>
       </thead>
-      {% if sessions%}
-        {% for session in sessions %}
+      {% if details %}
 
         <tbody>
           <tr class="studentLabel">
           <a class="studentLabel" href="childProfile.html"></a>
-            <td>{{session.begintime|date:"D, d M y"}}</td>
+            {% if isfull %}
+              <td>Yes</td>
+            {% else %}
+              <td>No</td>
+            {% endif %}
+            <td>{{details.begintime|date:"d M"}} - {{details.begintime|time:"H:i"}}</td>
+            <td>{{details.endtime|time:"H:i"}}</td>
+            <td>{{details.block_blockid.label}}</td>
+            <td>{{details.agegroup}}</td>
+            <td>{{details.skillgroup}}</td>
             <td>TODO</td>
-            <td>TODO</td>
-            <td>TODO</td>
-            <td>TODO</td>
-            <td>TODO</td>
-            <td>TODO</td>
-            <td>
-            	<!-- DROPDOWN of members list -->
-            	<div class="btn-group" style="position: absolute; right:225px; top:8px;">
-						<button type="button" class="btn btn-primary">Select View</button>
-						<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-							<span class="caret"></span>
-							<span class="sr-only">Member List</span>
-						</button>
-						<ul class="dropdown-menu" role="menu">
-							<!-- TODO retreive from database -->
-							<li><a href="/bookingsystem/manager">Member 1</a></li>
-							<li><a href="/bookingsystem/coach">Member 2</a></li>
-							<li><a href="/bookingsystem/parent">Member 3 etc ..</a></li>
-						</ul>
-				</div>
-            </td>
-          </tr>
+            <td><!-- DROPDOWN of members list -->
+              <div class="btn-group" >
+            <button type="button" class="btn btn-primary">Clients</button>
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+              <span class="caret"></span>
+              {% if users %}
+                {% for user in users %}
+              <span class="sr-only">Client List</span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <!-- TODO retreive from database -->
+              <li><a href={% url 'bookingsystem.views.childProfile' user.user_uid.uid %}>{{user.user_uid.firstname}}, {{user.user_uid.lastname}} </a></li>
+            </ul>
+        </div>
+        </td>
+
         {% endfor %}
+        {% endif %}
       {% else %}
         There are no Sessions or an error has occurred.
       {% endif %}
+
+
 
 
       </tbody>
