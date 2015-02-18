@@ -166,6 +166,9 @@ def managerSessions(request):
 	context_dict={'sessions':sessionInfo}
 	return render_to_response('manager/sessions.html', context_dict, context)
 
+
+
+###################### Add block id query in context detail########################
 @login_required
 @user_passes_test(is_manager)
 def managerBlocks(request):
@@ -175,6 +178,8 @@ def managerBlocks(request):
 	#info = sessionInfo | venueInfo
 	context_dict={'blocks':blockInfo}
 	return render_to_response('manager/blocks.html', context_dict, context)
+###################################################################################	
+
 
 @login_required
 @user_passes_test(is_manager)

@@ -46,12 +46,13 @@
             <th>Label</th>
             <th>Type</th>
             <th>Price</th>
+	        <th>Info</th>
           </tr>
         </thead>
         <!-- change this to get block information rather than sessions -->
         {% if blocks%}
           {% for block in blocks %}
-
+		  {% url 'bookingsystem.views.blockInfo' block.blockid as blockUrl %}   <!-- TODO  in views.py -->
           <tbody>
             <tr class="studentLabel">
             <a class="studentLabel table" href="childProfile.html"></a>
@@ -60,10 +61,15 @@
               <td>{{block.label}}</td>
               <td>{{block.type}}</td>
               <td>TODO</td>
+			  <td>
+				<a href="#" style="color: #1A387B">
+              		<span class="glyphicon glyphicon-info-sign"/>
+				</a>
+              </td>
             </tr>
           {% endfor %}
         {% else %}
-          There are no Sessions or an error has occurred.
+          There are no saved Blocks or an error has occurred.
         {% endif %}
 
 
