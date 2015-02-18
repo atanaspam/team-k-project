@@ -16,10 +16,10 @@
               {% for child in children %}
                 {% with child.uid as uid %}
                 {% with uid|stringformat:'s' as uID %}
-                {% url 'bookingsystem.views.userBookings' as uurl %}
+                {% url 'bookingsystem.views.userBookings' as uuurl %}
                 <!-- list item -->
                 <a href={{uurl|add:uID}} class="list-group-item clearfix">
-                  <span class="glyphicon glyphicon-file"></span>
+                  <span class="glyphicon glyphicon-user"></span>
                   {{child.firstname}} {{child.lastname}}
                   <span class="pull-right">
                     <button class="btn btn-xs btn-warning">

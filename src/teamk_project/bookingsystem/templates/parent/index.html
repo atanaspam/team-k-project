@@ -31,10 +31,20 @@
                       {% with child.uid as id %}
                       {% with id|stringformat:'s' as ID %}
                       {% url 'bookingsystem.views.childProfile' as uurl %}
+                	  {% url 'bookingsystem.views.userBookings' as uuurl %}
                       <!-- {{ uurl|add:ID }} THIS PRINTS THE CURRENT LINK -->
-                      <ul>
-                          <a href={{ uurl|add:ID }} class="list-group-item">{{ child.firstname }}</a>
-                      </ul>
+                      <span class="list-group-item clearfix" style="color: #000;">
+						<span class="glyphicon glyphicon-user" style="color: #4179FA;"></span>
+                        <a href={{ uurl|add:ID }} style="color: #000;">{{ child.firstname }}</a>
+	 						<span class="pull-right">
+								<a href={{uuurl|add:ID}} class="btn btn-xs btn-warning" id ="warning">
+                            		Enroll <span class="glyphicon glyphicon-pencil"></span>
+                          		</a>
+								<a href={{ uurl|add:ID }} class="btn btn-xs btn-info" id ="info">
+                            		<span class="glyphicon glyphicon-info-sign"></span>
+                          		</a>
+							</span>
+                      </span>
                       {% endwith %}
                       {% endwith %}
                      {% endfor %}
