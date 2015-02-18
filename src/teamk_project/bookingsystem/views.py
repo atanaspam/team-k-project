@@ -129,7 +129,17 @@ def markPaid(request):
 def loggedin(request):
 	context = RequestContext(request)
 	return render_to_response('manager/loggedin.html', context_dict, context)
-
+	
+	
+################################  Block Info Pages #############################################
+	
+@login_required
+@user_passes_test(is_manager)
+def blockInfo(request):
+	context = RequestContext(request)
+	context_dict={}
+	return render_to_response('manager/blockInfo.html', context_dict, context)
+################################################################################################
 @login_required
 @user_passes_test(is_manager)
 def managerBookings(request):																	#### WARNING: Repetitive code:Line 51

@@ -80,7 +80,11 @@ body {
   color: #4179FA;
 }
 a {
-  color:#efefef;
+  color:#EFEFEF;
+}
+
+ad {
+  color:#1A387B;
 }
 .text-center {
   padding-top: 20px;

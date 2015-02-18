@@ -45,14 +45,14 @@
           <th>Venue</th>
           <th>Duration</th>
           <th>Price</th>
+          <th>Info</th>
         </tr>
       </thead>
       {% if sessions%}
         {% for session in sessions %}
-
+		{% url 'bookingsystem.views.sessionInfo' session.sessionid as sessionUrl %}
         <tbody>
           <tr class="studentLabel">
-          <a class="studentLabel" href="childProfile.html"></a>
             <td>{{session.begintime|date:"D, d M y"}}</td>
             <td>{{session.begintime|time:"H:i"}}</td>
             <td>{{session.endtime|time:"H:i"}}</td> <!-- CHANGE ME TO A PROPER HOUR -->
@@ -60,6 +60,11 @@
             <td>TODO</td>
             <td>{{session.duration}}</td>
             <td>TODO</td>
+			<td>
+				<a href= {{ sessionUrl }} style="color: #1A387B">
+              		<span class="glyphicon glyphicon-info-sign"/>
+				</a>
+            </td>
           </tr>
         {% endfor %}
       {% else %}
