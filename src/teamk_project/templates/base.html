@@ -40,18 +40,29 @@
 						{% if user.is_authenticated %}  
 						<div class="btn-group" style="position: absolute; top:8px;">
 					  		{% if user|is_manager %} <button type="button" class="btn btn-primary">Manager</button>
+								{% if user|is_coach or user|is_parent %}
+									<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+										<span class="caret"></span>
+										<span class="sr-only">Toggle Dropdown</span>
+									</button>
+									<ul class="dropdown-menu" role="menu">
+										<li><a href="/bookingsystem/manager">Manager</a></li>
+										{% if user|is_coach %}<li><a href="/bookingsystem/coach">Coach</a></li>{% endif %}
+										{% if user|is_parent %}<li><a href="/bookingsystem/parent">Parent</a></li>{% endif %}
+									</ul>
+								{% endif %}
 					    	{% elif user|is_coach %} <button type="button" class="btn btn-primary">Coach</button>
+								{% if user|is_parent %}
+								<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+									<span class="caret"></span>
+									<span class="sr-only">Toggle Dropdown</span>
+								</button>
+								<ul class="dropdown-menu" role="menu">
+									<li><a href="/bookingsystem/coach">Coach</a></li>
+									<li><a href="/bookingsystem/parent">Parent</a></li>
+								</ul>
+								{% endif %}
 					     	{% elif user|is_parent %} <button type="button" class="btn btn-primary">Parent</button>{% endif %}
-							<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-								<span class="caret"></span>
-								<span class="sr-only">Toggle Dropdown</span>
-							</button>
-							<ul class="dropdown-menu" role="menu">
-								{% if user|is_manager %}<li><a href="/bookingsystem/manager">Manager</a></li>{% endif %}
-								{% if user|is_coach %}<li><a href="/bookingsystem/coach">Coach</a></li>{% endif %}
-								{% if user|is_parent %}<li><a href="/bookingsystem/parent">Parent</a></li>{% endif %}
-
-							</ul>
 						</div>{% endif %}
 
 						
