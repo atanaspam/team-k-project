@@ -3,6 +3,11 @@ Sports Facilities Management <sup>pending better name</sup>
 
 A web app to manage the running and management of sports facilities and camps over varying periods of time.
 
+Web Site
+--------
+
+* (http://projekt.imlach.co.uk:8000/)
+
 Short term TODO's
 -----------------
 

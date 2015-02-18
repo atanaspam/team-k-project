@@ -3,36 +3,57 @@
 {% block sidebarNav %}
 {% include "sidebarNav/manager.html" %}
 {% endblock %}
-<!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
-<!-- 	EACH OF THE RESULTS SHOULD BE ENCODED INTO A HIPERLINK AND  -->
-<!-- 	THIS HYPERLINK SHOULD POINT TO THE PAGE THAT IS RESPONSIBLE -->
-<!-- 	FOR THE KID's PERSONAL INFORMATION							-->
-<!-- 																-->
-<!-- 	ALSO WE NEED ALL THE BUTTONS THAT WOULD POINT TO THE REST   -->
-<!-- 	OF THE FUNCTIONALITY PLACED AND POINTING TO THE CORRECT URL -->
-<!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
+
+{% comment %}
+--------------------------------------------------------------------------------
+---                               TODO'S                                     ---
+--------------------------------------------------------------------------------
+
+  * Reallocate and add appropriate spacing to the widgets of the form.
+  * Get rid or do something else with the submit button at the bottom of the code
+  * We need to totally rework the second part of the Block creation page.
+
+
+{% endcomment %}
 
 {% block mainArea %}
 
 <!-- main area -->
 <div class="col-xs-12 col-sm-8" data-spy="scroll" data-target="#sidebar-nav">
-          
-          
+
         <!-- cofigure block name start and end -->
           <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title">Block Details</h3>
             </div>
             <div class="panel-body">
+              <form id="block_form" method="post" action="/bookingsystem/manager/test.html">
+                {% csrf_token %}
+
+                 {{form.begindate.help_text}}  {{form.begindate}}
+                {{form.enddate.help_text}}  {{form.enddate}}
+                {{form.label.help_text}}  {{form.label}}
+                {{form.type.help_text}}  {{form.type}}
+
+                 <input type="submit" name="submit" value="Create Block" />
+
+              </form>
+
+            {% comment %}
+
+**** This is not cool :(  ****
+
+
+    <input type="submit" name="submit" value="Create Category" />
+  </form>
 
               <input type="text" class="form-control" name="blockname" placeholder="Block Name" aria-describedby="basic-addon1">
-              
+
               <div class="btn-group" >
                   <button type="button" class="btn btn-primary">Start Date</button>
                   <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                     <span class="caret"></span>
-                    {% if users %}
-                      {% for user in users %}
+
                     <span class="sr-only">Date List</span>
                   </button>
                   <ul class="dropdown-menu" role="menu">
@@ -45,8 +66,7 @@
                   <button type="button" class="btn btn-primary">End Date</button>
                   <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                     <span class="caret"></span>
-                    {% if users %}
-                      {% for user in users %}
+
                     <span class="sr-only">Date List</span>
                   </button>
                   <ul class="dropdown-menu" role="menu">
@@ -59,8 +79,7 @@
                   <button type="button" class="btn btn-primary">Age Group</button>
                   <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                     <span class="caret"></span>
-                    {% if users %}
-                      {% for user in users %}
+
                     <span class="sr-only">Age Group List</span>
                   </button>
                   <ul class="dropdown-menu" role="menu">
@@ -70,8 +89,11 @@
               </div>
 
           </div>
+          {% endcomment %}
 
-          <!-- select bookings checkboxes --> 
+
+
+          <!-- select bookings checkboxes -->
             <div class="panel-heading">
               <h3 class="panel-title">Weekly Sessions (Morning or Full Days)</h3>
             </div>
@@ -260,20 +282,20 @@
 
               </fieldset>
 
-            </div> 
+            </div>
 
         </div><!-- /.col-xs-12 main -->
 
+        {% comment %}
         <INPUT Type="button" class="btn btn-default" VALUE="Cancel" ONCLICK="window.location.href='sessions.html'"/>
-        <!-- TODO: give the button a submit function -->
-        <!-- submit block button -->
           <a class="studentLabel" href="">
-            <button class="btn btn-default" type="button">  
+            <button class="btn btn-default" type="button">
               <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
               Add New Block
             </button>
           </a>
+          {% endcomment %}
 
 
-            
+
 {% endblock %}

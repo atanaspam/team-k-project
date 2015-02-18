@@ -9,12 +9,29 @@ from django import forms
 from django.contrib.auth import logout
 from django.db import models
 from django.db.models import Max
+from bookingsystem.forms import BlockForm, SessionForm1 ##########################
 import datetime
 
 approvalHistory = []
 i = 0
 lastSessionID = -1
 lastID = -1
+lastBlockID = -1
+
+
+def getLastSessionID():
+	global lastSessionID
+	if (lastSessionID == -1):
+		lastSessionID = Session.objects.all().aggregate(Max('sessionid')).get("sessionid__max")
+	lastSessionID = lastSessionID + 1
+	return lastSessionID
+
+def getLastBlockID():
+	global lastBlockID
+	if (lastBlockID == -1):
+		lastBlockID = Block.objects.all().aggregate(Max('blockid')).get("blockid__max")
+	lastBlockID = lastBlockID + 1
+	return lastBlockID
 
 @login_required
 def index(request):
@@ -63,10 +80,6 @@ def managerIndex(request):
 	context = RequestContext(request)
 	parent = request.user
 	##			PENDING SESSIONS RETRIEVAL		##
-		#sessions = UserSelectsSession.objects.filter(status = 'P').values_list('user_uid')
-		#sessions1 = UserSelectsSession.objects.filter(status = 'P').values_list('session_sessionid')
-		#users = Client.objects.filter(uid__in=sessions)
-		#sessionDetails = Session.objects.filter(sessionid__in = sessions1)
 	pendingSessions = UserSelectsSession.objects.filter(status = 'P')
 	##			PENDING PAYERS RETRIEVAL		##
 	pendingPayments = Payment.objects.filter(haspayed=0)
@@ -74,7 +87,6 @@ def managerIndex(request):
 	nextArrivalDay = UserSelectsSession.objects.filter(user_uid__in=pendingUsers)
 		#pendingUsers = Client.objects.filter(payment__usertopay=nonPaidUsers).select_related()
 		#paymentInfo = Payment.objects.filter(haspayed = '0')
-
 	## 			DATA COMMUNICATION				##
 	context_dict={'parent':parent}
 	context_dict['pending'] = pendingSessions
@@ -91,38 +103,24 @@ def markPaid(request):
 	parent = request.user
 	context_dict = {}
 
-
 	if request.method == 'POST':
 		for i in request.POST.getlist('kidPaid'):
 			Payment.objects.filter(usertopay=i).update(haspayed=True)
 			print i
 
-
-		context_dict['paymentMade'] = True;
-
-
+		context_dict['paymentMade'] = True
 	##			PENDING SESSIONS RETRIEVAL		##
-		#sessions = UserSelectsSession.objects.filter(status = 'P').values_list('user_uid')
-		#sessions1 = UserSelectsSession.objects.filter(status = 'P').values_list('session_sessionid')
-		#users = Client.objects.filter(uid__in=sessions)
-		#sessionDetails = Session.objects.filter(sessionid__in = sessions1)
 	pendingSessions = UserSelectsSession.objects.filter(status = 'P')
 	##			PENDING PAYERS RETRIEVAL		##
 	pendingPayments = Payment.objects.filter(haspayed=0)
 	pendingUsers = pendingPayments.values_list('usertopay')
 	nextArrivalDay = UserSelectsSession.objects.filter(user_uid__in=pendingUsers)
-		#pendingUsers = Client.objects.filter(payment__usertopay=nonPaidUsers).select_related()
-		#paymentInfo = Payment.objects.filter(haspayed = '0')
-
 	## 			DATA COMMUNICATION				##
 	context_dict['parent'] = parent
 	context_dict['pending'] = pendingSessions
 	context_dict['nextarrivalday'] = nextArrivalDay
 	context_dict['payments'] = pendingPayments
 	checked = request.POST.getlist("checked")
-
-
-
 
 	return render_to_response('manager/index.html', context_dict, context)
 
@@ -157,6 +155,16 @@ def managerSessions(request):
 	#info = sessionInfo | venueInfo
 	context_dict={'sessions':sessionInfo}
 	return render_to_response('manager/sessions.html', context_dict, context)
+
+@login_required
+@user_passes_test(is_manager)
+def managerBlocks(request):
+	context = RequestContext(request)
+	blockInfo = Block.objects.all()
+	#venueInfo = SubvenueUsedforSession.objects.filter(session_sessionid__in=sessionInfo.values_list('sessionid'))
+	#info = sessionInfo | venueInfo
+	context_dict={'blocks':blockInfo}
+	return render_to_response('manager/blocks.html', context_dict, context)
 
 @login_required
 @user_passes_test(is_manager)
@@ -236,8 +244,6 @@ def paypalConfirm(request):
 	context_dict['children']= children
 	context_dict['parent'] = user
 
-
-
 	## !!!!!kick any user out that shouldn't be here
 	#if request.META['HTTP_REFERER'] != "paypal.com":
 	#	logout(request)
@@ -250,10 +256,6 @@ def paypalConfirm(request):
 		if i:
 			Payment.objects.filter(usertopay__in=i).update(haspayed=True)
 			return render_to_response('parent/index.html', context_dict, context)
-
-
-
-
 	moneyToPay = Payment.objects.filter(usertopay__in=children)
 
 	context_dict['payments'] = moneyToPay
@@ -354,16 +356,6 @@ def bookSessions1(request, blockID, uID):
  	context_dict['child'] = child
  	return render_to_response('parent/bookSessions.html', context_dict, context)
 
-# def bookSessions2(request, num):
-# 	context = RequestContext(request)
-# 	owner = Block.objects.get(blockid=num)
-# 	sessions = Session.objects.filter( Q(begintime__gte=datetime.datetime.now() ) & Q(begintime__lte=owner.enddate))
-# 	context_dict = {'sessions': sessions}
-# 	return render_to_response('parent/bookSessions.html', context_dict, context)
-
-###################################################################################
-####				Child Profiles depening on the uid passed					###
-###################################################################################
 
 @login_required
 @user_passes_test(is_parent)
@@ -397,9 +389,9 @@ def changeChild(request):
 
 	return redirect('/bookingsystem/parent/childrenList.html')
 
-###################################################################################
-####							Adding new Child								###
-###################################################################################
+################################################################################
+####												Adding new Child	 															 ###
+################################################################################
 
 @login_required
 @user_passes_test(is_parent)
@@ -492,12 +484,9 @@ def applicationApproved(request):
 	    		session.save()
 	return HttpResponse('Success!')
 
-################################################################################
-#													Not Yet Working																			 #
-################################################################################
+@login_required
 @user_passes_test(is_manager)
 def sessionInfo(request, sessionID):
-	#print sessionID
 	context = RequestContext(request)
 	user = request.user
 	# sessionID = None
@@ -522,37 +511,82 @@ def sessionInfo(request, sessionID):
 def addSession(request):
 	context = RequestContext(request)
 	context_dict={}
-	year_dropdown = []
 
-	if request.method == "POST":
-		global lastSessionID
+	# A HTTP POST?
+	if request.method == 'POST':
+		form = SessionForm1(request.POST)
+		print form.begintime
+		# Have we been provided with a valid form?
+		if form.is_valid():
+			session=form.save(commit=False)
+			session.sessionid = getLastSessionID()
+			print session.begintime
 
-		# THIS NEED TO BE CHANGED TO AUTOINCREMENT IN THE DATABASE!
-		if (lastSessionID == -1):
-			lastSessionID = Session.objects.all().aggregate(Max('sessionid')).get("sessionid__max")
-
-		lastSessionID = lastSessionID + 1
-		try:
-
-			f_sessionid = lastSessionID
-			f_duration = request.POST.get("duration", "")
-			f_begintime = request.POST.get("begintime", "")
-			f_endtime = request.POST.get("endtime", "")
-			block_blockid = int(request.POST.get("block_blockid", ""))
-			f_block_blockid = Block.objects.get(blockid=block_blockid)
-			f_capacity = request.POST.get("capacity", "")
-			f_agegroup = request.POST.get("agegroup", "")
-			f_skillgroup = request.POST.get("skillgroup", "")
-			f_isfull = request.POST.get("isfull", "")
-			# VALIDATION HERE!!!
-
-			p = Session.objects.get_or_create(sessionid=f_sessionid, duration=f_duration, begintime=f_begintime, endtime=f_endtime, block_blockid=f_block_blockid, capacity=f_capacity, agegroup=f_agegroup, skillgroup=f_skillgroup, isfull=f_isfull )
-		#return redirect('/bookingsystem/manager/confirmed.html')
-		except:
-			return redirect('/fail.html')
-		return redirect('/success.html')
+			# Now save to the DB block.save()
+			print session.begintime
+			# Redirect on success
+			return redirect('/success.html')
+		else:
+			# The supplied form contained errors - just print them to the terminal.
+			#print form.begintime
+			print form.errors
 	else:
-		return render_to_response('manager/addSession.html', context_dict, context)
+		# If the request was not a POST, display the form to enter details.
+		form = SessionForm1()
+	return render_to_response('manager/addSession.html', {'form': form}, context)
+
+	# if request.method == "POST":
+	# 	global lastSessionID
+
+	# 	# THIS NEED TO BE CHANGED TO AUTOINCREMENT IN THE DATABASE!
+	# 	if (lastSessionID == -1):
+	# 		lastSessionID = Session.objects.all().aggregate(Max('sessionid')).get("sessionid__max")
+
+	# 	lastSessionID = lastSessionID + 1
+	# 	try:
+
+	# 		f_sessionid = lastSessionID
+	# 		f_duration = request.POST.get("duration", "")
+	# 		f_begintime = request.POST.get("begintime", "")
+	# 		f_endtime = request.POST.get("endtime", "")
+	# 		block_blockid = int(request.POST.get("block_blockid", ""))
+	# 		f_block_blockid = Block.objects.get(blockid=block_blockid)
+	# 		f_capacity = request.POST.get("capacity", "")
+	# 		f_agegroup = request.POST.get("agegroup", "")
+	# 		f_skillgroup = request.POST.get("skillgroup", "")
+	# 		f_isfull = request.POST.get("isfull", "")
+	# 		# VALIDATION HERE!!!
+
+	# 		p = Session.objects.get_or_create(sessionid=f_sessionid, duration=f_duration, begintime=f_begintime, endtime=f_endtime, block_blockid=f_block_blockid, capacity=f_capacity, agegroup=f_agegroup, skillgroup=f_skillgroup, isfull=f_isfull )
+	# 	#return redirect('/bookingsystem/manager/confirmed.html')
+	# 	except:
+	# 		return redirect('/fail.html')
+	# 	return redirect('/success.html')
+	# else:
+	# 	return render_to_response('manager/addSession.html', context_dict, context)
+
+@login_required
+@user_passes_test(is_manager)
+def addBlock(request):
+	context = RequestContext(request)
+	# A HTTP POST?
+	if request.method == 'POST':
+		form = BlockForm(request.POST)
+		# Have we been provided with a valid form?
+		if form.is_valid():
+			block=form.save(commit=False)
+			block.blockid = getLastBlockID()
+			# Now save to the DB block.save()
+			print block.begindate
+			# Redirect on success
+			return redirect('/success.html')
+		else:
+			# The supplied form contained errors - just print them to the terminal.
+			print form.errors
+	else:
+		# If the request was not a POST, display the form to enter details.
+		form = BlockForm()
+	return render_to_response('manager/addBlock.html', {'form': form}, context)
 
 
 

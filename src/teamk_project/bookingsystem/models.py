@@ -27,12 +27,19 @@ class Address(models.Model):
     class Meta:
         db_table = 'address'
 
+TYPE_CHOICES = (
+    ('Morning', 'Morning'),
+    ('Afternoon', 'Afternoon'),
+    ('Week', 'Week'),
+    ('Season', 'Season'),
+)
+
 class Block(models.Model):
     blockid = models.IntegerField(primary_key=True, db_column='BlockID') # Field name made lowercase.
     begindate = models.DateField(db_column='beginDate') # Field name made lowercase.
     enddate = models.DateField(db_column='endDate') # Field name made lowercase.
     label = models.CharField(max_length=45, blank=True)
-    type = models.CharField(max_length=45)
+    type = models.CharField(max_length=45, choices = TYPE_CHOICES)
     class Meta:
         db_table = 'block'
 
@@ -105,9 +112,17 @@ class Paymenttype(models.Model):
     class Meta:
         db_table = 'paymenttype'
 
+DURATION_TYPES = (
+        ('0:30', '30 minutes'),
+        ('1:00', '1 hour'),
+        ('1:30', '1:30 hours'),
+        ('2:00', '2 hours'),
+        ('-1', 'Other'),
+        )
+
 class Session(models.Model):
     sessionid = models.IntegerField(primary_key=True, db_column='sessionID') # Field name made lowercase
-    duration = models.CharField(max_length=45, blank=True)
+    duration = models.CharField(max_length=45, blank=True, choices=DURATION_TYPES)
     begintime = models.DateTimeField(null=True, db_column='beginTime', blank=True) # Field name made lowercase.
     endtime = models.DateTimeField(null=True, db_column='endTime', blank=True) # Field name made lowercase.
     block_blockid = models.ForeignKey(Block, db_column='Block_BlockID') # Field name made lowercase.
