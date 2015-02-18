@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib import auth
+from bookingsystem.forms import RegisterForm
 
 def login(request):
     if request.user.is_authenticated():
@@ -58,16 +59,25 @@ def login_view(request):
     	return HttpResponseRedirect('/invalid.html')
 
 def register(request):
+    context = RequestContext(request)
+    # A HTTP POST?
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = RegisterForm(request.POST)
+        # Have we been provided with a valid form?
         if form.is_valid():
-            new_user = form.save()
-            return HttpResponseRedirect("/")
+            user=form.save(commit=False)
+            #user.blockid = getLastBlockID()
+            # Now save to the DB block.save()
+            print user.username
+            # Redirect on success
+            return redirect('/success.html')
+        else:
+            # The supplied form contained errors - just print them to the terminal.
+            print form.errors
     else:
-        form = UserCreationForm()
-    return render(request, "register.html", {
-        'form': form,
-    })
+        # If the request was not a POST, display the form to enter details.
+        form = RegisterForm()
+    return render_to_response('register.html', {'form': form}, context)
 
 def logout(request):
     auth.logout(request)

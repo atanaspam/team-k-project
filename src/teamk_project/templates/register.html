@@ -8,9 +8,15 @@
     <h3 class="panel-title">Registration form</h3>
   </div>
   <div class="panel-body">
-  
-  <form action="" method="post">{% csrf_token %} 
-      {{ form.as_p }}
+
+  <form action="" method="post">
+  	{% csrf_token %}
+      {{form.username.help_text}} {{ form.username }}
+      {{form.first_name.help_text}} {{form.first_name}}
+      {{form.last_name.help_text}} {{form.last_name}}
+      {{form.email.help_text}} {{form.email}}
+      {{form.password.help_text}} {{form.password}}
+
       <input class="btn btn-default" type="submit" value="Create Account" />
   </form>
 

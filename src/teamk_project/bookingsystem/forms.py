@@ -3,6 +3,7 @@ from bookingsystem.models import Block, Session, TYPE_CHOICES
 from django.forms import widgets
 from datetime import date, time
 from django.forms.extras.widgets import SelectDateWidget
+from django.contrib.auth.models import User
 
 import re
 from django.forms.extras.widgets import SelectDateWidget
@@ -269,6 +270,16 @@ class SessionForm1(forms.ModelForm):
     class Meta:
         model = Session
         fields = ('begindate', 'begintime', 'endtime', 'capacity', 'agegroup', 'skillgroup')
+
+class RegisterForm(forms.ModelForm):
+    username = forms.CharField(help_text="Username:")
+    first_name = forms.CharField(help_text="First Name:")
+    last_name = forms.CharField(help_text="Last Name:")
+    email = forms.CharField(help_text="Email:")
+    password = forms.PasswordInput()
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'last_name', 'email', 'password')
 
 
 
