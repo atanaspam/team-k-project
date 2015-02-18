@@ -25,7 +25,7 @@ RE_TIME = re.compile(time_pattern)
 # The following are just more readable ways to access re.matched groups:
 HOURS = 0
 MINUTES = 1
-#SECONDS = 3
+SECONDS = 3
 MERIDIEM = 4
 
 class SelectTimeWidget(Widget):
@@ -173,9 +173,9 @@ class SelectTimeWidget(Widget):
            # print h + m + s + 'AAA'
             return '%s:%s:%s' % (h, m, s)
         #print '%s:%s:%s' % (h, m, s)
-        print str(time(int(h), int(m)))
+        #print str(time(int(h), int(m)))
         #return str(time(int(h), int(m)))
-        print data.get(name, None)
+        #print data.get(name, None)
         return data.get(name, None)
 
 class DateSelectorWidget(widgets.MultiWidget):
@@ -242,8 +242,9 @@ class SplitSelectDateTimeWidget(widgets.MultiWidget):
         rendered_widgets.insert(-1, '<br/>')
         return u''.join(rendered_widgets)
 
-
-
+################################################################################
+#### TO BE REMOVED.
+################################################################################
 class SessionForm(forms.ModelForm):
 
     duration = forms.Select()

@@ -515,7 +515,6 @@ def addSession(request):
 	# A HTTP POST?
 	if request.method == 'POST':
 		form = SessionForm1(request.POST)
-		print form.begintime
 		# Have we been provided with a valid form?
 		if form.is_valid():
 			session=form.save(commit=False)
@@ -523,7 +522,6 @@ def addSession(request):
 			print session.begintime
 
 			# Now save to the DB block.save()
-			print session.begintime
 			# Redirect on success
 			return redirect('/success.html')
 		else:
