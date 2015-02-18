@@ -37,40 +37,48 @@
 
   <div class="panel-body">
     <!-- list of sessions-->
-    <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
-      <thead>
-        <tr>
-          <th>Begin Date</th>
-          <th>End Date</th>
-          <th>Label</th>
-          <th>Type</th>
-          <th>Price</th>
-        </tr>
-      </thead>
-      <!-- change this to get block information rather than sessions -->
-      {% if blocks%}
-        {% for block in blocks %}
-
-        <tbody>
-          <tr class="studentLabel">
-          <a class="studentLabel" href="childProfile.html"></a>
-            <td>{{block.begindate|date:"D, d M y"}}</td>
-            <td>{{block.enddate|date:"D, d M y"}}</td>
-            <td>{{block.label}}</td>
-            <td>{{block.type}}</td>
+    <div class="table-responsive">
+      <table id="myTableBlock" class="table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+            <th>Begin Date</th>
+            <th>End Date</th>
+            <th>Label</th>
+            <th>Type</th>
+            <th>Price</th>
           </tr>
-        {% endfor %}
-      {% else %}
-        There are no Sessions or an error has occurred.
-      {% endif %}
+        </thead>
+        <!-- change this to get block information rather than sessions -->
+        {% if blocks%}
+          {% for block in blocks %}
+
+          <tbody>
+            <tr class="studentLabel">
+            <a class="studentLabel table" href="childProfile.html"></a>
+              <td>{{block.begindate|date:"D, d M y"}}</td>
+              <td>{{block.enddate|date:"D, d M y"}}</td>
+              <td>{{block.label}}</td>
+              <td>{{block.type}}</td>
+              <td>TODO</td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          There are no Sessions or an error has occurred.
+        {% endif %}
 
 
-      </tbody>
-    </table>
+          </tbody>
+        </table>
 
+      </div> <!-- end table div -->
+    </div> <!-- end panel div -->
+ </div><!-- end block list-->
 
-    </div>
- </div><!--/.panel end block list-->
-
+<!--make table responsive-->
+<script>
+$(document).ready(function(){
+    $('#myTableBlock').dataTable();
+});
+</script>
 
 {% endblock %}
