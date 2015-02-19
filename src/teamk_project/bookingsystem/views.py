@@ -420,11 +420,8 @@ def childProfile(request, id):
 		form = EditPersonalDetailsForm()
 		context_dict['form'] = form
 		context_dict['child'] = child
-<<<<<<< HEAD
 		return render_to_response('parent/childProfile.html', context_dict, context)
 
-=======
-		return render_to_response('parent/editChildProfile.html', context_dict, context)
 
 @login_required
 @user_passes_test(is_parent)
