@@ -1,7 +1,7 @@
 from django import forms
 from bookingsystem.models import Block, Session, Client
 from django.forms import widgets
-from datetime import date, time
+from datetime import date, time, timedelta
 from django.forms.extras.widgets import SelectDateWidget
 from django.contrib.auth.models import User
 
@@ -224,6 +224,28 @@ class BlockForm(forms.ModelForm):
         # Provide an association between the ModelForm and a model
         model = Block
         fields = ('begindate', 'enddate', 'label', 'type')
+
+class WeekBlockForm(forms.ModelForm):
+
+    # Get the next Monday
+    today = date.today()
+    today += timedelta(days=-today.weekday())
+
+    WEEK_CHOICES = []
+    # Get the next 20 Mondays and add them to the select Field
+    for i in range(0,20):
+        today += timedelta(weeks=1)
+        WEEK_CHOICES += [(today, today.strftime("%d/%m/%y"))]
+    #print WEEK_CHOICES
+
+    #blockid = forms.IntegerField()
+    begindate = forms.DateField(widget=forms.Select(choices=WEEK_CHOICES), help_text="Beginning of the block")
+    label = forms.CharField(max_length=40, help_text="User Friendly name.")
+    # An inline class to provide additional information on the form.
+    class Meta:
+        # Provide an association between the ModelForm and a model
+        model = Block
+        fields = ('begindate', 'label')
 
 class SplitSelectDateTimeWidget(widgets.MultiWidget):
 

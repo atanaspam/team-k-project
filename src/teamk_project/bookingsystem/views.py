@@ -9,8 +9,10 @@ from django import forms
 from django.contrib.auth import logout
 from django.db import models
 from django.db.models import Max
-from bookingsystem.forms import BlockForm, SessionForm1, EditPersonalDetailsForm, CreateChildForm ##########################
+from bookingsystem.forms import BlockForm, SessionForm1, EditPersonalDetailsForm, CreateChildForm, WeekBlockForm ##########################
+from datetime import timedelta
 import datetime
+
 
 approvalHistory = []
 i = 0
@@ -85,7 +87,7 @@ def coachEditProfile(request):
 @user_passes_test(is_manager)
 def managerIndex(request):
 	context = RequestContext(request)
-	parent = request.user
+	manager = request.user
 	##			PENDING SESSIONS RETRIEVAL		##
 	pendingSessions = UserSelectsSession.objects.filter(status = 'P')
 	##			PENDING PAYERS RETRIEVAL		##
@@ -95,7 +97,7 @@ def managerIndex(request):
 		#pendingUsers = Client.objects.filter(payment__usertopay=nonPaidUsers).select_related()
 		#paymentInfo = Payment.objects.filter(haspayed = '0')
 	## 			DATA COMMUNICATION				##
-	context_dict={'parent':parent}
+	context_dict={'manager':manager}
 	context_dict['pending'] = pendingSessions
 	context_dict['nextarrivalday'] = nextArrivalDay
 	context_dict['payments'] = pendingPayments
@@ -660,11 +662,13 @@ def addBlock(request):
 	context = RequestContext(request)
 	# A HTTP POST?
 	if request.method == 'POST':
-		form = BlockForm(request.POST)
+		form = WeekBlockForm(request.POST)
 		# Have we been provided with a valid form?
 		if form.is_valid():
 			block=form.save(commit=False)
 			block.blockid = getLastBlockID()
+			block.enddate = block.begindate + timedelta(days = 6)
+			block.type = 'Week'
 			# Now save to the DB block.save()
 			print block.begindate
 			# Redirect on success
@@ -674,7 +678,7 @@ def addBlock(request):
 			print form.errors
 	else:
 		# If the request was not a POST, display the form to enter details.
-		form = BlockForm()
+		form = WeekBlockForm()
 	return render_to_response('manager/addBlock.html', {'form': form}, context)
 
 

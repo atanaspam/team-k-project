@@ -26,13 +26,13 @@
               <h3 class="panel-title">Block Details</h3>
             </div> <!-- end head-->
             <div class="panel-body">
-              <form id="block_form" method="post" action="/bookingsystem/manager/test.html">
+              <form id="block_form" method="post" action="/bookingsystem/manager/addBlock.html">
                 {% csrf_token %}
 
                 <p><td>{{form.begindate.help_text}} : {{form.begindate}}</p>
-                <p><td>{{form.enddate.help_text}} : {{form.enddate}}</p>
+                <!-- <p><td>{{form.enddate.help_text}} : {{form.enddate}}</p> -->
                 <p><td>{{form.label.help_text}} : {{form.label}}</p>
-                <p><td>{{form.type.help_text}} Type of Block:  {{form.type}}</p>
+                <!-- <p><td>{{form.type.help_text}} Type of Block:  {{form.type}}</p> -->
 
 
                 <input type="submit" class="btn btn-default" name="submit" value="Create Block" />
