@@ -60,20 +60,32 @@ def is_parent(user):
 def coachIndex(request):
 	context = RequestContext(request)
 	context_dict={}
+	today = datetime.date.today()
+	assignedSessions = Session.objects.filter(begintime__gte=today)
+	context_dict={'assignedSessions':assignedSessions}
 	return render_to_response('coach/index.html', context_dict, context)
 
 @login_required
 @user_passes_test(is_coach)
-def sessions(request):
+def sessions(request, id):
 	context = RequestContext(request)
 	context_dict={}
+	today = datetime.date.today()
+	assignedSessions = Session.objects.filter(begintime__gte=today)
+	context_dict={'assignedSessions':assignedSessions}
 	return render_to_response('coach/sessions.html', context_dict, context)
 
 @login_required
 @user_passes_test(is_coach)
-def attendance(request):
+def attendance(request, id):
 	context = RequestContext(request)
 	context_dict={}
+	# Get all children who are signed up to a particular session (id) #
+	children = Client.objects.all()[:10]
+	session = Session.objects.filter(sessionid=id)
+	context_dict={'children':children}
+	context_dict['s'] = session
+	print context_dict
 	return render_to_response('coach/attendance.html', context_dict, context)
 
 @login_required
