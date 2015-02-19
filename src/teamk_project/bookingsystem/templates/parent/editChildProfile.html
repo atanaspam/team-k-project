@@ -39,9 +39,7 @@
 		</div> <!-- end of list group-->
 	</div>
 </div> <!--panel-->
-{% with child.uid as id %}
-{% with id|stringformat:'s' as ID %}
-{% url 'bookingsystem.views.editChildProfile' as ecpUrl %}
+
 	<form action="/bookingsystem/parent/changeChild.html" method="post">{% csrf_token %}
 		<div class="panel panel-default"><!-- Personal Details -->
 			<div class="panel-heading">
@@ -52,17 +50,19 @@
 			<div class="panel-body"><!-- fields -->
 				<!-- Name -->
 				<div class="input-group">
-					<input type="text" class="form-control" name="firstname" value="{{ child.firstname }}" aria-describedby="basic-addon2" readonly>
-					<input type="text" class="form-control" name="lastname" value="{{ child.lastname }}" aria-describedby="basic-addon1" readonly>
+					<input type="text" class="form-control" name="firstname" value="{{ child.firstname }}" aria-describedby="basic-addon2">
+					<input type="text" class="form-control" name="lastname" value="{{ child.lastname }}" aria-describedby="basic-addon1">
 				</div>
 
 				<div class="input-group">
 					<span class="input-group-addon">Gender</span>
 					<select name="genderid">
 						{% if child.genderid = 1 %}
-					  		<option value=0 selected>Male</option>
+							<option value=0>Female</option>
+					  		<option value=1 selected>Male</option>
 						{% else %}
 							<option value=0 selected>Female</option>
+					  		<option value=1>Male</option>
 						{% endif %}
 					</select>
 				</div>
@@ -70,7 +70,7 @@
 				<!-- Date of Birth -->
 				<div class="input-group">
 					<span class="input-group-addon" id="basic-addon1">Age</span>
-					<input type="text" class="form-control" name="age" value="{{ child.age }}" aria-describedby="basic-addon1" readonly>
+					<input type="text" class="form-control" name="age" value="{{ child.age }}" aria-describedby="basic-addon1">
 				</div>
 
 			</div>
@@ -85,13 +85,13 @@
 	        	<!-- phone number -->
 				<div class="input-group">
 					<span class="input-group-addon" id="basic-addon1">#</span>
-					<input type="text" class="form-control" name="telephone" value="{{ child.telephone }}" aria-describedby="basic-addon1"readonly>
+					<input type="text" class="form-control" name="telephone" value="{{ child.telephone }}" aria-describedby="basic-addon1">
 				</div>
 
 				<!-- e-mail -->
 				<div class="input-group">
 					<span class="input-group-addon" id="basic-addon1">@</span>
-					<input type="text" class="form-control" name="email" value="{{ child.email }}" aria-describedby="basic-addon1" readonly>
+					<input type="text" class="form-control" name="email" value="{{ child.email }}" aria-describedby="basic-addon1">
 				</div>
 
 			</div>
@@ -111,20 +111,24 @@
 					<span class="input-group-btn">
 						<button class="btn btn-default" type="button">+</button>
 					</span>
-					<input type="text" class="form-control" name="medicalconditions" value="{{ child.medicalconditions }}" readonly>
+					<input type="text" class="form-control" name="medicalconditions" value="{{ child.medicalconditions }}">
 				</div><!-- /input-group -->
 			</div>
 		</div><!-- end of Medical Conditions -->
 
 		<input type="hidden" name="uid" value={{ child.uid }}>
-
-		<!-- Edit profile button -->
-		<span class="btn btn-default" type="button">
-          <a href={{ ecpUrl|add:ID }} style="color: #000000">
-            <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span>
-            Edit Profile
-          </a>
-      	</span>
+		{% with child.uid as id %}
+		{% with id|stringformat:'s' as ID %}
+		{% url 'bookingsystem.views.childProfile' as cpUrl %}
+		<!-- submit or cancel buttons -->
+		<!-- <INPUT Type="button" class="btn btn-default" VALUE="Cancel" ONCLICK="window.location.href='childrenList.html'"/> -->
+			<span class="btn btn-default" type="button">
+	          <a href={{ cpUrl|add:ID }} style="color: #000000">
+	            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+	            Cancel
+	          </a>
+	      	</span>
+		<INPUT Type="submit" class="btn btn-default" VALUE="Submit"/>
 {% endwith%}{%endwith%}
 
 	</forms>

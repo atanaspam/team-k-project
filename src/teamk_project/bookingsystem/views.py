@@ -378,10 +378,25 @@ def bookSessions1(request, blockID, uID):
  	context_dict['child'] = child
  	return render_to_response('parent/bookSessions.html', context_dict, context)
 
-
 @login_required
 @user_passes_test(is_parent)
 def childProfile(request, id):
+	context = RequestContext(request)
+	context_dict = {}
+	parentid = request.user.id
+	child = Client.objects.get(uid=id)
+	if request.method == 'POST':
+		form = EditPersonalDetailsForm(request.POST)
+		# If the request was not a POST, display the form to enter details.
+	form = EditPersonalDetailsForm()
+	context_dict['form'] = form
+	context_dict['child'] = child
+	return render_to_response('parent/childProfile.html', context_dict, context)		
+
+
+@login_required
+@user_passes_test(is_parent)
+def editChildProfile(request, id):
 	context = RequestContext(request)
 	context_dict = {}
 	parentid = request.user.id
@@ -405,7 +420,22 @@ def childProfile(request, id):
 		form = EditPersonalDetailsForm()
 		context_dict['form'] = form
 		context_dict['child'] = child
-		return render_to_response('parent/childProfile.html', context_dict, context)
+		return render_to_response('parent/editChildProfile.html', context_dict, context)
+		
+@login_required
+@user_passes_test(is_parent)
+def childProfile(request, id):
+	context = RequestContext(request)
+	context_dict = {}
+	parentid = request.user.id
+	child = Client.objects.get(uid=id)
+	if request.method == 'POST':
+		form = EditPersonalDetailsForm(request.POST)
+		# If the request was not a POST, display the form to enter details.
+	form = EditPersonalDetailsForm()
+	context_dict['form'] = form
+	context_dict['child'] = child
+	return render_to_response('parent/childProfile.html', context_dict, context)		
 
 @login_required
 @user_passes_test(is_parent)
