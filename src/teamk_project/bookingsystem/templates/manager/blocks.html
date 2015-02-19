@@ -51,11 +51,11 @@
         </thead>
         <!-- change this to get block information rather than sessions -->
         {% if blocks%}
+          <tbody>
           {% for block in blocks %}
 		  {% url 'bookingsystem.views.blockInfo' block.blockid as blockUrl %}   <!-- TODO  in views.py -->
-          <tbody>
+
             <tr class="studentLabel">
-            <a class="studentLabel table" href="childProfile.html"></a>
               <td>{{block.begindate|date:"D, d M y"}}</td>
               <td>{{block.enddate|date:"D, d M y"}}</td>
               <td>{{block.label}}</td>
