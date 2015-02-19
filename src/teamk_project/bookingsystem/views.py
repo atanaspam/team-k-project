@@ -495,34 +495,34 @@ def addNewChild(request):
 		return render_to_response('parent/addnewChild.html', context_dict, context)
 
 
-@login_required
-@user_passes_test(is_parent)
-def addChild(request):
-	if request.method == "POST":
-		global lastID
+# @login_required
+# @user_passes_test(is_parent)
+# def addChild(request):
+# 	if request.method == "POST":
+# 		global lastID
 
-		# THIS NEED TO BE CHANGED TO AUTOINCREMENT IN THE DATABASE!
-		if (lastID == -1):
-			lastID = Client.objects.all().aggregate(Max('uid')).get("uid__max")
+# 		# THIS NEED TO BE CHANGED TO AUTOINCREMENT IN THE DATABASE!
+# 		if (lastID == -1):
+# 			lastID = Client.objects.all().aggregate(Max('uid')).get("uid__max")
 
-		lastID = lastID + 1
+# 		lastID = lastID + 1
 
-		try:
-			f_uid = lastID
-			f_firstname = request.POST.get("firstname", "")
-			f_lastname = request.POST.get("lastname", "")
-			f_genderid = int(request.POST.get("genderid", ""))
-			f_age = request.POST.get("age", "")
-			f_telephone = request.POST.get("telephone", "")
-			f_email = request.POST.get("email", "")
-			f_medicalconditions = request.POST.get("medicalconditions", "")
-			f_belongsto = request.user.id
+# 		try:
+# 			f_uid = lastID
+# 			f_firstname = request.POST.get("firstname", "")
+# 			f_lastname = request.POST.get("lastname", "")
+# 			f_genderid = int(request.POST.get("genderid", ""))
+# 			f_age = request.POST.get("age", "")
+# 			f_telephone = request.POST.get("telephone", "")
+# 			f_email = request.POST.get("email", "")
+# 			f_medicalconditions = request.POST.get("medicalconditions", "")
+# 			f_belongsto = request.user.id
 
-			# VALIDATION HERE!!!
-			p = Client.objects.get_or_create(uid=f_uid, firstname=f_firstname, lastname=f_lastname, genderid=f_genderid, age=f_age, telephone=f_telephone, email=f_email, belongsto=f_belongsto, experiencelevel=0, managedby=0, ismember=0)
-		except:
-			return redirect('/fail.html')
-	return redirect('/success.html')
+# 			# VALIDATION HERE!!!
+# 			p = Client.objects.get_or_create(uid=f_uid, firstname=f_firstname, lastname=f_lastname, genderid=f_genderid, age=f_age, telephone=f_telephone, email=f_email, belongsto=f_belongsto, experiencelevel=0, managedby=0, ismember=0)
+# 		except:
+# 			return redirect('/fail.html')
+# 	return redirect('/success.html')
 
 ###################################################################################
 
@@ -669,6 +669,8 @@ def addBlock(request):
 			block.blockid = getLastBlockID()
 			block.enddate = block.begindate + timedelta(days = 6)
 			block.type = 'Week'
+
+
 			# Now save to the DB block.save()
 			print block.begindate
 			# Redirect on success
