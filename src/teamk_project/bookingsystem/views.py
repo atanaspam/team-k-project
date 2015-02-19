@@ -604,10 +604,17 @@ def sessionInfo(request, sessionID):
 	#     	if session:
 	#     		#print session.session_sessionid
 	#     		context_dict={'session':session}
+    
+    # Get all assigned coaches here!
+    # Add coaches to conext_dict!
+    
 	sessionDetails = Session.objects.get(sessionid=sessionID)
 	sessionUsers = UserSelectsSession.objects.filter(session_sessionid=sessionDetails.sessionid)
 	context_dict={'details': sessionDetails}
 	context_dict['users'] = sessionUsers
+	coaches = Client.objects.all()
+	context_dict['coaches'] = coaches[1:2]
+	context_dict['coaches2'] = coaches[10:20]
 	return render_to_response('manager/sessionInfo.html', context_dict, context)
 
 
