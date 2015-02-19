@@ -444,6 +444,9 @@ def childProfile(request, id):
 		context_dict['sessions'] = sessions
  		context_dict['child'] = child
  	return render_to_response('parent/childProfile.html', context_dict, context)
+<<<<<<< HEAD
+>>>>>>> FETCH_HEAD
+=======
 >>>>>>> FETCH_HEAD
 
 @login_required
