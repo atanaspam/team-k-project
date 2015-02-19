@@ -24,7 +24,7 @@
                 	<!-- list item -->
                 	<a href="childSessions.html" class="list-group-item clearfix">
                   		<span class="glyphicon glyphicon-file"></span>
-                    	{{session.begintime|date:"d M y"}} {{session.begintime|date:"d M y"}} - {{session.begintime|time:"H:i"}} , {{child.firstname}}
+                    	{{session.session_sessionid.begintime|date:"d M y"}} from {{session.session_sessionid.begintime|date:"g:i A"}} to {{session.session_sessionid.endtime|date:"g:i A"}} - {{session.user_uid.firstname}}
                   	  	<span class="pull-right">
                     		<button class="btn btn-xs btn-warning">
                       			<span class="glyphicon glyphicon-calendar"></span>
