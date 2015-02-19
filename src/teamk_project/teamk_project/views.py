@@ -7,7 +7,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib import auth
 from bookingsystem.forms import RegisterForm
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 
 def login(request):
     if request.user.is_authenticated():
@@ -71,6 +71,8 @@ def register(request):
             newUser = User.objects.create_user(user.username, user.email, user.password)
             newUser.first_name = user.first_name
             newUser.last_name = user.last_name
+            g = Group.objects.get(name='Parent')
+            g.user_set.add(newUser)
             newUser.save()
             #   print user.username
             # Redirect on success
