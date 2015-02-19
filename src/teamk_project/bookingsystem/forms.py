@@ -1,5 +1,5 @@
 from django import forms
-from bookingsystem.models import Block, Session, TYPE_CHOICES
+from bookingsystem.models import Block, Session, Client
 from django.forms import widgets
 from datetime import date, time
 from django.forms.extras.widgets import SelectDateWidget
@@ -281,6 +281,24 @@ class RegisterForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password')
+
+class EditPersonalDetailsForm(forms.ModelForm):
+    email = forms.EmailField(help_text="Email:")
+    telephone = forms.IntegerField(help_text="Telephone:")
+    class Meta:
+        model = Client
+        fields = ('email', 'telephone')
+
+class CreateChildForm(forms.ModelForm):
+    firstname = forms.CharField(help_text="First Name:")
+    lastname = forms.CharField(help_text="Surname:")
+    email = forms.CharField(help_text="Email:")
+    telephone = forms.IntegerField(help_text="Telephone:")
+    age = forms.IntegerField
+    genderid = forms.Select()
+    class Meta:
+        model = Client
+        fields = ('firstname', 'lastname', 'email', 'telephone', 'age', 'genderid')
 
 
 

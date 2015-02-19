@@ -12,9 +12,22 @@
 			<div class="panel-heading">
 				<h3 class="panel-title">Personal Details</h3>
 			</div>
+			<form action="/bookingsystem/parent/addNewChild.html" method="post">
+		    {% csrf_token %}
+					{{form.firstname.help_text}} {{form.firstname}}
+					{{form.lastname.help_text}} {{form.lastname}}
+          {{form.email.help_text}} {{form.email}}
+          {{form.telephone.help_text}} {{form.telephone}}
+          {{form.age.help_text}} {{form.age}}
+          {{form.genderid.help_text}} {{form.genderid}}
+
+
+
 
 		    <form action="/bookingsystem/parent/addNew.html" method="post">{% csrf_token %}
 			<div class="panel-body"><!-- fields -->
+
+			{% comment %}
 				<!-- Name -->
 				<div class="input-group">
 					<input type="text" class="form-control" name="firstname" placeholder="First Name" aria-describedby="basic-addon2">
@@ -36,6 +49,8 @@
 					<input type="text" class="form-control" name="age" placeholder="Age" aria-describedby="basic-addon1">
 				</div>
 
+				{% endcomment %}
+
 			</div>
 		</div> <!-- end of Personal Details -->
 
@@ -45,7 +60,7 @@
 			</div>
 
 			<div class="panel-body"><!-- fields -->
-	        	<!-- phone number -->
+	        {% comment %}
 				<div class="input-group">
 					<span class="input-group-addon" id="basic-addon1">#</span>
 					<input type="text" class="form-control" name="telephone" placeholder="Phone Number" aria-describedby="basic-addon1">
@@ -57,8 +72,21 @@
 					<input type="text" class="form-control" name="email" placeholder="e-mail" aria-describedby="basic-addon1">
 				</div>
 
+				{% endcomment %}
+
 			</div>
 		</div> <!-- end of Contact Details -->
+
+
+
+
+		<!-- Submit button -->
+		<input type="submit" name="submit" value="Create User" />
+
+
+
+
+
 
 
 		<!-- Medical Conditions -->
@@ -68,6 +96,8 @@
 			</div>
 
 			<div class="panel-body">
+
+
 				<!-- TODO: have to make this button add items-->
 				<!-- add body here -->
 				<div class="input-group">

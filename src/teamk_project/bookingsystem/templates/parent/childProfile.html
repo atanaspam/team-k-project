@@ -4,15 +4,33 @@
 {% include "sidebarNav/parent.html" %}
 {% endblock %}
 
-  <!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
-  <!-- QUERY THE DATABASE WITH THE BLOCKS FOR THE CORRESPONDING CHILD -->
-  <!-- POPULATE THE TABLE VIEW WITH AND MAKE EACH BLOCK LINK TO A PAGE-->
-  <!--                                                                -->
-  <!--      MAKE THE CHILD NAME APPEAR IN A BETTER WAY - LINE 23      -->
-  <!--  ALSO WE NEED TO CHANGE THE PLACE FOR THE PERSONAL INFORMATION -->
-  <!--                                                                -->
-  <!--                           ATANAS                               -->
-  <!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
+ {% comment %}
+
+ --------------------------------------------------------------------------------
+---                               TODO'S                                     ---
+--------------------------------------------------------------------------------
+
+  * Display personal information in a non-editable way first
+  * add a button edit data
+  * When the edit-data button is pressed additional fields that would allow
+  	data to be edited should appear
+
+ {% endcomment %}
+
+ {% comment %}
+
+ THOSE ARE THE ADDITIONAL FIELDS THAT SHOULD BE DISPLAYED WHEN THE EDIT PROFILE
+ BUTTON IS PRESSED.
+
+	<form action="/bookingsystem/parent/childProfile.html" method="post">
+	{% csrf_token %}
+
+ {{form.email.help_text}}  {{form.email}}
+ {{form.telephone.help_text}}  {{form.telephone}}
+
+	<input type="submit" name="submit" value="Submit" />
+
+ {% endcomment %}
 
   {% block mainArea %}
 
@@ -50,10 +68,6 @@
 	</div>
 </div> <!--panel-->
 
-<!-- TODO: ** add id's to retrieve data from textfields
-make sure the format of input is correct
-** fill textfields with child's information
-so the parent can edit them if needed-->
 	<form action="/bookingsystem/parent/changeChild.html" method="post">{% csrf_token %}
 		<div class="panel panel-default"><!-- Personal Details -->
 			<div class="panel-heading">

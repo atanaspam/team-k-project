@@ -9,7 +9,7 @@ from django import forms
 from django.contrib.auth import logout
 from django.db import models
 from django.db.models import Max
-from bookingsystem.forms import BlockForm, SessionForm1 ##########################
+from bookingsystem.forms import BlockForm, SessionForm1, EditPersonalDetailsForm, CreateChildForm ##########################
 import datetime
 
 approvalHistory = []
@@ -18,6 +18,13 @@ lastSessionID = -1
 lastID = -1
 lastBlockID = -1
 
+
+def getLastID():
+	global lastID
+	if (lastID == -1):
+		lastID = Client.objects.all().aggregate(Max('uid')).get("uid__max")
+	lastID = lastID + 1
+	return lastID
 
 def getLastSessionID():
 	global lastSessionID
@@ -378,13 +385,27 @@ def childProfile(request, id):
 	context = RequestContext(request)
 	context_dict = {}
 	parentid = request.user.id
-	try:
-		child = Client.objects.get(uid=id, belongsto=parentid)
-		if child:
-			context_dict['child'] = child
-			return render_to_response('parent/childProfile.html', context_dict, context)
-	except:
-		return redirect('/bookingsystem/parent/childrenList.html')
+	child = Client.objects.get(uid=id)
+
+	if request.method == 'POST':
+		form = EditPersonalDetailsForm(request.POST)
+		# Have we been provided with a valid form?
+		if form.is_valid():
+			info=form.save(commit=False)
+			child.telephone = info.telephone
+			child.email = info.email
+			child.save()
+			# Redirect on success
+			return redirect('/success.html')
+		else:
+			# The supplied form contained errors - just print them to the terminal.
+			print form.errors
+	else:
+		# If the request was not a POST, display the form to enter details.
+		form = EditPersonalDetailsForm()
+		context_dict['form'] = form
+		context_dict['child'] = child
+		return render_to_response('parent/childProfile.html', context_dict, context)
 
 @login_required
 @user_passes_test(is_parent)
@@ -412,10 +433,30 @@ def changeChild(request):
 @user_passes_test(is_parent)
 def addNewChild(request):
 	context = RequestContext(request)
-	context_dict={}
+	#context_dict={}
 	context_dict = {'parent': request.user}
 	#print lastID
-	return render_to_response('parent/addnewChild.html', context_dict, context)
+	if request.method == 'POST':
+		form = CreateChildForm(request.POST)
+		# Have we been provided with a valid form?
+		if form.is_valid():
+			info=form.save(commit=False)
+			info.uid = getLastID
+			info.ismember = 0
+			info.belongsto = request.user
+			print info
+			# info.save()
+			# Redirect on success
+			return redirect('/success.html')
+		else:
+			# The supplied form contained errors - just print them to the terminal.
+			print form.errors
+	else:
+		# If the request was not a POST, display the form to enter details.
+		form = CreateChildForm()
+		context_dict['form'] = form
+		return render_to_response('parent/addnewChild.html', context_dict, context)
+
 
 @login_required
 @user_passes_test(is_parent)

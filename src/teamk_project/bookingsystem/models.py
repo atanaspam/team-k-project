@@ -50,6 +50,11 @@ class BtmRank(models.Model):
     class Meta:
         db_table = 'btm_rank'
 
+GENDER_CHOICES = (
+	(1, 'Male'),
+	(0, 'Female')
+	)
+
 class Client(models.Model):
     uid = models.AutoField(primary_key=True, db_column='uID') # Field name made lowercase.
     firstname = models.CharField(max_length=45, db_column='firstName', blank=True) # Field name made lowercase.
@@ -60,7 +65,7 @@ class Client(models.Model):
     ismember = models.IntegerField(null=True, db_column='isMember', blank=True) # Field name made lowercase.
     managedby = models.IntegerField(null=True, db_column='managedBy', blank=True) # Field name made lowercase.
     belongsto = models.IntegerField(db_column='belongsTo') # Field name made lowercase.
-    genderid = models.IntegerField(null=True, db_column='genderID', blank=True) # Field name made lowercase.
+    genderid = models.IntegerField(null=True, db_column='genderID', blank=True, choices = GENDER_CHOICES) # Field name made lowercase.
     experiencelevel = models.IntegerField(db_column='experienceLevel') # Field name made lowercase.
     class Meta:
         db_table = 'client'
