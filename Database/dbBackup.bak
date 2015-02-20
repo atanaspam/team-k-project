@@ -1,0 +1,835 @@
+PRAGMA foreign_keys=OFF;
+BEGIN TRANSACTION;
+CREATE TABLE "address" (
+  "addressID" integer NOT NULL,
+  "city" varchar(45) DEFAULT NULL,
+  "country" varchar(45) DEFAULT NULL,
+  "street" varchar(45) DEFAULT NULL,
+  "number" integer DEFAULT NULL,
+  "label" varchar(45) DEFAULT NULL
+);
+INSERT INTO "address" VALUES(1,'Glasgow','United Kingdom','University avenue',56,'main address');
+CREATE TABLE "block" (
+  "BlockID" integer NOT NULL,
+  "beginDate" date NOT NULL,
+  "endDate" date NOT NULL,
+  "label" varchar(45) DEFAULT NULL,
+  "type" varchar(45) NOT NULL
+);
+INSERT INTO "block" VALUES(1,'2014-12-15','2014-12-15','Monday Morning','Morning');
+INSERT INTO "block" VALUES(2,'2014-12-15','2014-12-15','MondayAfternoon','Afternoon');
+INSERT INTO "block" VALUES(3,'2014-12-16','2014-12-16','Tuesday Morning','Morning');
+INSERT INTO "block" VALUES(4,'2014-12-16','2014-12-16','TuesdayAfternoon','Afternoon');
+INSERT INTO "block" VALUES(5,'2014-12-17','2014-12-17','Wednesday Morning','Morning');
+INSERT INTO "block" VALUES(6,'2014-12-17','2014-12-17','Wednesday Afternoon','Afternoon');
+INSERT INTO "block" VALUES(7,'2014-12-18','2014-12-18','Thursday Morning','Morning');
+INSERT INTO "block" VALUES(8,'2014-12-18','2014-12-18','Thursday Afternoon','Afternoon');
+INSERT INTO "block" VALUES(9,'2014-12-19','2014-12-19','Friday Morning','Morning');
+INSERT INTO "block" VALUES(10,'2014-12-19','2014-12-19','Friday Afternoon','Afternoon');
+INSERT INTO "block" VALUES(11,'2014-12-20','2014-12-20','Saturday Morning','Morning');
+INSERT INTO "block" VALUES(12,'2014-12-20','2014-12-20','Saturday Afternoon','Afternoon');
+INSERT INTO "block" VALUES(13,'2014-12-15','2014-12-21','Week n-1','Week');
+INSERT INTO "block" VALUES(14,'2014-12-22','2014-12-28','Week n','Week');
+INSERT INTO "block" VALUES(15,'2014-12-22','2014-12-22','Monday Morning','Morning');
+INSERT INTO "block" VALUES(16,'2014-12-22','2014-12-22','Monday Afternoon','Afternoon');
+INSERT INTO "block" VALUES(17,'2014-12-23','2014-12-23','Tuesday Morning','Morning');
+INSERT INTO "block" VALUES(18,'2014-12-23','2014-12-23','Tuesday Afternoon','Afternoon');
+INSERT INTO "block" VALUES(19,'2014-12-24','2014-12-24','Wednesday  Morning','Morning');
+INSERT INTO "block" VALUES(20,'2014-12-24','2014-12-24','Wednesday Afternoon','Afternoon');
+INSERT INTO "block" VALUES(21,'2014-12-25','2014-12-25','Thursday Morning','Morning');
+INSERT INTO "block" VALUES(22,'2014-12-25','2014-12-25','Thursday Afternoon','Afternoon');
+INSERT INTO "block" VALUES(23,'2014-12-26','2014-12-26','Friday Morning','Morning');
+INSERT INTO "block" VALUES(24,'2014-12-26','2014-12-26','Friday Afternoon','Afternoon');
+INSERT INTO "block" VALUES(25,'2014-12-27','2014-12-27','Saturday Morning','Morning');
+INSERT INTO "block" VALUES(26,'2014-12-27','2014-12-27','Saturday Afternoon','Afternoon');
+INSERT INTO "block" VALUES(27,'2015-01-19','2015-01-25','Week 1','Week');
+INSERT INTO "block" VALUES(28,'2015-01-19','2015-01-19','Monday Morning','Morning');
+INSERT INTO "block" VALUES(29,'2015-01-19','2015-01-19','Monday Afternoon','Afternoon');
+INSERT INTO "block" VALUES(30,'2015-01-20','2015-01-20','Tuesday Morning','Morning');
+INSERT INTO "block" VALUES(31,'2015-01-20','2015-01-20','Tuesday Afternoon','Afternoon');
+INSERT INTO "block" VALUES(32,'2015-01-21','2015-01-21','Wednesday Morning','Morning');
+INSERT INTO "block" VALUES(33,'2015-01-21','2015-01-21','Wednesday Afternoon','Afternoon');
+INSERT INTO "block" VALUES(34,'2015-01-22','2015-01-22','Thursday Morning','Morning');
+INSERT INTO "block" VALUES(35,'2015-01-22','2015-01-22','Thursday Afternoon','Afternoon');
+INSERT INTO "block" VALUES(36,'2015-01-23','2015-01-23','Friday Morning','Morning');
+INSERT INTO "block" VALUES(37,'2015-01-23','2015-01-23','Friday Afternoon','Afternoon');
+INSERT INTO "block" VALUES(38,'2015-01-24','2015-01-24','Saturday Morning','Morning');
+INSERT INTO "block" VALUES(39,'2015-01-24','2015-01-24','Saturday Afternoon','Afternoon');
+INSERT INTO "block" VALUES(40,'2015-01-26','2015-02-01','Week 2','Week');
+INSERT INTO "block" VALUES(41,'2015-01-26','2015-01-26','Monday Morning','Morning');
+INSERT INTO "block" VALUES(42,'2015-01-26','2015-01-26','Monday Afternoon','Afternoon');
+INSERT INTO "block" VALUES(43,'2015-01-27','2015-01-27','Tuesday Morning','Morning');
+INSERT INTO "block" VALUES(44,'2015-01-27','2015-01-27','Tuesday Afternoon','Afternoon');
+INSERT INTO "block" VALUES(45,'2015-01-28','2015-01-28','Wednesday Morning','Morning');
+INSERT INTO "block" VALUES(46,'2015-01-28','2015-01-28','Wednesday Afternoon','Afternoon');
+INSERT INTO "block" VALUES(47,'2015-01-29','2015-01-29','Thursday Morning','Morning');
+INSERT INTO "block" VALUES(48,'2015-01-29','2015-01-29','Thursday Afternoon','Afternoon');
+INSERT INTO "block" VALUES(49,'2015-01-30','2015-01-30','Friday Morning','Morning');
+INSERT INTO "block" VALUES(50,'2015-01-30','2015-01-30','Friday Afternoon','Afternoon');
+INSERT INTO "block" VALUES(51,'2015-01-31','2015-01-31','Saturday Morning','Morning');
+INSERT INTO "block" VALUES(52,'2015-01-31','2015-01-31','Saturday Afternoon','Afternoon');
+INSERT INTO "block" VALUES(53,'2015-02-02','2015-02-08','Week 3','Week');
+INSERT INTO "block" VALUES(54,'2015-02-02','2015-02-02','Monday Morning','Morning');
+INSERT INTO "block" VALUES(55,'2015-02-02','2015-02-02','Monday Afternoon','Afternoon');
+INSERT INTO "block" VALUES(56,'2015-02-03','2015-02-03','Tuesday Morning','Morning');
+INSERT INTO "block" VALUES(57,'2015-02-03','2015-02-03','Tuesday Afternoon','Afternoon');
+INSERT INTO "block" VALUES(58,'2015-02-04','2015-02-04','Wednesday Morning','Morning');
+INSERT INTO "block" VALUES(59,'2015-02-04','2015-02-04','Wednesday Afternoon','Afternoon');
+INSERT INTO "block" VALUES(60,'2015-02-05','2015-02-05','Thursday Morning','Morning');
+INSERT INTO "block" VALUES(61,'2015-02-05','2015-02-05','Thursday Afternoon','Afternoon');
+INSERT INTO "block" VALUES(62,'2015-02-06','2015-02-06','Friday Morning','Morning');
+INSERT INTO "block" VALUES(63,'2015-02-06','2015-02-06','Friday Afternoon','Afternoon');
+INSERT INTO "block" VALUES(64,'2015-02-07','2015-02-07','Saturday Morning','Morning');
+INSERT INTO "block" VALUES(65,'2015-02-07','2015-02-07','Saturday Afternoon','Afternoon');
+INSERT INTO "block" VALUES(66,'2015-02-09','2015-02-15','Week 4','Week');
+INSERT INTO "block" VALUES(67,'2015-02-09','2015-02-09','Monday Morning','Morning');
+INSERT INTO "block" VALUES(68,'2015-02-09','2015-02-09','Monday Afternoon','Afternoon');
+INSERT INTO "block" VALUES(69,'2015-02-10','2015-02-10','Tuesday Morning','Morning');
+INSERT INTO "block" VALUES(70,'2015-02-10','2015-02-10','Tuesday Afternoon','Afternoon');
+INSERT INTO "block" VALUES(71,'2015-02-11','2015-02-11','Wednesday Morning','Morning');
+INSERT INTO "block" VALUES(72,'2015-02-11','2015-02-11','Wednesday Afternoon','Afternoon');
+INSERT INTO "block" VALUES(73,'2015-02-12','2015-02-12','Thursday Morning','Morning');
+INSERT INTO "block" VALUES(74,'2015-02-12','2015-02-12','Thursday Afternoon','Afternoon');
+INSERT INTO "block" VALUES(75,'2015-02-13','2015-02-13','Friday Morning','Morning');
+INSERT INTO "block" VALUES(76,'2015-02-13','2015-02-13','Friday Afternoon','Afternoon');
+INSERT INTO "block" VALUES(77,'2015-02-14','2015-02-14','Saturday Morning','Morning');
+INSERT INTO "block" VALUES(78,'2015-02-14','2015-02-14','Saturday Afternoon','Afternoon');
+INSERT INTO "block" VALUES(79,'2015-02-16','2015-02-22','Week 5','Week');
+INSERT INTO "block" VALUES(80,'2015-02-23','2015-03-01','Week K','Week');
+CREATE TABLE "btm rank" (
+  "uID" integer NOT NULL,
+  "membershipNum" integer DEFAULT NULL,
+  "numOfPonts" integer DEFAULT NULL,
+  CONSTRAINT "uID" FOREIGN KEY ("uID") REFERENCES "client" ("uID") ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+INSERT INTO "btm rank" VALUES(1,123456789,100);
+INSERT INTO "btm rank" VALUES(2,132456789,20);
+INSERT INTO "btm rank" VALUES(3,142356789,34);
+INSERT INTO "btm rank" VALUES(4,152346789,11);
+INSERT INTO "btm rank" VALUES(5,162345789,76);
+INSERT INTO "btm rank" VALUES(6,172345689,55);
+INSERT INTO "btm rank" VALUES(7,182345679,23);
+INSERT INTO "btm rank" VALUES(8,192345678,0);
+INSERT INTO "btm rank" VALUES(9,124356789,1);
+INSERT INTO "btm rank" VALUES(10,125346789,-20);
+CREATE TABLE "client" (
+  "uID" integer NOT NULL,
+  "firstName" varchar(45) DEFAULT NULL,
+  "lastName" varchar(45) DEFAULT NULL ,
+  "email" varchar(45) DEFAULT NULL,
+  "telephone" bigint(20) DEFAULT NULL,
+  "age" integer DEFAULT NULL,
+  "isMember" integer DEFAULT NULL,
+  "managedBy" integer DEFAULT NULL,
+  "belongsTo" integer NOT NULL,
+  "genderID" integer DEFAULT NULL,
+  "experienceLevel" integer NOT NULL,
+  CONSTRAINT "fk_client_experienceLevel1" FOREIGN KEY ("experienceLevel") REFERENCES "experiencelevel" ("levelID") ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+INSERT INTO "client" VALUES(1,'Atanas ','Pamukchiev','burt.jules@tintired.info',6920000869,8,0,0,1,1,9);
+INSERT INTO "client" VALUES(2,'Jorge ','Strong','johnathon.silas.frederic@hope.edu',9925952894,15,0,0,15,61,1);
+INSERT INTO "client" VALUES(3,'Trisha','Childress','lucia.marta@money.me',3752410969,14,1,0,5,1,1);
+INSERT INTO "client" VALUES(4,'Mohamed ','Sims','sheree.carly@putquality.me',5079494990,15,1,0,1,1,2);
+INSERT INTO "client" VALUES(5,'Margo ','Shafer','garry.geoffrey@field.info',5884869039,13,1,0,1,1,1);
+INSERT INTO "client" VALUES(6,'Ezekiel ','Childs','deon@digestiondirection.me',6145256480,9,1,0,2,0,2);
+INSERT INTO "client" VALUES(7,'Ericka ','Duke','carmelo.barney.nestor@healthyhear.org',1006363469,17,0,0,1,1,3);
+INSERT INTO "client" VALUES(8,'Vicky ','Coffey','stuart.fredrick@ringriver.edu',2310430901,7,1,0,5,0,1);
+INSERT INTO "client" VALUES(9,'Catrina ','Ortega','dylan.chuck@kiss.info',3104981171,18,1,0,36,0,5);
+INSERT INTO "client" VALUES(10,'Gladys ','Britton','domingo.santos@healthy.me',7739120218,14,0,0,27,0,4);
+INSERT INTO "client" VALUES(11,'Krista ','Gonzalez','kurt.allan.nelson@woundwriting.info',1889529318,7,1,0,20,0,4);
+INSERT INTO "client" VALUES(12,'Hector ','Dixon','dee.winnie@breath.me',2716488017,6,1,0,12,1,5);
+INSERT INTO "client" VALUES(13,'Stacey ','Holley','tamra.aisha.wilda@straight.me',6325418616,18,0,0,57,0,9);
+INSERT INTO "client" VALUES(14,'Arleen ','Reilly','brigitte@writingwrong.edu',4285598932,12,0,0,34,1,2);
+INSERT INTO "client" VALUES(15,'Dwain ','Miranda','nathaniel@wood.org',4387881187,16,1,0,45,1,8);
+INSERT INTO "client" VALUES(16,'Iola ','Deleon','carmelo@soundsoup.org',9230718937,6,1,0,12,0,4);
+INSERT INTO "client" VALUES(17,'Frances ','Sawyer','patti@first.com',9387288723,6,0,0,28,0,7);
+INSERT INTO "client" VALUES(18,'Carmine ','Warren','werner.theo.geraldo@suddensugar.org',8392512936,18,0,0,87,0,6);
+INSERT INTO "client" VALUES(19,'Jeffry ','Carson','sonja.lila@talltaste.org',5438798984,11,0,0,23,0,5);
+INSERT INTO "client" VALUES(20,'Lon ','Huffman','felix.jimmie@position.info',4594176770,11,0,0,12,1,1);
+INSERT INTO "client" VALUES(21,'Beverley ','Fischer','graciela.imogene@sandsay.info',7157211283,13,1,0,70,0,2);
+INSERT INTO "client" VALUES(22,'Perry ','Jordan','johnny.earl.jimmy@sex.org',5662262975,8,0,0,73,1,1);
+INSERT INTO "client" VALUES(23,'Bret ','Rutherford','lauren.cathy@false.edu',9149145502,14,1,0,5,0,2);
+INSERT INTO "client" VALUES(24,'Doug ','Madden','edith.kim@touchtown.com',1604126505,6,0,0,71,1,3);
+INSERT INTO "client" VALUES(25,'Sonny ','Snider','vince.quincy.eddy@cookcopper.com',1999479435,18,0,0,55,1,1);
+INSERT INTO "client" VALUES(26,'Nellie ','Cash','lilia@behaviour.org',7602689351,10,1,0,3,1,5);
+INSERT INTO "client" VALUES(27,'Harriett ','Shaffer','claudia.jackie.marcia@still.org',2416224815,15,0,0,1,1,4);
+INSERT INTO "client" VALUES(28,'Brendon ','Calderon','scotty@thumbthunder.com',4184470083,13,1,0,80,0,4);
+INSERT INTO "client" VALUES(29,'Clement ','Saunders','morton.jonas.forest@flatflight.edu',7222260385,12,1,0,56,0,5);
+INSERT INTO "client" VALUES(30,'Elias ','Monroe','rosalinda@answerant.org',9409612404,11,0,0,9,0,9);
+INSERT INTO "client" VALUES(31,'Walter ','Moses','ross.virgil.andy@expansion.me',8120476356,9,0,0,9,1,2);
+INSERT INTO "client" VALUES(32,'Megan ','Hutchinson','teri.cristina@jewel.org',1168307510,17,0,0,15,1,8);
+INSERT INTO "client" VALUES(33,'Renee ','Sparks','dick@while.org',1117403540,12,0,0,29,0,4);
+INSERT INTO "client" VALUES(34,'Carl ','Anderson','frederick@have.com',6398894956,16,0,0,16,0,7);
+INSERT INTO "client" VALUES(35,'Marcelino ','Hastings','thanh.dillon.amado@measuremeat.org',6976600147,12,0,0,87,0,6);
+INSERT INTO "client" VALUES(36,'Lily ','Merrill','shelley@damagedanger.org',9856862707,6,0,0,28,0,5);
+INSERT INTO "client" VALUES(37,'Issac ','Krause','susie.olivia@againstagreement.edu',5171824782,17,0,0,24,1,1);
+INSERT INTO "client" VALUES(38,'Viola ','Morales','hilario.bud.sal@certain.org',9801608083,17,1,0,31,1,2);
+INSERT INTO "client" VALUES(39,'Lamont ','Cabrera','rex@sneezesnow.edu',3069091271,7,0,0,71,0,1);
+INSERT INTO "client" VALUES(40,'Eddie ','Fitzpatrick','joni@goldgood.me',9282517683,12,0,0,36,1,2);
+INSERT INTO "client" VALUES(41,'Katherine ','Salinas','kira@personphysical.com',6356430271,10,0,0,45,0,3);
+INSERT INTO "client" VALUES(42,'Pamala ','Farmer','adrian.rhea.marquita@army.org',6216708005,8,1,0,83,0,1);
+INSERT INTO "client" VALUES(43,'Theron ','Benjamin','denny.davis@view.org',2242769060,8,0,0,1,1,5);
+INSERT INTO "client" VALUES(44,'Max ','Farley','carly.james@night.me',4648468923,8,1,0,73,1,4);
+INSERT INTO "client" VALUES(45,'Hubert ','Moss','deshawn@burstbusiness.com',7086014328,9,1,0,95,0,4);
+INSERT INTO "client" VALUES(46,'Jeanie ','Foley','cole.denny@family.edu',5327048547,9,0,0,31,1,5);
+INSERT INTO "client" VALUES(47,'Zachary ','Hartley','quinton@dropdry.edu',3743587228,11,1,0,12,1,9);
+INSERT INTO "client" VALUES(48,'Karyn ','Donahue','raleigh@hanging.me',8672779193,9,0,0,1,0,2);
+INSERT INTO "client" VALUES(49,'Shonda ','Sykes','issac.mary.dudley@interest.me',6975984086,10,0,0,93,1,8);
+INSERT INTO "client" VALUES(50,'Charles ','Kaufman','renato.jc.hoyt@curve.com',7758441835,9,0,0,52,0,4);
+INSERT INTO "client" VALUES(51,'Rudolph ','Finch','wm@leatherleft.info',5633261376,7,1,0,68,1,7);
+INSERT INTO "client" VALUES(52,'Art ','Bradshaw','ashley@illimportant.me',4365898032,7,1,0,91,1,6);
+INSERT INTO "client" VALUES(53,'Michele ','Kelly','concetta.bertie.alba@hope.edu',3053853477,13,0,0,21,0,5);
+INSERT INTO "client" VALUES(54,'Trevor ','Rouse','lillian@face.me',7178817845,12,1,0,16,0,1);
+INSERT INTO "client" VALUES(55,'Kitty ','Gilliam','carey@animal.me',2005893944,12,0,0,71,1,2);
+INSERT INTO "client" VALUES(56,'Rigoberto ','Lindsey','lily@level.edu',4995285932,12,1,0,93,0,1);
+INSERT INTO "client" VALUES(57,'Riley ','Burke','paula.diana@shamesharp.org',9930400306,16,1,0,39,0,2);
+INSERT INTO "client" VALUES(58,'Arturo ','Benson','virgilio.mary@wind.org',5832038579,6,0,0,47,0,3);
+INSERT INTO "client" VALUES(59,'Fred ','Webber','august.leonardo.jasper@burstbusiness.com',7314332354,6,1,0,45,1,1);
+INSERT INTO "client" VALUES(60,'Nona ','Shelton','anthony.kevin.jason@existence.edu',7621731512,10,0,0,43,0,5);
+INSERT INTO "client" VALUES(61,'Randi ','Francis','tonya@laugh.info',1691334125,17,1,0,85,0,4);
+INSERT INTO "client" VALUES(62,'Alisha ','Hale','calvin.alex@cruel.edu',2762980394,6,0,0,19,1,4);
+INSERT INTO "client" VALUES(63,'Maura ','Flynn','jaclyn.gracie.sondra@otherout.info',8839543135,11,1,0,53,0,5);
+INSERT INTO "client" VALUES(64,'Earlene ','Madden','geraldine@kindkiss.info',2991345161,16,0,0,55,0,9);
+INSERT INTO "client" VALUES(65,'Beverly ','Sykes','marilynn.lucretia.karrie@threadthroat.com',4502323924,7,1,0,86,1,2);
+INSERT INTO "client" VALUES(66,'Alphonse ','Gibson','elisabeth@knife.info',1470853413,11,1,0,35,1,8);
+INSERT INTO "client" VALUES(67,'Mina ','Levy','larissa@hollow.org',9561845063,17,1,0,100,0,4);
+INSERT INTO "client" VALUES(68,'Kenny ','Fitzgerald','nora.margie@bulb.org',1755427936,10,0,0,53,1,7);
+INSERT INTO "client" VALUES(69,'Frankie ','King','elise@start.info',2937260970,9,1,0,59,1,6);
+INSERT INTO "client" VALUES(70,'Danielle ','Boyle','therese.frankie.dena@stopstore.org',7248466717,14,0,0,52,0,5);
+INSERT INTO "client" VALUES(71,'Cyrus ','Aguirre','warren@branch.info',7922146103,18,1,0,78,0,1);
+INSERT INTO "client" VALUES(72,'Susie ','Cochran','maynard@disgust.info',1619520853,9,0,0,75,1,2);
+INSERT INTO "client" VALUES(73,'Tanya ','Sparks','amalia.savannah.anastasia@punishment.com',7327599609,7,0,0,67,1,1);
+INSERT INTO "client" VALUES(74,'Rosalee ','Starr','joni@propertyprose.edu',7980738516,6,0,0,84,0,2);
+INSERT INTO "client" VALUES(75,'Claud ','Ibarra','lauren@circle.org',4563594324,12,0,0,46,0,3);
+INSERT INTO "client" VALUES(76,'Julio ','Ford','kristopher@jelly.org',9194111341,15,0,0,3,1,1);
+INSERT INTO "client" VALUES(77,'Mervin ','Potter','samatha.oralia@canvascard.org',5934337532,13,1,0,44,1,5);
+INSERT INTO "client" VALUES(78,'Marcelino ','Singleton','jodi@purposepush.me',1315529629,15,0,0,85,1,4);
+INSERT INTO "client" VALUES(79,'Demetria ','Jackson','normand.kieth@tradetrain.edu',3092212329,14,0,0,48,1,4);
+INSERT INTO "client" VALUES(80,'Alec ','Mendez','juliana.aline@farm.me',4942235249,7,0,0,79,0,5);
+INSERT INTO "client" VALUES(81,'Cecelia ','Braun','reina.lauretta.kylie@backbad.org',9411636031,15,0,0,66,1,9);
+INSERT INTO "client" VALUES(82,'Tana ','Gill','ezequiel.erasmo@left.com',1335300112,10,0,0,36,1,2);
+INSERT INTO "client" VALUES(83,'Randall ','Dailey','mindy@country.me',3468966458,18,0,0,58,1,8);
+INSERT INTO "client" VALUES(84,'Cesar ','Neely','allison.tamara.joy@earearly.edu',4312076039,17,0,0,42,0,4);
+INSERT INTO "client" VALUES(85,'Donnell ','Puckett','jimmie.everett@brushbucket.info',6456069612,13,1,0,100,0,7);
+INSERT INTO "client" VALUES(86,'Francis ','Bland','tad@scissorsscrew.edu',7979036497,7,1,0,68,0,6);
+INSERT INTO "client" VALUES(87,'Josh ','Barker','archie@leftleg.org',6706864194,10,1,0,22,0,5);
+INSERT INTO "client" VALUES(88,'Clarice ','Bowers','alonzo.elias@enoughequal.com',6199000765,13,0,0,72,1,1);
+INSERT INTO "client" VALUES(89,'Owen ','Kline','janna.juliette.deena@militarymilk.org',4120087460,13,1,0,93,1,2);
+INSERT INTO "client" VALUES(90,'Catrina ','Olsen','inez.lynda@windowwine.me',8911067040,8,0,0,48,1,1);
+INSERT INTO "client" VALUES(91,'Solomon ','Henry','ben.chester.cecil@warwarm.com',9670109418,13,1,0,37,0,2);
+INSERT INTO "client" VALUES(92,'Jack ','Porter','heriberto.donnell.cole@tonguetooth.edu',3264255196,12,1,0,82,0,3);
+INSERT INTO "client" VALUES(93,'Vicky ','Case','joanne.eleanor.valerie@painpaint.org',1388632536,15,0,0,10,0,1);
+INSERT INTO "client" VALUES(94,'Ron ','Pacheco','mona@distance.com',9025616952,17,1,0,84,1,5);
+INSERT INTO "client" VALUES(95,'Briana ','Williamson','latisha.barbra@come.info',5700218162,7,0,0,18,1,4);
+INSERT INTO "client" VALUES(96,'Lauri ','Carson','shannon.sheila.ethel@wellwest.me',8745632775,18,0,0,87,1,4);
+INSERT INTO "client" VALUES(97,'Ronald ','Logan','lyndon@futuregarden.me',2878355270,9,1,0,76,0,5);
+INSERT INTO "client" VALUES(98,'Loretta ','Molina','chloe@mark.edu',8684603623,16,0,0,43,0,9);
+INSERT INTO "client" VALUES(99,'Loyd ','Dennis','ebony@penpencil.edu',2404013488,7,1,0,23,1,2);
+INSERT INTO "client" VALUES(100,'Agatha ','Smith','minh@old.edu',7479587950,18,0,0,92,0,8);
+CREATE TABLE "experiencelevel" (
+  "levelID" integer NOT NULL,
+  "label" varchar(45) DEFAULT NULL
+);
+INSERT INTO "experiencelevel" VALUES(0,'Mega noob');
+INSERT INTO "experiencelevel" VALUES(1,'Noob');
+INSERT INTO "experiencelevel" VALUES(2,'Novice');
+INSERT INTO "experiencelevel" VALUES(3,'Amateur');
+INSERT INTO "experiencelevel" VALUES(4,'Semi-Pro');
+INSERT INTO "experiencelevel" VALUES(5,'Pro-Wannaby');
+INSERT INTO "experiencelevel" VALUES(6,'Pro-Wannaby');
+INSERT INTO "experiencelevel" VALUES(7,'Expert');
+INSERT INTO "experiencelevel" VALUES(8,'Grand SlamWinner');
+INSERT INTO "experiencelevel" VALUES(9,'Godlike');
+INSERT INTO "experiencelevel" VALUES(10,'Almost at my level ');
+CREATE TABLE "extras" (
+  "extrasID" integer NOT NULL,
+  "label" varchar(45) DEFAULT NULL,
+  "price" integer DEFAULT NULL,
+  "description" varchar(45) DEFAULT NULL,
+  "ownerSessionID" integer NOT NULL,
+  CONSTRAINT "fk_Extras_Session1" FOREIGN KEY ("ownerSessionID") REFERENCES "session" ("sessionID") ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+INSERT INTO "extras" VALUES(1,'Pizza',10,NULL,23);
+INSERT INTO "extras" VALUES(2,'Candy',20,NULL,34);
+INSERT INTO "extras" VALUES(3,'Drinks',15,NULL,36);
+INSERT INTO "extras" VALUES(4,'Raquets',25,NULL,41);
+INSERT INTO "extras" VALUES(5,'Transport',30,NULL,28);
+INSERT INTO "extras" VALUES(6,'Stuff',5,NULL,11);
+CREATE TABLE "medicalcondition" (
+  "ownerID" integer NOT NULL,
+  "condition" varchar(45) DEFAULT NULL,
+  CONSTRAINT "fk_medicalCondition_client1" FOREIGN KEY ("ownerID") REFERENCES "client" ("uID") ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+INSERT INTO "medicalcondition" VALUES(1,'Too Musch SWAG');
+INSERT INTO "medicalcondition" VALUES(2,'In da Thug Life');
+INSERT INTO "medicalcondition" VALUES(3,'Broken Leg');
+INSERT INTO "medicalcondition" VALUES(4,'Headache');
+INSERT INTO "medicalcondition" VALUES(5,'Seriously Ill');
+INSERT INTO "medicalcondition" VALUES(6,'Broken Arm');
+CREATE TABLE "notes" (
+  "noteID" integer NOT NULL,
+  "Note" mediumtext,
+  "Session_sessionID" integer NOT NULL,
+  "hasNotes" integer DEFAULT NULL,
+  CONSTRAINT "fk_Notes_Session1" FOREIGN KEY ("Session_sessionID") REFERENCES "session" ("sessionID") ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+INSERT INTO "notes" VALUES(1,'It was really Rainy',23,1);
+INSERT INTO "notes" VALUES(2,'Atanas was the Best!',25,1);
+INSERT INTO "notes" VALUES(3,'A UFO Crashed near the Venue',26,1);
+INSERT INTO "notes" VALUES(4,'Day 1 of alien abduction: its dark',27,1);
+INSERT INTO "notes" VALUES(6,NULL,29,0);
+CREATE TABLE "payment" (
+  "paymentID" integer NOT NULL,
+  "userToPay" integer NOT NULL,
+  "paymentType" integer NOT NULL,
+  "amount" integer DEFAULT NULL,
+  "label" varchar(45) DEFAULT NULL,
+  "hasPayed" integer DEFAULT NULL,
+  "dueDate" date DEFAULT NULL,
+  "payedDate" date DEFAULT NULL,
+  CONSTRAINT "fk_Payment_paymentType1" FOREIGN KEY ("paymentType") REFERENCES "paymenttype" ("typeID") ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT "fk_payment_client1" FOREIGN KEY ("userToPay") REFERENCES "client" ("uID") ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+INSERT INTO "payment" VALUES(1,26,1,100,'Sessions - 1,2,3',0,'2015-01-30',NULL);
+INSERT INTO "payment" VALUES(2,30,2,25,'Sessions - 1',0,'2015-01-27',NULL);
+CREATE TABLE "paymenttype" (
+  "typeID" integer NOT NULL,
+  "typeLabel" varchar(45) DEFAULT NULL
+);
+INSERT INTO "paymenttype" VALUES(1,'Cash');
+INSERT INTO "paymenttype" VALUES(2,'PayPal');
+INSERT INTO "paymenttype" VALUES(3,'None');
+CREATE TABLE "session" (
+  "sessionID" integer NOT NULL,
+  "duration" varchar(45) DEFAULT NULL,
+  "beginTime" datetime DEFAULT NULL,
+  "endTime" datetime DEFAULT NULL,
+  "Block_BlockID" integer NOT NULL,
+  "capacity" integer DEFAULT NULL,
+  "ageGroup" varchar(45) DEFAULT NULL,
+  "skillGroup" varchar(45) DEFAULT NULL,
+  "isFull" varchar(45) DEFAULT NULL,
+  CONSTRAINT "fk_Session_Block1" FOREIGN KEY ("Block_BlockID") REFERENCES "block" ("BlockID") ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+INSERT INTO "session" VALUES(1,'1,5','2014-12-15 08:00:00','2014-12-15 09:30:00',1,10,'13-25','1','0');
+INSERT INTO "session" VALUES(2,'1,5','2014-12-15 10:00:00','2014-12-15 11:30:00',1,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(3,'1,5','2014-12-15 12:00:00','2014-12-15 13:30:00',1,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(4,'1,5','2014-12-15 15:00:00','2014-12-15 16:30:00',2,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(5,'1,5','2014-12-15 17:00:00','2014-12-15 18:30:00',2,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(6,'1','2014-12-15 19:00:00','2014-12-15 20:00:00',2,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(7,'1,5','2014-12-16 08:00:00','2014-12-16 09:30:00',3,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(8,'1,5','2014-12-16 10:00:00','2014-12-16 11:30:00',3,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(9,'1,5','2014-12-16 12:00:00','2014-12-16 13:30:00',3,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(10,'1,5','2014-12-16 15:00:00','2014-12-16 16:30:00',4,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(11,'1,5','2014-12-16 17:00:00','2014-12-16 18:30:00',4,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(12,'1','2014-12-16 19:00:00','2014-12-16 20:00:00',4,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(13,'1,5','2014-12-17 08:00:00','2014-12-17 09:30:00',5,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(14,'1,5','2014-12-17 10:00:00','2014-12-17 11:30:00',5,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(15,'1,5','2014-12-17 12:00:00','2014-12-17 13:30:00',5,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(16,'1,5','2014-12-17 15:00:00','2014-12-17 16:30:00',6,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(17,'1,5','2014-12-17 17:00:00','2014-12-17 18:30:00',6,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(18,'1','2014-12-17 19:00:00','2014-12-17 20:00:00',6,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(19,'1,5','2014-12-18 08:00:00','2014-12-18 09:30:00',7,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(20,'1,5','2014-12-18 10:00:00','2014-12-18 11:30:00',7,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(21,'1,5','2014-12-18 12:00:00','2014-12-18 13:30:00',7,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(22,'1,5','2014-12-18 15:00:00','2014-12-18 16:30:00',8,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(23,'1,5','2014-12-18 17:00:00','2014-12-18 18:30:00',8,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(24,'1','2014-12-18 19:00:00','2014-12-18 20:00:00',8,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(25,'1,5','2014-12-19 08:00:00','2014-12-19 09:30:00',9,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(26,'1,5','2014-12-19 10:00:00','2014-12-19 11:30:00',9,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(27,'1,5','2014-12-19 12:00:00','2014-12-19 13:30:00',9,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(28,'1,5','2014-12-19 15:00:00','2014-12-19 16:30:00',10,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(29,'1,5','2014-12-19 17:00:00','2014-12-19 18:30:00',10,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(30,'1','2014-12-19 19:00:00','2014-12-19 20:00:00',10,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(31,'1,5','2014-12-15 08:00:00','2014-12-15 09:30:00',1,10,'08-25',NULL,'0');
+INSERT INTO "session" VALUES(32,'1,5','2014-12-15 10:00:00','2014-12-15 11:30:00',1,10,'08-25',NULL,'0');
+INSERT INTO "session" VALUES(33,'1,5','2014-12-15 12:00:00','2014-12-15 13:30:00',1,10,'08-25',NULL,'0');
+INSERT INTO "session" VALUES(34,'1,5','2014-12-15 15:00:00','2014-12-15 16:30:00',2,10,'08-25',NULL,'0');
+INSERT INTO "session" VALUES(35,'1,5','2014-12-15 17:00:00','2014-12-15 18:30:00',2,10,'08-25',NULL,'0');
+INSERT INTO "session" VALUES(36,'1','2014-12-15 19:00:00','2014-12-15 20:00:00',2,10,'08-35',NULL,'0');
+INSERT INTO "session" VALUES(37,'1,5','2015-01-26 08:00:00','2015-01-26 09:30:00',41,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(38,'1,5','2015-01-26 10:00:00','2015-01-26 11:30:00',41,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(39,'1,5','2015-01-26 12:00:00','2015-01-26 13:30:00',41,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(40,'1,5','2015-01-26 15:00:00','2015-01-26 16:30:00',42,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(41,'1,5','2015-01-26 17:00:00','2015-01-26 18:30:00',42,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(42,'1','2015-01-26 19:00:00','2015-01-26 20:00:00',42,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(43,'1,5','2015-01-27 08:00:00','2015-01-27 09:30:00',43,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(44,'1,5','2015-01-27 10:00:00','2015-01-27 11:30:00',43,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(45,'1,5','2015-01-27 12:00:00','2015-01-27 13:30:00',43,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(46,'1,5','2015-01-27 15:00:00','2015-01-27 16:30:00',44,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(47,'1,5','2015-01-27 17:00:00','2015-01-27 18:30:00',44,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(48,'1','2015-01-27 19:00:00','2015-01-27 20:00:00',44,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(49,'1,5','2015-01-28 08:00:00','2015-01-28 09:30:00',45,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(50,'1,5','2015-01-28 10:00:00','2015-01-28 11:30:00',45,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(51,'1,5','2015-01-28 12:00:00','2015-01-28 13:30:00',45,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(52,'1,5','2015-01-28 15:00:00','2015-01-28 16:30:00',46,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(53,'1,5','2015-01-28 17:00:00','2015-01-28 18:30:00',46,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(54,'1','2015-01-28 19:00:00','2015-01-28 20:00:00',46,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(55,'1,5','2015-01-28 08:00:00','2015-01-28 09:30:00',45,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(56,'1,5','2015-01-28 10:00:00','2015-01-28 11:30:00',45,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(57,'1,5','2015-01-28 12:00:00','2015-01-28 13:30:00',45,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(58,'1,5','2015-01-28 15:00:00','2015-01-28 16:30:00',46,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(59,'1,5','2015-01-28 17:00:00','2015-01-28 18:30:00',46,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(60,'1','2015-01-28 19:00:00','2015-01-28 20:00:00',46,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(61,'1,5','2015-01-29 08:00:00','2015-01-29 09:30:00',47,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(62,'1,5','2015-01-29 10:00:00','2015-01-29 11:30:00',47,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(63,'1,5','2015-01-29 12:00:00','2015-01-29 13:30:00',47,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(64,'1,5','2015-01-29 15:00:00','2015-01-29 16:30:00',48,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(65,'1,5','2015-01-29 17:00:00','2015-01-29 18:30:00',48,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(66,'1','2015-01-29 19:00:00','2015-01-29 20:00:00',48,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(67,'1,5','2015-01-30 08:00:00','2015-01-30 09:30:00',47,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(68,'1,5','2015-01-30 10:00:00','2015-01-30 11:30:00',47,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(69,'1,5','2015-01-30 12:00:00','2015-01-30 13:30:00',47,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(70,'1,5','2015-01-30 15:00:00','2015-01-30 16:30:00',48,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(71,'1,5','2015-01-30 17:00:00','2015-01-30 18:30:00',48,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(72,'1','2015-01-30 19:00:00','2015-01-30 20:00:00',48,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(73,'1,5','2015-01-31 08:00:00','2015-01-31 09:30:00',49,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(74,'1,5','2015-01-31 10:00:00','2015-01-31 11:30:00',49,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(75,'1,5','2015-01-31 12:00:00','2015-01-31 13:30:00',49,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(76,'1,5','2015-01-31 15:00:00','2015-01-31 16:30:00',50,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(77,'1,5','2015-01-31 17:00:00','2015-01-31 18:30:00',50,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(78,'1','2015-01-31 19:00:00','2015-01-31 20:00:00',50,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(79,'1,5','2015-02-02 08:00:00','2015-02-02 09:30:00',54,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(80,'1,5','2015-02-02 10:00:00','2015-02-02 11:30:00',54,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(81,'1,5','2015-02-02 12:00:00','2015-02-02 13:30:00',54,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(82,'1,5','2015-02-02 15:00:00','2015-02-02 16:30:00',55,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(83,'1,5','2015-02-02 17:00:00','2015-02-02 18:30:00',55,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(84,'1','2015-02-02 19:00:00','2015-02-02 20:00:00',55,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(85,'1,5','2015-02-03 08:00:00','2015-02-03 09:30:00',56,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(86,'1,5','2015-02-03 10:00:00','2015-02-03 11:30:00',56,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(87,'1,5','2015-02-03 12:00:00','2015-02-03 13:30:00',56,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(88,'1,5','2015-02-03 15:00:00','2015-02-03 16:30:00',57,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(89,'1,5','2015-02-03 17:00:00','2015-02-03 18:30:00',57,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(90,'1','2015-02-03 19:00:00','2015-02-03 20:00:00',57,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(91,'1,5','2015-02-04 08:00:00','2015-02-04 09:30:00',58,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(92,'1,5','2015-02-04 10:00:00','2015-02-04 11:30:00',58,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(93,'1,5','2015-02-04 12:00:00','2015-02-04 13:30:00',58,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(94,'1,5','2015-02-04 15:00:00','2015-02-04 16:30:00',59,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(95,'1,5','2015-02-04 17:00:00','2015-02-04 18:30:00',59,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(96,'1','2015-02-04 19:00:00','2015-02-04 20:00:00',59,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(97,'1,5','2015-02-05 08:00:00','2015-02-05 09:30:00',60,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(98,'1,5','2015-02-05 10:00:00','2015-02-05 11:30:00',60,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(99,'1,5','2015-02-05 12:00:00','2015-02-05 13:30:00',60,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(100,'1,5','2015-02-05 15:00:00','2015-02-05 16:30:00',61,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(101,'1,5','2015-02-05 17:00:00','2015-02-05 18:30:00',61,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(102,'1','2015-02-05 19:00:00','2015-02-05 20:00:00',61,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(103,'1,5','2015-02-06 08:00:00','2015-02-06 09:30:00',62,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(104,'1,5','2015-02-06 10:00:00','2015-02-06 11:30:00',62,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(105,'1,5','2015-02-06 12:00:00','2015-02-06 13:30:00',62,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(106,'1,5','2015-02-06 15:00:00','2015-02-06 16:30:00',63,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(107,'1,5','2015-02-06 17:00:00','2015-02-06 18:30:00',63,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(108,'1','2015-02-06 19:00:00','2015-02-06 20:00:00',63,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(109,'1.5','2015-02-07 08:00:00','2015-02-07 09:30:00',61,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(110,'1.5','2015-02-07 10:00:00','2015-02-07 11:30:00',61,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(111,'1.5','2015-02-07 12:00:00','2015-02-07 13:30:00',61,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(112,'1.5','2015-02-07 15:00:00','2015-02-07 16:30:00',58,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(113,'1.5','2015-02-07 17:00:00','2015-02-07 18:30:00',58,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(114,'1','2015-02-07 19:00:00','2015-02-07 20:00:00',65,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(115,'1.5','2015-02-09 08:00:00','2015-02-09 09:30:00',67,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(116,'1.5','2015-02-09 10:00:00','2015-02-09 11:30:00',67,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(117,'1.5','2015-02-09 12:00:00','2015-02-09 13:30:00',67,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(118,'1.5','2015-02-09 15:00:00','2015-02-09 16:30:00',68,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(119,'1.5','2015-02-09 17:00:00','2015-02-09 18:30:00',68,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(120,'1','2015-02-09 19:00:00','2015-02-09 20:00:00',68,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(121,'1.5','2015-02-10 08:00:00','2015-02-10 09:30:00',69,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(122,'1.5','2015-02-10 10:00:00','2015-02-10 11:30:00',69,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(123,'1.5','2015-02-10 12:00:00','2015-02-10 13:30:00',69,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(124,'1.5','2015-02-10 15:00:00','2015-02-10 16:30:00',70,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(125,'1.5','2015-02-10 17:00:00','2015-02-10 18:30:00',70,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(126,'1','2015-02-10 19:00:00','2015-02-10 20:00:00',70,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(127,'1.5','2015-02-11 08:00:00','2015-02-11 09:30:00',71,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(128,'1.5','2015-02-11 10:00:00','2015-02-11 11:30:00',71,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(129,'1.5','2015-02-11 12:00:00','2015-02-11 13:30:00',71,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(130,'1.5','2015-02-11 15:00:00','2015-02-11 16:30:00',72,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(131,'1.5','2015-02-11 17:00:00','2015-02-11 18:30:00',72,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(132,'1','2015-02-11 19:00:00','2015-02-11 20:00:00',72,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(133,'1.5','2015-02-12 08:00:00','2015-02-12 09:30:00',73,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(134,'1.5','2015-02-12 10:00:00','2015-02-12 11:30:00',73,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(135,'1.5','2015-02-12 12:00:00','2015-02-12 13:30:00',73,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(136,'1.5','2015-02-12 15:00:00','2015-02-12 16:30:00',74,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(137,'1.5','2015-02-12 17:00:00','2015-02-12 18:30:00',74,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(138,'1','2015-02-12 19:00:00','2015-02-12 20:00:00',74,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(139,'1.5','2015-02-13 08:00:00','2015-02-13 08:00:00',75,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(140,'1.5','2015-02-13 10:00:00','2015-02-13 10:00:00',75,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(141,'1.5','2015-02-13 12:00:00','2015-02-13 12:00:00',75,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(142,'1.5','2015-02-13 15:00:00','2015-02-13 15:00:00',76,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(143,'1.5','2015-02-13 17:00:00','2015-02-13 17:00:00',76,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(144,'1','2015-02-13 19:00:00','2015-02-13 19:00:00',76,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(145,'1.5','2015-02-14 08:00:00','2015-02-14 08:00:00',77,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(146,'1.5','2015-02-14 10:00:00','2015-02-14 10:00:00',77,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(147,'1.5','2015-02-14 12:00:00','2015-02-14 12:00:00',77,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(148,'1.5','2015-02-14 15:00:00','2015-02-14 15:00:00',78,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(149,'1.5','2015-02-14 17:00:00','2015-02-14 17:00:00',78,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(150,'1','2015-02-14 19:00:00','2015-02-14 19:00:00',78,10,'13-25',NULL,'0');
+INSERT INTO "session" VALUES(151,'1.5','2015-02-20 08:00:00','2015-02-21 09:30:00',78,10,'13-25','none','0');
+CREATE TABLE "subvenue" (
+  "subVenueID" integer NOT NULL,
+  "label" varchar(45) DEFAULT NULL,
+  "capacity" varchar(45) DEFAULT NULL,
+  "ownerVenue" integer NOT NULL,
+  CONSTRAINT "fk_SubVenue_Venue1" FOREIGN KEY ("ownerVenue") REFERENCES "venue" ("venueID") ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+INSERT INTO "subvenue" VALUES(1,'Court1','10',1);
+INSERT INTO "subvenue" VALUES(2,'Court2','10',1);
+INSERT INTO "subvenue" VALUES(3,'Court3','10',1);
+INSERT INTO "subvenue" VALUES(4,'Court4','10',1);
+INSERT INTO "subvenue" VALUES(5,'Court5','10',1);
+INSERT INTO "subvenue" VALUES(6,'Court6','10',1);
+INSERT INTO "subvenue" VALUES(7,'Court7','10',1);
+INSERT INTO "subvenue" VALUES(8,'Court8','10',1);
+CREATE TABLE "subvenue_usedfor_session" (
+  "Session_sessionID" integer NOT NULL,
+  "SubVenue_subVenueID" integer NOT NULL,
+  "SubVenue_ownerVenue" integer NOT NULL,
+  CONSTRAINT "fk_Session_has_SubVenue_Session1" FOREIGN KEY ("Session_sessionID") REFERENCES "session" ("sessionID") ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT "fk_Session_has_SubVenue_SubVenue1" FOREIGN KEY ("SubVenue_subVenueID", "SubVenue_ownerVenue") REFERENCES "subvenue" ("subVenueID", "ownerVenue") ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+INSERT INTO "subvenue_usedfor_session" VALUES(37,1,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(38,1,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(39,1,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(40,2,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(41,2,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(42,1,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(43,1,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(44,1,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(45,3,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(46,1,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(47,1,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(48,1,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(49,2,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(50,2,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(51,1,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(52,1,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(53,1,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(54,1,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(55,3,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(56,1,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(57,4,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(58,2,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(59,1,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(60,1,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(61,3,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(62,1,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(63,1,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(64,1,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(65,1,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(66,1,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(67,1,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(68,1,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(69,1,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(70,1,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(71,1,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(72,1,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(73,1,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(74,1,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(75,1,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(76,1,1);
+INSERT INTO "subvenue_usedfor_session" VALUES(77,1,1);
+CREATE TABLE "user_selects_session" (
+  "User_uID" integer NOT NULL,
+  "Session_sessionID" integer NOT NULL,
+  "status" char(1) DEFAULT NULL,
+  CONSTRAINT "fk_User_has_Session_Session1" FOREIGN KEY ("Session_sessionID") REFERENCES "session" ("sessionID") ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT "fk_User_has_Session_User1" FOREIGN KEY ("User_uID") REFERENCES "client" ("uID") ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+INSERT INTO "user_selects_session" VALUES(3,37,'C');
+INSERT INTO "user_selects_session" VALUES(3,38,'P');
+INSERT INTO "user_selects_session" VALUES(3,39,'P');
+INSERT INTO "user_selects_session" VALUES(3,40,'P');
+INSERT INTO "user_selects_session" VALUES(3,41,'P');
+INSERT INTO "user_selects_session" VALUES(3,42,'P');
+INSERT INTO "user_selects_session" VALUES(3,43,'P');
+INSERT INTO "user_selects_session" VALUES(3,44,'P');
+INSERT INTO "user_selects_session" VALUES(3,45,'P
+');
+INSERT INTO "user_selects_session" VALUES(4,37,'C');
+INSERT INTO "user_selects_session" VALUES(4,38,'C');
+INSERT INTO "user_selects_session" VALUES(26,46,'C');
+INSERT INTO "user_selects_session" VALUES(26,89,'C');
+CREATE TABLE "venue" (
+  "venueID" integer NOT NULL,
+  "capacity" integer DEFAULT NULL,
+  "name" varchar(45) DEFAULT NULL,
+  "load" integer DEFAULT NULL,
+  "Manager" integer NOT NULL,
+  "Address_addressID" integer NOT NULL,
+  CONSTRAINT "fk_Venue_Address1" FOREIGN KEY ("Address_addressID") REFERENCES "address" ("addressID") ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT "fk_Venue_User1" FOREIGN KEY ("Manager") REFERENCES "client" ("uID") ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+INSERT INTO "venue" VALUES(1,100,'West End Venue',30,1,1);
+CREATE TABLE "auth_permission" (
+    "id" integer NOT NULL PRIMARY KEY,
+    "name" varchar(50) NOT NULL,
+    "content_type_id" integer NOT NULL,
+    "codename" varchar(100) NOT NULL,
+    UNIQUE ("content_type_id", "codename")
+);
+INSERT INTO "auth_permission" VALUES(1,'Can add permission',1,'add_permission');
+INSERT INTO "auth_permission" VALUES(2,'Can change permission',1,'change_permission');
+INSERT INTO "auth_permission" VALUES(3,'Can delete permission',1,'delete_permission');
+INSERT INTO "auth_permission" VALUES(4,'Can add group',2,'add_group');
+INSERT INTO "auth_permission" VALUES(5,'Can change group',2,'change_group');
+INSERT INTO "auth_permission" VALUES(6,'Can delete group',2,'delete_group');
+INSERT INTO "auth_permission" VALUES(7,'Can add user',3,'add_user');
+INSERT INTO "auth_permission" VALUES(8,'Can change user',3,'change_user');
+INSERT INTO "auth_permission" VALUES(9,'Can delete user',3,'delete_user');
+INSERT INTO "auth_permission" VALUES(10,'Can add content type',4,'add_contenttype');
+INSERT INTO "auth_permission" VALUES(11,'Can change content type',4,'change_contenttype');
+INSERT INTO "auth_permission" VALUES(12,'Can delete content type',4,'delete_contenttype');
+INSERT INTO "auth_permission" VALUES(13,'Can add session',5,'add_session');
+INSERT INTO "auth_permission" VALUES(14,'Can change session',5,'change_session');
+INSERT INTO "auth_permission" VALUES(15,'Can delete session',5,'delete_session');
+INSERT INTO "auth_permission" VALUES(16,'Can add site',6,'add_site');
+INSERT INTO "auth_permission" VALUES(17,'Can change site',6,'change_site');
+INSERT INTO "auth_permission" VALUES(18,'Can delete site',6,'delete_site');
+INSERT INTO "auth_permission" VALUES(19,'Can add address',7,'add_address');
+INSERT INTO "auth_permission" VALUES(20,'Can change address',7,'change_address');
+INSERT INTO "auth_permission" VALUES(21,'Can delete address',7,'delete_address');
+INSERT INTO "auth_permission" VALUES(22,'Can add block',8,'add_block');
+INSERT INTO "auth_permission" VALUES(23,'Can change block',8,'change_block');
+INSERT INTO "auth_permission" VALUES(24,'Can delete block',8,'delete_block');
+INSERT INTO "auth_permission" VALUES(25,'Can add btm rank',9,'add_btmrank');
+INSERT INTO "auth_permission" VALUES(26,'Can change btm rank',9,'change_btmrank');
+INSERT INTO "auth_permission" VALUES(27,'Can delete btm rank',9,'delete_btmrank');
+INSERT INTO "auth_permission" VALUES(28,'Can add client',10,'add_client');
+INSERT INTO "auth_permission" VALUES(29,'Can change client',10,'change_client');
+INSERT INTO "auth_permission" VALUES(30,'Can delete client',10,'delete_client');
+INSERT INTO "auth_permission" VALUES(31,'Can add experiencelevel',11,'add_experiencelevel');
+INSERT INTO "auth_permission" VALUES(32,'Can change experiencelevel',11,'change_experiencelevel');
+INSERT INTO "auth_permission" VALUES(33,'Can delete experiencelevel',11,'delete_experiencelevel');
+INSERT INTO "auth_permission" VALUES(34,'Can add extras',12,'add_extras');
+INSERT INTO "auth_permission" VALUES(35,'Can change extras',12,'change_extras');
+INSERT INTO "auth_permission" VALUES(36,'Can delete extras',12,'delete_extras');
+INSERT INTO "auth_permission" VALUES(37,'Can add medicalcondition',13,'add_medicalcondition');
+INSERT INTO "auth_permission" VALUES(38,'Can change medicalcondition',13,'change_medicalcondition');
+INSERT INTO "auth_permission" VALUES(39,'Can delete medicalcondition',13,'delete_medicalcondition');
+INSERT INTO "auth_permission" VALUES(40,'Can add notes',14,'add_notes');
+INSERT INTO "auth_permission" VALUES(41,'Can change notes',14,'change_notes');
+INSERT INTO "auth_permission" VALUES(42,'Can delete notes',14,'delete_notes');
+INSERT INTO "auth_permission" VALUES(43,'Can add payment',15,'add_payment');
+INSERT INTO "auth_permission" VALUES(44,'Can change payment',15,'change_payment');
+INSERT INTO "auth_permission" VALUES(45,'Can delete payment',15,'delete_payment');
+INSERT INTO "auth_permission" VALUES(46,'Can add paymenttype',16,'add_paymenttype');
+INSERT INTO "auth_permission" VALUES(47,'Can change paymenttype',16,'change_paymenttype');
+INSERT INTO "auth_permission" VALUES(48,'Can delete paymenttype',16,'delete_paymenttype');
+INSERT INTO "auth_permission" VALUES(49,'Can add session',17,'add_session');
+INSERT INTO "auth_permission" VALUES(50,'Can change session',17,'change_session');
+INSERT INTO "auth_permission" VALUES(51,'Can delete session',17,'delete_session');
+INSERT INTO "auth_permission" VALUES(52,'Can add subvenue',18,'add_subvenue');
+INSERT INTO "auth_permission" VALUES(53,'Can change subvenue',18,'change_subvenue');
+INSERT INTO "auth_permission" VALUES(54,'Can delete subvenue',18,'delete_subvenue');
+INSERT INTO "auth_permission" VALUES(55,'Can add subvenue usedfor session',19,'add_subvenueusedforsession');
+INSERT INTO "auth_permission" VALUES(56,'Can change subvenue usedfor session',19,'change_subvenueusedforsession');
+INSERT INTO "auth_permission" VALUES(57,'Can delete subvenue usedfor session',19,'delete_subvenueusedforsession');
+INSERT INTO "auth_permission" VALUES(58,'Can add user selects session',20,'add_userselectssession');
+INSERT INTO "auth_permission" VALUES(59,'Can change user selects session',20,'change_userselectssession');
+INSERT INTO "auth_permission" VALUES(60,'Can delete user selects session',20,'delete_userselectssession');
+INSERT INTO "auth_permission" VALUES(61,'Can add venue',21,'add_venue');
+INSERT INTO "auth_permission" VALUES(62,'Can change venue',21,'change_venue');
+INSERT INTO "auth_permission" VALUES(63,'Can delete venue',21,'delete_venue');
+INSERT INTO "auth_permission" VALUES(64,'Can add log entry',22,'add_logentry');
+INSERT INTO "auth_permission" VALUES(65,'Can change log entry',22,'change_logentry');
+INSERT INTO "auth_permission" VALUES(66,'Can delete log entry',22,'delete_logentry');
+CREATE TABLE "auth_group_permissions" (
+    "id" integer NOT NULL PRIMARY KEY,
+    "group_id" integer NOT NULL,
+    "permission_id" integer NOT NULL REFERENCES "auth_permission" ("id"),
+    UNIQUE ("group_id", "permission_id")
+);
+INSERT INTO "auth_group_permissions" VALUES(1,1,10);
+INSERT INTO "auth_group_permissions" VALUES(2,1,22);
+INSERT INTO "auth_group_permissions" VALUES(3,1,23);
+INSERT INTO "auth_group_permissions" VALUES(4,1,24);
+INSERT INTO "auth_group_permissions" VALUES(5,1,25);
+INSERT INTO "auth_group_permissions" VALUES(6,1,26);
+INSERT INTO "auth_group_permissions" VALUES(7,1,27);
+INSERT INTO "auth_group_permissions" VALUES(8,1,28);
+INSERT INTO "auth_group_permissions" VALUES(9,1,29);
+INSERT INTO "auth_group_permissions" VALUES(10,1,30);
+INSERT INTO "auth_group_permissions" VALUES(11,1,31);
+INSERT INTO "auth_group_permissions" VALUES(12,1,32);
+INSERT INTO "auth_group_permissions" VALUES(13,1,33);
+INSERT INTO "auth_group_permissions" VALUES(14,1,34);
+INSERT INTO "auth_group_permissions" VALUES(15,1,35);
+INSERT INTO "auth_group_permissions" VALUES(16,1,36);
+INSERT INTO "auth_group_permissions" VALUES(17,1,37);
+INSERT INTO "auth_group_permissions" VALUES(18,1,38);
+INSERT INTO "auth_group_permissions" VALUES(19,1,39);
+INSERT INTO "auth_group_permissions" VALUES(20,1,40);
+INSERT INTO "auth_group_permissions" VALUES(21,1,41);
+INSERT INTO "auth_group_permissions" VALUES(22,1,42);
+INSERT INTO "auth_group_permissions" VALUES(23,1,43);
+INSERT INTO "auth_group_permissions" VALUES(24,1,44);
+INSERT INTO "auth_group_permissions" VALUES(25,1,45);
+INSERT INTO "auth_group_permissions" VALUES(26,1,46);
+INSERT INTO "auth_group_permissions" VALUES(27,1,47);
+INSERT INTO "auth_group_permissions" VALUES(28,1,48);
+INSERT INTO "auth_group_permissions" VALUES(29,1,49);
+INSERT INTO "auth_group_permissions" VALUES(30,1,50);
+INSERT INTO "auth_group_permissions" VALUES(31,1,51);
+CREATE TABLE "auth_group" (
+    "id" integer NOT NULL PRIMARY KEY,
+    "name" varchar(80) NOT NULL UNIQUE
+);
+INSERT INTO "auth_group" VALUES(1,'Manager');
+INSERT INTO "auth_group" VALUES(2,'Parent');
+INSERT INTO "auth_group" VALUES(3,'Coach');
+CREATE TABLE "auth_user_groups" (
+    "id" integer NOT NULL PRIMARY KEY,
+    "user_id" integer NOT NULL,
+    "group_id" integer NOT NULL REFERENCES "auth_group" ("id"),
+    UNIQUE ("user_id", "group_id")
+);
+INSERT INTO "auth_user_groups" VALUES(1,7,1);
+INSERT INTO "auth_user_groups" VALUES(3,4,3);
+INSERT INTO "auth_user_groups" VALUES(4,3,2);
+INSERT INTO "auth_user_groups" VALUES(5,5,1);
+INSERT INTO "auth_user_groups" VALUES(6,5,2);
+INSERT INTO "auth_user_groups" VALUES(7,5,3);
+INSERT INTO "auth_user_groups" VALUES(8,8,2);
+INSERT INTO "auth_user_groups" VALUES(9,9,2);
+CREATE TABLE "auth_user_user_permissions" (
+    "id" integer NOT NULL PRIMARY KEY,
+    "user_id" integer NOT NULL,
+    "permission_id" integer NOT NULL REFERENCES "auth_permission" ("id"),
+    UNIQUE ("user_id", "permission_id")
+);
+CREATE TABLE "auth_user" (
+    "id" integer NOT NULL PRIMARY KEY,
+    "password" varchar(128) NOT NULL,
+    "last_login" datetime NOT NULL,
+    "is_superuser" bool NOT NULL,
+    "username" varchar(30) NOT NULL UNIQUE,
+    "first_name" varchar(30) NOT NULL,
+    "last_name" varchar(30) NOT NULL,
+    "email" varchar(75) NOT NULL,
+    "is_staff" bool NOT NULL,
+    "is_active" bool NOT NULL,
+    "date_joined" datetime NOT NULL
+);
+INSERT INTO "auth_user" VALUES(1,'pbkdf2_sha256$10000$I08MVZGZXcbK$SH99yKVcEyUQtq8kpqN+Qzy75S9t6b6RiLhYOQQ8pVI=','2015-01-25 01:11:26.424717',1,'atanaspam','','','sfors123@gmail.com',1,1,'2015-01-24 22:32:36.032633');
+INSERT INTO "auth_user" VALUES(2,'pbkdf2_sha256$12000$Vs1tQHke2l8r$PvLEyP49BA+JTNYhKGQakYjwDFwt4/HFWlsDvrpdJdI=','2015-01-27 16:43:37.233680',1,'dimitris','Dimitris','Kiker','',1,1,'2015-01-25 01:14:31');
+INSERT INTO "auth_user" VALUES(3,'pbkdf2_sha256$12000$LEd3NVboCvJe$anYYTZKgKvQsPwx5OdbRBpHH00ygmp4EySU4l8s9+/g=','2015-02-02 13:19:15.554948',1,'zoe','Zoe','Gerolemou','',1,1,'2015-01-25 01:15:25');
+INSERT INTO "auth_user" VALUES(4,'pbkdf2_sha256$12000$4qxRcVaxlgb3$9mqnXEN5RI46gXPqsbwydkOi0lIM2WHKV5h/eiESnXk=','2015-01-29 23:26:40.562000',1,'pedro','Pedro','Quintas','',1,1,'2015-01-25 01:16:04');
+INSERT INTO "auth_user" VALUES(5,'pbkdf2_sha256$12000$uTnYqdApT7Jn$Pu+u5GYp7cdxBia3v6yzc09NN4wKu9kx5NImF4Yt7j4=','2015-02-19 13:28:43.957464',1,'karl','Karl','Drouven','',1,1,'2015-01-25 01:16:56');
+INSERT INTO "auth_user" VALUES(6,'pbkdf2_sha256$10000$Fec9MI6rCP2C$QG9Om/kV1uPRR1L4xyilx2F02D5dXISpgvnxkeX/aQE=','2015-01-25 01:17:45.036092',0,'ross','','','',0,1,'2015-01-25 01:17:45.036118');
+INSERT INTO "auth_user" VALUES(7,'pbkdf2_sha256$10000$xeuMlUUawXEj$biTz0tQgnipHdfynYBS0k7VTaaV6/6eiD4vXrI2ck+c=','2015-02-04 00:38:18.339178',1,'atanas','Atanas','Pamukchiev','',1,1,'2015-01-25 01:18:05');
+INSERT INTO "auth_user" VALUES(8,'pbkdf2_sha256$10000$h3WNJL3uU7wc$qbZK8BUw1p2Ze4DZn3VGp8KwMXRnnFR/2KRi8y54KIg=','2015-02-19 11:19:35.064505',0,'aatanas','Atanas','KKKASA','lucia.marta@money.me',0,1,'2015-02-19 11:18:19.829543');
+INSERT INTO "auth_user" VALUES(9,'pbkdf2_sha256$10000$KbckTmfPL7H4$QN73s44UOqNHzvs9jfPjdRc+5FgG0H+kGtnJuZ3C5RA=','2015-02-19 13:26:28.567429',0,'asd','weq','qewqq','qweqwe@asds.com',0,1,'2015-02-19 13:26:28.567429');
+CREATE TABLE "django_content_type" (
+    "id" integer NOT NULL PRIMARY KEY,
+    "name" varchar(100) NOT NULL,
+    "app_label" varchar(100) NOT NULL,
+    "model" varchar(100) NOT NULL,
+    UNIQUE ("app_label", "model")
+);
+INSERT INTO "django_content_type" VALUES(1,'permission','auth','permission');
+INSERT INTO "django_content_type" VALUES(2,'group','auth','group');
+INSERT INTO "django_content_type" VALUES(3,'user','auth','user');
+INSERT INTO "django_content_type" VALUES(4,'content type','contenttypes','contenttype');
+INSERT INTO "django_content_type" VALUES(5,'session','sessions','session');
+INSERT INTO "django_content_type" VALUES(6,'site','sites','site');
+INSERT INTO "django_content_type" VALUES(7,'address','bookingsystem','address');
+INSERT INTO "django_content_type" VALUES(8,'block','bookingsystem','block');
+INSERT INTO "django_content_type" VALUES(9,'btm rank','bookingsystem','btmrank');
+INSERT INTO "django_content_type" VALUES(10,'client','bookingsystem','client');
+INSERT INTO "django_content_type" VALUES(11,'experiencelevel','bookingsystem','experiencelevel');
+INSERT INTO "django_content_type" VALUES(12,'extras','bookingsystem','extras');
+INSERT INTO "django_content_type" VALUES(13,'medicalcondition','bookingsystem','medicalcondition');
+INSERT INTO "django_content_type" VALUES(14,'notes','bookingsystem','notes');
+INSERT INTO "django_content_type" VALUES(15,'payment','bookingsystem','payment');
+INSERT INTO "django_content_type" VALUES(16,'paymenttype','bookingsystem','paymenttype');
+INSERT INTO "django_content_type" VALUES(17,'session','bookingsystem','session');
+INSERT INTO "django_content_type" VALUES(18,'subvenue','bookingsystem','subvenue');
+INSERT INTO "django_content_type" VALUES(19,'subvenue usedfor session','bookingsystem','subvenueusedforsession');
+INSERT INTO "django_content_type" VALUES(20,'user selects session','bookingsystem','userselectssession');
+INSERT INTO "django_content_type" VALUES(21,'venue','bookingsystem','venue');
+INSERT INTO "django_content_type" VALUES(22,'log entry','admin','logentry');
+CREATE TABLE "django_session" (
+    "session_key" varchar(40) NOT NULL PRIMARY KEY,
+    "session_data" text NOT NULL,
+    "expire_date" datetime NOT NULL
+);
+INSERT INTO "django_session" VALUES('fs5vrv8n7rxvp4s5ldpuwx3s9cngrm92','YzE5MTBiMjAwZDE1M2YzMTI4Yzk3MDQ3MzMyZTUxNDI5NzBlZDlmZDp7Il9hdXRoX3VzZXJfaWQiOjcsIl9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIn0=','2015-02-08 18:09:05.811094');
+INSERT INTO "django_session" VALUES('sb5h41brofk5k89qulfvuq6n4pen6k3i','NjIyMGJiOWYzNzEzNTJlMmI0NDA1YjIzODU2MTk2M2NhMDNmMzRjYTp7fQ==','2015-02-08 19:26:00.257647');
+INSERT INTO "django_session" VALUES('n68biy7l34zbgfy78t5uciwjngb4vun5','NjIyMGJiOWYzNzEzNTJlMmI0NDA1YjIzODU2MTk2M2NhMDNmMzRjYTp7fQ==','2015-02-08 23:49:16.516000');
+INSERT INTO "django_session" VALUES('beekah3m5ulkwu19caq77pv2kn414kik','NWNlMDQ1MjVkZmMxNmUxNTA3MTJmZGUwODhmMmMxNWZmZTQ3Zjg4NDp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6N30=','2015-02-09 01:22:45.742000');
+INSERT INTO "django_session" VALUES('xf6yfn2v2tchszdydzlnajfbp65a2f1m','OTE5Mzk4MzI4YThkOTgyNWU4YzQwODdkYjNkY2RhNTk2OTYwYjJkNDp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6M30=','2015-02-09 03:35:52.625065');
+INSERT INTO "django_session" VALUES('tqfszo7kmc2a6f4bmtuk85or7x87vgdg','NWNlMDQ1MjVkZmMxNmUxNTA3MTJmZGUwODhmMmMxNWZmZTQ3Zjg4NDp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6N30=','2015-02-09 15:12:58.807000');
+INSERT INTO "django_session" VALUES('tmhk8hf23d5qr820eecyjshxdhnje55h','NWNlMDQ1MjVkZmMxNmUxNTA3MTJmZGUwODhmMmMxNWZmZTQ3Zjg4NDp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6N30=','2015-02-09 15:13:00.748000');
+INSERT INTO "django_session" VALUES('odzle9phjbfw7ryz8j7hpqsebamlh0l9','NWNlMDQ1MjVkZmMxNmUxNTA3MTJmZGUwODhmMmMxNWZmZTQ3Zjg4NDp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6N30=','2015-02-09 15:49:44.623000');
+INSERT INTO "django_session" VALUES('3ek2zep2qma4osupuzyq634rpf7qpep1','NjIyMGJiOWYzNzEzNTJlMmI0NDA1YjIzODU2MTk2M2NhMDNmMzRjYTp7fQ==','2015-02-10 15:45:41.028269');
+INSERT INTO "django_session" VALUES('stnjwvityhmcfm7ozojg97mqtgr1aurs','NTlkNTE0YmY1OGFiOGZmZTFkYjFhMDM2YmFlMGYxNWY2MDM2OTZiOTp7Il9hdXRoX3VzZXJfaGFzaCI6ImIzNTIyNmM3MzExZTA1YWVlZjJmN2YwZDE1ZjczMGVjOGExNzNiYzEiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOjR9','2015-02-10 16:53:10.741213');
+INSERT INTO "django_session" VALUES('n0krjnc5oac6qrwqu9n591rkl5g2z85f','OWI4NzIyMjU5M2M2YzY5ODZjMzcyMzU2NjRjMWQ0NWY3ZWI0Yjc2NTp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6NX0=','2015-02-10 20:40:01.301942');
+INSERT INTO "django_session" VALUES('weqmd0qcgezmuiccqqr0xsjcsmgeyfgu','NjIyMGJiOWYzNzEzNTJlMmI0NDA1YjIzODU2MTk2M2NhMDNmMzRjYTp7fQ==','2015-02-10 22:00:57.632160');
+INSERT INTO "django_session" VALUES('eew142rv5ygmv5fouvj6d4gdzqmd2u3c','OWI4NzIyMjU5M2M2YzY5ODZjMzcyMzU2NjRjMWQ0NWY3ZWI0Yjc2NTp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6NX0=','2015-02-11 13:14:16.454955');
+INSERT INTO "django_session" VALUES('bqe1btwi4anyjl4ynl5grneancv10t0z','OWI4NzIyMjU5M2M2YzY5ODZjMzcyMzU2NjRjMWQ0NWY3ZWI0Yjc2NTp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6NX0=','2015-02-11 23:48:45.539557');
+INSERT INTO "django_session" VALUES('3g3os77jcifhc05vlmozt9prf8io6w0q','OWI4NzIyMjU5M2M2YzY5ODZjMzcyMzU2NjRjMWQ0NWY3ZWI0Yjc2NTp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6NX0=','2015-02-12 11:49:07.840440');
+INSERT INTO "django_session" VALUES('sovcmchinwplufpu8iqmzqbsgpot80ra','OWI4NzIyMjU5M2M2YzY5ODZjMzcyMzU2NjRjMWQ0NWY3ZWI0Yjc2NTp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6NX0=','2015-02-12 13:23:35.456284');
+INSERT INTO "django_session" VALUES('b2gxuyjv5w7cs9yzo8i5fuocmhlg4jim','OWI4NzIyMjU5M2M2YzY5ODZjMzcyMzU2NjRjMWQ0NWY3ZWI0Yjc2NTp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6NX0=','2015-02-12 13:24:33.699569');
+INSERT INTO "django_session" VALUES('08z2fgho91oy11obkm9dpuc7lkm0whck','OWI4NzIyMjU5M2M2YzY5ODZjMzcyMzU2NjRjMWQ0NWY3ZWI0Yjc2NTp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6NX0=','2015-02-12 14:18:29.095374');
+INSERT INTO "django_session" VALUES('1omkxnqwqg2rad7e7cnblrg4hteabk3f','NWNlMDQ1MjVkZmMxNmUxNTA3MTJmZGUwODhmMmMxNWZmZTQ3Zjg4NDp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6N30=','2015-02-14 14:07:55.589000');
+INSERT INTO "django_session" VALUES('ifeg73i73kozxwtvvccjwsblmodmy82a','OWI4NzIyMjU5M2M2YzY5ODZjMzcyMzU2NjRjMWQ0NWY3ZWI0Yjc2NTp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6NX0=','2015-02-16 00:31:40.262103');
+INSERT INTO "django_session" VALUES('9rs7lfmdt7x78okm86rmjs18r8oo5p14','OWI4NzIyMjU5M2M2YzY5ODZjMzcyMzU2NjRjMWQ0NWY3ZWI0Yjc2NTp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6NX0=','2015-02-16 13:22:13.215183');
+INSERT INTO "django_session" VALUES('ky2qus1xvro7ueez9kvmig5reyhy7m80','NWNlMDQ1MjVkZmMxNmUxNTA3MTJmZGUwODhmMmMxNWZmZTQ3Zjg4NDp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6N30=','2015-02-18 00:38:18.341895');
+INSERT INTO "django_session" VALUES('s6lar9y30r5awai2rnquzyx8lwzb6kwr','OWI4NzIyMjU5M2M2YzY5ODZjMzcyMzU2NjRjMWQ0NWY3ZWI0Yjc2NTp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6NX0=','2015-02-19 21:54:37.747000');
+INSERT INTO "django_session" VALUES('cnw1h8nd4fh4p26qwj6az06lbfhn7rcl','NjIyMGJiOWYzNzEzNTJlMmI0NDA1YjIzODU2MTk2M2NhMDNmMzRjYTp7fQ==','2015-02-20 03:42:09.886495');
+INSERT INTO "django_session" VALUES('4pbmbj4gunn8mnmqhmblpg8kp6mj6nh0','NjIyMGJiOWYzNzEzNTJlMmI0NDA1YjIzODU2MTk2M2NhMDNmMzRjYTp7fQ==','2015-03-04 22:58:32.536511');
+INSERT INTO "django_session" VALUES('12gqlablxf95jd8o7i2epcai4wsu3u60','OWI4NzIyMjU5M2M2YzY5ODZjMzcyMzU2NjRjMWQ0NWY3ZWI0Yjc2NTp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6NX0=','2015-03-05 13:28:43.959536');
+CREATE TABLE "django_site" (
+    "id" integer NOT NULL PRIMARY KEY,
+    "domain" varchar(100) NOT NULL,
+    "name" varchar(50) NOT NULL
+);
+INSERT INTO "django_site" VALUES(1,'example.com','example.com');
+CREATE TABLE "django_admin_log" (
+    "id" integer NOT NULL PRIMARY KEY,
+    "action_time" datetime NOT NULL,
+    "user_id" integer NOT NULL REFERENCES "auth_user" ("id"),
+    "content_type_id" integer REFERENCES "django_content_type" ("id"),
+    "object_id" text,
+    "object_repr" varchar(200) NOT NULL,
+    "action_flag" smallint unsigned NOT NULL,
+    "change_message" text NOT NULL
+);
+INSERT INTO "django_admin_log" VALUES(1,'2015-01-25 01:13:53.573245',1,3,'4','asd',3,'');
+INSERT INTO "django_admin_log" VALUES(2,'2015-01-25 01:14:01.365384',1,3,'2','naseto123',3,'');
+INSERT INTO "django_admin_log" VALUES(3,'2015-01-25 01:14:07.284889',1,3,'3','naseto123asd',3,'');
+INSERT INTO "django_admin_log" VALUES(4,'2015-01-25 01:14:31.438083',1,3,'2','dimitris',1,'');
+INSERT INTO "django_admin_log" VALUES(5,'2015-01-25 01:15:17.559858',1,3,'2','dimitris',2,'Changed password, first_name, last_name, is_staff and is_superuser.');
+INSERT INTO "django_admin_log" VALUES(6,'2015-01-25 01:15:25.923574',1,3,'3','zoe',1,'');
+INSERT INTO "django_admin_log" VALUES(7,'2015-01-25 01:15:49.603375',1,3,'3','zoe',2,'Changed password, first_name, last_name, is_staff and is_superuser.');
+INSERT INTO "django_admin_log" VALUES(8,'2015-01-25 01:16:04.703047',1,3,'4','pedro',1,'');
+INSERT INTO "django_admin_log" VALUES(9,'2015-01-25 01:16:33.688749',1,3,'4','pedro',2,'Changed password, first_name, last_name, is_staff and is_superuser.');
+INSERT INTO "django_admin_log" VALUES(10,'2015-01-25 01:16:56.455518',1,3,'5','karl',1,'');
+INSERT INTO "django_admin_log" VALUES(11,'2015-01-25 01:17:16.538387',1,3,'5','karl',2,'Changed password, first_name, last_name, is_staff and is_superuser.');
+INSERT INTO "django_admin_log" VALUES(12,'2015-01-25 01:17:45.108310',1,3,'6','ross',1,'');
+INSERT INTO "django_admin_log" VALUES(13,'2015-01-25 01:18:05.137603',1,3,'7','atanas',1,'');
+INSERT INTO "django_admin_log" VALUES(14,'2015-01-25 01:18:18.435739',1,3,'7','atanas',2,'Changed password, first_name, last_name, is_staff and is_superuser.');
+INSERT INTO "django_admin_log" VALUES(15,'2015-01-25 01:18:40.563364',1,3,'7','atanas',2,'Changed password and last_name.');
+INSERT INTO "django_admin_log" VALUES(16,'2015-01-25 15:29:29.424320',7,2,'1','Manager',1,'');
+INSERT INTO "django_admin_log" VALUES(17,'2015-01-25 15:29:59.688121',7,3,'7','atanas',2,'Changed password and groups.');
+INSERT INTO "django_admin_log" VALUES(18,'2015-01-25 19:24:43.287268',5,2,'2','Parent',1,'');
+INSERT INTO "django_admin_log" VALUES(19,'2015-01-25 19:24:53.755817',5,2,'3','Coach',1,'');
+INSERT INTO "django_admin_log" VALUES(20,'2015-01-25 19:25:04.311566',5,3,'5','karl',2,'Changed password and groups.');
+INSERT INTO "django_admin_log" VALUES(21,'2015-01-25 19:25:16.761224',5,3,'4','pedro',2,'Changed password and groups.');
+INSERT INTO "django_admin_log" VALUES(22,'2015-01-25 19:25:24.479834',5,3,'3','zoe',2,'Changed password and groups.');
+INSERT INTO "django_admin_log" VALUES(23,'2015-01-27 20:19:42.086616',5,3,'5','karl',2,'Changed password and groups.');
+INSERT INTO "django_admin_log" VALUES(24,'2015-02-05 10:30:20.195473',5,10,'101','Client object',3,'');
+CREATE TABLE "django_migrations" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "app" varchar(255) NOT NULL, "name" varchar(255) NOT NULL, "applied" datetime NOT NULL);
+CREATE TABLE "btm_rank" (
+    "uID" integer NOT NULL PRIMARY KEY,
+    "membershipNum" integer,
+    "numOfPonts" integer
+);
+CREATE INDEX "auth_permission_37ef4eb4" ON "auth_permission" ("content_type_id");
+CREATE INDEX "auth_group_permissions_5f412f9a" ON "auth_group_permissions" ("group_id");
+CREATE INDEX "auth_group_permissions_83d7f98b" ON "auth_group_permissions" ("permission_id");
+CREATE INDEX "auth_user_groups_6340c63c" ON "auth_user_groups" ("user_id");
+CREATE INDEX "auth_user_groups_5f412f9a" ON "auth_user_groups" ("group_id");
+CREATE INDEX "auth_user_user_permissions_6340c63c" ON "auth_user_user_permissions" ("user_id");
+CREATE INDEX "auth_user_user_permissions_83d7f98b" ON "auth_user_user_permissions" ("permission_id");
+CREATE INDEX "django_session_b7b81f0c" ON "django_session" ("expire_date");
+CREATE INDEX "django_admin_log_6340c63c" ON "django_admin_log" ("user_id");
+CREATE INDEX "django_admin_log_37ef4eb4" ON "django_admin_log" ("content_type_id");
+COMMIT;

@@ -155,8 +155,7 @@ def loggedin(request):
 	context = RequestContext(request)
 	return render_to_response('manager/loggedin.html', context_dict, context)
 
-
-################################  Block Info Pages #############################################
+################################  Block Info Pages #############################
 
 @login_required
 @user_passes_test(is_manager)
@@ -164,7 +163,8 @@ def blockInfo(request):
 	context = RequestContext(request)
 	context_dict={}
 	return render_to_response('manager/blockInfo.html', context_dict, context)
-################################################################################################
+
+################################################################################
 @login_required
 @user_passes_test(is_manager)
 def managerBookings(request):																	#### WARNING: Repetitive code:Line 51
@@ -193,7 +193,8 @@ def managerSessions(request):
 
 
 
-###################### Add block id query in context detail########################
+###################### Add block id query in context detail#####################
+
 @login_required
 @user_passes_test(is_manager)
 def managerBlocks(request):
@@ -203,7 +204,8 @@ def managerBlocks(request):
 	#info = sessionInfo | venueInfo
 	context_dict={'blocks':blockInfo}
 	return render_to_response('manager/blocks.html', context_dict, context)
-###################################################################################
+
+################################################################################
 
 
 @login_required
@@ -512,38 +514,6 @@ def addNewChild(request):
 		context_dict['form'] = form
 		return render_to_response('parent/addnewChild.html', context_dict, context)
 
-
-# @login_required
-# @user_passes_test(is_parent)
-# def addChild(request):
-# 	if request.method == "POST":
-# 		global lastID
-
-# 		# THIS NEED TO BE CHANGED TO AUTOINCREMENT IN THE DATABASE!
-# 		if (lastID == -1):
-# 			lastID = Client.objects.all().aggregate(Max('uid')).get("uid__max")
-
-# 		lastID = lastID + 1
-
-# 		try:
-# 			f_uid = lastID
-# 			f_firstname = request.POST.get("firstname", "")
-# 			f_lastname = request.POST.get("lastname", "")
-# 			f_genderid = int(request.POST.get("genderid", ""))
-# 			f_age = request.POST.get("age", "")
-# 			f_telephone = request.POST.get("telephone", "")
-# 			f_email = request.POST.get("email", "")
-# 			f_medicalconditions = request.POST.get("medicalconditions", "")
-# 			f_belongsto = request.user.id
-
-# 			# VALIDATION HERE!!!
-# 			p = Client.objects.get_or_create(uid=f_uid, firstname=f_firstname, lastname=f_lastname, genderid=f_genderid, age=f_age, telephone=f_telephone, email=f_email, belongsto=f_belongsto, experiencelevel=0, managedby=0, ismember=0)
-# 		except:
-# 			return redirect('/fail.html')
-# 	return redirect('/success.html')
-
-###################################################################################
-
 @login_required
 @user_passes_test(is_parent)
 def payments(request):
@@ -610,10 +580,10 @@ def sessionInfo(request, sessionID):
 	#     	if session:
 	#     		#print session.session_sessionid
 	#     		context_dict={'session':session}
-    
+
     # Get all assigned coaches here!
     # Add coaches to conext_dict!
-    
+
 	sessionDetails = Session.objects.get(sessionid=sessionID)
 	sessionUsers = UserSelectsSession.objects.filter(session_sessionid=sessionDetails.sessionid)
 	context_dict={'details': sessionDetails}
@@ -651,35 +621,6 @@ def addSession(request):
 		form = SessionForm1()
 	return render_to_response('manager/addSession.html', {'form': form}, context)
 
-	# if request.method == "POST":
-	# 	global lastSessionID
-
-	# 	# THIS NEED TO BE CHANGED TO AUTOINCREMENT IN THE DATABASE!
-	# 	if (lastSessionID == -1):
-	# 		lastSessionID = Session.objects.all().aggregate(Max('sessionid')).get("sessionid__max")
-
-	# 	lastSessionID = lastSessionID + 1
-	# 	try:
-
-	# 		f_sessionid = lastSessionID
-	# 		f_duration = request.POST.get("duration", "")
-	# 		f_begintime = request.POST.get("begintime", "")
-	# 		f_endtime = request.POST.get("endtime", "")
-	# 		block_blockid = int(request.POST.get("block_blockid", ""))
-	# 		f_block_blockid = Block.objects.get(blockid=block_blockid)
-	# 		f_capacity = request.POST.get("capacity", "")
-	# 		f_agegroup = request.POST.get("agegroup", "")
-	# 		f_skillgroup = request.POST.get("skillgroup", "")
-	# 		f_isfull = request.POST.get("isfull", "")
-	# 		# VALIDATION HERE!!!
-
-	# 		p = Session.objects.get_or_create(sessionid=f_sessionid, duration=f_duration, begintime=f_begintime, endtime=f_endtime, block_blockid=f_block_blockid, capacity=f_capacity, agegroup=f_agegroup, skillgroup=f_skillgroup, isfull=f_isfull )
-	# 	#return redirect('/bookingsystem/manager/confirmed.html')
-	# 	except:
-	# 		return redirect('/fail.html')
-	# 	return redirect('/success.html')
-	# else:
-	# 	return render_to_response('manager/addSession.html', context_dict, context)
 
 @login_required
 @user_passes_test(is_manager)
