@@ -387,7 +387,6 @@ def userBookings1(request, num):
 	today = datetime.date.today()
 	monday = today - datetime.timedelta(days=today.weekday())
 	blocks = Block.objects.filter(Q(type='Week') & Q(begindate__gte=monday))
-	sessions = Session.objects.filter( Q(begintime__gte=datetime.datetime.now() ) & Q(begintime__lte=owner.enddate))
  	context_dict = {'sessions': sessions}
 	context_dict = {'blocks': blocks}
 	context_dict['child'] = child
