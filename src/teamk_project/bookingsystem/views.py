@@ -617,17 +617,23 @@ def sessionInfo(request, sessionID):
 	#     		#print session.session_sessionid
 	#     		context_dict={'session':session}
 
-	coaches = user.groups.get(name='Coach')
-	users = User.objects.filter(groups=coaches)
-	print users
-	print user.groups.values_list
+	##
+	## replace skillgroup with coachedby!
+	##
+
 	sessionDetails = Session.objects.get(sessionid=sessionID)
-	sessionUsers = UserSelectsSession.objects.filter(session_sessionid=sessionDetails.sessionid)
 	context_dict={'details': sessionDetails}
-	context_dict['users'] = sessionUsers
-	coaches = Client.objects.all()
-	context_dict['coaches'] = coaches[1:2]
-	context_dict['coaches2'] = coaches[10:20]
+
+	print sessionDetails
+	sessionDetails = Session.objects.get(sessionid=sessionID)
+	coacheGroups = user.groups.get(name='Coach')
+	
+	allCoaches = User.objects.filter(Q(groups=coacheGroups))
+	assignedCoaches = allCoaches.filter(Q(id = sessionDetails.skillgroup))
+	unassignedCoaches = allCoaches.filter(~Q(id = sessionDetails.skillgroup))
+
+	context_dict['assignedCoaches'] = assignedCoaches
+	context_dict['unassignedCoaches'] = unassignedCoaches
 	return render_to_response('manager/sessionInfo.html', context_dict, context)
 
 
