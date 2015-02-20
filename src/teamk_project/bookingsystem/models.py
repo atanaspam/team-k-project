@@ -16,6 +16,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.contrib.auth.models import User
 
 class Address(models.Model):
     addressid = models.IntegerField(primary_key=True, db_column='addressID') # Field name made lowercase.
@@ -135,6 +136,7 @@ class Session(models.Model):
     agegroup = models.CharField(max_length=45, db_column='ageGroup', blank=True) # Field name made lowercase.
     skillgroup = models.CharField(max_length=45, db_column='skillGroup', blank=True) # Field name made lowercase.
     isfull = models.CharField(max_length=45, db_column='isFull', blank=True) # Field name made lowercase.
+    coachuname = models.ManyToManyField(User) #coachUNname
     class Meta:
         db_table = 'session'
 

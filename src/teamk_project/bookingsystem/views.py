@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.template import RequestContext
 from django.shortcuts import render_to_response, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.models import User, Group
 from django.db.models import Q, Sum
 from bookingsystem.models import Client, Session, Block, UserSelectsSession, Payment, SubvenueUsedforSession
 from django.views.decorators.csrf import csrf_exempt
@@ -243,8 +244,8 @@ def members(request):
     #print clients.query, "\n"
     context_dict={'clients':clients}
 
-    for i in clients:
-    	print i.amount
+    #for i in clients:
+    #	print i.amount
 
     #print clients.values_list()
     #context_dict['payments'] = Payment.objects.filter(haspayed=0)
@@ -581,9 +582,10 @@ def sessionInfo(request, sessionID):
 	#     		#print session.session_sessionid
 	#     		context_dict={'session':session}
 
-    # Get all assigned coaches here!
-    # Add coaches to conext_dict!
-
+	coaches = user.groups.get(name='Coach')
+	users = User.objects.filter(groups=coaches)
+	print users
+	print user.groups.values_list
 	sessionDetails = Session.objects.get(sessionid=sessionID)
 	sessionUsers = UserSelectsSession.objects.filter(session_sessionid=sessionDetails.sessionid)
 	context_dict={'details': sessionDetails}
