@@ -94,8 +94,20 @@ def success(request):
     context_dict={}
     return render_to_response('success.html', context_dict, context)
 
+def successEmb(request):
+    context = RequestContext(request)
+    context_dict={}
+    return render_to_response('successEmb.html', context_dict, context)
+
 
 def fail(request):
     context = RequestContext(request)
     context_dict={}
     return render_to_response('fail.html', context_dict, context)
+    
+def editProfile(request):
+    context = RequestContext(request)
+    context_dict={}
+    user = request.user
+    context_dict = {'user':user}
+    return render_to_response('editProfile.html', context_dict, context)

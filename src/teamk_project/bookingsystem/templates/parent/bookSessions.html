@@ -1,29 +1,5 @@
-{% extends "base.html" %}
-
-{% block sidebarNav %}
-{% include "sidebarNav/parent.html" %}
-{% endblock %}
-
-  <!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
-  <!--  EACH OF THE RESULTS SHOULD BE ENCODED INTO A HIPERLINK AND  -->
-  <!--  THIS HYPERLINK SHOULD POINT TO THE PAGE THAT IS RESPONSIBLE -->
-  <!--  FOR THE KID's PERSONAL INFORMATION              -->
-  <!--                                -->
-  <!--  ALSO WE NEED ALL THE BUTTONS THAT WOULD POINT TO THE REST   -->
-  <!--  OF THE FUNCTIONALITY PLACED AND POINTING TO THE CORRECT URL -->
-  <!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
-
-  {% block mainArea %}
-
-  <!-- main area -->
-
-  <!-- TODO: get the childs specific sessions
-              ** fill in name of block-->
-
-  <!-- sessions -->
-  <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">Session List In Block **</h3>
+      <h3 class="panel-title">Sessions</h3>
     </div>
     <div class="panel-body">
     {% with child.uid|stringformat:'s' as uid %}
@@ -62,21 +38,9 @@
         </tbody>
       </table>
 	   {% endwith %}
-      <!-- TODO: implement the select all button -->
     	<input class="btn btn-default" type="submit" value="Submit" />
 
 
 	</form>
 </div> <!-- end panel body -->
-  </div> <!-- end panel Session List -->
-
-
-            <button class="btn btn-default" type="button">
-              <a class="studentLabel"href="bookings.html">
-                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                Back
-              </a>
-            </button>
-
-{% endblock %}
 

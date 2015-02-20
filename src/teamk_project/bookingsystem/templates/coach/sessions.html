@@ -24,9 +24,14 @@
 
               <!-- add body here -->
               <div class="list-group">
-                <a href="attendance.html" class="list-group-item">First session</a>
-                <a href="attendance.html" class="list-group-item">Second session</a>
-                <a href="attendance.html" class="list-group-item">Third session</a>
-                <a href="attendance.html" class="list-group-item">Another session</a>
+	            {% if assignedSessions %}
+	            	{% for session in assignedSessions %}
+						<ul>
+							<a href="{% url 'bookingsystem.views.attendance' %}{{ session.sessionid }}" class="list-group-item">{{ session.begintime }}</a>
+						</ul>
+							{% endfor %}
+						{% else %}
+	            	You are currently not assigend to any sessions!
+	            {% endif %}
               </div>
 {% endblock %}
