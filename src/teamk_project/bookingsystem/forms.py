@@ -12,6 +12,8 @@ from django.utils.safestring import mark_safe
 
 #from django.forms import MultiWidget
 
+# Source: https://djangosnippets.org/snippets/1202/
+################################################################################
 __all__ = ('SelectTimeWidget', 'SplitSelectDateTimeWidget')
 
 # Attempt to match many time formats:

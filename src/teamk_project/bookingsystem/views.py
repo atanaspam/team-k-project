@@ -11,7 +11,7 @@ from django.db import models
 from django.db.models import Max
 from bookingsystem.forms import BlockForm, SessionForm1, EditPersonalDetailsForm, CreateChildForm, WeekBlockForm ##########################
 from datetime import timedelta
-import datetime
+import datetime, time
 
 
 approvalHistory = []
@@ -19,7 +19,11 @@ i = 0
 lastSessionID = -1
 lastID = -1
 lastBlockID = -1
+ageGroups = ['7-10','10-12', '12-15', '15-19']
 
+def getDayOfWeek(n):
+	daysOfWeek = {0:'Monday', 1:'Tuesday', 2:'Wednesday', 3:'Thurday', 4:'Friday', 5:'Saturday', 6:'Sunday'}
+	return daysOfWeek[n]
 
 def getLastID():
 	global lastID
@@ -659,6 +663,7 @@ def addSession(request):
 @login_required
 @user_passes_test(is_manager)
 def addBlock(request):
+	global ageGroups
 	context = RequestContext(request)
 	# A HTTP POST?
 	if request.method == 'POST':
@@ -669,10 +674,31 @@ def addBlock(request):
 			block.blockid = getLastBlockID()
 			block.enddate = block.begindate + timedelta(days = 6)
 			block.type = 'Week'
-
-
-			# Now save to the DB block.save()
-			print block.begindate
+			#block.save()
+			for i in range(0,7):
+				# Create the morning Block
+				b = Block(blockid=getLastBlockID(), begindate=block.begindate + timedelta(days = i), enddate=block.begindate + timedelta(days = i), label=getDayOfWeek(i), type='Morning')
+				print b
+				#b.save()
+				# Create all the sessions for the morning block
+				for age in ageGroups:
+					# Generate the time
+					sessionTime = datetime.datetime.strptime('08:00', '%H:%M').time() # generate a 8:00 time
+					sessionBegTime = datetime.datetime.combine(block.begindate+timedelta(days = i), sessionTime)
+					s = Session(sessionid=getLastSessionID(), duration=1, begintime=sessionBegTime, endtime=(sessionBegTime+timedelta(hours=1)), block_blockid=b, capacity=10, agegroup=age, skillgroup='RANDOM', isfull=0)
+					print s.sessionid , s.begintime, s.endtime, s.agegroup
+					#s.save()
+				# Create the afternoon block
+				b1 = Block(blockid=getLastBlockID(), begindate=block.begindate + timedelta(days = i), enddate=block.begindate + timedelta(days = i), label=getDayOfWeek(i), type='Afternoon')
+				print b1
+				#b1.save()
+				for age in ageGroups:
+					# Generate the time
+					sessionTime = datetime.datetime.strptime('13:00', '%H:%M').time() # generate a 8:00 time
+					sessionBegTime = datetime.datetime.combine(block.begindate+timedelta(days = i), sessionTime)
+					s = Session(sessionid=getLastSessionID(), duration=1, begintime=sessionBegTime, endtime=(sessionBegTime+timedelta(hours=1)), block_blockid=b1, capacity=10, agegroup=age, skillgroup='RANDOM', isfull=0)
+					print s.sessionid , s.begintime, s.endtime, s.agegroup
+					#s.save()
 			# Redirect on success
 			return redirect('/success.html')
 		else:
