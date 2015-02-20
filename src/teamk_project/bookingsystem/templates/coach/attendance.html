@@ -12,12 +12,12 @@
 			<div class="panel-heading">
 				<h3 class="panel-title">Addendance for {{ s.begintime }}</h3>
 			</div>
-			
+
 			<!-- add body here -->
 			<div class="panel-body">
 				<div class="col-lg-6">
 					{% for object in sessionObjects %}
-						{% if object.user_uid.belongsto == 0 %}
+						<!--{% if object.user_uid.belongsto == 0 %} DUNNO WHY THIS IS HERE -->
 							<div class="input-group">
 								<span class="input-group-addon">
 									<input type="checkbox" aria-labelledby="labelst" value="{{ object.user_uid.uid }}" name="attendance">
@@ -26,7 +26,7 @@
 		                                {{ object.user_uid.firstname }} {{ object.user_uid.lastname }}
 		                              </li>
 		                    </div><!-- /input-group -->
-						{% endif %}
+						<!-- {% endif %} -->
 					{% endfor %}
 				</div><!-- /.col-lg-6 -->
 			</div>
