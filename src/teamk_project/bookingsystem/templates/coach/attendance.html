@@ -6,29 +6,32 @@
 
 {% block mainArea %}
 	<br>
-	<form action="/bookingsystem/coach/commitAddendance.html" method="post">{% csrf_token %}
+	<form action="/bookingsystem/coach/submitAttendance" method="post">{% csrf_token %}
 		<!-- Session Attendance -->
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">Addendance for {% for is in s%}{{ is.begintime }}{%endfor%}</h3>
+				<h3 class="panel-title">Addendance for {{ s.begintime }}</h3>
 			</div>
-
+			
 			<!-- add body here -->
 			<div class="panel-body">
 				<div class="col-lg-6">
-					{% for child in children %}
-						<div class="input-group">
-							<span class="input-group-addon">
-								<input type="checkbox" aria-labelledby="labelst" value="child.uid">
-							</span>
-							<li class="studentLabel list-group-item labelst">
-	                                {{ child.firstname }} {{ child.lastnama }}
-	                              </li>
-	                        </div><!-- /input-group -->
+					{% for object in sessionObjects %}
+						{% if object.user_uid.belongsto == 0 %}
+							<div class="input-group">
+								<span class="input-group-addon">
+									<input type="checkbox" aria-labelledby="labelst" value="{{ object.user_uid.uid }}" name="attendance">
+								</span>
+								<li class="studentLabel list-group-item labelst">
+		                                {{ object.user_uid.firstname }} {{ object.user_uid.lastname }}
+		                              </li>
+		                    </div><!-- /input-group -->
+						{% endif %}
 					{% endfor %}
 				</div><!-- /.col-lg-6 -->
 			</div>
 		</div> <!--panel-->
+		<input type="hidden" name="sessionID" value="{{ s.sessionid }}">
 		<INPUT Type="button" class="btn btn-default" VALUE="Cancel" ONCLICK="window.location.href='/bookingsystem/coach/index.html'"/>
 		<INPUT Type="submit" class="btn btn-default" VALUE="Submit"/>
 	</from>
