@@ -6,6 +6,8 @@
     {% url 'bookingsystem.views.confirmBookings' as uurl %}
 	  <form action={{uurl|add:uid}} method="post">{% csrf_token %}
 
+
+     {% if sessions %}
 	  <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr>
@@ -19,7 +21,6 @@
         </thead>
 
         <tbody>
-          {% if sessions %}
           {% for session in sessions %}
           <tr class="greylabel">
             <td class="textCentered">
@@ -32,13 +33,13 @@
             <td>{{session.capacity}}</td>
           </tr>
           {% endfor %}
-          {% else %}
-          <strong>There are no categories present.</strong>
-          {% endif %}
+     {% else %}
+          <strong> - No sessions available in that week.</strong>
+     {% endif %}
         </tbody>
       </table>
 	   {% endwith %}
-    	<input class="btn btn-default" type="submit" value="Submit" />
+    	{% if sessions %}<input class="btn btn-default" type="submit" value="Submit" />{% endif %}
 
 
 	</form>
