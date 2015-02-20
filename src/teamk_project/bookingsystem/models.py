@@ -136,7 +136,7 @@ class Session(models.Model):
     agegroup = models.CharField(max_length=45, db_column='ageGroup', blank=True) # Field name made lowercase.
     skillgroup = models.CharField(max_length=45, db_column='skillGroup', blank=True) # Field name made lowercase.
     isfull = models.CharField(max_length=45, db_column='isFull', blank=True) # Field name made lowercase.
-    coachuname = models.ManyToManyField(User) #coachUNname
+    coachedby = models.ManyToManyField(User, null=True, blank=True)
     class Meta:
         db_table = 'session'
 
@@ -144,6 +144,7 @@ class UserSelectsSession(models.Model):
     user_uid = models.ForeignKey(Client, primary_key=True, db_column='User_uID') # Field name made lowercase.
     session_sessionid = models.ForeignKey(Session, primary_key=True, db_column='Session_sessionID') # Field name made lowercase.
     status = models.CharField(max_length=1, blank=True)
+    hasattended = models.IntegerField(db_column='hasattended')
     class Meta:
         db_table = 'user_selects_session'
 
