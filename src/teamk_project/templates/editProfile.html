@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block sidebarNav %}
+<!--{% include "sidebarNav/parent.html" %}-->
+{% endblock %}
+
+{% block mainArea %}
+	<br>
+	<form action="changeProfile.html" method="post">{% csrf_token %}
+	    <!-- Personal Details -->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Personal Details</h3>
+			</div>
+		
+			<div class="panel-body">
+				<!-- Name -->
+				<div class="input-group">
+					<input type="text" class="form-control" value="{{ user.first_name }}" readonly aria-describedby="basic-addon2">
+					<input type="text" class="form-control" value="{{ user.last_name }}" readonly aria-describedby="basic-addon1">
+				</div>
+			</div>
+		</div> <!--panel-->
+	    <!-- end of Personal Details -->
+
+		<!-- Contact Details -->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Contact Details</h3>
+			</div>
+		
+			<div class="panel-body">
+				<!-- add body here -->
+				<!-- phone number -->
+				<div class="input-group">
+					<span class="input-group-addon" id="telephone">#</span>
+					<input type="text" class="form-control" value="{{ user.telephone }}" aria-describedby="basic-addon1">
+				</div>
+
+				<!-- e-mail -->
+				<div class="input-group">
+					<span class="input-group-addon" id="email">@</span>
+					<input type="text" class="form-control" value="{{ user.email }}" aria-describedby="basic-addon1">
+				</div>
+			</div>
+		</div> <!--panel-->
+		<!-- end of Contact Details -->		
+	
+	
+		<!-- Account Settings -->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Change Password</h3>
+			</div>
+		
+			<div class="panel-body">
+				<!-- add body here -->
+				<!-- old password -->
+				<div class="input-group">
+					<span class="input-group-addon" id="oldpassword">&nbsp;Old Password *</span>
+					<input type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
+				</div>
+			
+				<!-- new password -->
+				<div class="input-group">
+					<span class="input-group-addon" id="newpassword1">New Password *</span>
+					<input type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
+				</div>
+
+				<!-- confirm new password -->
+				<div class="input-group">
+					<span class="input-group-addon" id="newpassword2">New Password *</span>
+					<input type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
+				</div>
+
+			</div>
+		</div> <!--panel-->
+		<!-- end of Account Settings -->
+
+		<INPUT Type="button" class="btn btn-default" VALUE="Cancel" ONCLICK="window.location.href='/'"/>
+		<INPUT Type="submit" class="btn btn-default" VALUE="Submit"/>
+	</form>
+{% endblock %}

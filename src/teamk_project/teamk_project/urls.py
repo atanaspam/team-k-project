@@ -19,6 +19,6 @@ urlpatterns = patterns('',
     url(r'^invalid', 'teamk_project.views.invalid', name='invalid'),
     url(r'^fail', 'teamk_project.views.fail', name='fail'),
     url(r'^success', 'teamk_project.views.success', name='success'),
-    url(r'^successEmb', 'teamk_project.views.successEmb', name='successEmb')
-
+    url(r'^successEmb', 'teamk_project.views.successEmb', name='successEmb'),
+    url(r'^editProfile', 'teamk_project.views.editProfile', name='editProfile')
 )

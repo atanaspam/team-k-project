@@ -4,28 +4,43 @@
 {% include "sidebarNav/coach.html" %}
 {% endblock %}
 
-<!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
-<!-- 	EACH OF THE RESULTS SHOULD BE ENCODED INTO A HIPERLINK AND  -->
-<!-- 	THIS HYPERLINK SHOULD POINT TO THE PAGE THAT IS RESPONSIBLE -->
-<!-- 	FOR THE KID's PERSONAL INFORMATION							-->
-<!-- 																-->
-<!-- 	ALSO WE NEED ALL THE BUTTONS THAT WOULD POINT TO THE REST   -->
-<!-- 	OF THE FUNCTIONALITY PLACED AND POINTING TO THE CORRECT URL -->
-<!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
-
 {% block mainArea %}
-
-	<p/>
-	<p> </p>
-
-	<h3><strong><u>Today's Class List</u></strong></h3>
-	{% if children %}
-            <ul>
-                {% for child in children %}
-                <li>{{ child.firstname }}</li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <i> - You have no classes assigned.</i>
-        {% endif %}
+	
+	<br>
+	
+	<!-- Attendance -->
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Sessions for Attendance</h3>
+		</div>
+		
+		<div class="panel-body">
+			<!-- add body here -->
+              <div class="list-group">
+	            {% if assignedSessions %}
+	            	{% for session in assignedSessions %}
+						<ul>
+							<a href="{% url 'bookingsystem.views.attendance' %}{{ session.sessionid }}" class="list-group-item">{{ session.begintime }}</a>
+						</ul>
+					{% endfor %}
+				{% else %}
+	            	You are currently not assigend to any sessions!
+	            {% endif %}
+              </div>
+		</div>
+	</div>
+	
+	<!-- Schedule -->
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Schedule</h3>
+		</div>
+		
+		<div class="panel-body">
+			<!-- add body here -->
+        	<div class="list-group">
+          	  	Show schedule here!
+			</div>
+		</div>
+	</div>			  
 {% endblock %}
