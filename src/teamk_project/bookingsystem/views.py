@@ -104,7 +104,7 @@ def submitAttendance(request):
 		if (key == 'attendance'):
 			childID = request.POST[key]
 			child = UserSelectsSession.objects.get(user_uid=childID, session_sessionid = sessionID)
-			child.attendance = 1
+			child.hasattended = 1
 			child.save()
 	return  redirect("index.html")
 
