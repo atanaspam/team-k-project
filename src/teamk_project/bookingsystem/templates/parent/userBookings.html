@@ -16,7 +16,7 @@
 				{% for block in blocks %}
 					{% with block.blockid|stringformat:'s' as ID %}
               	  	{% with child.uid|stringformat:'s' as uid %}
-					
+
 					<div class="accordion-heading">
 						<a class="list-group-item clearfix" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ forloop.counter }}">
 							<span class="glyphicon glyphicon-file"></span> 
@@ -26,12 +26,13 @@
 					</div>
 
 					<div id="collapse{{ forloop.counter }}" class="accordion-body collapse" role="tabpanel">
-						<div class="panel-body">
-							Sessions here!
-						</div>
+						<div> 
+					    <object type="text/html" data={{uurl|add:"bookSessions"|add:ID|add:"/"|add:uid}}  width="100%" height="250px" style="overflow:auto;border:5px ridge blue">
+					    </object></div>
+							   {% endwith %}
+
 					</div>
 			  
-					{% endwith %}
 					{% endwith %}
 				{% endfor %}
 			</div> <!-- end of list group-->

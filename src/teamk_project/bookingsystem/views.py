@@ -332,6 +332,8 @@ def userBookings1(request, num):
 	today = datetime.date.today()
 	monday = today - datetime.timedelta(days=today.weekday())
 	blocks = Block.objects.filter(Q(type='Week') & Q(begindate__gte=monday))
+	sessions = Session.objects.filter( Q(begintime__gte=datetime.datetime.now() ) & Q(begintime__lte=owner.enddate))
+ 	context_dict = {'sessions': sessions}
 	context_dict = {'blocks': blocks}
 	context_dict['child'] = child
 	return render_to_response('parent/userBookings.html', context_dict, context)
@@ -354,7 +356,7 @@ def confirmBookings(request, uID):
 				)
 			t.save()
 	context_dict = {'checked': checked}
-	return render_to_response('success.html', context_dict, context)
+	return render_to_response('successEmb.html', context_dict, context)
 
 
 @login_required
