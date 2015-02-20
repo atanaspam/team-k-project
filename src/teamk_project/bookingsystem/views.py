@@ -374,8 +374,10 @@ def userBookings(request, num):
 	today = datetime.date.today()
 	monday = today - datetime.timedelta(days=today.weekday())
 	blocks = Block.objects.filter(Q(type='Week') & Q(begindate__gte=monday))
+	sessions = Session.objects.filter(Q(block_blockid__in = blocks))
 	context_dict = {'blocks': blocks}
 	context_dict['child'] = child
+	context_dict['sessions'] = sessions
 	return render_to_response('parent/userBookings.html', context_dict, context)
 
 @login_required

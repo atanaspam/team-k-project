@@ -26,9 +26,27 @@
 					</div>
 
 					<div id="collapse{{ forloop.counter }}" class="accordion-body collapse" role="tabpanel">
-						<div> 
+						<div class="panel-body">
+				
+							{% for session in sessions %}
+								{% if session.block_blockid.blockid == block.blockid %}
+									<div class="input-group">
+										<span class="input-group-addon">
+											<input type="checkbox" aria-labelledby="labelst" value="{{ session.sessionid }}" name="session">
+										</span>
+										<li class="studentLabel list-group-item labelst">
+				                                {{ session.begintime }} - {{ session.endtime }}
+				                              </li>
+				                    </div>
+								{% endif %}
+							{% endfor %}
+
+							<!--
+							
 					    <object type="text/html" data={{uurl|add:"bookSessions"|add:ID|add:"/"|add:uid}}  width="100%" height="250px" style="overflow:auto;border:5px ridge blue">
-					    </object></div>
+					    </object>
+								-->
+						</div>
 							   {% endwith %}
 
 					</div>
