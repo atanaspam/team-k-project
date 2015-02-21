@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 
 import re
 from django.forms.extras.widgets import SelectDateWidget
-from django.forms.widgets import Widget, Select, MultiWidget
+from django.forms.widgets import Widget, Select, MultiWidget, CheckboxSelectMultiple
 from django.utils.safestring import mark_safe
 
 #from django.forms import MultiWidget
@@ -216,16 +216,18 @@ class DateSelectorWidget(widgets.MultiWidget):
 
 class BlockForm(forms.ModelForm):
 
+    num_choices = ( (1, "Monday"), (2, "Tuesday"), (3, "Wednesday"), (4, "Thursday"), (5, "Friday"), (6, "Saturday"), (7, "Sunday"))
     #blockid = forms.IntegerField()
     begindate = forms.DateField(widget=DateSelectorWidget(), help_text="Beginning of the block")
     enddate = forms.DateField(widget=DateSelectorWidget(), help_text="End of the block")
     label = forms.CharField(max_length=40, help_text="User Friendly name.")
-    type = forms.Select()
+    weekdays = forms.MultipleChoiceField(choices=num_choices, required=True, widget=forms.CheckboxSelectMultiple(), label='Select Days', )
+    #type = forms.Select()
     # An inline class to provide additional information on the form.
     class Meta:
         # Provide an association between the ModelForm and a model
         model = Block
-        fields = ('begindate', 'enddate', 'label', 'type')
+        fields = ('begindate', 'enddate', 'label')
 
 class WeekBlockForm(forms.ModelForm):
 

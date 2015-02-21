@@ -684,47 +684,67 @@ def addBlock(request):
 	context = RequestContext(request)
 	# A HTTP POST?
 	if request.method == 'POST':
-		form = WeekBlockForm(request.POST)
-		# Have we been provided with a valid form?
-		if form.is_valid():
-			block=form.save(commit=False)
-			block.blockid = getLastBlockID()
-			block.enddate = block.begindate + timedelta(days = 6)
-			block.type = 'Week'
-			#block.save()
-			for i in range(0,7):
-				# Create the morning Block
-				b = Block(blockid=getLastBlockID(), begindate=block.begindate + timedelta(days = i), enddate=block.begindate + timedelta(days = i), label=getDayOfWeek(i), type='Morning')
-				print b
-				#b.save()
-				# Create all the sessions for the morning block
-				for age in ageGroups:
-					# Generate the time
-					sessionTime = datetime.datetime.strptime('08:00', '%H:%M').time() # generate a 8:00 time
-					sessionBegTime = datetime.datetime.combine(block.begindate+timedelta(days = i), sessionTime)
-					s = Session(sessionid=getLastSessionID(), duration=1, begintime=sessionBegTime, endtime=(sessionBegTime+timedelta(hours=1)), block_blockid=b, capacity=10, agegroup=age, skillgroup='RANDOM', isfull=0)
-					print s.sessionid , s.begintime, s.endtime, s.agegroup
-					#s.save()
-				# Create the afternoon block
-				b1 = Block(blockid=getLastBlockID(), begindate=block.begindate + timedelta(days = i), enddate=block.begindate + timedelta(days = i), label=getDayOfWeek(i), type='Afternoon')
-				print b1
-				#b1.save()
-				for age in ageGroups:
-					# Generate the time
-					sessionTime = datetime.datetime.strptime('13:00', '%H:%M').time() # generate a 8:00 time
-					sessionBegTime = datetime.datetime.combine(block.begindate+timedelta(days = i), sessionTime)
-					s = Session(sessionid=getLastSessionID(), duration=1, begintime=sessionBegTime, endtime=(sessionBegTime+timedelta(hours=1)), block_blockid=b1, capacity=10, agegroup=age, skillgroup='RANDOM', isfull=0)
-					print s.sessionid , s.begintime, s.endtime, s.agegroup
-					#s.save()
-			# Redirect on success
-			return redirect('/success.html')
+		if 'submit_week' in request.POST:
+
+			form = WeekBlockForm(request.POST)
+			# Have we been provided with a valid form?
+			if form.is_valid():
+				block=form.save(commit=False)
+				block.blockid = getLastBlockID()
+				block.enddate = block.begindate + timedelta(days = 6)
+				block.type = 'Week'
+				#block.save()
+				for i in range(0,7):
+					# Create the morning Block
+					b = Block(blockid=getLastBlockID(), begindate=block.begindate + timedelta(days = i), enddate=block.begindate + timedelta(days = i), label=getDayOfWeek(i), type='Morning')
+					print b
+					#b.save()
+					# Create all the sessions for the morning block
+					for age in ageGroups:
+						# Generate the time
+						sessionTime = datetime.datetime.strptime('08:00', '%H:%M').time() # generate a 8:00 time
+						sessionBegTime = datetime.datetime.combine(block.begindate+timedelta(days = i), sessionTime)
+						s = Session(sessionid=getLastSessionID(), duration=1, begintime=sessionBegTime, endtime=(sessionBegTime+timedelta(hours=1)), block_blockid=b, capacity=10, agegroup=age, skillgroup='RANDOM', isfull=0)
+						print s.sessionid , s.begintime, s.endtime, s.agegroup
+						#s.save()
+					# Create the afternoon block
+					b1 = Block(blockid=getLastBlockID(), begindate=block.begindate + timedelta(days = i), enddate=block.begindate + timedelta(days = i), label=getDayOfWeek(i), type='Afternoon')
+					print b1
+					#b1.save()
+					for age in ageGroups:
+						# Generate the time
+						sessionTime = datetime.datetime.strptime('13:00', '%H:%M').time() # generate a 8:00 time
+						sessionBegTime = datetime.datetime.combine(block.begindate+timedelta(days = i), sessionTime)
+						s = Session(sessionid=getLastSessionID(), duration=1, begintime=sessionBegTime, endtime=(sessionBegTime+timedelta(hours=1)), block_blockid=b1, capacity=10, agegroup=age, skillgroup='RANDOM', isfull=0)
+						print s.sessionid , s.begintime, s.endtime, s.agegroup
+						#s.save()
+				# Redirect on success
+				return redirect('/success.html')
+			else:
+				# The supplied form contained errors - just print them to the terminal.
+				print form.errors
+		if 'submit_season' in request.POST:
+			print 'AAAAAAAAAAAAAAAAA'
+			form = BlockForm(request.POST)
+			# Have we been provided with a valid form?
+			if form.is_valid():
+				block=form.save(commit=False)
+				block.blockid = getLastBlockID()
+				block.type = 'Season'
+				#block.save()
+				return redirect('/success.html')
+			else:
+				# If error
+				print form.errors
+				return redirect('/fail.html')
 		else:
-			# The supplied form contained errors - just print them to the terminal.
-			print form.errors
+			# if unrecognised
+			return redirect('/fail.html')
 	else:
 		# If the request was not a POST, display the form to enter details.
 		form = WeekBlockForm()
-	return render_to_response('manager/addBlock.html', {'form': form}, context)
+		sform = BlockForm()
+	return render_to_response('manager/addBlock.html', {'form': form, 'sform': sform}, context)
 
 
 
