@@ -374,8 +374,8 @@ def userBookings(request, num):
 	child = Client.objects.get(uid=num)
 	today = datetime.date.today()
 	monday = today - datetime.timedelta(days=today.weekday())
-	blocks = Block.objects.filter(Q(type='Week') & Q(begindate__gte=monday))
-	context_dict = {'blocks': blocks}
+	weeks = Block.objects.filter((Q(type='Week') & Q(begindate__gte=monday)) | (Q(type='Season')))
+	context_dict = {'blocks': weeks}
 	context_dict['child'] = child
 	return render_to_response('parent/userBookings.html', context_dict, context)
 
@@ -386,9 +386,7 @@ def userBookings1(request, num):
 	context = RequestContext(request)
 	today = datetime.date.today()
 	monday = today - datetime.timedelta(days=today.weekday())
-	blocks = Block.objects.filter(Q(type='Week') & Q(begindate__gte=monday))
  	context_dict = {'sessions': sessions}
-	context_dict = {'blocks': blocks}
 	context_dict['child'] = child
 	return render_to_response('parent/userBookings.html', context_dict, context)
 
@@ -435,6 +433,20 @@ def bookSessions1(request, blockID, uID):
  	context_dict = {'sessions': sessions}
  	context_dict['child'] = child
  	return render_to_response('parent/bookSessions.html', context_dict, context)
+
+def bookSeason(request):
+	context = RequestContext(request)
+	context_dict={}
+	return render_to_response('parameterent/bookSeason.html', context_dict, context)
+
+def bookSeason1(request, blockID, uID):
+ 	context = RequestContext(request)
+ 	child = Client.objects.get(uid=uID)
+	owner = Block.objects.get(blockid=blockID)
+ 	sessions = Session.objects.filter( Q(begintime__gte=datetime.datetime.now() ) & Q(begintime__lte=owner.enddate))
+ 	context_dict = {'sessions': sessions}
+ 	context_dict['child'] = child
+ 	return render_to_response('parent/bookSeason.html', context_dict, context)
 
 @login_required
 @user_passes_test(is_parent)
