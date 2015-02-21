@@ -216,18 +216,23 @@ class DateSelectorWidget(widgets.MultiWidget):
 
 class BlockForm(forms.ModelForm):
 
-    num_choices = ( (1, "Monday"), (2, "Tuesday"), (3, "Wednesday"), (4, "Thursday"), (5, "Friday"), (6, "Saturday"), (7, "Sunday"))
     #blockid = forms.IntegerField()
     begindate = forms.DateField(widget=DateSelectorWidget(), help_text="Beginning of the block")
     enddate = forms.DateField(widget=DateSelectorWidget(), help_text="End of the block")
     label = forms.CharField(max_length=40, help_text="User Friendly name.")
-    weekdays = forms.MultipleChoiceField(choices=num_choices, required=True, widget=forms.CheckboxSelectMultiple(), label='Select Days', )
+    #weekdays = forms.MultipleChoiceField(choices=num_choices, required=True, widget=forms.CheckboxSelectMultiple(), label='Select Days')
     #type = forms.Select()
     # An inline class to provide additional information on the form.
     class Meta:
         # Provide an association between the ModelForm and a model
         model = Block
-        fields = ('begindate', 'enddate', 'label')
+        fields = ['begindate', 'enddate', 'label']
+
+class BlockFormMore(BlockForm):
+    num_choices = ( (0, "Monday"), (1, "Tuesday"), (2, "Wednesday"), (3, "Thursday"), (4, "Friday"), (5, "Saturday"), (6, "Sunday"))
+    weekdays = forms.MultipleChoiceField(choices=num_choices, required=True, widget=forms.CheckboxSelectMultiple(), label='Select Days')
+    class Meta(BlockForm.Meta):
+        fields = BlockForm.Meta.fields + ['weekdays']
 
 class WeekBlockForm(forms.ModelForm):
 

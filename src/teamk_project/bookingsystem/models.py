@@ -43,6 +43,8 @@ class Block(models.Model):
     type = models.CharField(max_length=45, choices = TYPE_CHOICES)
     class Meta:
         db_table = 'block'
+    def __str__(self):
+        return '%s %s %s' % (self.blockid, self.begindate, self.enddate)
 
 class BtmRank(models.Model):
     uid = models.IntegerField(primary_key=True, db_column='uID') # Field name made lowercase.

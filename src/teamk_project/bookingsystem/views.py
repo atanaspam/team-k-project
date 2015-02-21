@@ -10,7 +10,7 @@ from django import forms
 from django.contrib.auth import logout
 from django.db import models
 from django.db.models import Max
-from bookingsystem.forms import BlockForm, SessionForm1, EditPersonalDetailsForm, CreateChildForm, WeekBlockForm ##########################
+from bookingsystem.forms import BlockFormMore, SessionForm1, EditPersonalDetailsForm, CreateChildForm, WeekBlockForm ##########################
 from datetime import timedelta
 import datetime, time
 
@@ -725,13 +725,28 @@ def addBlock(request):
 				print form.errors
 		if 'submit_season' in request.POST:
 			print 'AAAAAAAAAAAAAAAAA'
-			form = BlockForm(request.POST)
+			form = BlockFormMore(request.POST)
 			# Have we been provided with a valid form?
 			if form.is_valid():
 				block=form.save(commit=False)
 				block.blockid = getLastBlockID()
 				block.type = 'Season'
 				#block.save()
+				days = []
+				for data in form.cleaned_data['weekdays']:
+					days.append(int(data))
+				print days
+				delta = datetime.timedelta(days=1)
+				day = block.begindate
+				while day <= block.enddate:
+					if day.weekday() in days:
+						sessionTime = datetime.datetime.strptime('13:00', '%H:%M').time() # generate a 8:00 time
+						sessionBegTime = datetime.datetime.combine(day, sessionTime)
+						s = Session(sessionid=getLastSessionID(), duration=1, begintime=sessionBegTime, endtime=(sessionBegTime+timedelta(hours=1)), block_blockid=block, capacity=10, agegroup='13-23', skillgroup='RANDOM', isfull=0)
+						print s.sessionid , s.begintime, s.endtime, s.agegroup, s.block_blockid.blockid
+						#s.save()
+					day += delta
+				print Session.objects.filter(block_blockid=block.blockid)
 				return redirect('/success.html')
 			else:
 				# If error
@@ -743,8 +758,10 @@ def addBlock(request):
 	else:
 		# If the request was not a POST, display the form to enter details.
 		form = WeekBlockForm()
-		sform = BlockForm()
+		sform = BlockFormMore()
 	return render_to_response('manager/addBlock.html', {'form': form, 'sform': sform}, context)
+
+
 
 
 
