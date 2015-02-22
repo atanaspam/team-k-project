@@ -1,10 +1,11 @@
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.shortcuts import render_to_response, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User, Group
 from django.db.models import Q, Sum
-from bookingsystem.models import Client, Session, Block, UserSelectsSession, Payment, SubvenueUsedforSession
+from bookingsystem.models import Client, Session, Block, UserSelectsSession, Payment, SubvenueUsedforSession, sessionCoachedBy
 from django.views.decorators.csrf import csrf_exempt
 from django import forms
 from django.contrib.auth import logout
@@ -72,12 +73,10 @@ def coachIndex(request):
 	context_dict={}
 	today = datetime.date.today()
 	userID = request.user.id
-	##
-	## duration has to be changed to coached by!
-	## this is only for testing purposes until the db has been changed!
-	##
-	assignedSessions = Session.objects.filter(begintime__gte=today, coachedby=userID)
-	context_dict={'assignedSessions':assignedSessions}
+	todaysAssignedSessions = Session.objects.filter(Q(begintime__year=today.year, begintime__month=today.month, begintime__day=today.day), coachedby=userID)
+	futureAssignedSessions = Session.objects.filter(~Q(begintime__year=today.year, begintime__month=today.month, begintime__day=today.day), Q(begintime__gte = today), coachedby=userID)
+	context_dict={'todaysAssignedSessions':todaysAssignedSessions}
+	context_dict['futureAssignedSessions'] = futureAssignedSessions
 	return render_to_response('coach/index.html', context_dict, context)
 
 @login_required
@@ -85,14 +84,29 @@ def coachIndex(request):
 def attendance(request, id):
 	context = RequestContext(request)
 	context_dict={}
-	sessionObjects = UserSelectsSession.objects.filter(session_sessionid = id, status = 'C',hasattended = 0)
-	if sessionObjects:
-		print sessionObjects
-		context_dict = {'sessionObjects':sessionObjects}
-		context_dict['s'] = Session.objects.get(sessionid = id)
-		return render_to_response('coach/attendance.html', context_dict, context)
-	else:
-		return redirect("/bookingsystem/coach/index.html")
+	unattendedSessionObjects = UserSelectsSession.objects.filter(session_sessionid = id, status = 'C',hasattended = 0)
+	attendedSessionObjects = UserSelectsSession.objects.filter(session_sessionid = id, status = 'C',hasattended = 1)
+
+	context_dict = {'unattendedSessionObjects':unattendedSessionObjects}
+	context_dict['attendedSessionObjects'] = attendedSessionObjects
+	context_dict['s'] = Session.objects.get(sessionid = id)
+	return render_to_response('coach/attendance.html', context_dict, context)
+
+@login_required
+@user_passes_test(is_coach)
+def attended(request,id,sid):
+
+	attendance = UserSelectsSession.objects.get(user_uid=id, session_sessionid = sid)
+
+	currentAttendance = (not attendance.hasattended)
+
+	attendance.hasattended = currentAttendance
+
+	attendance.save()
+
+	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+#					 			NOT REQUIRED 								  #
 
 @login_required
 @user_passes_test(is_coach)
@@ -101,16 +115,12 @@ def submitAttendance(request):
 	context_dict={}
 	sessionID = request.POST['sessionID']
 	for key in request.POST:
-		if (key == 'attendance'):
+		if (key.startswith('attendance')):
 			childID = request.POST[key]
 			child = UserSelectsSession.objects.get(user_uid=childID, session_sessionid = sessionID)
 			child.hasattended = 1
 			child.save()
 	return  redirect("index.html")
-
-
-#					 			NOT REQUIRED 								  #
-
 
 @login_required
 @user_passes_test(is_coach)
@@ -257,14 +267,56 @@ def confirmbooking(request):
 def coaches(request):
 	context = RequestContext(request)
 	context_dict={}
+
+	coacheGroups = Group.objects.get(name='Coach')
+	allCoaches = User.objects.filter(Q(groups=coacheGroups))
+
+	notCoaches = User.objects.filter(~Q(id__in = allCoaches))
+
+	context_dict['allCoaches'] = allCoaches
+	context_dict['notCoaches'] = notCoaches
 	return render_to_response('manager/coaches.html', context_dict, context)
+
 
 @login_required
 @user_passes_test(is_manager)
-def coachProfile(request):
+def addNewCoach(request):
+	context = RequestContext(request)
+	user = request.user
+	context_dict={}
+
+	for key in request.POST:
+		if (key.startswith('notCoach')):
+			userID = request.POST[key]
+			userObject = User.objects.get(id = userID)
+			g = Group.objects.get(name='Coach') 
+			g.user_set.add(userObject)
+
+	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+@login_required
+@user_passes_test(is_manager)
+def coachProfile(request, id):
  	context = RequestContext(request)
  	context_dict={}
- 	return render_to_response('manager/coachProfile.html', context_dict, context)
+ 	coacheGroups = Group.objects.get(name='Coach')
+	allCoaches = User.objects.filter(Q(groups=coacheGroups))
+	userObject = User.objects.get(id = id)
+	if (userObject in allCoaches):
+	 	context_dict['userObject'] = userObject
+	 	return render_to_response('manager/coachProfile.html', context_dict, context)
+	else:
+		return redirect('/bookingsystem/manager/coaches.html')
+
+@login_required
+@user_passes_test(is_manager)
+def removeCoach(request, id):
+ 	userObject = User.objects.get(id = id)
+	g = Group.objects.get(name='Coach') 
+	g.user_set.remove(userObject)
+	return redirect('/bookingsystem/manager/coaches.html')
+
 
 @login_required
 @user_passes_test(is_manager)
@@ -629,24 +681,38 @@ def sessionInfo(request, sessionID):
 	#     		#print session.session_sessionid
 	#     		context_dict={'session':session}
 
-	##
-	## replace skillgroup with coachedby!
-	##
-
 	sessionDetails = Session.objects.get(sessionid=sessionID)
 	context_dict={'details': sessionDetails}
 
-	print sessionDetails
-	sessionDetails = Session.objects.get(sessionid=sessionID)
-	coacheGroups = user.groups.get(name='Coach')
+	sessionCoachedByObjects = sessionCoachedBy.objects.filter(session_id = sessionID)
 
+	coacheGroups = Group.objects.get(name='Coach')
 	allCoaches = User.objects.filter(Q(groups=coacheGroups))
-	assignedCoaches = allCoaches.filter(Q(id = sessionDetails.skillgroup))
-	unassignedCoaches = allCoaches.filter(~Q(id = sessionDetails.skillgroup))
+	assignedCoaches = allCoaches.filter(Q(id__in = sessionCoachedByObjects.values('user_id')))
+	unassignedCoaches = allCoaches.filter(~Q(id__in = sessionCoachedByObjects.values('user_id')))
 
 	context_dict['assignedCoaches'] = assignedCoaches
 	context_dict['unassignedCoaches'] = unassignedCoaches
 	return render_to_response('manager/sessionInfo.html', context_dict, context)
+
+@login_required
+@user_passes_test(is_manager)
+def addCoachToSession(request):
+	context = RequestContext(request)
+	user = request.user
+	context_dict={}
+
+	print request.POST.values()
+
+	SessionID = request.POST['sessionID']
+	sessionObject = Session.objects.get(sessionid = SessionID)
+	for key in request.POST:
+		if (key.startswith('coachID')):
+			userID = request.POST[key]
+			userObject = User.objects.get(id = userID)
+			add = sessionCoachedBy.objects.get_or_create(session_id = sessionObject, user_id = userObject)
+
+	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 @login_required

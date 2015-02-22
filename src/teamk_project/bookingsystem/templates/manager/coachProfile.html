@@ -13,96 +13,62 @@
 <!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
 
 {% block mainArea %}
-          <!-- Personal Details -->
-          <div class="panel panel-default">
-            <div class="panel-heading">
+	<br>
+	<!-- Personal Details -->
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Personal Details</h3>
+		</div>
 
-              <!-- TODO: ** get Coach personal details filled in
-                         so the coach can edit the ones he wants 
-                         then retreive all the data -->
-              <h3 class="panel-title">Personal Details</h3>
-            </div>
-            <div class="panel-body">
-              
+		<div class="panel-body">
+ 			<!-- add body here -->
+			<!-- Name -->
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon1">First Name</span>
+				<input type="text" class="form-control" value="{{ userObject.first_name }}" aria-describedby="basic-addon2" readonly>
+			</div>
+			
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon1">Last Name</span>
+				<input type="text" class="form-control" value="{{ userObject.last_name }}" aria-describedby="basic-addon1" readonly>
+			</div>
+		</div>
+	</div> <!--panel-->
+	<!-- end of Personal Details -->
 
-              <!-- add body here -->
+	<!-- Contact Details -->
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Contact Details</h3>
+		</div>
+		
+		<div class="panel-body">
+			<!-- add body here -->
+			<!-- phone number -->
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon1">#&nbsp;</span>
+				<input type="text" class="form-control" value="{{ userObject.telephone }}" aria-describedby="basic-addon1" readonly>
+			</div>
 
-                <!-- Name -->
-                <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Given Name" aria-describedby="basic-addon2">
-                  <input type="text" class="form-control" placeholder="Surname" aria-describedby="basic-addon1">
-                </div>
-
-            </div>
-          </div> <!--panel-->
-          <!-- end of Personal Details -->
-
-          <!-- Contact Details -->
-          <div class="panel panel-default">
-            <div class="panel-heading">
-
-              <!-- TODO: ** get Coach personal details filled in
-                         so the coach can edit the ones he wants 
-                         then retreive all the data -->
-              <h3 class="panel-title">Contact Details</h3>
-            </div>
-            <div class="panel-body">
-              
-
-              <!-- add body here -->
-
-                <!-- phone number -->
-                <div class="input-group">
-                  <span class="input-group-addon" id="basic-addon1">#</span>
-                  <input type="text" class="form-control" placeholder="Phone Number" aria-describedby="basic-addon1">
-                </div>
-
-                <!-- e-mail -->
-                <div class="input-group">
-                  <span class="input-group-addon" id="basic-addon1">@</span>
-                  <input type="text" class="form-control" placeholder="e-mail address" aria-describedby="basic-addon1">
-                </div>
-
-            </div>
-          </div> <!--panel-->
-          <!-- end of Contact Details -->
+			<!-- e-mail -->
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon1">@</span>
+				<input type="text" class="form-control" value="{{ userObject.email }}" aria-describedby="basic-addon1" readonly>
+			</div>
+		</div>
+	</div> <!--panel-->
+	<!-- end of Contact Details -->
 
 
 
-          <!-- Password -->
-          <div class="panel panel-default">
-            <div class="panel-heading">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Summary of Coaching hours</h3>
+		</div>
+		
+		<div class="panel-body">
 
-              <!-- TODO: ** get Coach personal details filled in
-                         so the coach can edit the ones he wants 
-                         then retreive all the data -->
-              <h3 class="panel-title">Password Reset</h3>
-            </div>
-            <div class="panel-body">
-              
-
-              <!-- add body here -->
-
-
-                <!-- new password -->
-                <div class="input-group">
-                  <span class="input-group-addon" id="basic-addon1">*new</span>
-                  <input type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
-                </div>
-
-                <!-- confirm new password -->
-                <div class="input-group">
-                  <span class="input-group-addon" id="basic-addon1">*new</span>
-                  <input type="Repeat" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
-                </div>
-
-            </div>
-          </div> <!--panel-->
-          <!-- end of Account Settings -->
-
-<div class="container">
-      <h2>Hours</h2>
-      <p>Summary of Coaching hours</p>                                                                                      
+                                                                                 
       <div class="table-responsive">          
       <table class="table">
         <thead>
@@ -128,6 +94,7 @@
       </table>
       </div>
     </div>
+</div>
 
           <!-- submit or cancel buttons -->
           <button class="btn btn-default" type="button" onclick="window.location.href='timeable.html'; return false;">
@@ -135,5 +102,8 @@
 
           <button class="btn btn-default" type="button" onclick="window.location.href='audit.html'; return false;">
           <span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span>Financial Data</button>
+		  
+          <button class="btn btn-danger" type="button" onclick="window.location.href='/bookingsystem/manager/removeCoach/{{ userObject.id }}'; return false;">
+          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;Remove Coach</button>
 
 {% endblock %}

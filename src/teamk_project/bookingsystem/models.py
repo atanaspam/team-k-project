@@ -174,3 +174,11 @@ class SubvenueUsedforSession(models.Model):
     subvenue_ownervenue = models.IntegerField(db_column='SubVenue_ownerVenue') # Field name made lowercase. , related_name='subvenue_owner'
     class Meta:
         db_table = 'subvenue_usedfor_session'
+
+class sessionCoachedBy(models.Model):
+    id = models.IntegerField(primary_key=True, db_column='id')
+    session_id = models.ForeignKey(Session, db_column='session_id')
+    user_id = models.ForeignKey(User, db_column='user_id')
+
+    class Meta:
+        db_table = 'session_coachedby'
