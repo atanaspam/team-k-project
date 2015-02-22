@@ -70,8 +70,19 @@ class Client(models.Model):
     belongsto = models.IntegerField(db_column='belongsTo') # Field name made lowercase.
     genderid = models.IntegerField(null=True, db_column='genderID', blank=True, choices = GENDER_CHOICES) # Field name made lowercase.
     experiencelevel = models.IntegerField(db_column='experienceLevel') # Field name made lowercase.
+    def __unicode__(self):
+        return "%s %s" % (self.firstname, self.lastname)
     class Meta:
         db_table = 'client'
+
+
+class ClientManager(models.Manager):
+    def getMales(self):
+        return self.filter(genderid = 1)
+    def getFemales(self):
+        return self.filter(genderid = 0)
+
+
 
 class Experiencelevel(models.Model):
     levelid = models.IntegerField(primary_key=True, db_column='levelID') # Field name made lowercase.
