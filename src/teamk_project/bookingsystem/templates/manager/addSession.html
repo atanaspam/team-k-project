@@ -25,37 +25,51 @@
 			</div>
 
 		    <form action="/bookingsystem/manager/addSession.html" method="post">
-		    {% csrf_token %}
-			<div class="panel-body"><!-- fields -->
-				<div class="input-group">
+			    {% csrf_token %}
+				<div class="panel-body"><!-- fields -->
+					<div class="input-group">
 
-				{% comment %}
+											{% comment %}
 
-					{{form.duration.help_text}}  {{form.duration}}
-					{{form.begintime}}  {{form.begintime.help_text}}
-          {{form.endtime}}  {{form.endtime.help_text}}
-          {{form.block_blockid}}  {{form.block_blockid.help_text}}
-          {{form.capacity}}  {{form.capacity.help_text}}
-          {{form.agegroup}}  {{form.agegroup.help_text}}
-          {{form.skillgroup}}  {{form.skillgroup.help_text}}
+												{{form.duration.help_text}}  {{form.duration}}
+												{{form.begintime}}  {{form.begintime.help_text}}
+							          {{form.endtime}}  {{form.endtime.help_text}}
+							          {{form.block_blockid}}  {{form.block_blockid.help_text}}
+							          {{form.capacity}}  {{form.capacity.help_text}}
+							          {{form.agegroup}}  {{form.agegroup.help_text}}
+							          {{form.skillgroup}}  {{form.skillgroup.help_text}}
 
-				{% endcomment %}
+											{% endcomment %}
+						<div class="form-group">
+						  {{form.begindate.help_text}} {{form.begindate}}
+						</div>
+						<div class="form-group">
+						  {{form.begintime.help_text}} {{form.begintime}}
+						</div>
+						<div class="form-group">
+				          {{form.endtime.help_text}} {{form.endtime}}
+				        </div>
+				        <div class="form-group">
+				          {{form.block_blockid.help_text}} {{form.block_blockid}}
+				        </div>
+						<div class="form-group">
+				          {{form.capacity.help_text}} {{form.capacity}}
+						</div>
+				        <div class="form-group">
+				          {{form.agegroup.help_text}} {{form.agegroup}}
+				         </div>
+						<div class="form-group">
+				          {{form.skillgroup.help_text}} {{form.skillgroup}}
+				        </div>
 
-					{{form.begindate.help_text}} {{form.begindate}}
-					{{form.begintime.help_text}} {{form.begintime}}
-          {{form.endtime.help_text}} {{form.endtime}}
-          {{form.block_blockid.help_text}} {{form.block_blockid}}
-          {{form.capacity.help_text}} {{form.capacity}}
-          {{form.agegroup.help_text}} {{form.agegroup}}
-          {{form.skillgroup.help_text}} {{form.skillgroup}}
+				          <input type="submit" class="btn btn-default" name="submit" value="Create Session" />
 
-          <input type="submit" name="submit" value="Create Session" />
+					</div>
 
 				</div>
-
-			</div>
+			</form>
 		</div> <!-- end of Session Details -->
 
-
-	</forms>
+	</form>
+	
 {% endblock %}
