@@ -90,10 +90,13 @@
 	</div>
 
 	<div class="panel-body">
+		{% if assignedCoaches %}
 		{% for coach in assignedCoaches %}
-			<a href="coachProfile.html" class="list-group-item">{{ coach.first_name }} {{ coach.last_name }}</a>
+			<a href="coachProfile/{{ coach.id }}" class="list-group-item">{{ coach.first_name }} {{ coach.last_name }}</a>
 		{% endfor %}
+		{% endif %}
 		
+		{% if unassignedCoaches %}
 		<div class="accordion-heading">
 			<a class="list-group-item clearfix" data-toggle="collapse" data-parent="#accordion" href="#collapseAddCoach">
 				<strong>Add Coaches</strong>
@@ -102,10 +105,10 @@
 		
 		<div id="collapseAddCoach" class="accordion-body collapse" role="tabpanel">
 			<div class="panel-body">
-				<form action="somewhere" method="post">{% csrf_token %}
+				<form action="/bookingsystem/manager/addCoachToSession" method="post">{% csrf_token %}
 					{% for coach in unassignedCoaches %}
 						<li class="studentLabel list-group-item labelst">
-	                            <input type="checkbox" aria-labelledby="labelst" value="{{ coach.id }}"> &nbsp;{{ coach.first_name }} {{ coach.last_name }}
+	                            <input type="checkbox" value="{{ coach.id }}" name="coachID{{ coach.id }}"> &nbsp;{{ coach.first_name }} {{ coach.last_name }}</input>
 	                    </li>
 					{% endfor %}<br>
 					<input type="hidden" name="sessionID" value="{{ details.sessionid }}">
@@ -113,20 +116,11 @@
 				</form>
 			</div>
 		</div>
+		{% endif %}
 	
 	</div>
 </div><!--/.panel-->	
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-		
+
 
             <INPUT Type="button" class="btn btn-default" VALUE="Back" ONCLICK="window.location.href='bookings.html'"/>
 

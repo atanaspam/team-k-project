@@ -12,3 +12,4 @@ function printContent(el){
 	window.print();
 	document.body.innerHTML = restorepage;
 }
+
