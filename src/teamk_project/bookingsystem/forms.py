@@ -11,7 +11,6 @@ from django.forms.widgets import Widget, Select, MultiWidget, CheckboxSelectMult
 from django.utils.safestring import mark_safe
 
 #from django.forms import MultiWidget
-
 # Source: https://djangosnippets.org/snippets/1202/
 ################################################################################
 __all__ = ('SelectTimeWidget', 'SplitSelectDateTimeWidget')
@@ -34,7 +33,7 @@ class SelectTimeWidget(Widget):
 
     hour_field = '%s_hour'
     minute_field = '%s_minute'
-    #second_field = '%s_second'
+    second_field = '%s_second'
     meridiem_field = '%s_meridiem'
     twelve_hr = False # Default to 24hr.
 
@@ -54,37 +53,37 @@ class SelectTimeWidget(Widget):
             self.hours = range(1,13)
         else: # 24hr, no stepping
             self.hours = range(0,24)
-            minute_step = 10
+
         if minute_step:
             self.minutes = range(0,60,minute_step)
         else:
             self.minutes = range(0,60)
 
-        #if second_step:
-        #    self.seconds = range(0,60,second_step)
-        #else:
-        #    self.seconds = range(0,60)
+        if second_step:
+            self.seconds = range(0,60,second_step)
+        else:
+            self.seconds = range(0,60)
 
     def render(self, name, value, attrs=None):
         try: # try to get time values from a datetime.time object (value)
-            hour_val, minute_val = value.hour, value.minute
+            hour_val, minute_val, second_val = value.hour, value.minute, value.second
             if self.twelve_hr:
                 if hour_val >= 12:
                     self.meridiem_val = 'p.m.'
                 else:
                     self.meridiem_val = 'a.m.'
         except AttributeError:
-            hour_val = minute_val = 0
+            hour_val = minute_val = second_val = 0
             if isinstance(value, basestring):
                 match = RE_TIME.match(value)
                 if match:
                     time_groups = match.groups();
                     hour_val = int(time_groups[HOURS]) % 24 # force to range(0-24)
                     minute_val = int(time_groups[MINUTES])
-                   # if time_groups[SECONDS] is None:
-                   #     selfecond_val = 0
-                   # else:
-                   #     second_val = int(time_groups[SECONDS])
+                    if time_groups[SECONDS] is None:
+                        second_val = 0
+                    else:
+                        second_val = int(time_groups[SECONDS])
 
                     # check to see if meridiem was passed in
                     if time_groups[MERIDIEM] is not None:
@@ -117,7 +116,7 @@ class SelectTimeWidget(Widget):
         # When Select builds a list of options, it checks against Unicode values
         hour_val = u"%.2d" % hour_val
         minute_val = u"%.2d" % minute_val
-        #second_val = u"%.2d" % second_val
+        second_val = u"%.2d" % second_val
 
         hour_choices = [("%.2d"%i, "%.2d"%i) for i in self.hours]
         local_attrs = self.build_attrs(id=self.hour_field % id_)
@@ -129,14 +128,10 @@ class SelectTimeWidget(Widget):
         select_html = Select(choices=minute_choices).render(self.minute_field % name, minute_val, local_attrs)
         output.append(select_html)
 
-        ########################################################################
-        ##################      SECONDS GO HERE         ########################
-        ########################################################################
-
-        #second_choices = [("%.2d"%i, "%.2d"%i) for i in self.seconds]
-        #local_attrs['id'] = self.second_field % id_
-        #select_html = Select(choices=second_choices).render(self.second_field % name, second_val, local_attrs)
-        #output.append(select_html)
+        # second_choices = [("%.2d"%i, "%.2d"%i) for i in self.seconds]
+        # local_attrs['id'] = self.second_field % id_
+        # select_html = Select(choices=second_choices).render(self.second_field % name, second_val, local_attrs)
+        # output.append(select_html)
 
         if self.twelve_hr:
             #  If we were given an initial value, make sure the correct meridiem gets selected.
@@ -156,28 +151,23 @@ class SelectTimeWidget(Widget):
     id_for_label = classmethod(id_for_label)
 
     def value_from_datadict(self, data, files, name):
-        #print name
         # if there's not h:m:s data, assume zero:
         h = data.get(self.hour_field % name, 0) # hour
         m = data.get(self.minute_field % name, 0) # minute
         #s = data.get(self.second_field % name, 0) # second
+
         meridiem = data.get(self.meridiem_field % name, None)
-        #print 'AAAA'
-        #print maridiem
+
         #NOTE: if meridiem is None, assume 24-hr
         if meridiem is not None:
             if meridiem.lower().startswith('p') and int(h) != 12:
                 h = (int(h)+12)%24
             elif meridiem.lower().startswith('a') and int(h) == 12:
                 h = 0
-        s = 0
-        if (int(h) == 0 or h) and m and s:
-           # print h + m + s + 'AAA'
-            return '%s:%s:%s' % (h, m, s)
-        #print '%s:%s:%s' % (h, m, s)
-        #print str(time(int(h), int(m)))
-        #return str(time(int(h), int(m)))
-        #print data.get(name, None)
+
+        if (int(h) == 0 or h) and m:# and s:
+            return '%s:%s' % (h, m)
+
         return data.get(name, None)
 
 class DateSelectorWidget(widgets.MultiWidget):
@@ -231,6 +221,7 @@ class BlockForm(forms.ModelForm):
 class BlockFormMore(BlockForm):
     num_choices = ( (0, "Monday"), (1, "Tuesday"), (2, "Wednesday"), (3, "Thursday"), (4, "Friday"), (5, "Saturday"), (6, "Sunday"))
     weekdays = forms.MultipleChoiceField(choices=num_choices, required=True, widget=forms.CheckboxSelectMultiple(), label='Select Days')
+    begintime = forms.TimeField(widget=SelectTimeWidget(minute_step=10, twelve_hr=True), label="Session begintime")
     class Meta(BlockForm.Meta):
         fields = BlockForm.Meta.fields + ['weekdays']
 

@@ -732,6 +732,7 @@ def addBlock(request):
 				block.blockid = getLastBlockID()
 				block.type = 'Season'
 				#block.save()
+				print form.cleaned_data['begintime']
 				days = []
 				for data in form.cleaned_data['weekdays']:
 					days.append(int(data))
@@ -740,7 +741,8 @@ def addBlock(request):
 				day = block.begindate
 				while day <= block.enddate:
 					if day.weekday() in days:
-						sessionTime = datetime.datetime.strptime('13:00', '%H:%M').time() # generate a 8:00 time
+						#sessionTime = datetime.datetime.strptime('13:00', '%H:%M').time() # generate a 8:00 time
+						sessionTime = form.cleaned_data['begintime']
 						sessionBegTime = datetime.datetime.combine(day, sessionTime)
 						s = Session(sessionid=getLastSessionID(), duration=1, begintime=sessionBegTime, endtime=(sessionBegTime+timedelta(hours=1)), block_blockid=block, capacity=10, agegroup='13-23', skillgroup='RANDOM', isfull=0)
 						print s.sessionid , s.begintime, s.endtime, s.agegroup, s.block_blockid.blockid
