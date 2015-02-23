@@ -14,13 +14,7 @@
 			</div>
 			<form action="/bookingsystem/parent/addNewChild.html" method="post">
 		    {% csrf_token %}
-					{{form.firstname.help_text}} {{form.firstname}}
-					{{form.lastname.help_text}} {{form.lastname}}
-          {{form.email.help_text}} {{form.email}}
-          {{form.telephone.help_text}} {{form.telephone}}
-          {{form.age.help_text}} {{form.age}}
-          {{form.genderid.help_text}} {{form.genderid}}
-
+					{{form.as_p}}
 
 
 

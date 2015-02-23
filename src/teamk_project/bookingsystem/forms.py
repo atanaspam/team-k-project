@@ -1,5 +1,5 @@
 from django import forms
-from bookingsystem.models import Block, Session, Client
+from bookingsystem.models import Block, Session, Client, GENDER_CHOICES
 from django.forms import widgets
 from datetime import date, time, timedelta
 from django.forms.extras.widgets import SelectDateWidget
@@ -312,15 +312,15 @@ class EditPersonalDetailsForm(forms.ModelForm):
         fields = ('email', 'telephone')
 
 class CreateChildForm(forms.ModelForm):
-    firstname = forms.CharField(help_text="First Name:")
-    lastname = forms.CharField(help_text="Surname:")
-    email = forms.CharField(help_text="Email:")
-    telephone = forms.IntegerField(help_text="Telephone:")
-    age = forms.IntegerField
-    genderid = forms.Select()
+    firstname = forms.CharField(label="First Name:")
+    lastname = forms.CharField(label="Surname:")
+    email = forms.CharField(label="Email:")
+    telephone = forms.IntegerField(label="Telephone:")
+    dateofbirth = forms.DateField(widget=DateSelectorWidget(), label="Date Of Birth")
+    genderid = forms.ChoiceField(initial="Select:", label="Gender",choices=GENDER_CHOICES )
     class Meta:
         model = Client
-        fields = ('firstname', 'lastname', 'email', 'telephone', 'age', 'genderid')
+        fields = ('firstname', 'lastname', 'email', 'telephone', 'dateofbirth', 'genderid')
 
 
 

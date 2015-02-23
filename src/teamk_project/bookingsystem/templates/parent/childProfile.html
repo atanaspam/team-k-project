@@ -72,8 +72,8 @@
 
 				<!-- Date of Birth -->
 				<div class="input-group">
-					<span class="input-group-addon" id="basic-addon1">Age</span>
-					<input type="text" class="form-control" name="age" value="{{ child.age }}" aria-describedby="basic-addon1" readonly>
+					<span class="input-group-addon" id="basic-addon1">Date Of Birth</span>
+					<input type="text" class="form-control" name="dateofbirth" value="{{ child.dateofbirth }}" aria-describedby="basic-addon1" readonly>
 				</div>
 
 			</div>
@@ -134,7 +134,7 @@
 {% endwith%}{%endwith%}
 
 	</forms>
-	
+
 	<script>
 	function toggle_edit(editBool) {
 	  editBool = $("#bool").val();

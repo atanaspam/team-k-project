@@ -11,7 +11,7 @@
 <!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
 
 {% block mainArea %}
-          <!-- bookings pending confirmation -->   
+          <!-- bookings pending confirmation -->
      <div class="panel-heading">
               <h4 class="panel-title"><strong><u>Members List</u></strong></h4>
             </div>
@@ -21,7 +21,7 @@
                 <th>Name</th>
                 <th>Email</th>
                 <th>Gender</th>
-                <th>Age</th>
+                <th>Date of Birth</th>
                 <th>Experience</th>
                 <th>Due</th>
             </tr>
@@ -36,10 +36,10 @@
                 {% else %}
                   <td>Female</td>
                 {% endif %}
-                <td>{{child.age}}</td>
+                <td>{{child.dateofbirth}}</td>
                 <td>{{child.experiencelevel}}</td>
                 <td>
-                    
+
                 {% if child.amount != none %}
                     £{{ child.amount }}
                 {% else %}

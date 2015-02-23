@@ -64,7 +64,7 @@ class Client(models.Model):
     lastname = models.CharField(max_length=45, db_column='lastName', blank=True) # Field name made lowercase.
     email = models.CharField(max_length=45, blank=True)
     telephone = models.TextField(blank=True) # This field type is a guess.
-    age = models.IntegerField(null=True, blank=True)
+    dateofbirth = models.DateField(null=False, blank=False, db_column='dateofbirth')
     ismember = models.IntegerField(null=True, db_column='isMember', blank=True) # Field name made lowercase.
     managedby = models.IntegerField(null=True, db_column='managedBy', blank=True) # Field name made lowercase.
     belongsto = models.IntegerField(db_column='belongsTo') # Field name made lowercase.

@@ -289,7 +289,7 @@ def addNewCoach(request):
 		if (key.startswith('notCoach')):
 			userID = request.POST[key]
 			userObject = User.objects.get(id = userID)
-			g = Group.objects.get(name='Coach') 
+			g = Group.objects.get(name='Coach')
 			g.user_set.add(userObject)
 
 	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
@@ -313,7 +313,7 @@ def coachProfile(request, id):
 @user_passes_test(is_manager)
 def removeCoach(request, id):
  	userObject = User.objects.get(id = id)
-	g = Group.objects.get(name='Coach') 
+	g = Group.objects.get(name='Coach')
 	g.user_set.remove(userObject)
 	return redirect('/bookingsystem/manager/coaches.html')
 
@@ -575,7 +575,7 @@ def changeChild(request):
 		child.firstname = request.POST.get("firstname", "")
 		child.lastname = request.POST.get("lastname", "")
 		child.genderid = int(request.POST.get("genderid", ""))
-		child.age = request.POST.get("age", "")
+		child.dateofbirth = request.POST.get("dateofbirth", "")
 		child.telephone = request.POST.get("telephone", "")
 		child.email = request.POST.get("email", "")
 		child.save()
@@ -760,7 +760,7 @@ def addBlock(request):
 				block.enddate = block.begindate + timedelta(days = 6)
 				block.type = 'Week'
 				#block.save()
-				for i in range(0,7):
+				for i in range(0,5):
 					# Create the morning Block
 					b = Block(blockid=getLastBlockID(), begindate=block.begindate + timedelta(days = i), enddate=block.begindate + timedelta(days = i), label=getDayOfWeek(i), type='Morning')
 					print b
