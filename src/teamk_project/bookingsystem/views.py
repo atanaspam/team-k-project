@@ -70,12 +70,12 @@ def is_parent(user):
 @user_passes_test(is_coach)
 def coachIndex(request):
 	context = RequestContext(request)
-	context_dict={}
 	today = datetime.date.today()
 	userID = request.user.id
-	todaysAssignedSessions = Session.objects.filter(Q(begintime__year=today.year, begintime__month=today.month, begintime__day=today.day), coachedby=userID)
-	futureAssignedSessions = Session.objects.filter(~Q(begintime__year=today.year, begintime__month=today.month, begintime__day=today.day), Q(begintime__gte = today), coachedby=userID)
-	context_dict={'todaysAssignedSessions':todaysAssignedSessions}
+	todaySessions = Session.objects.filter(Q(begintime__year=today.year, begintime__month=today.month, begintime__day=today.day)).values_list('sessionid')
+	todayAssignedSessions = sessionCoachedBy.objects.filter(Q(session_id__in=todaySessions) & Q(user_id=userID))
+	futureAssignedSessions = sessionCoachedBy.objects.filter(user_id=userID)
+	context_dict={'todayAssignedSessions':todayAssignedSessions}
 	context_dict['futureAssignedSessions'] = futureAssignedSessions
 	return render_to_response('coach/index.html', context_dict, context)
 
@@ -797,12 +797,12 @@ def addSession(request):
 def removeSession(request,sid):
 	context = RequestContext(request)
 	context_dict={}
-	
+
 	userSelectSessionObjects = UserSelectsSession.objects.filter(session_sessionid = sid)
 	sessionCoachedByObjects = sessionCoachedBy.objects.filter(session_id = sid)
 
 	print sessionCoachedByObjects
-	
+
 	context_dict['userSelectSessionObjects'] = userSelectSessionObjects
 	context_dict['sessionCoachedByObjects'] = sessionCoachedByObjects
 	context_dict['sessionid'] = sid

@@ -5,21 +5,21 @@
 {% endblock %}
 
 {% block mainArea %}
-	
+
 	<br>
-	
+
 	<!-- Attendance -->
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">Today's Sessions</h3>
 		</div>
-		
+
 		<div class="panel-body">
 			<!-- add body here -->
               <div class="list-group">
-	            {% if todaysAssignedSessions %}
-	            	{% for session in todaysAssignedSessions %}
-						<a href="{% url 'bookingsystem.views.attendance' %}{{ session.sessionid }}" class="list-group-item">{{ session.begintime }}</a>
+	            {% if todayAssignedSessions %}
+	            	{% for session in todayAssignedSessions %}
+						<a href="{% url 'bookingsystem.views.attendance' %}{{ session.session_id.sessionid }}" class="list-group-item">{{ session.session_id.begintime }}</a>
 					{% endfor %}
 				{% else %}
 	            	There are no sessions assigned to you today.
@@ -27,18 +27,18 @@
               </div>
 		</div>
 	</div>
-	
+
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">Future Sessions</h3>
 		</div>
-		
+
 		<div class="panel-body">
 			<!-- add body here -->
               <div class="list-group">
 	            {% if futureAssignedSessions %}
 	            	{% for session in futureAssignedSessions %}
-						<a href="{% url 'bookingsystem.views.attendance' %}{{ session.sessionid }}" class="list-group-item">{{ session.begintime }}</a>	
+						<a href="{% url 'bookingsystem.views.attendance' %}{{ session.session_id.sessionid }}" class="list-group-item">{{ session.session_id.begintime }}</a>
 					{% endfor %}
 				{% else %}
 	            	There are no sessions assigned to you in the future.
@@ -46,18 +46,18 @@
               </div>
 		</div>
 	</div>
-	
+
 	<!-- Schedule -->
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">Schedule</h3>
 		</div>
-		
+
 		<div class="panel-body">
 			<!-- add body here -->
         	<div class="list-group">
 				Schedule here!
 			</div>
 		</div>
-	</div>			  
+	</div>
 {% endblock %}
