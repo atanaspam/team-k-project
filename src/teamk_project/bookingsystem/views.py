@@ -206,9 +206,16 @@ def loggedin(request):
 
 @login_required
 @user_passes_test(is_manager)
-def blockInfo(request):
+def blockInfo(request, bid):
 	context = RequestContext(request)
 	context_dict={}
+	blocks = Block.objects.get(blockid = bid)
+	blockSessions = Session.objects.filter(block_blockid = bid)
+
+	context_dict['blocks'] = blocks
+	context_dict['blockSessions'] = blockSessions
+
+	print context_dict
 	return render_to_response('manager/blockInfo.html', context_dict, context)
 
 ################################################################################
@@ -312,10 +319,30 @@ def coachProfile(request, id):
 @login_required
 @user_passes_test(is_manager)
 def removeCoach(request, id):
+	context = RequestContext(request)
+ 	context_dict={}
+	sessionCoachedByObjects = sessionCoachedBy.objects.filter(user_id = id)
+	print sessionCoachedByObjects.values_list()
+	print context_dict
+	if sessionCoachedByObjects:
+		context_dict = {'sessionCoachedByObjects':sessionCoachedByObjects}
+		context_dict['coachid'] = id
+		return render_to_response('manager/removeCoach.html', context_dict, context)
+	else:
+		confirmRemoveCoachFunction(id)
+ 		return redirect('/bookingsystem/manager/coaches.html')
+
+@login_required
+@user_passes_test(is_manager)
+def confirmRemoveCoach(request, id):
+ 	confirmRemoveCoachFunction(id)
+	return redirect('/bookingsystem/manager/coaches.html')
+
+def confirmRemoveCoachFunction(id):
  	userObject = User.objects.get(id = id)
 	g = Group.objects.get(name='Coach')
 	g.user_set.remove(userObject)
-	return redirect('/bookingsystem/manager/coaches.html')
+	sessionCoachedBy.objects.filter(user_id = id).delete()
 
 
 @login_required
@@ -669,20 +696,15 @@ def applicationApproved(request):
 @user_passes_test(is_manager)
 def sessionInfo(request, sessionID):
 	context = RequestContext(request)
-	user = request.user
-	# sessionID = None
-	# if request.method == 'GET':
-	# 	sessionID = request.GET['session_sessionid']
-	# 	#print sessionID
-	# 	if sessionID:
-	# 		session = Session.objects.get(sessionid=sessionID)
-	# 		print session
-	#     	if session:
-	#     		#print session.session_sessionid
-	#     		context_dict={'session':session}
+
+	userSelectSessionObjects = UserSelectsSession.objects.filter(Q(session_sessionid = sessionID))
+	context_dict = {'userSelectSessionObjects': userSelectSessionObjects}
+
+	childrenNot = Client.objects.filter(~Q(uid__in = userSelectSessionObjects.values('user_uid')))
+	context_dict['childrenNot'] = childrenNot
 
 	sessionDetails = Session.objects.get(sessionid=sessionID)
-	context_dict={'details': sessionDetails}
+	context_dict['details'] = sessionDetails
 
 	sessionCoachedByObjects = sessionCoachedBy.objects.filter(session_id = sessionID)
 
@@ -699,10 +721,7 @@ def sessionInfo(request, sessionID):
 @user_passes_test(is_manager)
 def addCoachToSession(request):
 	context = RequestContext(request)
-	user = request.user
 	context_dict={}
-
-	print request.POST.values()
 
 	SessionID = request.POST['sessionID']
 	sessionObject = Session.objects.get(sessionid = SessionID)
@@ -714,6 +733,37 @@ def addCoachToSession(request):
 
 	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+@login_required
+@user_passes_test(is_manager)
+def removeCoachFromSession(request, id, sid):
+
+	sessionCoachedBy.objects.filter(session_id = sid, user_id = id).delete()
+
+	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+@login_required
+@user_passes_test(is_manager)
+def addChildToSession(request):
+	context = RequestContext(request)
+	context_dict={}
+
+	SessionID = request.POST['sessionID']
+	sessionObject = Session.objects.get(sessionid = SessionID)
+	for key in request.POST:
+		if (key.startswith('notInSession')):
+			childID = request.POST[key]
+			clientObject = Client.objects.get(uid = childID)
+			add = UserSelectsSession.objects.get_or_create(session_sessionid = sessionObject, user_uid = clientObject)
+
+	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+@login_required
+@user_passes_test(is_manager)
+def removeChildFromSession(request, id, sid):
+
+	UserSelectsSession.objects.filter(user_uid = id, session_sessionid = sid).delete()
+
+	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 @login_required
 @user_passes_test(is_manager)
@@ -741,6 +791,40 @@ def addSession(request):
 		# If the request was not a POST, display the form to enter details.
 		form = SessionForm1()
 	return render_to_response('manager/addSession.html', {'form': form}, context)
+
+@login_required
+@user_passes_test(is_manager)
+def removeSession(request,sid):
+	context = RequestContext(request)
+	context_dict={}
+	
+	userSelectSessionObjects = UserSelectsSession.objects.filter(session_sessionid = sid)
+	sessionCoachedByObjects = sessionCoachedBy.objects.filter(session_id = sid)
+
+	print sessionCoachedByObjects
+	
+	context_dict['userSelectSessionObjects'] = userSelectSessionObjects
+	context_dict['sessionCoachedByObjects'] = sessionCoachedByObjects
+	context_dict['sessionid'] = sid
+
+	print context_dict
+
+	if userSelectSessionObjects or sessionCoachedByObjects:
+		return render_to_response('manager/removeSession.html', context_dict, context)
+	else:
+		confirmRemoveSessionFunction(sid)
+		return redirect('/bookingsystem/manager/sessions.html')
+
+@login_required
+@user_passes_test(is_manager)
+def confirmRemoveSession(request,sid):
+	confirmRemoveSessionFunction(sid)
+	return redirect('/bookingsystem/manager/sessions.html')
+
+def confirmRemoveSessionFunction(sid):
+	UserSelectsSession.objects.filter(session_sessionid = sid).delete()
+	sessionCoachedBy.objects.filter(session_id = sid).delete()
+	Session.objects.get(sessionid = sid).delete()
 
 
 @login_required
@@ -829,11 +913,44 @@ def addBlock(request):
 		sform = BlockFormMore()
 	return render_to_response('manager/addBlock.html', {'form': form, 'sform': sform}, context)
 
+@login_required
+@user_passes_test(is_manager)
+def removeBlock(request,bid):
+	context = RequestContext(request)
+	context_dict={}
+	sessionsInBlock = Session.objects.filter(block_blockid = bid)
+	UserSelectsSessionObjects = UserSelectsSession.objects.filter(session_sessionid__in = sessionsInBlock.values('sessionid'))
+	sessions1 = Session.objects.filter(Q(block_blockid = bid) & Q(sessionid__in = UserSelectsSessionObjects.values('session_sessionid') ))
+	sessionCoachedByObjects = sessionCoachedBy.objects.filter(session_id__in = sessionsInBlock.values('sessionid'))
+	sessions2 = Session.objects.filter(Q(block_blockid = bid) & Q(sessionid__in = sessionCoachedByObjects.values('session_id') ))
+
+	context_dict = {'sessionsInBlock' : sessions1}
+	context_dict['UserSelectsSessionObjects'] = UserSelectsSessionObjects
+
+	context_dict['sessionWithCoach'] = sessions2
+	context_dict['sessionCoachedByObjects'] = sessionCoachedByObjects
+
+	context_dict['blockid'] = bid
+
+	if UserSelectsSessionObjects:
+		return render_to_response('manager/removeBlock.html', context_dict, context)
+	else:
+		confirmRemoveBlockFunction(bid)
+	return redirect('/bookingsystem/manager/blocks.html')
 
 
+@login_required
+@user_passes_test(is_manager)
+def confirmRemoveBlock(request,bid):
+	confirmRemoveBlockFunction(bid)
+	return redirect('/bookingsystem/manager/blocks.html')
 
-
-
+def confirmRemoveBlockFunction(bid):
+	sessionsInBlock = Session.objects.filter(block_blockid = bid)
+	UserSelectsSessionObjects = UserSelectsSession.objects.filter(session_sessionid__in = sessionsInBlock.values('sessionid')).delete()
+	sessionCoachedByObjects = sessionCoachedBy.objects.filter(session_id__in = sessionsInBlock.values('sessionid')).delete()
+	sessionsInBlock.delete()
+	Block.objects.get(blockid = bid).delete()
 
 
 

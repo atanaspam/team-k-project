@@ -4,86 +4,67 @@
 {% include "sidebarNav/manager.html" %}
 {% endblock %}
 
-{% comment %}
---------------------------------------------------------------------------------
----                               TODO'S                                     ---
---------------------------------------------------------------------------------
-
-  * Nothing
-
-{% endcomment %}
-
 {% block mainArea %}
 
-<!-- List of Sessions -->
-<div class="panel panel-default">
-
-    <div class="panel-heading clearfix">
-      <h4 class="panel-title pull-left" style="padding-top: 7.5px;">List of Sessions</h4>
-      <div class="btn-group pull-right">
-
-        <!-- add new session button -->
-          <a class="studentLabel" style="float:right;" href="addSession.html">
-            <button class="btn btn-default" type="button">
-              <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-              Add New Session
-            </button>
-          </a>
-
-      </div>
-    </div>
-
-  <div class="panel-body">
-    <!-- list of sessions-->
-    <table id="myTableBlock" class="table table-striped table-bordered" cellspacing="0" width="100%">
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Begin Time</th>
-          <th>End Time</th>
-          <th>Skill Group</th>
-          <th>Venue</th>
-          <th>Duration</th>
-          <th>Price</th>
-          <th>Info</th>
-        </tr>
-      </thead>
-      {% if sessions%}
-        <tbody>
-        {% for session in sessions %}
-		{% url 'bookingsystem.views.sessionInfo' session.sessionid as sessionUrl %}
-          <tr class="studentLabel">
-            <td>{{session.begintime|date:"D, d M y"}}</td>
-            <td>{{session.begintime|time:"H:i"}}</td>
-            <td>{{session.endtime|time:"H:i"}}</td> <!-- CHANGE ME TO A PROPER HOUR -->
-            <td>{{session.skillgroup}}</td>
-            <td>TODO</td>
-            <td>{{session.duration}}</td>
-            <td>TODO</td>
-			<td>
-				<a href= {{ sessionUrl }} style="color: #1A387B">
-              		<span class="glyphicon glyphicon-info-sign"/>
+	<!--make table responsive-->
+	<script>
+	$(document).ready(function(){
+	    $('#myTableBlock').dataTable();
+	});
+	</script>
+	<br>
+	<!-- List of Sessions -->
+	<div class="panel panel-default">
+		<div class="panel-heading clearfix">
+			<h4 class="panel-title pull-left" style="padding-top: 7.5px;">List of Sessions</h4>
+			<div class="btn-group pull-right">
+				<!-- add new session button -->
+				<a class="studentLabel" style="float:right;" href="addSession.html">
+					<button class="btn btn-default" type="button">
+						<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+						Add New Session
+					</button>
 				</a>
-            </td>
-          </tr>
-        {% endfor %}
-      {% else %}
-        There are no Sessions or an error has occurred.
-      {% endif %}
+			</div>
+		</div>
 
-
-      </tbody>
-    </table>
-
-
-    </div>
- </div><!--/.panel-->
-<!--make table responsive-->
-<script>
-$(document).ready(function(){
-    $('#myTableBlock').dataTable();
-});
-</script>
-
-
+		<div class="panel-body">
+			<!-- list of sessions-->
+			<table id="myTableBlock" class="table table-striped table-bordered" cellspacing="0" width="100%">
+			  <thead>
+				  <tr>
+					  <th>Date</th>
+			          <th>Begin Time</th>
+			          <th>End Time</th>
+			          <th>Skill Group</th>
+			          <th>Venue</th>
+			          <th>Duration</th>
+			          <th>Price</th>
+			          <th>Info</th>
+				  </tr>
+			  </thead>
+			  {% if sessions%}
+			  	  <tbody>
+					  {% for session in sessions %}
+					  	  {% url 'bookingsystem.views.sessionInfo' session.sessionid as sessionUrl %}
+						  <tr class="studentLabel">
+							  <td>{{session.begintime|date:"D, d M y"}}</td>
+							  <td>{{session.begintime|time:"H:i"}}</td>
+							  <td>{{session.endtime|time:"H:i"}}</td> <!-- CHANGE ME TO A PROPER HOUR -->
+							  <td>{{session.skillgroup}}</td>
+							  <td>TODO</td>
+							  <td>{{session.duration}}</td>
+							  <td>TODO</td>
+							  <td>
+								  <a href= {{ sessionUrl }} style="color: #1A387B">
+						      		  <span class="glyphicon glyphicon-info-sign"/>
+								  </a>
+							  </td>
+						  </tr>
+					  {% endfor %}
+				  </tbody>
+			  {% endif %}
+			</table>
+		</div>
+	</div>
 {% endblock %}

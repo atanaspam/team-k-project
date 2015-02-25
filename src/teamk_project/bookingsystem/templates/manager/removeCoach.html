@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block sidebarNav %}
+{% include "sidebarNav/manager.html" %}
+{% endblock %}
+
+{% block mainArea %}
+	<!-- List of Blocks -->
+	<br>
+	{% if sessionCoachedByObjects %}
+		<div class="panel panel-default">
+			<div class="panel-heading clearfix">
+				<h4 class="panel-title pull-left" style="padding-top: 7.5px;">Warning! This coach is assigned to sessions!</h4>
+		    </div>
+			<div class="panel-body">
+				{% for coach in sessionCoachedByObjects %}
+					<li class="studentLabel list-group-item labelst">
+						{{ coach.session_id.begintime }}
+					</li>
+				{% endfor %}
+			</div> <!-- end panel div -->
+		</div>
+	{% endif %}
+	
+	<span class="pull-right">
+		<a href="/bookingsystem/manager/confirmRemoveCoach/{{ coachid }}" class="btn btn-danger">
+			Confirm
+		</a>
+	</span>
+	
+	<span class="pull-right" style="padding-right: 20px;">
+		<a href="/bookingsystem/manager/sessions" class="btn btn-default">
+			Cancel
+		</a>
+	</span>
+{% endblock %}

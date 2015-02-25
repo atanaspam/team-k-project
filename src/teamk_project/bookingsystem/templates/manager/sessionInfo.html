@@ -15,114 +15,179 @@
 <!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
 
 {% block mainArea %}
-<br>
-<!-- List of Sessions -->
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">List of Sessions</h3>
-  </div>
-
-  <div class="panel-body">
-    <!-- list of sessions-->
-    <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
-      <thead>
-        <tr>
-          <th>Is Full</th>
-          <th>Begin Time</th>
-          <th>End Time</th>
-          <th>Block Belonging</th>
-          <th>Ages Group</th>
-          <th>Skill Group</th>
-          <th>Assigned Coach</th>
-          <th>List of Members</th>
-        </tr>
-      </thead>
-      {% if details %}
-        <tbody>
-          <tr class="studentLabel">
-          <a class="studentLabel" href="childProfile.html"></a>
-            {% if isfull %}
-              <td>Yes</td>
-            {% else %}
-              <td>No</td>
-            {% endif %}
-            <td>{{details.begintime|date:"d M"}} - {{details.begintime|time:"H:i"}}</td>
-            <td>{{details.endtime|time:"H:i"}}</td>
-            <td>{{details.block_blockid.label}}</td>
-            <td>{{details.agegroup}}</td>
-            <td>{{details.skillgroup}}</td>
-            <td>TODO</td>
-            <td><!-- DROPDOWN of members list -->
-              <div class="btn-group" >
-            <button type="button" class="btn btn-primary">Clients</button>
-            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-              <span class="caret"></span>
-              {% if users %}
-                {% for user in users %}
-              <span class="sr-only">Client List</span>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-              <!-- TODO retreive from database -->
-              <li><a href={% url 'bookingsystem.views.childProfile' user.user_uid.uid %}>{{user.user_uid.firstname}}, {{user.user_uid.lastname}} </a></li>
-            </ul>
-        </div>
-        </td>
-
-        {% endfor %}
-        {% endif %}
-      {% else %}
-        There are no Sessions or an error has occurred.
-      {% endif %}
-
-
-
-
-      </tbody>
-    </table>
-
-
-              </div>
-</div><!--/.panel-->
-			
-<div class="panel panel-default">
-	<div class="panel-heading">
-		<h3 class="panel-title">Assigned Coach</h3>
-	</div>
-
-	<div class="panel-body">
-		{% if assignedCoaches %}
-		{% for coach in assignedCoaches %}
-			<a href="coachProfile/{{ coach.id }}" class="list-group-item">{{ coach.first_name }} {{ coach.last_name }}</a>
-		{% endfor %}
-		{% endif %}
-		
-		{% if unassignedCoaches %}
-		<div class="accordion-heading">
-			<a class="list-group-item clearfix" data-toggle="collapse" data-parent="#accordion" href="#collapseAddCoach">
-				<strong>Add Coaches</strong>
-			</a>
-		</div>
-		
-		<div id="collapseAddCoach" class="accordion-body collapse" role="tabpanel">
-			<div class="panel-body">
-				<form action="/bookingsystem/manager/addCoachToSession" method="post">{% csrf_token %}
-					{% for coach in unassignedCoaches %}
-						<li class="studentLabel list-group-item labelst">
-	                            <input type="checkbox" value="{{ coach.id }}" name="coachID{{ coach.id }}"> &nbsp;{{ coach.first_name }} {{ coach.last_name }}</input>
-	                    </li>
-					{% endfor %}<br>
-					<input type="hidden" name="sessionID" value="{{ details.sessionid }}">
-					<INPUT Type="submit" class="btn btn-default" VALUE="Add"/>
-				</form>
-			</div>
-		</div>
-		{% endif %}
+	<script>
+	    $(function() {
+	        $('#search_input').fastLiveFilter('#search_list');
+	    });
+	</script>
 	
-	</div>
-</div><!--/.panel-->	
+	<script>
+	    $(function() {
+	        $('#search_input1').fastLiveFilter('#search_list1');
+	    });
+	</script>
+	
+	<br>
+	<!-- List of Sessions -->
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">List of Sessions</h3>
+		</div>
+
+		<div class="panel-body">
+			<!-- list of sessions-->
+			<table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+				<thead>
+					<tr>
+						<th>Is Full</th>
+          			  	<th>Begin Time</th>
+          			  	<th>End Time</th>
+          			  	<th>Block Belonging</th>
+          			  	<th>Ages Group</th>
+          			  	<th>Skill Group</th>
+          			  	<th>Assigned Coach</th>
+        			</tr>
+      		  	</thead>
+				
+				{% if details %}
+					<tbody>
+						<tr class="studentLabel">
+							<a class="studentLabel" href="childProfile.html"></a>
+							
+							{% if isfull %}
+								<td>Yes</td>
+							{% else %}
+ 						   		<td>No</td>
+							{% endif %}
+            				
+							<td>{{details.begintime|date:"d M"}} - {{details.begintime|time:"H:i"}}</td>
+            				<td>{{details.endtime|time:"H:i"}}</td>
+            				<td>{{details.block_blockid.label}}</td>
+            				<td>{{details.agegroup}}</td>
+            				<td>{{details.skillgroup}}</td>
+            				<td>TODO</td>
+						</tr>
+					</tbody>
+				{% endif %}
+			</table>
+		</div>
+	</div><!--/.panel-->
+	
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Children In This Session</h3>
+		</div>
+
+		<div class="panel-body">
+			{% if userSelectSessionObjects %}
+			{% for child in userSelectSessionObjects %}
+                <span class="list-group-item clearfix" style="color: #000;">
+					<span class="glyphicon glyphicon-user" style="color: #4179FA;"></span>                      	
+						{{ child.user_uid }}
+					<span class="pull-right">
+						<a href="removeChildFromSession/{{ child.user_uid.uid }}/{{ details.sessionid }}" class="btn btn-xs btn-danger" id ="info">
+                      		<span class="glyphicon glyphicon-remove"></span>
+                    	</a>
+					</span>
+                </span>
+			{% endfor %}
+			{% endif %}
+			
+			{% if childrenNot %}
+				<div class="accordion-heading">
+					<a class="list-group-item clearfix" data-toggle="collapse" data-parent="#accordion" href="#collapseAddChild">
+						<strong>Add Child</strong>
+					</a>
+				</div>
+				<form action="/bookingsystem/manager/addChildToSession" method="post">{% csrf_token %}
+					<div id="collapseAddChild" class="accordion-body collapse" role="tabpanel">
+						<br>
+						<div class="panel-body">
+							<div align="center">
+								<input align="right" id="search_input" placeholder="Type to filter">
+							</div>
+							<br>
+							<div style="overflow:auto; max-height: 250px;">
+								<ul id="search_list" style="list-style:none; ; margin: 0px 0px -20px -40px;">
+									{% for child in childrenNot %}
+										<li class="studentLabel list-group-item labelst">
+					                    	<input type="checkbox" value="{{ child.uid }}" name="notInSession{{ child.uid }}"> &nbsp;{{ child.firstname }} {{ child.lastname }}</input>
+					                    </li>
+									{% endfor %}
+								</ul>
+								<br>
+							</div>
+							<br>
+							<input type="hidden" name="sessionID" value="{{ details.sessionid }}">
+							<INPUT Type="submit" class="btn btn-default" VALUE="Add"/>
+						</div>
+					</div>
+				</form>
+			{% endif %}
+		</div>
+	</div><!--/.panel-->	
+			
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Assigned Coach</h3>
+		</div>
+
+		<div class="panel-body">
+			{% if assignedCoaches %}
+				{% for coach in assignedCoaches %}
+                    <span class="list-group-item clearfix" style="color: #000;">
+						<span class="glyphicon glyphicon-user" style="color: #4179FA;"></span>                      	
+							{{ coach.user_id.first_name }} {{ coach.last_name }}
+ 						<span class="pull-right">
+							<a href="removeCoachFromSession/{{ coach.id }}/{{ details.sessionid }}" class="btn btn-xs btn-danger" id ="info">
+                          		<span class="glyphicon glyphicon-remove"></span>
+                        	</a>
+						</span>
+                    </span>
+				{% endfor %}
+			{% endif %}
+		
+			{% if unassignedCoaches %}
+				<div class="accordion-heading">
+					<a class="list-group-item clearfix" data-toggle="collapse" data-parent="#accordion" href="#collapseAddCoach">
+						<strong>Add Coaches</strong>
+					</a>
+				</div>
+				<form action="/bookingsystem/manager/addCoachToSession" method="post">{% csrf_token %}
+					<div id="collapseAddCoach" class="accordion-body collapse" role="tabpanel">
+						<br>
+						<div class="panel-body">
+							<div align="center">
+								<input align="right" id="search_input1" placeholder="Type to filter">
+							</div>
+							<br>
+							<div class="panel-body" style="overflow:auto; max-height: 250px;">
+								<ul id="search_list1" style="list-style:none; ; margin: -15px -15px -35px -55px;">
+									{% for coach in unassignedCoaches %}
+										<li class="studentLabel list-group-item labelst">
+					                    	<input type="checkbox" value="{{ coach.id }}" name="coachID{{ coach.id }}"> &nbsp;{{ coach.first_name }} {{ coach.last_name }}
+					                    </li>
+									{% endfor %}
+								</ul>
+								<br>
+							</div>
+							<br>
+							<input type="hidden" name="sessionID" value="{{ details.sessionid }}">
+							<INPUT Type="submit" class="btn btn-default" VALUE="Add"/>
+						</div>
+					</div>
+				</form>
+			{% endif %}
+		</div>
+	</div><!--/.panel-->	
 
 
-            <INPUT Type="button" class="btn btn-default" VALUE="Back" ONCLICK="window.location.href='bookings.html'"/>
+	<INPUT Type="button" class="btn btn-default" VALUE="Back" ONCLICK="window.location.href='sessions.html'"/>
+	<span class="pull-right">
+		<a href="removeSession/{{ details.sessionid }}" class="btn btn-danger" id ="info">
+      		Remove Session
+    	</a>
+	</span>
 
 
 {% endblock %}

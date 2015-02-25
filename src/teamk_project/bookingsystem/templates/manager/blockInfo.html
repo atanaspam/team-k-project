@@ -11,100 +11,71 @@
 
 {% block mainArea %}
 
-<!-- main area -->
-
-        <!-- cofigure block info-->
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">Edit Info</h3>
-            </div> <!-- end head-->
-            <div class="panel-body">
-
-             <div class="btn-group" >
-                  <button type="button" class="btn btn-primary">Start Date</button>
-                  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <span class="caret"></span>
-
-                    <span class="sr-only">Date List</span>
-                  </button>
-                  <ul class="dropdown-menu" role="menu">
-                    <!-- TODO retreive from database -->
-                    <li><a href={% url 'bookingsystem.views.childProfile' user.user_uid.uid %}>{{user.user_uid.firstname}}, {{user.user_uid.lastname}} </a></li>
-                  </ul>
-              </div>
-
-              <div class="btn-group" >
-                  <button type="button" class="btn btn-primary">End Date</button>
-                  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <span class="caret"></span>
-
-                    <span class="sr-only">Date List</span>
-                  </button>
-                  <ul class="dropdown-menu" role="menu">
-                    <!-- TODO retreive from database -->
-                    <li><a href={% url 'bookingsystem.views.childProfile' user.user_uid.uid %}>{{user.user_uid.firstname}}, {{user.user_uid.lastname}} </a></li>
-                  </ul>
-              </div>
-
-              <div class="btn-group" >
-                  <button type="button" class="btn btn-primary">Age Group</button>
-                  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <span class="caret"></span>
-
-                    <span class="sr-only">Age Group List</span>
-                  </button>
-                  <ul class="dropdown-menu" role="menu">
-                    <!-- TODO retreive from database -->
-                    <li><a href={% url 'bookingsystem.views.childProfile' user.user_uid.uid %}>{{user.user_uid.firstname}}, {{user.user_uid.lastname}} </a></li>
-                  </ul>
-              </div>
-
-
-              </form>
-
-            </div> <!-- end body-->
-              <input type="submit" class="btn btn-default" name="submit" value="Submit Changes" />
-          </div> <!-- end panel-->
-
-
-
-
-
-          <!-- Sessions -->
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">Sessions</h3>
-            </div> <!-- end heading -->
-            <div class="panel-body">
+	<!-- main area -->
+	<!-- cofigure block info-->
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Edit Info</h3>
+		</div> <!-- end head-->
 	
+		<div class="panel-body">
+			TODO!
+		</div> <!-- end body-->
+	</div> <!-- end panel-->
+
+	{% if blockSessions %}
+		<!-- Sessions -->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Sessions</h3>
+			</div> <!-- end heading -->
+		
+			<div class="panel-body">
+				<table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+					<thead>
+						<tr>
+							<th>Is Full</th>
+	          			  	<th>Begin Time</th>
+	          			  	<th>End Time</th>
+	          			  	<th>Block Belonging</th>
+	          			  	<th>Ages Group</th>
+	          			  	<th>Skill Group</th>
+	          			  	<th>Assigned Coach</th>
+							<th>Info</th>
+	        			</tr>
+	      		  	</thead>
+					{% for session in blockSessions %}
+						<tbody>
+							<tr class="studentLabel">
+								{% if isfull %}
+									<td>Yes</td>
+								{% else %}
+	 						   		<td>No</td>
+								{% endif %}
+					            <td>{{session.begintime|time:"H:i"}}</td>
+					            <td>{{session.endtime|time:"H:i"}}</td>
+					            <td>?</td>
+					            <td>{{session.agegroup}}</td>
+					            <td>{{session.skillgroup}}</td>
+					            <td>?</td>
+								<td>
+									<a href="/bookingsystem/manager/sessionInfo{{ session.sessionid }}" style="color: #1A387B">
+					              		<span class="glyphicon glyphicon-info-sign"/>
+									</a>
+					            </td>
+							</tr>
+						</tbody>
+					{% endfor %}
+				</table>
+			</div> <!-- end body -->
+		</div> <!-- end panel -->
+	{% endif %}
 	
-<!--------------------- TO DO: QUERY FOR SESSIONS WITH THIS BLOCK ID (blockSessions)  ---------------------->
-              {% if sessions%}
-		        {% for session in blockSessions %}
-				{% url 'bookingsystem.views.sessionInfo' session.sessionid as sessionUrl %}
-		        <tbody>
-		          <tr class="studentLabel">
-		            <td>{{session.begintime|date:"D, d M y"}}</td>
-		            <td>{{session.begintime|time:"H:i"}}</td>
-		            <td>{{session.endtime|time:"H:i"}}</td> <!-- CHANGE ME TO A PROPER HOUR -->
-		            <td>{{session.skillgroup}}</td>
-		            <td>TODO</td>
-		            <td>{{session.duration}}</td>
-		            <td>TODO</td>
-					<td>
-						<a href= {{ sessionUrl }} style="color: #1A387B">
-		              		<span class="glyphicon glyphicon-info-sign"/>
-						</a>
-		            </td>
-		          </tr>
-		        {% endfor %}
-		      {% else %}
-		        Block is empty of Sessions.
-		      {% endif %}
-
-            </div> <!-- end body -->
-          </div> <!-- end panel -->
-
-
-
+	<input type="submit" class="btn btn-default" name="submit" value="Submit Changes" />
+	
+	<span class="pull-right">
+		<a href="/bookingsystem/manager/removeBlock/{{ blocks.blockid }}" class="btn btn-danger">
+	   		Remove Block
+	 	</a>
+	</span>
 {% endblock %}

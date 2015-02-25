@@ -21,15 +21,24 @@
 		<!-- add body here -->
 		<div class="list-group">
 			{% for coach in allCoaches %}
-                <a href="{% url 'bookingsystem.views.coachProfile' %}{{ coach.id }}" class="list-group-item clearfix">
-                	<span class="glyphicon glyphicon-user"></span>
-					{{ coach.first_name }} {{ coach.last_name }}
-                </a>
+                <span class="list-group-item clearfix" style="color: #000;">
+					<span class="glyphicon glyphicon-user" style="color: #4179FA;"></span>                      	
+						{{ coach.first_name }} {{ coach.last_name }}
+					<span class="pull-right">
+						<a href="{% url 'bookingsystem.views.coachProfile' %}{{ coach.id }}" class="btn btn-xs btn-info" id ="info">
+                      		<span class="glyphicon glyphicon-info-sign"></span>
+                    	</a>
+						<a href="{% url 'bookingsystem.views.removeCoach' %}{{ coach.id }}" class="btn btn-xs btn-danger" id ="info">
+                      		<span class="glyphicon glyphicon-remove"></span>
+                    	</a>
+					</span>
+                </span>
 			{% endfor %}
 			
 			
 			
 			{% if notCoaches %}
+			<form action="/bookingsystem/manager/addNewCoach" method="post">{% csrf_token %}
 			<div class="accordion-heading">
 				<a class="list-group-item clearfix" data-toggle="collapse" data-parent="#accordion" href="#collapseAddCoach">
 					<strong>Add Coaches</strong>
@@ -40,13 +49,17 @@
 				<div class="panel-body">
 
 
+		<div align="center">
 			
-					<form action="/bookingsystem/manager/addNewCoach" method="post">{% csrf_token %}
-						<div align="center">
-						<input align="right" id="search_input" placeholder="Type to filter">
-					</div>
+		<input align="right" id="search_input" placeholder="Type to filter">
+		<br>
+		<br>
+	</div>
+			<div class="panel-body" style="overflow:auto; max-height: 250px;">
+					
+						
 					<br>
-						<ul id="search_list" style="list-style:none; padding-left:0;">
+						<ul id="search_list" style="list-style:none; margin: -35px -15px -35px -55px;">
 						{% for notCoach in notCoaches %}
 							<li class="studentLabel list-group-item labelst">
 		                            <input type="checkbox" value="{{ notCoach.id }}" name="notCoachID{{ notCoach.id }}"> &nbsp;{{ notCoach.first_name }} {{ notCoach.last_name }}</input>
@@ -54,10 +67,15 @@
 						{% endfor %}
 						</ul>
 					</ul><br>
-						<INPUT Type="submit" class="btn btn-default" VALUE="Add"/>
-					</form>
+						
+				</div><br>
+					<INPUT Type="submit" class="btn btn-default" VALUE="Add"/>
+
 				</div>
+
 			</div>
+				
+			</form>
 			{% endif %}
 			
 		</div>

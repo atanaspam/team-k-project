@@ -103,7 +103,11 @@
           <button class="btn btn-default" type="button" onclick="window.location.href='audit.html'; return false;">
           <span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span>Financial Data</button>
 		  
-          <button class="btn btn-danger" type="button" onclick="window.location.href='/bookingsystem/manager/removeCoach/{{ userObject.id }}'; return false;">
-          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;Remove Coach</button>
+          
+  		<span class="pull-right">
+  			<a href="/bookingsystem/manager/removeCoach/{{ userObject.id }}" class="btn btn-danger" id ="info">
+            		Remove Coach
+          	</a>
+  		</span>
 
 {% endblock %}

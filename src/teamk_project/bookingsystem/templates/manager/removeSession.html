@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block sidebarNav %}
+{% include "sidebarNav/manager.html" %}
+{% endblock %}
+
+{% block mainArea %}
+	<!-- List of Blocks -->
+	<br>
+	{% if userSelectSessionObjects %}
+		<div class="panel panel-default">
+			<div class="panel-heading clearfix">
+				<h4 class="panel-title pull-left" style="padding-top: 7.5px;">Warning! This sessions has participants!</h4>
+		    </div>
+
+			<div class="panel-body">
+				{% for child in userSelectSessionObjects%}
+					<li class="studentLabel list-group-item labelst">
+						{{ child.user_uid.firstname }} {{ child.user_uid.lastname }}
+					</li>
+				{% endfor %}
+			</div> <!-- end panel div -->
+		</div>
+	{% endif %}
+	
+	{% if sessionCoachedByObjects %}
+		<div class="panel panel-default">
+			<div class="panel-heading clearfix">
+				<h4 class="panel-title pull-left" style="padding-top: 7.5px;">Warning! This sessions has assigned coaches!</h4>
+		    </div>
+
+			<div class="panel-body">
+				{% for coach in sessionCoachedByObjects%}
+					<li class="studentLabel list-group-item labelst">
+						{{ coach.user_id.first_name }} {{ coach.user_id.last_name }}
+					</li>
+				{% endfor %}
+			</div> <!-- end panel div -->
+		</div>
+	{% endif %}
+	
+	<span class="pull-right">
+		<a href="/bookingsystem/manager/confirmRemoveSession/{{ sessionid }}" class="btn btn-danger">
+			Confirm
+		</a>
+	</span>
+	
+	<span class="pull-right" style="padding-right: 20px;">
+		<a href="/bookingsystem/manager/sessions" class="btn btn-default">
+			Cancel
+		</a>
+	</span>
+{% endblock %}
