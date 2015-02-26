@@ -520,7 +520,7 @@ def bookSessions1(request, blockID, uID):
  	context = RequestContext(request)
  	child = Client.objects.get(uid=uID)
 	owner = Block.objects.get(blockid=blockID)
- 	sessions = Session.objects.filter( Q(begintime__gte=datetime.datetime.now() ) & Q(begintime__lte=owner.enddate))
+ 	sessions = Session.objects.filter( (Q(begintime__gte=datetime.datetime.now()) & Q(begintime__gte=owner.begindate)) & Q(begintime__lte=owner.enddate))
  	context_dict = {'sessions': sessions}
  	context_dict['child'] = child
  	return render_to_response('parent/bookSessions.html', context_dict, context)
@@ -578,6 +578,9 @@ def childProfile(request, id):
 	sessions = UserSelectsSession.objects.filter(user_uid=child.uid)
  	if request.method == 'POST':
  		form = EditPersonalDetailsForm(request.POST)
+ 		if form.is_valid():
+ 			newinfo = form.save(commit=False)
+ 			print newinfo
  		#If the request was not a POST, display the form to enter details.
  	else:
  		form = EditPersonalDetailsForm()
