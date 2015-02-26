@@ -453,7 +453,7 @@ def userBookings(request, num):
 	child = Client.objects.get(uid=num)
 	today = datetime.date.today()
 	monday = today - datetime.timedelta(days=today.weekday())
-	weeks = Block.objects.filter((Q(type='Week') & Q(begindate__gte=monday)) | (Q(type='Season')))
+	weeks = Block.objects.filter(((Q(type='Week') & Q(begindate__gte=monday))) | (Q(type='Season')))
 	context_dict = {'blocks': weeks}
 	context_dict['child'] = child
 	return render_to_response('parent/userBookings.html', context_dict, context)
