@@ -1,7 +1,16 @@
+
 {% extends "base.html" %}
+{% load bookingsystem_extras %}
 
 {% block sidebarNav %}
-<!--{% include "sidebarNav/parent.html" %}-->
+{% if user.is_authenticated %}  
+	{% if user|is_manager %}
+		{% include "sidebarNav/manager.html" %}
+	{% elif user|is_parent %}
+		{% include "sidebarNav/parent.html" %}
+	{% elif user|is_coach %}
+		{% include "sidebarNav/coach.html" %}
+	{% endif %}{% endif %}
 {% endblock %}
 
 {% block mainArea %}
