@@ -1,3 +1,7 @@
+.darkText{
+  color: #000000;
+}
+
 html,body {
   height: 100%;
 }
@@ -76,9 +80,10 @@ html,body {
 
 body {
   padding-top: 51px; 
-  background: #F0F0F0;
+  background: #E9E9E9;
   color: #4179FA;
 }
+
 a {
   color:#EFEFEF;
 }

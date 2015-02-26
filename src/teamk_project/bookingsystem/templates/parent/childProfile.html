@@ -4,8 +4,8 @@
 {% include "sidebarNav/parent.html" %}
 {% endblock %}
 
-  {% block mainArea %}
-
+{% block mainArea %}
+<br>
   <!-- main area -->
 
   <!-- view Status -->
@@ -128,7 +128,7 @@
 		<!-- submit or cancel buttons -->
 		<!-- <INPUT Type="button" class="btn btn-default" VALUE="Cancel" ONCLICK="window.location.href='childrenList.html'"/> -->
 		<!-- Edit profile button -->
-		<td><select name="bool" id="bool" onChange="toggle_edit(this.value)">
+		<td><select name="bool" id="bool" class="btn btn-default" onChange="toggle_edit(this.value)">
 		<option selected value="0">Read Only</option>
 		<option value="1">Edit Profile</option>
 		</select>&nbsp;</td>

@@ -11,47 +11,53 @@
 <!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
 
 {% block mainArea %}
-          <!-- bookings pending confirmation -->
-     <div class="panel-heading">
-              <h4 class="panel-title"><strong><u>Members List</u></strong></h4>
+<br>
+          <!-- members table -->
+          <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Members List</h3>
             </div>
-          <table id="myTableBlock" class="table table-striped table-bordered" cellspacing="0" width="100%">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Gender</th>
-                <th>Date of Birth</th>
-                <th>Experience</th>
-                <th>Due</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for child in clients %}
-            <tr class="studentLabel">
-            {% url 'bookingsystem.views.managerChildProfile' child.uid as uurl %}
-                <td><a class="studentLabel" href= {{uurl}}> {{child.firstname}} {{child.lastname}} </a></td>
-                <td>{{child.email}}</td>
-                {% if child.genderid %}
-                  <td>Male</td>
-                {% else %}
-                  <td>Female</td>
-                {% endif %}
-                <td>{{child.dateofbirth}}</td>
-                <td>{{child.experiencelevel}}</td>
-                <td>
+            <div class="panel-body">
+                <table id="myTableBlock" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Gender</th>
+                            <th>Date of Birth</th>
+                            <th>Experience</th>
+                            <th>Due</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for child in clients %}
+                            <tr class="studentLabel">
+                            {% url 'bookingsystem.views.managerChildProfile' child.uid as uurl %}
+                                <td><a class="studentLabel" href= {{uurl}}> {{child.firstname}} {{child.lastname}} </a></td>
+                                <td>{{child.email}}</td>
+                                {% if child.genderid %}
+                                  <td>Male</td>
+                                {% else %}
+                                  <td>Female</td>
+                                {% endif %}
+                                <td>{{child.dateofbirth}}</td>
+                                <td>{{child.experiencelevel}}</td>
+                                <td>
 
-                {% if child.amount != none %}
-                    £{{ child.amount }}
-                {% else %}
-                    £0
-                {% endif %}
-                </td>
-            </tr>
-        {% endfor %}
+                                {% if child.amount != none %}
+                                    £{{ child.amount }}
+                                {% else %}
+                                    £0
+                                {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
 
-        </tbody>
-    </table>
+                    </tbody>
+                 </table>
+            </div> <!-- close body -->
+        </div> <!-- close panel -->
+
 	<script>
 	$(document).ready(function(){
 	    $('#myTableBlock').dataTable();
