@@ -32,17 +32,17 @@
 							
 				  {% elif block.type == 'Season' %}   
 					<div class="accordion-heading">
-						<a class="list-group-item clearfix" data-toggle="collapse" data-parent="#accordion2" href="#collapse{{ forloop.counter2 }}">
+						<a class="list-group-item clearfix" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ forloop.counter }}">
 							<span class="glyphicon glyphicon-file"></span> 
 							Class Running from {{block.begindate}} until {{block.enddate}}
 							<span class="pull-right">
 						</a>
 					</div>
 
-					<div id="collapse{{ forloop.counter2 }}" class="accordion-body collapse" role="tabpanel">
+					<div id="collapse{{ forloop.counter }}" class="accordion-body collapse" role="tabpanel">
 						<div> 
 					    <object type="text/html" data={{uurl|add:"bookSeason"|add:ID|add:"/"|add:uid}}  width="100%" height="250px" style="overflow:auto;border:5px ridge blue">
-					    </object></div></div>
+					    </object></div>					</div>
 				  {% endif %}   
 							
 							
