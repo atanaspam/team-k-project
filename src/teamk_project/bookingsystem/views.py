@@ -798,10 +798,10 @@ def addSession(request):
 			# Now save to the DB block.save()
 			# Redirect on success
 			return redirect('/success.html')
-		else:
+		#else:
 			# The supplied form contained errors - just print them to the terminal.
 			#print form.begintime
-			print form.errors
+			#print form.errors
 	else:
 		# If the request was not a POST, display the form to enter details.
 		form = SessionForm()

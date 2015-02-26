@@ -29,10 +29,12 @@
               <form id="week_form" method="post" action="/bookingsystem/manager/addBlock.html">
                 {% csrf_token %}
 
-                <p><td>{{form.begindate.help_text}} : {{form.begindate}}</p>
-                <!-- <p><td>{{form.enddate.help_text}} : {{form.enddate}}</p> -->
-                <p><td>{{form.label.help_text}} : {{form.label}}</p>
-                <!-- <p><td>{{form.type.help_text}} Type of Block:  {{form.type}}</p> -->
+                {% for field in form %}
+                <div class="form-group">
+                   <p><font color="red">{{ field.errors }}</font></p>
+                   {{ field.label_tag }} {{ field }}
+                </div>
+                {% endfor %}
 
 
                 <input type="submit" class="btn btn-default" name="submit_week" value="Create Block" />
@@ -50,7 +52,12 @@
               <form id="season_form" method="post" action="/bookingsystem/manager/addBlock.html">
                 {% csrf_token %}
 
-                {{sform.as_p}}
+               {% for field in sform %}
+                <div class="form-group">
+                   <p><font color="red">{{ field.errors }}</font></p>
+                   {{ field.label_tag }} {{ field }}
+                </div>
+                {% endfor %}
 
 
                 <input type="submit" class="btn btn-default" name="submit_season" value="Create Block" />

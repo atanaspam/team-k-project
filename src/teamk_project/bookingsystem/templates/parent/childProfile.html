@@ -22,7 +22,9 @@
             {% if sessions %}
             	{% for session in sessions %}
                 	<!-- list item -->
-                	<a href="childSessions.html" class="list-group-item clearfix">
+                	 {% url 'bookingsystem.views.childSessions' session.session_sessionid.sessionid as uurl %}
+                	 {{ uurl }}
+                	<a class="list-group-item clearfix" href={{ uurl }} >
                   		<span class="glyphicon glyphicon-file"></span>
                     	{{session.session_sessionid.begintime|date:"d M y"}} from {{session.session_sessionid.begintime|date:"g:i A"}} to {{session.session_sessionid.endtime|date:"g:i A"}} - {{session.user_uid.firstname}}
                   	  	<span class="pull-right">

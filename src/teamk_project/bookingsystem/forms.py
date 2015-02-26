@@ -264,21 +264,22 @@ class SplitSelectDateTimeWidget(widgets.MultiWidget):
         rendered_widgets.insert(-1, '<br/>')
         return u''.join(rendered_widgets)
 
-################################################################################
-#### TO BE REMOVED.
-################################################################################
 class SessionForm(forms.ModelForm):
 
     #duration = forms.Select()
-    begintime = forms.DateTimeField(widget=SplitSelectDateTimeWidget(), help_text="Beginning of the session")
-    endtime = forms.DateTimeField(widget=SplitSelectDateTimeWidget(), help_text="End of the session")
+    begintime = forms.DateTimeField(widget=SplitSelectDateTimeWidget(), label="Beginning of the session")
+    endtime = forms.DateTimeField(widget=SplitSelectDateTimeWidget(), label="End of the session")
     block_blockid = forms.Select()
-    capacity = forms.IntegerField(help_text="Capacity of the session")
-    agegroup = forms.CharField(help_text="Associated age group")
-    skillgroup = forms.CharField(help_text="Associated skill group")
+    capacity = forms.IntegerField(label="Capacity of the session")
+    agegroup = forms.CharField(label="Associated age group")
+    skillgroup = forms.CharField(label="Associated skill group")
     class Meta:
         model = Session
         fields = ('begintime', 'begintime', 'block_blockid', 'endtime', 'capacity', 'agegroup', 'skillgroup')
+
+################################################################################
+#### TO BE REMOVED.
+################################################################################
 
 class SessionForm1(forms.ModelForm):
 
@@ -293,20 +294,21 @@ class SessionForm1(forms.ModelForm):
     class Meta:
         model = Session
         fields = ('begindate', 'begintime', 'endtime', 'capacity', 'agegroup', 'skillgroup')
+################################################################################
 
 class RegisterForm(forms.ModelForm):
-    username = forms.CharField(help_text="Username:")
-    first_name = forms.CharField(help_text="First Name:")
-    last_name = forms.CharField(help_text="Last Name:")
-    email = forms.CharField(help_text="Email:")
+    username = forms.CharField(label="Username:")
+    first_name = forms.CharField(label="First Name:")
+    last_name = forms.CharField(label="Last Name:")
+    email = forms.CharField(label="Email:")
     password = forms.PasswordInput()
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password')
 
 class EditPersonalDetailsForm(forms.ModelForm):
-    email = forms.EmailField(help_text="Email:")
-    telephone = forms.IntegerField(help_text="Telephone:")
+    email = forms.EmailField(label="Email:")
+    telephone = forms.IntegerField(label="Telephone:")
     class Meta:
         model = Client
         fields = ('email', 'telephone')

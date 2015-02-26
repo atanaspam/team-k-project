@@ -18,58 +18,33 @@
 
 {% endcomment %}
 
-	<form action="/bookingsystem/manager/addSession.html" method="post">
-		<div class="panel panel-default"><!-- Personal Details -->
-			<div class="panel-heading">
-				<h3 class="panel-title">Session Details</h3>
-			</div>
+<form action="/bookingsystem/manager/addSession.html" method="post">
+	<div class="panel panel-default"><!-- Personal Details -->
+		<div class="panel-heading">
+			<h3 class="panel-title">Session Details</h3>
+		</div>
 
-		    <form action="/bookingsystem/manager/addSession.html" method="post">
-			    {% csrf_token %}
-				<div class="panel-body"><!-- fields -->
-					<div class="input-group">
+		<form action="/bookingsystem/manager/addSession.html" method="post">
+			{% csrf_token %}
+			<div class="panel-body"><!-- fields -->
+				<div class="input-group">
 
-											{% comment %}
-
-												{{form.duration.help_text}}  {{form.duration}}
-												{{form.begintime}}  {{form.begintime.help_text}}
-							          {{form.endtime}}  {{form.endtime.help_text}}
-							          {{form.block_blockid}}  {{form.block_blockid.help_text}}
-							          {{form.capacity}}  {{form.capacity.help_text}}
-							          {{form.agegroup}}  {{form.agegroup.help_text}}
-							          {{form.skillgroup}}  {{form.skillgroup.help_text}}
-
-											{% endcomment %}
+					<!--{{form.as_p}} -->
+					{% for field in form %}
 						<div class="form-group">
-						  {{form.begindate.help_text}} {{form.begindate}}
+						<p><font color="red">{{ field.errors }}</font></p>
+						{{ field.label_tag }} {{ field }}
 						</div>
-						<div class="form-group">
-						  {{form.begintime.help_text}} {{form.begintime}}
-						</div>
-						<div class="form-group">
-				          {{form.endtime.help_text}} {{form.endtime}}
-				        </div>
-				        <div class="form-group">
-				          {{form.block_blockid.help_text}} {{form.block_blockid}}
-				        </div>
-						<div class="form-group">
-				          {{form.capacity.help_text}} {{form.capacity}}
-						</div>
-				        <div class="form-group">
-				          {{form.agegroup.help_text}} {{form.agegroup}}
-				         </div>
-						<div class="form-group">
-				          {{form.skillgroup.help_text}} {{form.skillgroup}}
-				        </div>
+					{% endfor %}
+					<input type="submit" class="btn btn-default" name="submit" value="Create Session" />
 
-				          <input type="submit" class="btn btn-default" name="submit" value="Create Session" />
-
-					</div>
 
 				</div>
-			</form>
-		</div> <!-- end of Session Details -->
 
-	</form>
-	
+			</div>
+		</form>
+	</div> <!-- end of Session Details -->
+
+</form>
+
 {% endblock %}

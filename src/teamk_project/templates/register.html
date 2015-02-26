@@ -11,11 +11,12 @@
 
   <form action="" method="post">
   	{% csrf_token %}
-      <p><td>{{form.username.help_text}} {{ form.username }}</p>
-      <p><td>{{form.first_name.help_text}} {{form.first_name}}</p>
-      <p><td>{{form.last_name.help_text}} {{form.last_name}}</p>
-      <p><td>{{form.email.help_text}} {{form.email}}</p>
-	  <p><td>{{form.password.help_text}} Password: {{form.password}}</p>
+    {% for field in form %}
+      <div class="form-group">
+      <p><font color="red">{{ field.errors }}</font></p>
+      {{ field.label_tag }} {{ field }}
+      </div>
+    {% endfor %}
 
 
       <input class="btn btn-default" type="submit" value="Create Account" />

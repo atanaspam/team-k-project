@@ -75,13 +75,11 @@ class Client(models.Model):
     class Meta:
         db_table = 'client'
 
-
 class ClientManager(models.Manager):
     def getMales(self):
         return self.filter(genderid = 1)
     def getFemales(self):
         return self.filter(genderid = 0)
-
 
 
 class Experiencelevel(models.Model):
