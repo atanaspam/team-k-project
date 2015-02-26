@@ -269,16 +269,16 @@ class SplitSelectDateTimeWidget(widgets.MultiWidget):
 ################################################################################
 class SessionForm(forms.ModelForm):
 
-    duration = forms.Select()
+    #duration = forms.Select()
     begintime = forms.DateTimeField(widget=SplitSelectDateTimeWidget(), help_text="Beginning of the session")
     endtime = forms.DateTimeField(widget=SplitSelectDateTimeWidget(), help_text="End of the session")
-    block_blockid = forms.IntegerField(help_text="Which block it belongs to")
+    block_blockid = forms.Select()
     capacity = forms.IntegerField(help_text="Capacity of the session")
     agegroup = forms.CharField(help_text="Associated age group")
     skillgroup = forms.CharField(help_text="Associated skill group")
     class Meta:
         model = Session
-
+        fields = ('begintime', 'begintime', 'block_blockid', 'endtime', 'capacity', 'agegroup', 'skillgroup')
 
 class SessionForm1(forms.ModelForm):
 

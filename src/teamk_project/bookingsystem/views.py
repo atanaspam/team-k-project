@@ -11,7 +11,7 @@ from django import forms
 from django.contrib.auth import logout
 from django.db import models
 from django.db.models import Max
-from bookingsystem.forms import BlockFormMore, SessionForm1, EditPersonalDetailsForm, CreateChildForm, WeekBlockForm ##########################
+from bookingsystem.forms import BlockFormMore, SessionForm, EditPersonalDetailsForm, CreateChildForm, WeekBlockForm ##########################
 from datetime import timedelta
 import datetime, time
 
@@ -31,22 +31,34 @@ def getLastID():
 	global lastID
 	if (lastID == -1):
 		lastID = Client.objects.all().aggregate(Max('uid')).get("uid__max")
-	lastID = lastID + 1
-	return lastID
+		if lastID is None:
+			lastID = 1
+			return lastID
+	#print lastID +1
+	return ++lastID
 
 def getLastSessionID():
 	global lastSessionID
 	if (lastSessionID == -1):
 		lastSessionID = Session.objects.all().aggregate(Max('sessionid')).get("sessionid__max")
-	lastSessionID = lastSessionID + 1
+		if lastSessionID is None:
+			lastSessionID = 1
+			return lastSessionID
+	lastSessionID += 1
 	return lastSessionID
 
 def getLastBlockID():
 	global lastBlockID
 	if (lastBlockID == -1):
 		lastBlockID = Block.objects.all().aggregate(Max('blockid')).get("blockid__max")
-	lastBlockID = lastBlockID + 1
+		if lastBlockID is None:
+			print 'noBlock'
+			lastBlockID = 1
+			return lastBlockID
+	lastBlockID += 1
 	return lastBlockID
+
+
 
 @login_required
 def index(request):
@@ -527,49 +539,33 @@ def bookSeason1(request, blockID, uID):
  	context_dict['child'] = child
  	return render_to_response('parent/bookSeason.html', context_dict, context)
 
-@login_required
-@user_passes_test(is_parent)
-def childProfile(request, id):
-	context = RequestContext(request)
-	context_dict = {}
-	parentid = request.user.id
-	child = Client.objects.get(uid=id)
-	if request.method == 'POST':
-		form = EditPersonalDetailsForm(request.POST)
-		# If the request was not a POST, display the form to enter details.
-	form = EditPersonalDetailsForm()
-	context_dict['form'] = form
-	context_dict['child'] = child
-	return render_to_response('parent/childProfile.html', context_dict, context)
+# @login_required
+# @user_passes_test(is_parent)
+# def childProfile(request, id):
+# 	context = RequestContext(request)
+# 	context_dict = {}
+# 	parentid = request.user.id
+# 	child = Client.objects.get(uid=id)
 
-
-@login_required
-@user_passes_test(is_parent)
-def childProfile(request, id):
-	context = RequestContext(request)
-	context_dict = {}
-	parentid = request.user.id
-	child = Client.objects.get(uid=id)
-
-	if request.method == 'POST':
-		form = EditPersonalDetailsForm(request.POST)
-		# Have we been provided with a valid form?
-		if form.is_valid():
-			info=form.save(commit=False)
-			child.telephone = info.telephone
-			child.email = info.email
-			child.save()
-			# Redirect on success
-			return redirect('/success.html')
-		else:
-			# The supplied form contained errors - just print them to the terminal.
-			print form.errors
-	else:
-		# If the request was not a POST, display the form to enter details.
-		form = EditPersonalDetailsForm()
-		context_dict['form'] = form
-		context_dict['child'] = child
-		return render_to_response('parent/childProfile.html', context_dict, context)
+# 	if request.method == 'POST':
+# 		form = EditPersonalDetailsForm(request.POST)
+# 		# Have we been provided with a valid form?
+# 		if form.is_valid():
+# 			info=form.save(commit=False)
+# 			child.telephone = info.telephone
+# 			child.email = info.email
+# 			child.save()
+# 			# Redirect on success
+# 			return redirect('/success.html')
+# 		else:
+# 			# The supplied form contained errors - just print them to the terminal.
+# 			print form.errors
+# 	else:
+# 		# If the request was not a POST, display the form to enter details.
+# 		form = EditPersonalDetailsForm()
+# 		context_dict['form'] = form
+# 		context_dict['child'] = child
+# 		return render_to_response('parent/childProfile.html', context_dict, context)
 
 
 @login_required
@@ -582,7 +578,6 @@ def childProfile(request, id):
 	sessions = UserSelectsSession.objects.filter(user_uid=child.uid)
  	if request.method == 'POST':
  		form = EditPersonalDetailsForm(request.POST)
- 		print form
  		#If the request was not a POST, display the form to enter details.
  	else:
  		form = EditPersonalDetailsForm()
@@ -592,22 +587,42 @@ def childProfile(request, id):
  	return render_to_response('parent/childProfile.html', context_dict, context)
 
 @login_required
-@user_passes_test(is_parent)
-def changeChild(request):
-	f_uid = request.POST.get("uid", "")
+@user_passes_test(is_manager)
+def managerChildProfile(request, id):
+	context = RequestContext(request)
+	context_dict = {}
+	print id
 	parentid = request.user.id
+	child = Client.objects.get(uid=id)
+	sessions = UserSelectsSession.objects.filter(user_uid=child.uid)
+ 	if request.method == 'POST':
+ 		form = EditPersonalDetailsForm(request.POST)
 
-	child = Client.objects.get(uid=f_uid, belongsto=parentid)
-	if child:
-		child.firstname = request.POST.get("firstname", "")
-		child.lastname = request.POST.get("lastname", "")
-		child.genderid = int(request.POST.get("genderid", ""))
-		child.dateofbirth = request.POST.get("dateofbirth", "")
-		child.telephone = request.POST.get("telephone", "")
-		child.email = request.POST.get("email", "")
-		child.save()
+ 		#If the request was not a POST, display the form to enter details.
+ 	else:
+ 		form = EditPersonalDetailsForm()
+ 		context_dict['form'] = form
+		context_dict['sessions'] = sessions
+ 		context_dict['child'] = child
+ 	return render_to_response('manager/childProfile.html', context_dict, context)
 
-	return redirect('/bookingsystem/parent/childrenList.html')
+# @login_required
+# @user_passes_test(is_parent)
+# def changeChild(request):
+# 	f_uid = request.POST.get("uid", "")
+# 	parentid = request.user.id
+
+# 	child = Client.objects.get(uid=f_uid, belongsto=parentid)
+# 	if child:
+# 		child.firstname = request.POST.get("firstname", "")
+# 		child.lastname = request.POST.get("lastname", "")
+# 		child.genderid = int(request.POST.get("genderid", ""))
+# 		child.dateofbirth = request.POST.get("dateofbirth", "")
+# 		child.telephone = request.POST.get("telephone", "")
+# 		child.email = request.POST.get("email", "")
+# 		child.save()
+
+# 	return redirect('/bookingsystem/parent/childrenList.html')
 
 ################################################################################
 ####												Adding new Child	 															 ###
@@ -773,13 +788,13 @@ def addSession(request):
 
 	# A HTTP POST?
 	if request.method == 'POST':
-		form = SessionForm1(request.POST)
+		form = SessionForm(request.POST)
 		# Have we been provided with a valid form?
 		if form.is_valid():
 			session=form.save(commit=False)
 			session.sessionid = getLastSessionID()
-			print session.begintime
-
+			print session.sessionid, session.begintime, session.endtime, session.block_blockid
+			session.save()
 			# Now save to the DB block.save()
 			# Redirect on success
 			return redirect('/success.html')
@@ -789,7 +804,7 @@ def addSession(request):
 			print form.errors
 	else:
 		# If the request was not a POST, display the form to enter details.
-		form = SessionForm1()
+		form = SessionForm()
 	return render_to_response('manager/addSession.html', {'form': form}, context)
 
 @login_required
@@ -841,33 +856,34 @@ def addBlock(request):
 			if form.is_valid():
 				block=form.save(commit=False)
 				block.blockid = getLastBlockID()
+				print 'Week block ID:', block.blockid
 				block.enddate = block.begindate + timedelta(days = 6)
 				block.type = 'Week'
-				#block.save()
+				block.save()
 				for i in range(0,5):
 					# Create the morning Block
-					b = Block(blockid=getLastBlockID(), begindate=block.begindate + timedelta(days = i), enddate=block.begindate + timedelta(days = i), label=getDayOfWeek(i), type='Morning')
-					print b
-					#b.save()
+					b = Block(blockid=getLastBlockID(), begindate=block.begindate + timedelta(days = i), enddate=block.begindate + timedelta(days = i), label=getDayOfWeek(i) + ' Morning', type='Morning')
+					print 'Morning Block:', b
+					b.save()
 					# Create all the sessions for the morning block
 					for age in ageGroups:
 						# Generate the time
 						sessionTime = datetime.datetime.strptime('08:00', '%H:%M').time() # generate a 8:00 time
 						sessionBegTime = datetime.datetime.combine(block.begindate+timedelta(days = i), sessionTime)
 						s = Session(sessionid=getLastSessionID(), duration=1, begintime=sessionBegTime, endtime=(sessionBegTime+timedelta(hours=1)), block_blockid=b, capacity=10, agegroup=age, skillgroup='RANDOM', isfull=0)
-						print s.sessionid , s.begintime, s.endtime, s.agegroup
-						#s.save()
+						#print s.sessionid , s.begintime, s.endtime, s.agegroup
+						s.save()
 					# Create the afternoon block
-					b1 = Block(blockid=getLastBlockID(), begindate=block.begindate + timedelta(days = i), enddate=block.begindate + timedelta(days = i), label=getDayOfWeek(i), type='Afternoon')
-					print b1
-					#b1.save()
+					b1 = Block(blockid=getLastBlockID(), begindate=block.begindate + timedelta(days = i), enddate=block.begindate + timedelta(days = i), label=getDayOfWeek(i) + ' Afternoon', type='Afternoon')
+					print 'Afternoon Block:',  b1
+					b1.save()
 					for age in ageGroups:
 						# Generate the time
 						sessionTime = datetime.datetime.strptime('13:00', '%H:%M').time() # generate a 8:00 time
 						sessionBegTime = datetime.datetime.combine(block.begindate+timedelta(days = i), sessionTime)
 						s = Session(sessionid=getLastSessionID(), duration=1, begintime=sessionBegTime, endtime=(sessionBegTime+timedelta(hours=1)), block_blockid=b1, capacity=10, agegroup=age, skillgroup='RANDOM', isfull=0)
-						print s.sessionid , s.begintime, s.endtime, s.agegroup
-						#s.save()
+						#print s.sessionid , s.begintime, s.endtime, s.agegroup
+						s.save()
 				# Redirect on success
 				return redirect('/success.html')
 			else:
@@ -881,7 +897,7 @@ def addBlock(request):
 				block=form.save(commit=False)
 				block.blockid = getLastBlockID()
 				block.type = 'Season'
-				#block.save()
+				block.save()
 				print form.cleaned_data['begintime']
 				days = []
 				for data in form.cleaned_data['weekdays']:
@@ -896,7 +912,7 @@ def addBlock(request):
 						sessionBegTime = datetime.datetime.combine(day, sessionTime)
 						s = Session(sessionid=getLastSessionID(), duration=1, begintime=sessionBegTime, endtime=(sessionBegTime+timedelta(hours=1)), block_blockid=block, capacity=10, agegroup='13-23', skillgroup='RANDOM', isfull=0)
 						print s.sessionid , s.begintime, s.endtime, s.agegroup, s.block_blockid.blockid
-						#s.save()
+						s.save()
 					day += delta
 				print Session.objects.filter(block_blockid=block.blockid)
 				return redirect('/success.html')

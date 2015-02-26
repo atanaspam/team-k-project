@@ -44,7 +44,7 @@ class Block(models.Model):
     class Meta:
         db_table = 'block'
     def __str__(self):
-        return '%s %s %s' % (self.blockid, self.begindate, self.enddate)
+        return '%s %s %s' % (self.begindate, self.enddate, self.label)
 
 class BtmRank(models.Model):
     uid = models.IntegerField(primary_key=True, db_column='uID') # Field name made lowercase.
