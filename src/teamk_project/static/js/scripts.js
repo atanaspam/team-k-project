@@ -3,6 +3,11 @@ $(document).ready(function(){
   $('[data-toggle=offcanvas]').click(function() {
     $('.row-offcanvas').toggleClass('active');
   });
+
+if ($(window).width() < 960) {
+   $( ".navbar-brand" ).replaceWith( "<a class='navbar-brand' href='/'>WTC</a>" );
+}
+
 });
 
 function printContent(el){

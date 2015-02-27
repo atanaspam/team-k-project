@@ -23,7 +23,7 @@
 		<!--[if lt IE 9]>
 			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
-		<!-- table libraries -->  
+		<!-- table libraries -->
 		<link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"></style>
 		<script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
 
@@ -38,8 +38,8 @@
 		    		<div class="navbar-header">
 
 		    			<a class="navbar-brand" href="/">Western Tennis Club</a>
-						{% if user.is_authenticated %}  
-						<div class="btn-group" style="position: absolute; top:8px;">
+						{% if user.is_authenticated %}
+						<div class="btn-group" style="position: fixed; top:8px;">
 					  		{% if user|is_manager %} <button type="button" class="btn btn-primary">Manager</button>
 								{% if user|is_coach or user|is_parent %}
 									<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -66,7 +66,7 @@
 					     	{% elif user|is_parent %} <button type="button" class="btn btn-primary">Parent</button>{% endif %}
 						</div>{% endif %}
 
-						
+
 
 						<button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".sidebar-nav">
 		             		<span class="icon-bar"></span>
@@ -78,7 +78,7 @@
 
 					{% if user.is_authenticated %}
 					<div class="btn-group" style="position: absolute; right:145px; top:8px;">
-						
+
 
 					</div>{% endif %}
 
