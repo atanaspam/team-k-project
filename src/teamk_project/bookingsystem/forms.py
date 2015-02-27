@@ -1,14 +1,12 @@
 from django import forms
 from bookingsystem.models import Block, Session, Client, GENDER_CHOICES
+from django.contrib.auth.models import User
 from django.forms import widgets
 from datetime import date, time, timedelta
 from django.forms.extras.widgets import SelectDateWidget
-from django.contrib.auth.models import User
-
-import re
-from django.forms.extras.widgets import SelectDateWidget
 from django.forms.widgets import Widget, Select, MultiWidget, CheckboxSelectMultiple
 from django.utils.safestring import mark_safe
+import re
 
 #from django.forms import MultiWidget
 # Source: https://djangosnippets.org/snippets/1202/
@@ -218,8 +216,9 @@ class BlockForm(forms.ModelForm):
 
 class BlockFormMore(BlockForm):
     num_choices = ( (0, "Monday"), (1, "Tuesday"), (2, "Wednesday"), (3, "Thursday"), (4, "Friday"), (5, "Saturday"), (6, "Sunday"))
-    weekdays = forms.MultipleChoiceField(choices=num_choices, required=True, widget=forms.CheckboxSelectMultiple(), label='Select Days')
     begintime = forms.TimeField(widget=SelectTimeWidget(minute_step=10, twelve_hr=True), label="Session begintime")
+    agegroup = forms.ChoiceField(choices=[('7-10', '7-10'), ('10-12', '10-12'), ('12-15', '12-15'), ('15-21', '15-21')])
+    weekdays = forms.MultipleChoiceField(choices=num_choices, required=True, widget=forms.CheckboxSelectMultiple(), label='Select Days')
     class Meta(BlockForm.Meta):
         fields = BlockForm.Meta.fields + ['weekdays']
 

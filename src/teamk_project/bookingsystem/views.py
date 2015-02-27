@@ -21,7 +21,8 @@ i = 0
 lastSessionID = -1
 lastID = -1
 lastBlockID = -1
-ageGroups = ['7-10','10-12', '12-15', '15-21']
+# This field is also referred to in the forms BlockFormMore
+ageGroups = ['7-10', '10-12', '12-15', '15-21']
 
 def getDayOfWeek(n):
 	daysOfWeek = {0:'Monday', 1:'Tuesday', 2:'Wednesday', 3:'Thurday', 4:'Friday', 5:'Saturday', 6:'Sunday'}
@@ -938,7 +939,7 @@ def addBlock(request):
 				block.blockid = getLastBlockID()
 				block.type = 'Season'
 				block.save()
-				print form.cleaned_data['begintime']
+				#print form.cleaned_data['begintime']
 				days = []
 				for data in form.cleaned_data['weekdays']:
 					days.append(int(data))
@@ -950,7 +951,7 @@ def addBlock(request):
 						#sessionTime = datetime.datetime.strptime('13:00', '%H:%M').time() # generate a 8:00 time
 						sessionTime = form.cleaned_data['begintime']
 						sessionBegTime = datetime.datetime.combine(day, sessionTime)
-						s = Session(sessionid=getLastSessionID(), duration=1, begintime=sessionBegTime, endtime=(sessionBegTime+timedelta(hours=1)), block_blockid=block, capacity=10, agegroup='13-23', skillgroup='RANDOM', isfull=0)
+						s = Session(sessionid=getLastSessionID(), duration=1, begintime=sessionBegTime, endtime=(sessionBegTime+timedelta(hours=1)), block_blockid=block, capacity=10, agegroup=form.cleaned_data['agegroup'], skillgroup='RANDOM', isfull=0)
 						print s.sessionid , s.begintime, s.endtime, s.agegroup, s.block_blockid.blockid
 						s.save()
 					day += delta
