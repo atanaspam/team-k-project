@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+		{% extends "base.html" %}
 
 {% block sidebarNav %}
 {% include "sidebarNav/parent.html" %}
@@ -19,33 +19,33 @@
 				  {% if block.type == 'Week' %}
 					<div class="accordion-heading">
 						<a class="list-group-item clearfix" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ forloop.counter }}">
-							<span class="glyphicon glyphicon-file"></span> 
+							<span class="glyphicon glyphicon-file"></span>
 							Camp Week Beginning on: {{block.begindate}}
 							<span class="pull-right">
 						</a>
 					</div>
 
 					<div id="collapse{{ forloop.counter }}" class="accordion-body collapse" role="tabpanel">
-						<div> 
-					    <object type="text/html" data={{uurl|add:"bookSessions"|add:ID|add:"/"|add:uid}}  width="100%" height="250px" style="overflow:auto;border:5px ridge blue">
+						<div>
+					    <object type="text/html" data={{uurl|add:"bookSessions"|add:ID|add:"/"|add:uid}}  width="100%" height="250px" style="overflow:auto;border: 5px ridge rgb(211, 211, 218)">
 					    </object></div>					</div>
-							
-				  {% elif block.type == 'Season' %}   
+
+				  {% elif block.type == 'Season' %}
 					<div class="accordion-heading">
 						<a class="list-group-item clearfix" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ forloop.counter }}">
-							<span class="glyphicon glyphicon-file"></span> 
+							<span class="glyphicon glyphicon-file"></span>
 							Class Running from {{block.begindate}} until {{block.enddate}}
 							<span class="pull-right">
 						</a>
 					</div>
 
 					<div id="collapse{{ forloop.counter }}" class="accordion-body collapse" role="tabpanel">
-						<div> 
+						<div>
 					    <object type="text/html" data={{uurl|add:"bookSeason"|add:ID|add:"/"|add:uid}}  width="100%" height="250px" style="overflow:auto;border:5px ridge blue">
 					    </object></div>					</div>
-				  {% endif %}   
-							
-							
+				  {% endif %}
+
+
 				  {% endwith %}
 				  {% endwith %}
 				{% endfor %}
@@ -53,4 +53,4 @@
 			</div> <!-- end of list group-->
 		</div> <!-- end panel body -->
 	</div> <!-- end panel blocks -->
-{% endblock %}  
+{% endblock %}
