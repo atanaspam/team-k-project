@@ -21,11 +21,21 @@ i = 0
 lastSessionID = -1
 lastID = -1
 lastBlockID = -1
-ageGroups = ['7-10','10-12', '12-15', '15-19']
+ageGroups = ['7-10','10-12', '12-15', '15-21']
 
 def getDayOfWeek(n):
 	daysOfWeek = {0:'Monday', 1:'Tuesday', 2:'Wednesday', 3:'Thurday', 4:'Friday', 5:'Saturday', 6:'Sunday'}
 	return daysOfWeek[n]
+
+def getAgeGroup(age):
+	global ageGroups
+	for group in ageGroups:
+		temp = group.split('-')
+		if (age in range(int(temp[0]), int(temp[1]))):
+			return group
+	return NULL
+
+
 
 def getLastID():
 	global lastID
@@ -521,7 +531,10 @@ def bookSessions1(request, blockID, uID):
  	context = RequestContext(request)
  	child = Client.objects.get(uid=uID)
 	owner = Block.objects.get(blockid=blockID)
- 	sessions = Session.objects.filter( (Q(begintime__gte=datetime.datetime.now()) & Q(begintime__gte=owner.begindate)) & Q(begintime__lte=owner.enddate))
+	age = datetime.date.today() - child.dateofbirth
+	#print age.days/365
+	#getAgeGroup(age.days/365)
+ 	sessions = Session.objects.filter( (Q(begintime__gte=datetime.datetime.now()) & Q(begintime__gte=owner.begindate)) & Q(begintime__lte=owner.enddate)  & Q(agegroup=getAgeGroup(age.days/365) ))
  	context_dict = {'sessions': sessions}
  	context_dict['child'] = child
  	return render_to_response('parent/bookSessions.html', context_dict, context)
