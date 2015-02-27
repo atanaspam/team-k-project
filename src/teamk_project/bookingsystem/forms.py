@@ -210,8 +210,6 @@ class BlockForm(forms.ModelForm):
     begindate = forms.DateField(widget=DateSelectorWidget(), help_text="Beginning of the block")
     enddate = forms.DateField(widget=DateSelectorWidget(), help_text="End of the block")
     label = forms.CharField(max_length=40, help_text="User Friendly name.")
-    #weekdays = forms.MultipleChoiceField(choices=num_choices, required=True, widget=forms.CheckboxSelectMultiple(), label='Select Days')
-    #type = forms.Select()
     # An inline class to provide additional information on the form.
     class Meta:
         # Provide an association between the ModelForm and a model
@@ -230,15 +228,11 @@ class WeekBlockForm(forms.ModelForm):
     # Get the next Monday
     today = date.today()
     today += timedelta(days=-today.weekday())
-
     WEEK_CHOICES = []
     # Get the next 20 Mondays and add them to the select Field
     for i in range(0,20):
         today += timedelta(weeks=1)
         WEEK_CHOICES += [(today, today.strftime("%d/%m/%y"))]
-    #print WEEK_CHOICES
-
-    #blockid = forms.IntegerField()
     begindate = forms.DateField(widget=forms.Select(choices=WEEK_CHOICES), help_text="Beginning of the block")
     label = forms.CharField(max_length=40, help_text="User Friendly name.")
     # An inline class to provide additional information on the form.
@@ -275,7 +269,13 @@ class SessionForm(forms.ModelForm):
     skillgroup = forms.CharField(label="Associated skill group")
     class Meta:
         model = Session
-        fields = ('begintime', 'begintime', 'block_blockid', 'endtime', 'capacity', 'agegroup', 'skillgroup')
+        fields = ['begintime', 'endtime', 'block_blockid', 'capacity', 'agegroup', 'skillgroup']
+
+class SessionFormMore(SessionForm):
+    venue_choices = ((1, "Court 1"), (2, "Court 2"), (3, "Court 3"), (4, "Court 4"), (5, "Court 5"), (6, "Court 6"))
+    subvenue = forms.MultipleChoiceField(choices=venue_choices, required=True, widget=forms.CheckboxSelectMultiple(), label='Select Venue')
+    class Meta(SessionForm.Meta):
+        fields = SessionForm.Meta.fields + ['subvenue']
 
 ################################################################################
 #### TO BE REMOVED.
@@ -306,23 +306,40 @@ class RegisterForm(forms.ModelForm):
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password')
 
+# This form is responsible for changing the personal data of Clients
 class EditPersonalDetailsForm(forms.ModelForm):
     email = forms.EmailField(label="Email:")
     telephone = forms.IntegerField(label="Telephone:")
     class Meta:
         model = Client
-        fields = ('email', 'telephone')
+        fields = ['email', 'telephone']
+YES_OR_NO = (
+    (1, 'Yes'),
+    (0, 'No')
+)
+class ManagerEditPersonalDetailsForm(EditPersonalDetailsForm):
+    ismember = forms.ChoiceField(choices=YES_OR_NO)
+    class Meta(EditPersonalDetailsForm.Meta):
+        fields = EditPersonalDetailsForm.Meta.fields + ['ismember']
 
 class CreateChildForm(forms.ModelForm):
     firstname = forms.CharField(label="First Name:")
     lastname = forms.CharField(label="Surname:")
-    email = forms.CharField(label="Email:")
+    email = forms.EmailField(label="Email:")
     telephone = forms.IntegerField(label="Telephone:")
     dateofbirth = forms.DateField(widget=DateSelectorWidget(), label="Date Of Birth")
     genderid = forms.ChoiceField(initial="Select:", label="Gender",choices=GENDER_CHOICES )
     class Meta:
         model = Client
         fields = ('firstname', 'lastname', 'email', 'telephone', 'dateofbirth', 'genderid')
+
+# This form is responsible for changing the personal data of django contrib auth users
+class EditUserPersonalDetailsForm(forms.ModelForm):
+    email = forms.EmailField(label="Email:")
+    password = forms.PasswordInput()
+    class Meta:
+        model = User
+
 
 
 

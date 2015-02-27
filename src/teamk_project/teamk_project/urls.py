@@ -20,5 +20,6 @@ urlpatterns = patterns('',
     url(r'^fail', 'teamk_project.views.fail', name='fail'),
     url(r'^success', 'teamk_project.views.success', name='success'),
     url(r'^successEmb', 'teamk_project.views.successEmb', name='successEmb'),
-    url(r'^editProfile', 'teamk_project.views.editProfile', name='editProfile')
+    url(r'^editProfile', 'teamk_project.views.editProfile', name='editProfile'),
+    url(r'^changePassword','teamk_project.views.changePassword', name='changePassword')
 )

@@ -183,7 +183,8 @@ class SubvenueUsedforSession(models.Model):
     subvenue_subvenueid = models.ForeignKey(Subvenue, db_column='SubVenue_subVenueID') # Field name made lowercase. , related_name='subvenue_id'
     subvenue_ownervenue = models.IntegerField(db_column='SubVenue_ownerVenue') # Field name made lowercase. , related_name='subvenue_owner'
     class Meta:
-        db_table = 'subvenue_usedfor_session'
+			unique_together = (("subvenue_subvenueid", "session_sessionid"),)
+			db_table = 'subvenue_usedfor_session'
 
 class sessionCoachedBy(models.Model):
     id = models.IntegerField(primary_key=True, db_column='id')

@@ -3,7 +3,7 @@
 {% load bookingsystem_extras %}
 
 {% block sidebarNav %}
-{% if user.is_authenticated %}  
+{% if user.is_authenticated %}
 	{% if user|is_manager %}
 		{% include "sidebarNav/manager.html" %}
 	{% elif user|is_parent %}
@@ -21,7 +21,7 @@
 			<div class="panel-heading">
 				<h3 class="panel-title">Personal Details</h3>
 			</div>
-		
+
 			<div class="panel-body">
 				<!-- Name -->
 				<div class="input-group">
@@ -31,37 +31,38 @@
 			</div>
 		</div> <!--panel-->
 	    <!-- end of Personal Details -->
-
 		<!-- Contact Details -->
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title">Contact Details</h3>
 			</div>
-		
 			<div class="panel-body">
 				<!-- add body here -->
 				<!-- phone number -->
+				{% comment %}
 				<div class="input-group">
 					<span class="input-group-addon" id="telephone">#</span>
 					<input type="text" class="form-control" value="{{ user.telephone }}" aria-describedby="basic-addon1">
 				</div>
-
+				{% endcomment %}
 				<!-- e-mail -->
 				<div class="input-group">
-					<span class="input-group-addon" id="email">@</span>
-					<input type="text" class="form-control" value="{{ user.email }}" aria-describedby="basic-addon1">
+					<span class="input-group-addon" id="email">Email:</span>
+					<!--<input type="text" class="form-control" value="{{ user.email }}" aria-describedby="basic-addon1"> -->
+					 <p><font color="red">{{ form.email.errors }}</font></p>
+                    {{form.email}}
 				</div>
 			</div>
 		</div> <!--panel-->
-		<!-- end of Contact Details -->		
-	
-	
+		<!-- end of Contact Details -->
+
+
 		<!-- Account Settings -->
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title">Change Password</h3>
 			</div>
-		
+
 			<div class="panel-body">
 				<!-- add body here -->
 				<!-- old password -->
@@ -69,7 +70,7 @@
 					<span class="input-group-addon" id="oldpassword">&nbsp;Old Password *</span>
 					<input type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
 				</div>
-			
+
 				<!-- new password -->
 				<div class="input-group">
 					<span class="input-group-addon" id="newpassword1">New Password *</span>

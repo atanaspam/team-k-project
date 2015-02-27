@@ -35,7 +35,7 @@
                                     <button class="btn btn-xs btn-warning">
                                       <span class="glyphicon glyphicon-time"></span>
                                     </button>
-                                
+
                                      <a href={{ uurl }} class="btn btn-xs btn-info" id ="info">
                                       <span class="glyphicon glyphicon-info-sign"></span>
                                     </a>
@@ -84,7 +84,7 @@
           {% endif %}
           {% endfor %}
         {% else %}
-          There are no recent confirmations.
+          <strong>There are no recent confirmations.</strong>
         {% endif %}
       </a> <!-- end of list group item -->
 
@@ -108,7 +108,7 @@
             {% if item %}
                 <a href="#" class="list-group-item clearfix">
                   <span class="glyphicon glyphicon-file"></span>
-                  {{item.begintime|date:"d M y"}} - {{item.begintime|time:"H i"}} , Places Left: {{item.capacity}}
+                    {{item.session_sessionid.begintime|date:"d M"}} - {{item.session_sessionid.begintime|time:"H:i"}}, {{item.user_uid.firstname}} {{item.user_uid.lastname}}
                   <span class="pull-right">
                     <button class="btn btn-xs btn-info">
                       <span class="glyphicon glyphicon-info-sign"></span>
@@ -116,7 +116,7 @@
                 </span>
                 </a> <!-- end of list group item -->
             {% else %}
-            There are no rejected bookings.
+            <strong>There are no rejected bookings.</strong>
             {% endif %}
         {% endfor %}
     {% else %}

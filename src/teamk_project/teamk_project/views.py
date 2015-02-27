@@ -6,8 +6,9 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib import auth
-from bookingsystem.forms import RegisterForm
+from bookingsystem.forms import RegisterForm, EditUserPersonalDetailsForm
 from django.contrib.auth.models import User, Group
+from django.contrib.auth.forms import PasswordChangeForm
 
 def login(request):
     if request.user.is_authenticated():
@@ -104,10 +105,28 @@ def fail(request):
     context = RequestContext(request)
     context_dict={}
     return render_to_response('fail.html', context_dict, context)
-    
+
 def editProfile(request):
     context = RequestContext(request)
-    context_dict={}
     user = request.user
     context_dict = {'user':user}
+    if request.method == 'POST':
+        form = EditUserPersonalDetailsForm(request.POST)
+        # Have we been provided with a valid form?
+        if form.is_valid():
+            print form
+    else:
+        # If the request was not a POST, display the form to enter details.
+        form = EditUserPersonalDetailsForm()
+        context['form'] = form
     return render_to_response('editProfile.html', context_dict, context)
+
+def changePassword(request):
+    context = RequestContext(request)
+    if request.method == 'POST':
+        form = PasswordChangeForm()
+        if form.is_valid():
+            print form
+    else:
+        form = PasswordChangeForm()
+    return render_to_response('changePassword.html', {'form':form}, context)

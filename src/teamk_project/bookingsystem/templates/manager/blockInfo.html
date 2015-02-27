@@ -17,27 +17,47 @@
 		<div class="panel-heading">
 			<h3 class="panel-title">Edit Info</h3>
 		</div> <!-- end head-->
-	
+
 		<div class="panel-body">
-			TODO!
-		</div> <!-- end body-->
+			<!-- list of sessions-->
+			<table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+				<thead>
+					<tr>
+          	<th>Begin Date</th>
+          	<th>End Date</th>
+          	<th>Label</th>
+          	<th>Type</th>
+        	</tr>
+      	</thead>
+
+				{% if details %}
+					<tbody>
+						<tr class="studentLabel">
+							<a class="studentLabel" href="childProfile.html"></a>
+							<td>{{details.begindate|date:"d M"}}</td>
+							<td>{{details.enddate|date:"d M"}}</td>
+							<td>{{details.label}}</td>
+							<td>{{details.type}}</td>
+						</tr>
+					</tbody>
+				{% endif %}
+			</table>
+		</div>
 	</div> <!-- end panel-->
 
-	{% if blockSessions %}
 		<!-- Sessions -->
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title">Sessions</h3>
 			</div> <!-- end heading -->
-		
 			<div class="panel-body">
+			{% if blockSessions %}
 				<table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
 					<thead>
 						<tr>
 							<th>Is Full</th>
 	          			  	<th>Begin Time</th>
 	          			  	<th>End Time</th>
-	          			  	<th>Block Belonging</th>
 	          			  	<th>Ages Group</th>
 	          			  	<th>Skill Group</th>
 	          			  	<th>Assigned Coach</th>
@@ -54,7 +74,6 @@
 								{% endif %}
 					            <td>{{session.begintime|time:"H:i"}}</td>
 					            <td>{{session.endtime|time:"H:i"}}</td>
-					            <td>?</td>
 					            <td>{{session.agegroup}}</td>
 					            <td>{{session.skillgroup}}</td>
 					            <td>?</td>
@@ -66,13 +85,16 @@
 							</tr>
 						</tbody>
 					{% endfor %}
+					{% else %}
+						There are no sessions in this block.
+					{% endif %}
+
 				</table>
 			</div> <!-- end body -->
 		</div> <!-- end panel -->
-	{% endif %}
-	
+
 	<input type="submit" class="btn btn-default" name="submit" value="Submit Changes" />
-	
+
 	<span class="pull-right">
 		<a href="/bookingsystem/manager/removeBlock/{{ blocks.blockid }}" class="btn btn-danger">
 	   		Remove Block

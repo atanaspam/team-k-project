@@ -11,7 +11,7 @@ from django import forms
 from django.contrib.auth import logout
 from django.db import models
 from django.db.models import Max
-from bookingsystem.forms import BlockFormMore, SessionForm, EditPersonalDetailsForm, CreateChildForm, WeekBlockForm ##########################
+from bookingsystem.forms import BlockFormMore, EditPersonalDetailsForm, CreateChildForm, WeekBlockForm, SessionFormMore, ManagerEditPersonalDetailsForm##########################  SessionForm,
 from datetime import timedelta
 import datetime, time
 
@@ -145,12 +145,12 @@ def sessions(request, id):
 	return render_to_response('coach/sessions.html', context_dict, context)
 
 
-@login_required
-@user_passes_test(is_coach)
-def coachEditProfile(request):
-	context = RequestContext(request)
-	context_dict={}
-	return render_to_response('coach/editProfile.html', context_dict, context)
+# @login_required
+# @user_passes_test(is_coach)
+# def coachEditProfile(request):
+# 	context = RequestContext(request)
+# 	context_dict={}
+# 	return render_to_response('coach/editProfile.html', context_dict, context)
 
 
 ###############################################################################
@@ -224,7 +224,7 @@ def blockInfo(request, bid):
 	blocks = Block.objects.get(blockid = bid)
 	blockSessions = Session.objects.filter(block_blockid = bid)
 
-	context_dict['blocks'] = blocks
+	context_dict['details'] = blocks
 	context_dict['blockSessions'] = blockSessions
 
 	print context_dict
@@ -238,7 +238,7 @@ def managerBookings(request):																	#### WARNING: Repetitive code:Line
 	parent = request.user
 	##			PENDING SESSIONS RETRIEVAL		##
 	pendingSessions = UserSelectsSession.objects.filter(status = 'P')
-	declinedSessions = Session.objects.filter(sessionid__in=UserSelectsSession.objects.filter(status = 'R').values_list('session_sessionid'))
+	declinedSessions = UserSelectsSession.objects.filter(status = 'D')
 
 	## 			DATA COMMUNICATION				##
 	context_dict={'parent':parent}
@@ -495,7 +495,8 @@ def confirmBookings(request, uID):
 			t = UserSelectsSession(
 				session_sessionid=session,
 				user_uid=user,
-				status='P'
+				status='P',
+				hasattended=0
 				)
 			t.save()
 	context_dict = {'checked': checked}
@@ -599,11 +600,11 @@ def managerChildProfile(request, id):
 	child = Client.objects.get(uid=id)
 	sessions = UserSelectsSession.objects.filter(user_uid=child.uid)
  	if request.method == 'POST':
- 		form = EditPersonalDetailsForm(request.POST)
+ 		form = ManagerEditPersonalDetailsForm(request.POST)
 
  		#If the request was not a POST, display the form to enter details.
  	else:
- 		form = EditPersonalDetailsForm()
+ 		form = ManagerEditPersonalDetailsForm()
  		context_dict['form'] = form
 		context_dict['sessions'] = sessions
  		context_dict['child'] = child
@@ -677,12 +678,12 @@ def payments(request):
 	context_dict['totalDue'] = moneyToPay.filter(haspayed=False).aggregate(Sum('amount'))['amount__sum']
 	return render_to_response('parent/payments.html', context_dict, context)
 
-@login_required
-@user_passes_test(is_parent)
-def parentEditProfile(request):
-	context = RequestContext(request)
-	context_dict={}
-	return render_to_response('parent/editProfile.html', context_dict, context)
+# @login_required
+# @user_passes_test(is_parent)
+# def parentEditProfile(request):
+# 	context = RequestContext(request)
+# 	context_dict={}
+# 	return render_to_response('parent/editProfile.html', context_dict, context)
 
 @login_required
 @user_passes_test(is_parent)
@@ -691,6 +692,7 @@ def sessionsTimetable(request):
 	context_dict={}
 	return render_to_response('coach/sessionsTimetable.html', context_dict, context)
 
+@login_required
 @user_passes_test(is_manager)
 def applicationApproved(request):
 	global i
@@ -707,6 +709,26 @@ def applicationApproved(request):
 	    		approvalHistory.insert(i, session)
 	    		i=(i+1)%10
 	    		session.status = 'C' # set from pending to confirmed
+	    		session.save()
+	return HttpResponse('Success!')
+
+@login_required
+@user_passes_test(is_manager)
+def applicationDeclined(request):
+	global i
+	context = RequestContext(request)
+	sessionID = None
+	if request.method == 'GET':
+		sessionID = request.GET['session_sessionid']
+		user = request.GET['userid']
+		#print user
+		if sessionID:
+			session = UserSelectsSession.objects.get( Q(session_sessionid = sessionID) & Q(user_uid = user) )
+	    	if session:
+	    		#print session.session_sessionid
+	    		approvalHistory.insert(i, session)
+	    		i=(i+1)%10
+	    		session.status = 'D' # set from pending to confirmed
 	    		session.save()
 	return HttpResponse('Success!')
 
@@ -796,6 +818,7 @@ def addSession(request):
 		if form.is_valid():
 			session=form.save(commit=False)
 			session.sessionid = getLastSessionID()
+			session.duration = (session.endtime-session.begintime)
 			print session.sessionid, session.begintime, session.endtime, session.block_blockid
 			session.save()
 			# Now save to the DB block.save()
@@ -807,7 +830,8 @@ def addSession(request):
 			#print form.errors
 	else:
 		# If the request was not a POST, display the form to enter details.
-		form = SessionForm()
+		form = SessionFormMore()
+		print form
 	return render_to_response('manager/addSession.html', {'form': form}, context)
 
 @login_required

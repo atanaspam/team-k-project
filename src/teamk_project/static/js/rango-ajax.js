@@ -15,4 +15,19 @@ $(document).ready(function() {
         });
     });
 
+    $('.declineButton').click(function() {
+        console.log("NASKOOOOO");
+        var catid;
+        catid = $(this).attr("data-catid");
+        userid = $(this).attr("user");
+        $.get('/bookingsystem/manager/applicationDeclined/', {
+            session_sessionid: catid,
+            userid: userid
+        }, function(data) {
+
+            $('.declineButton[data-catid=' + catid + ']').html(data);
+            //$('#approve').hide();
+        });
+    });
+
 });
