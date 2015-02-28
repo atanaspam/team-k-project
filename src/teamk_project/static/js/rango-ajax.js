@@ -1,7 +1,6 @@
 $(document).ready(function() {
 
     $('.approveButton').click(function() {
-        //console.log("NASKOOOOO");
         var catid;
         catid = $(this).attr("data-catid");
         userid = $(this).attr("user");
@@ -16,7 +15,6 @@ $(document).ready(function() {
     });
 
     $('.declineButton').click(function() {
-        console.log("NASKOOOOO");
         var catid;
         catid = $(this).attr("data-catid");
         userid = $(this).attr("user");

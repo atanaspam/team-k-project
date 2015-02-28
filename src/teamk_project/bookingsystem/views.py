@@ -492,8 +492,8 @@ def confirmBookings(request, uID):
 	context = RequestContext(request)
 	checked = request.POST.getlist("checked")
 	if checked:
+		print 'AAAAAAA'
 		for item in checked:
-			#print item
 			user = Client.objects.get(uid=uID)
 			session = Session.objects.get(sessionid=item)
 			t = UserSelectsSession(
@@ -502,6 +502,7 @@ def confirmBookings(request, uID):
 				status='P',
 				hasattended=0
 				)
+			#print t.session_sessionid, user_uid, status, hasattended
 			t.save()
 	context_dict = {'checked': checked}
 	return render_to_response('successEmb.html', context_dict, context)
