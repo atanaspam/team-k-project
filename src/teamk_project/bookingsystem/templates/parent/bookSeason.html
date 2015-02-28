@@ -8,9 +8,9 @@
 
 
      {% if sessions %}
-	  <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+	  <table id="example" class="table table-striped table-bordered" border="3" cellspacing="0" width="100%">
         <thead>
-          <tr>
+          <tr allign>
             <th></th>
             <th>Date</th>
             <th>Begin</th>
@@ -39,7 +39,7 @@
         </tbody>
       </table>
 	   {% endwith %}
-    	{% if sessions %}<input class="btn btn-default" type="submit" value="Submit" />{% endif %}
+    	{% if sessions %}<input class="btn btn-default" style="float:right;" type="submit" value="Submit" />{% endif %}
 
 
 	</form>

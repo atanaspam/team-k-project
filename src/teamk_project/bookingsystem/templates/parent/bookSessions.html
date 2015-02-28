@@ -4,11 +4,16 @@
     <div class="panel-body">
     {% with child.uid|stringformat:'s' as uid %}
     {% url 'bookingsystem.views.confirmBookings' as uurl %}
+
+
 	  <form action={{uurl|add:uid}} method="post">{% csrf_token %}
-
-
+		<span style="float:right;"><tr>Quick Selection:</tr>
+			<INPUT Type="button" class="btn btn-default" VALUE="All Morning Sessions" ONCLICK="selectSession(0);">
+			<INPUT Type="button" class="btn btn-default" VALUE="All Full Day Sessions" ONCLICK="selectSession(1);">
+			<INPUT Type="button" class="btn btn-default" VALUE="Clear All Selections" ONCLICK="selectSession(2);">
+		</span></br>
      {% if sessions %}
-	  <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+	  <table id="example" class="table table-striped table-bordered" border="3" cellspacing="0" width="100%">
         <thead>
           <tr>
             <th></th>
@@ -24,7 +29,7 @@
           {% for session in sessions %}
           <tr class="greylabel">
             <td class="textCentered">
-                <input type="checkbox" name="checked" value={{session.sessionid}} />
+                <input type="checkbox" value={{session.sessionid}} {% if session.begintime|time == "8 a.m." %} name="morning"/> {% else %} disabled name="afternoon"/> *{% endif  %}
             </td>
             <td>{{session.begintime|date:"D, d M"}}</td>
             <td>{{session.begintime|time:"H:i"}}</td>
@@ -39,9 +44,41 @@
         </tbody>
       </table>
 	   {% endwith %}
-    	{% if sessions %}<input class="btn btn-default" type="submit" value="Submit" />{% endif %}
-
+    	 <i>* afternoon sessions are only available as a full days (morning & afternoon session) </i>{% if sessions %}<input class="btn btn-default" style="float:right;" type="submit" value="Submit" />{% endif %}
 
 	</form>
 </div> <!-- end panel body -->
+
+<script>
+function selectSession(editBool) {
+	if( editBool == 0) {
+		for (var i=0;i<document.getElementsByName("morning").length;i++){
+    		document.getElementsByName("morning")[i].checked = true;
+			document.getElementsByName("morning")[i].disabled = true;
+		}
+		for (var i=0;i<document.getElementsByName("afternoon").length;i++){
+    		document.getElementsByName("afternoon")[i].checked = false;
+			document.getElementsByName("afternoon")[i].disabled = false;
+		}
+	}else if (editBool == 1){ 
+		for (var i=0;i<document.getElementsByName("morning").length;i++){
+    		document.getElementsByName("morning")[i].checked = true;
+			document.getElementsByName("morning")[i].disabled = true;
+		}
+		for (var i=0;i<document.getElementsByName("afternoon").length;i++){
+    		document.getElementsByName("afternoon")[i].checked = true;
+			document.getElementsByName("afternoon")[i].disabled = false;
+		}
+	}else{
+		for (var i=0;i<document.getElementsByName("morning").length;i++){
+    		document.getElementsByName("morning")[i].checked = false;
+			document.getElementsByName("morning")[i].disabled = false;
+		}
+		for (var i=0;i<document.getElementsByName("afternoon").length;i++){
+    		document.getElementsByName("afternoon")[i].checked = false;
+			document.getElementsByName("afternoon")[i].disabled = true;
+		}
+	}
+}
+</script>
 
