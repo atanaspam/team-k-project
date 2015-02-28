@@ -67,7 +67,7 @@ class Client(models.Model):
     dateofbirth = models.DateField(null=False, blank=False, db_column='dateofbirth')
     ismember = models.IntegerField(null=True, db_column='isMember', blank=True) # Field name made lowercase.
     managedby = models.IntegerField(null=True, db_column='managedBy', blank=True) # Field name made lowercase.
-    belongsto = models.IntegerField(db_column='belongsTo') # Field name made lowercase.
+    belongsto = models.ForeignKey(User, db_column='belongsTo') # Field name made lowercase.
     genderid = models.IntegerField(null=True, db_column='genderID', blank=True, choices = GENDER_CHOICES) # Field name made lowercase.
     experiencelevel = models.IntegerField(db_column='experienceLevel') # Field name made lowercase.
     def __unicode__(self):

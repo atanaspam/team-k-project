@@ -492,7 +492,6 @@ def confirmBookings(request, uID):
 	context = RequestContext(request)
 	checked = request.POST.getlist("checked")
 	if checked:
-		print 'AAAAAAA'
 		for item in checked:
 			user = Client.objects.get(uid=uID)
 			session = Session.objects.get(sessionid=item)
@@ -632,8 +631,7 @@ def confirmRemoveChild(request, uid):
 def managerChildProfile(request, id):
 	context = RequestContext(request)
 	context_dict = {}
-	print id
-	parentid = request.user.id
+	#parentid = request.user.id
 	child = Client.objects.get(uid=id)
 	sessions = UserSelectsSession.objects.filter(user_uid=child.uid)
  	if request.method == 'POST':
@@ -641,7 +639,9 @@ def managerChildProfile(request, id):
 
  		#If the request was not a POST, display the form to enter details.
  	else:
+ 		print child
  		form = ManagerEditPersonalDetailsForm()
+ 		#context_dict['parentInfo'] = child.belongsto
  		context_dict['form'] = form
 		context_dict['sessions'] = sessions
  		context_dict['child'] = child
