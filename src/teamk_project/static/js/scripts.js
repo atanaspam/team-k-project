@@ -4,10 +4,22 @@ $(document).ready(function(){
     $('.row-offcanvas').toggleClass('active');
   });
 
-if ($(window).width() < 960) {
-   $( ".navbar-brand" ).replaceWith( "<a class='navbar-brand' href='/'>WTC</a>" );
-}
+	   if ($(window).width() < 960) {
+		   $( ".navbar-brand" ).replaceWith( "<a class='navbar-brand' href='/'>WTC</a>" );
+		}
+		else {
+			   $( ".navbar-brand" ).replaceWith( "<a class='navbar-brand' href='/'>Western  Tennis Club</a>" );
+			}
 
+});
+
+$(window).resize(function() {
+  if ($(window).width() < 960) {
+	   $( ".navbar-brand" ).replaceWith( "<a class='navbar-brand' href='/'>WTC</a>" );
+	}
+	else {
+	   $( ".navbar-brand" ).replaceWith( "<a class='navbar-brand' href='/'>Western  Tennis Club</a>" );
+	}
 });
 
 function printContent(el){
