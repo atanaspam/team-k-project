@@ -107,9 +107,18 @@ def fail(request):
     return render_to_response('fail.html', context_dict, context)
 
 def editProfile(request):
+    
     context = RequestContext(request)
     user = request.user
     context_dict = {'user':user}
+    
+    if "/manager/" in request.META.get('HTTP_REFERER'):
+        context_dict['sidebar'] = "manager"
+    elif "/coach/" in request.META.get('HTTP_REFERER'):
+        context_dict['sidebar'] = "coach"
+    elif "/parent/" in request.META.get('HTTP_REFERER'):
+        context_dict['sidebar'] = "parent"
+
     if request.method == 'POST':
         form = EditUserPersonalDetailsForm(request.POST)
         # Have we been provided with a valid form?

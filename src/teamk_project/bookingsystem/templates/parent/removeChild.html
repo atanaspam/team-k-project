@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block sidebarNav %}
+{% include "sidebarNav/parent.html" %}
+{% endblock %}
+
+{% block mainArea %}
+	<br>
+	{% if sessions %}	
+		<div class="panel panel-default">
+			<div class="panel-heading">
+		    	<h3 class="panel-title">Warnign! This child is currently enrolled!</h3>
+		  	</div>
+			<div class="panel-body">
+				<!-- add body here -->
+		        <div class="list-group">
+		            {% if sessions %}
+		            	{% for session in sessions %}
+							<li class="studentLabel list-group-item labelst">
+								{{ session.session_sessionid.begintime }}
+							</li>
+						{% endfor %}
+		            {% endif %}
+				</div> <!-- end of list group-->
+			</div>
+		</div> <!--panel-->
+	{% else %}
+		<div class="panel panel-default">
+			<div class="panel-heading">
+		    	<h3 class="panel-title">Warnign!</h3>
+		  	</div>
+			<div class="panel-body">
+				<!-- add body here -->
+		        <div class="list-group">
+		            Are you sure you want to delete this child?
+				</div> <!-- end of list group-->
+			</div>
+		</div> <!--panel-->
+	{% endif %}
+	
+	<span class="pull-right">
+		<a href="/bookingsystem/parent/confirmRemoveChild/{{ childid }}" class="btn btn-danger">
+			Confirm
+		</a>
+	</span>
+
+{% endblock %}

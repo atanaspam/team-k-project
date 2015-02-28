@@ -133,50 +133,54 @@
 		</div>
 
 		<div class="panel-body">
-			{% if assignedCoaches %}
-				{% for coach in assignedCoaches %}
-                    <span class="list-group-item clearfix" style="color: #000;">
-						<span class="glyphicon glyphicon-user" style="color: #4179FA;"></span>                      	
-							{{ coach.user_id.first_name }} {{ coach.last_name }}
- 						<span class="pull-right">
-							<a href="removeCoachFromSession/{{ coach.id }}/{{ details.sessionid }}" class="btn btn-xs btn-danger" id ="info">
-                          		<span class="glyphicon glyphicon-remove"></span>
-                        	</a>
-						</span>
-                    </span>
-				{% endfor %}
-			{% endif %}
+			{% if assignedCoaches or unassignedCoaches %}
+				{% if assignedCoaches %}
+					{% for coach in assignedCoaches %}
+	                    <span class="list-group-item clearfix" style="color: #000;">
+							<span class="glyphicon glyphicon-user" style="color: #4179FA;"></span>                      	
+								{{ coach.user_id.first_name }} {{ coach.last_name }}
+	 						<span class="pull-right">
+								<a href="removeCoachFromSession/{{ coach.id }}/{{ details.sessionid }}" class="btn btn-xs btn-danger" id ="info">
+	                          		<span class="glyphicon glyphicon-remove"></span>
+	                        	</a>
+							</span>
+	                    </span>
+					{% endfor %}
+				{% endif %}
 		
-			{% if unassignedCoaches %}
-				<div class="accordion-heading">
-					<a class="list-group-item clearfix" data-toggle="collapse" data-parent="#accordion" href="#collapseAddCoach">
-						<strong>Add Coaches</strong>
-					</a>
-				</div>
-				<form action="/bookingsystem/manager/addCoachToSession" method="post">{% csrf_token %}
-					<div id="collapseAddCoach" class="accordion-body collapse" role="tabpanel">
-						<br>
-						<div class="panel-body">
-							<div align="center">
-								<input align="right" id="search_input1" placeholder="Type to filter">
-							</div>
-							<br>
-							<div class="panel-body" style="overflow:auto; max-height: 250px;">
-								<ul id="search_list1" style="list-style:none; ; margin: -15px -15px -35px -55px;">
-									{% for coach in unassignedCoaches %}
-										<li class="studentLabel list-group-item labelst">
-					                    	<input type="checkbox" value="{{ coach.id }}" name="coachID{{ coach.id }}"> &nbsp;{{ coach.first_name }} {{ coach.last_name }}
-					                    </li>
-									{% endfor %}
-								</ul>
-								<br>
-							</div>
-							<br>
-							<input type="hidden" name="sessionID" value="{{ details.sessionid }}">
-							<INPUT Type="submit" class="btn btn-default" VALUE="Add"/>
-						</div>
+				{% if unassignedCoaches %}
+					<div class="accordion-heading">
+						<a class="list-group-item clearfix" data-toggle="collapse" data-parent="#accordion" href="#collapseAddCoach">
+							<strong>Add Coaches</strong>
+						</a>
 					</div>
-				</form>
+					<form action="/bookingsystem/manager/addCoachToSession" method="post">{% csrf_token %}
+						<div id="collapseAddCoach" class="accordion-body collapse" role="tabpanel">
+							<br>
+							<div class="panel-body">
+								<div align="center">
+									<input align="right" id="search_input1" placeholder="Type to filter">
+								</div>
+								<br>
+								<div class="panel-body" style="overflow:auto; max-height: 250px;">
+									<ul id="search_list1" style="list-style:none; ; margin: -15px -15px -35px -55px;">
+										{% for coach in unassignedCoaches %}
+											<li class="studentLabel list-group-item labelst">
+						                    	<input type="checkbox" value="{{ coach.id }}" name="coachID{{ coach.id }}"> &nbsp;{{ coach.first_name }} {{ coach.last_name }}
+						                    </li>
+										{% endfor %}
+									</ul>
+									<br>
+								</div>
+								<br>
+								<input type="hidden" name="sessionID" value="{{ details.sessionid }}">
+								<INPUT Type="submit" class="btn btn-default" VALUE="Add"/>
+							</div>
+						</div>
+					</form>
+				{% endif %}
+			{% else %}
+				You have add coaches before you can assign them to a session.
 			{% endif %}
 		</div>
 	</div><!--/.panel-->	

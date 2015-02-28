@@ -135,7 +135,13 @@
 		<INPUT Type="submit" class="btn btn-default" VALUE="Submit"/>
 {% endwith%}{%endwith%}
 
+
 	</forms>
+	<span class="pull-right">
+		<a href="/bookingsystem/parent/removeChild/{{ child.uid }}" class="btn btn-danger">
+	   		Remove Child
+	 	</a>
+	</span>
 
 	<script>
 	function toggle_edit(editBool) {
