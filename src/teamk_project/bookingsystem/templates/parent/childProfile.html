@@ -127,7 +127,7 @@
 		{% url 'bookingsystem.views.childProfile' as cpUrl %}
 				<!-- Edit profile and Submit buttons -->
 				<INPUT Type="button" class="btn btn-default" VALUE="Edit Profile" ONCLICK="toggle_edit(0);">
-				<INPUT Type="submit" class="btn btn-default" VALUE="Submit"/>
+				<INPUT Type="submit" class="btn btn-default" VALUE="Submit" style="display:none" id="edit1"/>
 		{% endwith%}{%endwith%}
 
 
@@ -139,13 +139,11 @@
 	</span>
 
 	<script>
-	function toggle_edit(editBool) {
-	  editBool = $("#bool").val();
-	  if( editBool == "0") {
-	    	$("#edit2").attr("readonly", true);
-			$("#edit3").attr("readonly", true);
-			$("#edit4").attr("readonly", true);
-	  }
+	function toggle_edit() {
+			$("#edit1").removeAttr("style");
+	    	$("#edit2").attr("readonly", false);
+			$("#edit3").attr("readonly", false);
+			$("#edit4").attr("readonly", false);
 	}
 	</script>
 {% endblock %}
