@@ -10,7 +10,7 @@ $(document).ready(function() {
             userid: userid
         }, function(data) {
 
-            $('.approveButton[data-catid=' + catid + ']').html(data);
+            $('.approveButton[data-catid=' + catid + '][user=' + userid + ']').html(data);
             //$('#approve').hide();
         });
     });
@@ -25,7 +25,7 @@ $(document).ready(function() {
             userid: userid
         }, function(data) {
 
-            $('.declineButton[data-catid=' + catid + ']').html(data);
+            $('.declineButton[data-catid=' + catid + '][user=' + userid + ']').html(data);
             //$('#approve').hide();
         });
     });
