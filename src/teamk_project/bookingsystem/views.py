@@ -485,6 +485,48 @@ def userBookings1(request, num):
 	context_dict['child'] = child
 	return render_to_response('parent/userBookings.html', context_dict, context)
 
+@login_required
+@user_passes_test(is_parent)
+def bookSessions(request):
+	context = RequestContext(request)
+	context_dict={}
+	return render_to_response('parameterent/bookSessions.html', context_dict, context)
+
+def bookSessions1(request, blockID, uID):
+ 	context = RequestContext(request)
+ 	child = Client.objects.get(uid=uID)
+	owner = Block.objects.get(blockid=blockID)
+	age = datetime.date.today() - child.dateofbirth
+	preSelectedSessions = UserSelectsSession.objects.filter(user_uid=child.uid)
+	# for session in preSelectedSessions:
+	print Session.objects.filter(Q(sessionid__in=[session.session_sessionid.sessionid for session in preSelectedSessions]) )
+	availableSessions = Session.objects.filter(~Q(sessionid__in=[session.session_sessionid.sessionid for session in preSelectedSessions]) )
+ 	sessions = availableSessions.filter(
+ 		(Q(begintime__gte=datetime.datetime.now()) & Q(begintime__gte=owner.begindate)) & Q(begintime__lte=owner.enddate)  & Q(agegroup=getAgeGroup(age.days/365)))
+ 	#print sessions.exclude(sessionid__in=[session.id for session in preSelectedSessions])
+ 	# for session in sessions:
+ 	# 	print session.sessionid
+ 	# 	if session.sessionid in selected:
+		# 	print session.sessionid, 'AAAAA'
+	print len(sessions)
+ 	context_dict = {'sessions': sessions}
+ 	context_dict['child'] = child
+ 	return render_to_response('parent/bookSessions.html', context_dict, context)
+
+def bookSeason(request):
+	context = RequestContext(request)
+	context_dict={}
+	return render_to_response('parameterent/bookSeason.html', context_dict, context)
+
+def bookSeason1(request, blockID, uID):
+ 	context = RequestContext(request)
+ 	child = Client.objects.get(uid=uID)
+	owner = Block.objects.get(blockid=blockID)
+ 	sessions = Session.objects.filter( Q(begintime__gte=datetime.datetime.now() ) & Q(begintime__lte=owner.enddate))
+ 	context_dict = {'sessions': sessions}
+ 	context_dict['child'] = child
+ 	return render_to_response('parent/bookSeason.html', context_dict, context)
+
 
 @login_required
 @user_passes_test(is_parent)
@@ -514,38 +556,6 @@ def childSessions(request):
 	context_dict={}
 	return render_to_response('parent/childSessions.html', context_dict, context)
 
-@login_required
-@user_passes_test(is_parent)
-def bookSessions(request):
-	context = RequestContext(request)
-	context_dict={}
-	return render_to_response('parameterent/bookSessions.html', context_dict, context)
-
-def bookSessions1(request, blockID, uID):
- 	context = RequestContext(request)
- 	child = Client.objects.get(uid=uID)
-	owner = Block.objects.get(blockid=blockID)
-	age = datetime.date.today() - child.dateofbirth
-	#print age.days/365
-	#getAgeGroup(age.days/365)
- 	sessions = Session.objects.filter( (Q(begintime__gte=datetime.datetime.now()) & Q(begintime__gte=owner.begindate)) & Q(begintime__lte=owner.enddate)  & Q(agegroup=getAgeGroup(age.days/365) ))
- 	context_dict = {'sessions': sessions}
- 	context_dict['child'] = child
- 	return render_to_response('parent/bookSessions.html', context_dict, context)
-
-def bookSeason(request):
-	context = RequestContext(request)
-	context_dict={}
-	return render_to_response('parameterent/bookSeason.html', context_dict, context)
-
-def bookSeason1(request, blockID, uID):
- 	context = RequestContext(request)
- 	child = Client.objects.get(uid=uID)
-	owner = Block.objects.get(blockid=blockID)
- 	sessions = Session.objects.filter( Q(begintime__gte=datetime.datetime.now() ) & Q(begintime__lte=owner.enddate))
- 	context_dict = {'sessions': sessions}
- 	context_dict['child'] = child
- 	return render_to_response('parent/bookSeason.html', context_dict, context)
 
 # @login_required
 # @user_passes_test(is_parent)
@@ -688,14 +698,12 @@ def addNewChild(request):
 			# info.save()
 			# Redirect on success
 			return redirect('/success.html')
-		else:
-			# The supplied form contained errors - just print them to the terminal.
-			print form.errors
+
 	else:
 		# If the request was not a POST, display the form to enter details.
 		form = CreateChildForm()
 		context_dict['form'] = form
-		return render_to_response('parent/addnewChild.html', context_dict, context)
+		return render_to_response('parent/addNewChild.html', context_dict, context)
 
 @login_required
 @user_passes_test(is_parent)
