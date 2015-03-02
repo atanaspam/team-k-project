@@ -471,23 +471,11 @@ def userBookings(request, num):
 	today = datetime.date.today()
 	monday = today - datetime.timedelta(days=today.weekday())
 	weeks = Block.objects.filter(((Q(type='Week') & Q(begindate__gte=monday))) | (Q(type='Season')))
+	print weeks
 	context_dict = {'blocks': weeks}
 	context_dict['child'] = child
 	return render_to_response('parent/userBookings.html', context_dict, context)
 
-@login_required
-@user_passes_test(is_parent)
-def userBookings1(request, num):
-	child = Client.objects.get(uid=num)
-	context = RequestContext(request)
-	today = datetime.date.today()
-	monday = today - datetime.timedelta(days=today.weekday())
- 	context_dict = {'sessions': sessions}
-	context_dict['child'] = child
-	return render_to_response('parent/userBookings.html', context_dict, context)
-
-<<<<<<< HEAD
-=======
 
 @login_required
 @user_passes_test(is_parent)
@@ -517,7 +505,7 @@ def childSessions(request):
 	context_dict={}
 	return render_to_response('parent/childSessions.html', context_dict, context)
 
->>>>>>> origin/master
+
 @login_required
 @user_passes_test(is_parent)
 def bookSessions(request):
@@ -531,16 +519,9 @@ def bookSessions1(request, blockID, uID):
 	owner = Block.objects.get(blockid=blockID)
 	age = datetime.date.today() - child.dateofbirth
 	preSelectedSessions = UserSelectsSession.objects.filter(user_uid=child.uid)
-	# for session in preSelectedSessions:
-	print Session.objects.filter(Q(sessionid__in=[session.session_sessionid.sessionid for session in preSelectedSessions]) )
 	availableSessions = Session.objects.filter(~Q(sessionid__in=[session.session_sessionid.sessionid for session in preSelectedSessions]) )
  	sessions = availableSessions.filter(
  		(Q(begintime__gte=datetime.datetime.now()) & Q(begintime__gte=owner.begindate)) & Q(begintime__lte=owner.enddate)  & Q(agegroup=getAgeGroup(age.days/365)))
- 	#print sessions.exclude(sessionid__in=[session.id for session in preSelectedSessions])
- 	# for session in sessions:
- 	# 	print session.sessionid
- 	# 	if session.sessionid in selected:
-		# 	print session.sessionid, 'AAAAA'
 	print len(sessions)
  	context_dict = {'sessions': sessions}
  	context_dict['child'] = child

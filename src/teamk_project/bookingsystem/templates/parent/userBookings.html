@@ -15,35 +15,51 @@
 			<div class="list-group">
 				{% for block in blocks %}
 				  {% with block.blockid|stringformat:'s' as ID %}
-              	  {% with child.uid|stringformat:'s' as uid %}
+          {% with child.uid|stringformat:'s' as uid %}
 				  {% if block.type == 'Week' %}
-					<div class="accordion-heading">
-						<a class="list-group-item clearfix" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ forloop.counter }}">
-							<span class="glyphicon glyphicon-file"></span>
-							Camp Week Beginning on: {{block.begindate}}
-							<span class="pull-right">
-						</a>
-					</div>
+						<div class="accordion-heading">
+							<a class="list-group-item clearfix" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ forloop.counter }}">
+								<span class="glyphicon glyphicon-file"></span>
+								Camp Week Beginning on: {{block.begindate}}
+								<span class="pull-right">
+							</a>
+						</div>
 
-					<div id="collapse{{ forloop.counter }}" class="accordion-body collapse" role="tabpanel">
-						<iframe src={{uurl|add:"bookSessions"|add:ID|add:"/"|add:uid}} width="100%" height="250px" style="overflow: auto; -webkit-overflow-scrolling: touch;"/>
-					</div>
+						<div id="collapse{{ forloop.counter }}" class="accordion-body collapse" role="tabpanel">
+						{% comment %}
+							!!!!!!!!! NOT WORKING !!!!!!!
+							<iframe src={{uurl|add:"bookSessions"|add:ID|add:"/"|add:uid}} width="100%" height="250px" style="overflow: auto; -webkit-overflow-scrolling: touch;"/>
+						</div>
+
+						{% endcomment %}
+						{% comment %}  Previous Version		{% endcomment %}
+ 						<div>
+					    <object type="text/html" data={{uurl|add:"bookSessions"|add:ID|add:"/"|add:uid}}  width="100%" height="250px" style="overflow:auto;border: 5px ridge rgb(211, 211, 218)">
+					    </object></div>					</div>
 
 				  {% elif block.type == 'Season' %}
-					<div class="accordion-heading">
-						<a class="list-group-item clearfix" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ forloop.counter }}">
-							<span class="glyphicon glyphicon-file"></span>
-							Class Running from {{block.begindate}} until {{block.enddate}}
-							<span class="pull-right">
-						</a>
-					</div>
+						<div class="accordion-heading">
+							<a class="list-group-item clearfix" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ forloop.counter }}">
+								<span class="glyphicon glyphicon-file"></span>
+								Class Running from {{block.begindate}} until {{block.enddate}}
+								<span class="pull-right">
+							</a>
+						</div>
+						<div id="collapse{{ forloop.counter }}" class="accordion-body collapse" role="tabpanel">
+							{% comment %}
+						    <iframe src={{uurl|add:"bookSeason"|add:ID|add:"/"|add:uid}} width="100%" height="350px" style="overflow: auto; -webkit-overflow-scrolling: touch;"/>
+						</div>
+							{% endcomment %}
 
-					<div id="collapse{{ forloop.counter }}" class="accordion-body collapse" role="tabpanel">
-					    <iframe src={{uurl|add:"bookSeason"|add:ID|add:"/"|add:uid}} width="100%" height="350px" style="overflow: auto; -webkit-overflow-scrolling: touch;"/>
-					</div>
+							{% comment %} Previous Version {% endcomment %}
+
+							<div>
+					    <object type="text/html" data={{uurl|add:"bookSeason"|add:ID|add:"/"|add:uid}}  width="100%" height="250px" style="overflow:auto;border:5px ridge rgb(211, 211, 218)">
+					    </object>
+					    </div>
+					    </div>
+
 				  {% endif %}
-
-
 				  {% endwith %}
 				  {% endwith %}
 				{% endfor %}
@@ -51,5 +67,5 @@
 			</div> <!-- end of list group-->
 		</div> <!-- end panel body -->
 	</div> <!-- end panel blocks -->
-	
+
 {% endblock %}
