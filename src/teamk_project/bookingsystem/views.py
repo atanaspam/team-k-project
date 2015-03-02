@@ -8,6 +8,7 @@ from django.db.models import Q, Sum
 from bookingsystem.models import Client, Session, Block, UserSelectsSession, Payment, SubvenueUsedforSession, sessionCoachedBy
 from django.views.decorators.csrf import csrf_exempt
 from django import forms
+from itertools import chain
 from django.contrib.auth import logout
 from django.db import models
 from django.db.models import Max
@@ -485,6 +486,38 @@ def userBookings1(request, num):
 	context_dict['child'] = child
 	return render_to_response('parent/userBookings.html', context_dict, context)
 
+<<<<<<< HEAD
+=======
+
+@login_required
+@user_passes_test(is_parent)
+def confirmBookings(request, uID):
+	context = RequestContext(request)
+	checked = chain(request.POST.getlist("morning"),request.POST.getlist("afternoon"))
+	if checked:
+		for item in checked:
+			user = Client.objects.get(uid=uID)
+			session = Session.objects.get(sessionid=item)
+			t = UserSelectsSession(
+				session_sessionid=session,
+				user_uid=user,
+				status='P',
+				hasattended=0
+				)
+			#print t.session_sessionid, user_uid, status, hasattended
+			t.save()
+	context_dict = {'checked': checked}
+	return render_to_response('successEmb.html', context_dict, context)
+
+
+@login_required
+@user_passes_test(is_parent)
+def childSessions(request):
+	context = RequestContext(request)
+	context_dict={}
+	return render_to_response('parent/childSessions.html', context_dict, context)
+
+>>>>>>> origin/master
 @login_required
 @user_passes_test(is_parent)
 def bookSessions(request):
@@ -526,35 +559,6 @@ def bookSeason1(request, blockID, uID):
  	context_dict = {'sessions': sessions}
  	context_dict['child'] = child
  	return render_to_response('parent/bookSeason.html', context_dict, context)
-
-
-@login_required
-@user_passes_test(is_parent)
-def confirmBookings(request, uID):
-	context = RequestContext(request)
-	checked = request.POST.getlist("checked")
-	if checked:
-		for item in checked:
-			user = Client.objects.get(uid=uID)
-			session = Session.objects.get(sessionid=item)
-			t = UserSelectsSession(
-				session_sessionid=session,
-				user_uid=user,
-				status='P',
-				hasattended=0
-				)
-			#print t.session_sessionid, user_uid, status, hasattended
-			t.save()
-	context_dict = {'checked': checked}
-	return render_to_response('successEmb.html', context_dict, context)
-
-
-@login_required
-@user_passes_test(is_parent)
-def childSessions(request):
-	context = RequestContext(request)
-	context_dict={}
-	return render_to_response('parent/childSessions.html', context_dict, context)
 
 
 # @login_required
