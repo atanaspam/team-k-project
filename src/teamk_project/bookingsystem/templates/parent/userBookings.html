@@ -26,9 +26,8 @@
 					</div>
 
 					<div id="collapse{{ forloop.counter }}" class="accordion-body collapse" role="tabpanel">
-						<div>
-					    <object type="text/html" data={{uurl|add:"bookSessions"|add:ID|add:"/"|add:uid}}  width="100%" height="250px" style="overflow:auto;border: 5px ridge rgb(211, 211, 218)">
-					    </object></div>					</div>
+						<iframe src={{uurl|add:"bookSessions"|add:ID|add:"/"|add:uid}} width="100%" height="250px" style="overflow: auto; -webkit-overflow-scrolling: touch;"/>
+					</div>
 
 				  {% elif block.type == 'Season' %}
 					<div class="accordion-heading">
@@ -40,9 +39,8 @@
 					</div>
 
 					<div id="collapse{{ forloop.counter }}" class="accordion-body collapse" role="tabpanel">
-						<div>
-					    <object type="text/html" data={{uurl|add:"bookSeason"|add:ID|add:"/"|add:uid}}  width="100%" height="250px" style="overflow:auto;border:5px ridge rgb(211, 211, 218)">
-					    </object></div>					</div>
+					    <iframe src={{uurl|add:"bookSeason"|add:ID|add:"/"|add:uid}} width="100%" height="350px" style="overflow: auto; -webkit-overflow-scrolling: touch;"/>
+					</div>
 				  {% endif %}
 
 
@@ -53,4 +51,5 @@
 			</div> <!-- end of list group-->
 		</div> <!-- end panel body -->
 	</div> <!-- end panel blocks -->
+	
 {% endblock %}

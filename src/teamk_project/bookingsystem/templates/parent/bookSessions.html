@@ -29,7 +29,7 @@
           {% for session in sessions %}
           <tr class="greylabel">
             <td class="textCentered">
-                <input type="checkbox" name="checked" value={{session.sessionid}} {% if session.begintime|time == "8 a.m." %} name="morning"/> {% else %} disabled name="afternoon"/> *{% endif  %}
+                <input type="checkbox" value={{session.sessionid}} {% if session.begintime|time == "8 a.m." %} name="morning" id={{session.begintime|date:"D"|add:" morning"}} onChange="change(this,{{session.begintime|date:"D"|add:" afternoon"}})"/> {% else %} disabled name="afternoon" id={{session.begintime|date:"D"|add:" afternoon"}}/> *{% endif  %}
             </td>
             <td>{{session.begintime|date:"D, d M"}}</td>
             <td>{{session.begintime|time:"H:i"}}</td>
@@ -50,6 +50,14 @@
 </div> <!-- end panel body -->
 
 <script>
+function change(morning, afternoon){
+    if(morning.checked){
+        document.getElementById(afternoon).disabled = false;
+    } else {
+        document.getElementById(afternoon).disabled = true;
+    }
+
+}
 function selectSession(editBool) {
 	if( editBool == 0) {
 		for (var i=0;i<document.getElementsByName("morning").length;i++){

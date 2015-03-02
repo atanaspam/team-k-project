@@ -8,6 +8,7 @@ from django.db.models import Q, Sum
 from bookingsystem.models import Client, Session, Block, UserSelectsSession, Payment, SubvenueUsedforSession, sessionCoachedBy
 from django.views.decorators.csrf import csrf_exempt
 from django import forms
+from itertools import chain
 from django.contrib.auth import logout
 from django.db import models
 from django.db.models import Max
@@ -490,9 +491,8 @@ def userBookings1(request, num):
 @user_passes_test(is_parent)
 def confirmBookings(request, uID):
 	context = RequestContext(request)
-	checked = request.POST.getlist("checked")
+	checked = chain(request.POST.getlist("morning"),request.POST.getlist("afternoon"))
 	if checked:
-		print 'AAAAAAA'
 		for item in checked:
 			user = Client.objects.get(uid=uID)
 			session = Session.objects.get(sessionid=item)
