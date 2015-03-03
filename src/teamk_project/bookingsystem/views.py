@@ -471,7 +471,6 @@ def userBookings(request, num):
 	today = datetime.date.today()
 	monday = today - datetime.timedelta(days=today.weekday())
 	weeks = Block.objects.filter(((Q(type='Week') & Q(begindate__gte=monday))) | (Q(type='Season')))
-	print weeks
 	context_dict = {'blocks': weeks}
 	context_dict['child'] = child
 	return render_to_response('parent/userBookings.html', context_dict, context)
@@ -642,24 +641,6 @@ def managerChildProfile(request, id):
  		context_dict['child'] = child
  	return render_to_response('manager/childProfile.html', context_dict, context)
 
-# @login_required
-# @user_passes_test(is_parent)
-# def changeChild(request):
-# 	f_uid = request.POST.get("uid", "")
-# 	parentid = request.user.id
-
-# 	child = Client.objects.get(uid=f_uid, belongsto=parentid)
-# 	if child:
-# 		child.firstname = request.POST.get("firstname", "")
-# 		child.lastname = request.POST.get("lastname", "")
-# 		child.genderid = int(request.POST.get("genderid", ""))
-# 		child.dateofbirth = request.POST.get("dateofbirth", "")
-# 		child.telephone = request.POST.get("telephone", "")
-# 		child.email = request.POST.get("email", "")
-# 		child.save()
-
-# 	return redirect('/bookingsystem/parent/childrenList.html')
-
 ################################################################################
 ####												Adding new Child	 															 ###
 ################################################################################
@@ -707,13 +688,6 @@ def payments(request):
 	context_dict['payments'] = moneyToPay
 	context_dict['totalDue'] = moneyToPay.filter(haspayed=False).aggregate(Sum('amount'))['amount__sum']
 	return render_to_response('parent/payments.html', context_dict, context)
-
-# @login_required
-# @user_passes_test(is_parent)
-# def parentEditProfile(request):
-# 	context = RequestContext(request)
-# 	context_dict={}
-# 	return render_to_response('parent/editProfile.html', context_dict, context)
 
 @login_required
 @user_passes_test(is_parent)
@@ -844,25 +818,24 @@ def addSession(request):
 
 	# A HTTP POST?
 	if request.method == 'POST':
-		form = SessionForm(request.POST)
+		form = SessionFormMore(request.POST)
 		# Have we been provided with a valid form?
 		if form.is_valid():
 			session=form.save(commit=False)
 			session.sessionid = getLastSessionID()
 			session.duration = (session.endtime-session.begintime)
-			print session.sessionid, session.begintime, session.endtime, session.block_blockid
+			print form.cleaned_data['coachedby']
+			#print session.sessionid, session.begintime, session.endtime, session.block_blockid
 			session.save()
-			# Now save to the DB block.save()
+			sessionCoachedBy(session_id=session, user_id=User.objects.get(id=form.cleaned_data['coachedby'][0])).save()
+
 			# Redirect on success
 			return redirect('/success.html')
 		#else:
 			# The supplied form contained errors - just print them to the terminal.
-			#print form.begintime
-			#print form.errors
 	else:
 		# If the request was not a POST, display the form to enter details.
 		form = SessionFormMore()
-		print form
 	return render_to_response('manager/addSession.html', {'form': form}, context)
 
 @login_required

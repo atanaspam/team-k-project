@@ -7,6 +7,8 @@ from django.forms.extras.widgets import SelectDateWidget
 from django.forms.widgets import Widget, Select, MultiWidget, CheckboxSelectMultiple
 from django.utils.safestring import mark_safe
 import re
+from django.contrib.auth.models import User, Group
+
 
 #from django.forms import MultiWidget
 # Source: https://djangosnippets.org/snippets/1202/
@@ -219,8 +221,15 @@ class BlockFormMore(BlockForm):
     begintime = forms.TimeField(widget=SelectTimeWidget(minute_step=10, twelve_hr=True), label="Session begintime")
     agegroup = forms.ChoiceField(choices=[('7-10', '7-10'), ('10-12', '10-12'), ('12-15', '12-15'), ('15-21', '15-21')])
     weekdays = forms.MultipleChoiceField(choices=num_choices, required=True, widget=forms.CheckboxSelectMultiple(), label='Select Days')
+    coachGroups = Group.objects.filter(id=3)
+    coachChoices = User.objects.filter(groups=coachGroups).values_list('id','first_name', 'last_name')
+    COACH_CHOICES = ( )
+    for item in coachChoices:
+        temp = (item[0], str(item[1] + ' ' + item[2]),)
+        COACH_CHOICES += (temp,)
+    coachedby = forms.ChoiceField(choices=COACH_CHOICES)
     class Meta(BlockForm.Meta):
-        fields = BlockForm.Meta.fields + ['weekdays']
+        fields = BlockForm.Meta.fields + ['weekdays', 'coachedby']
 
 class WeekBlockForm(forms.ModelForm):
 
@@ -273,8 +282,15 @@ class SessionForm(forms.ModelForm):
 class SessionFormMore(SessionForm):
     venue_choices = ((1, "Court 1"), (2, "Court 2"), (3, "Court 3"), (4, "Court 4"), (5, "Court 5"), (6, "Court 6"))
     subvenue = forms.MultipleChoiceField(choices=venue_choices, required=True, widget=forms.CheckboxSelectMultiple(), label='Select Venue')
+    coachGroups = Group.objects.filter(id=3)
+    coachChoices = User.objects.filter(groups=coachGroups).values_list('id','first_name', 'last_name')
+    COACH_CHOICES = ( )
+    for item in coachChoices:
+        temp = (item[0], str(item[1] + ' ' + item[2]),)
+        COACH_CHOICES += (temp,)
+    coachedby = forms.ChoiceField(choices=COACH_CHOICES)
     class Meta(SessionForm.Meta):
-        fields = SessionForm.Meta.fields + ['subvenue']
+        fields = SessionForm.Meta.fields + ['subvenue', 'coachedby']
 
 ################################################################################
 #### TO BE REMOVED.

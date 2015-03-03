@@ -38,10 +38,10 @@
 				          <th>Begin Time</th>
 				          <th>End Time</th>
 				          <th>Skill Group</th>
+				          <th>Coached By</th>
 				          <th>Venue</th>
 				          <th>Duration</th>
 				          <th>Price</th>
-				          <th>Info</th>
 					  </tr>
 				  </thead>
 				  {% if sessions%}
@@ -53,9 +53,9 @@
 								  <td>{{session.begintime|time:"H:i"}}</td>
 								  <td>{{session.endtime|time:"H:i"}}</td> <!-- CHANGE ME TO A PROPER HOUR -->
 								  <td>{{session.skillgroup}}</td>
+								  <td>{{session..entry_set.filter(session_id=session.sessionid)}} </td>
 								  <td>TODO</td>
 								  <td>{{session.duration}}</td>
-								  <td>TODO</td>
 								  <td>
 									  <a href= {{ sessionUrl }} style="color: #1A387B">
 							      		  <span class="glyphicon glyphicon-info-sign"/>
