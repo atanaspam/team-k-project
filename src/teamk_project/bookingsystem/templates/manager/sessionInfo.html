@@ -65,7 +65,10 @@
             				<td>{{details.block_blockid.label}}</td>
             				<td>{{details.agegroup}}</td>
             				<td>{{details.skillgroup}}</td>
-            				<td>TODO</td>
+            				<td>{% for coach in details.coachedby.all %}
+
+					            {{coach.first_name}} {{coach.last_name}}
+					            {% endfor %}</td>
 						</tr>
 					</tbody>
 				{% endif %}

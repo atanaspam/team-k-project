@@ -76,7 +76,12 @@
 					            <td>{{session.endtime|time:"H:i"}}</td>
 					            <td>{{session.agegroup}}</td>
 					            <td>{{session.skillgroup}}</td>
-					            <td>?</td>
+					            <td>
+					            	{% for coach in session.coachedby.all %}
+
+					            {{coach.first_name}} {{coach.last_name}}
+					            {% endfor %}
+					            </td>
 								<td>
 									<a href="/bookingsystem/manager/sessionInfo{{ session.sessionid }}" style="color: #1A387B">
 					              		<span class="glyphicon glyphicon-info-sign"/>
