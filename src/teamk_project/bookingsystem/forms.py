@@ -281,14 +281,14 @@ class SessionForm(forms.ModelForm):
 
 class SessionFormMore(SessionForm):
     venue_choices = ((1, "Court 1"), (2, "Court 2"), (3, "Court 3"), (4, "Court 4"), (5, "Court 5"), (6, "Court 6"))
-    subvenue = forms.MultipleChoiceField(choices=venue_choices, required=True, widget=forms.CheckboxSelectMultiple(), label='Select Venue')
+    subvenue = forms.MultipleChoiceField(choices=venue_choices, required=True, widget=forms.CheckboxSelectMultiple(), label='Venue:')
     coachGroups = Group.objects.filter(id=3)
     coachChoices = User.objects.filter(groups=coachGroups).values_list('id','first_name', 'last_name')
-    COACH_CHOICES = ( )
+    COACH_CHOICES = ((0, 'None'), )
     for item in coachChoices:
         temp = (item[0], str(item[1] + ' ' + item[2]),)
         COACH_CHOICES += (temp,)
-    coachedby = forms.ChoiceField(choices=COACH_CHOICES)
+    coachedby = forms.ChoiceField(choices=COACH_CHOICES, label="Coach:")
     class Meta(SessionForm.Meta):
         fields = SessionForm.Meta.fields + ['subvenue', 'coachedby']
 

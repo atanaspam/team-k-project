@@ -147,7 +147,7 @@ class Session(models.Model):
     agegroup = models.CharField(max_length=45, db_column='ageGroup', blank=True) # Field name made lowercase.
     skillgroup = models.CharField(max_length=45, db_column='skillGroup', blank=True) # Field name made lowercase.
     isfull = models.CharField(max_length=45, db_column='isFull', blank=True) # Field name made lowercase.
-    #coachedby = models.ManyToManyField(User, null=True, blank=True)
+    coachedby = models.ManyToManyField(User, null=True, blank=True)
     class Meta:
 			db_table = 'session'
 
@@ -186,10 +186,12 @@ class SubvenueUsedforSession(models.Model):
 			unique_together = (("subvenue_subvenueid", "session_sessionid"),)
 			db_table = 'subvenue_usedfor_session'
 
-class sessionCoachedBy(models.Model):
-    id = models.IntegerField(primary_key=True, db_column='id')
-    session_id = models.ForeignKey(Session, db_column='session_id')
-    user_id = models.ForeignKey(User, db_column='user_id')
+# class sessionCoachedBy(models.Model):
+#     id = models.IntegerField(primary_key=True, db_column='id')
+#     session_id = models.ForeignKey(Session, db_column='session_id')
+#     user_id = models.ForeignKey(User, db_column='user_id')
 
-    class Meta:
-        db_table = 'session_coachedby'
+#     class Meta:
+#         db_table = 'session_coachedby'
+
+

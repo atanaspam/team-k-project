@@ -22,24 +22,24 @@
 			</div> <!-- end panel div -->
 		</div>
 	{% endif %}
-	
-	{% if sessionCoachedByObjects %}
+
+	{% if sessionCoach %}
 		<div class="panel panel-default">
 			<div class="panel-heading clearfix">
 				<h4 class="panel-title pull-left" style="padding-top: 7.5px;">Warning! This sessions has assigned coaches!</h4>
 		    </div>
 
 			<div class="panel-body">
-				{% for coach in sessionCoachedByObjects%}
+				{% for coach in sessionCoach%}
 					<li class="studentLabel list-group-item labelst">
-						{{ coach.user_id.first_name }} {{ coach.user_id.last_name }}
+						{{ coach.first_name }} {{ coach.last_name }}
 					</li>
 				{% endfor %}
 			</div> <!-- end panel div -->
 		</div>
 	{% endif %}
-	
-	{% if  not userSelectSessionObjects and not sessionCoachedByObjects%}
+
+	{% if  not userSelectSessionObjects and not sessionCoach %}
 		<div class="panel panel-default">
 			<div class="panel-heading clearfix">
 				<h4 class="panel-title pull-left" style="padding-top: 7.5px;">Warning!</h4>
@@ -54,7 +54,7 @@
 			Confirm
 		</a>
 	</span>
-	
+
 	<span class="pull-right" style="padding-right: 20px;">
 		<a href="/bookingsystem/manager/sessions" class="btn btn-default">
 			Cancel

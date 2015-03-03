@@ -20,13 +20,13 @@
 	        $('#search_input').fastLiveFilter('#search_list');
 	    });
 	</script>
-	
+
 	<script>
 	    $(function() {
 	        $('#search_input1').fastLiveFilter('#search_list1');
 	    });
 	</script>
-	
+
 	<br>
 	<!-- List of Sessions -->
 	<div class="panel panel-default">
@@ -48,18 +48,18 @@
           			  	<th>Assigned Coach</th>
         			</tr>
       		  	</thead>
-				
+
 				{% if details %}
 					<tbody>
 						<tr class="studentLabel">
 							<a class="studentLabel" href="childProfile.html"></a>
-							
+
 							{% if isfull %}
 								<td>Yes</td>
 							{% else %}
  						   		<td>No</td>
 							{% endif %}
-            				
+
 							<td>{{details.begintime|date:"d M"}} - {{details.begintime|time:"H:i"}}</td>
             				<td>{{details.endtime|time:"H:i"}}</td>
             				<td>{{details.block_blockid.label}}</td>
@@ -72,7 +72,7 @@
 			</table>
 		</div>
 	</div><!--/.panel-->
-	
+
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">Children In This Session</h3>
@@ -82,7 +82,7 @@
 			{% if userSelectSessionObjects %}
 			{% for child in userSelectSessionObjects %}
                 <span class="list-group-item clearfix" style="color: #000;">
-					<span class="glyphicon glyphicon-user" style="color: #4179FA;"></span>                      	
+					<span class="glyphicon glyphicon-user" style="color: #4179FA;"></span>
 						{{ child.user_uid }}
 					<span class="pull-right">
 						<a href="removeChildFromSession/{{ child.user_uid.uid }}/{{ details.sessionid }}" class="btn btn-xs btn-danger" id ="info">
@@ -92,7 +92,7 @@
                 </span>
 			{% endfor %}
 			{% endif %}
-			
+
 			{% if childrenNot %}
 				<div class="accordion-heading">
 					<a class="list-group-item clearfix" data-toggle="collapse" data-parent="#accordion" href="#collapseAddChild">
@@ -125,19 +125,20 @@
 				</form>
 			{% endif %}
 		</div>
-	</div><!--/.panel-->	
-			
+	</div><!--/.panel-->
+
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">Assigned Coach</h3>
 		</div>
 
 		<div class="panel-body">
+		{{session.coachedby.user_id}}
 			{% if assignedCoaches or unassignedCoaches %}
 				{% if assignedCoaches %}
 					{% for coach in assignedCoaches %}
 	                    <span class="list-group-item clearfix" style="color: #000;">
-							<span class="glyphicon glyphicon-user" style="color: #4179FA;"></span>                      	
+							<span class="glyphicon glyphicon-user" style="color: #4179FA;"></span>
 								{{ coach.user_id.first_name }} {{ coach.last_name }}
 	 						<span class="pull-right">
 								<a href="removeCoachFromSession/{{ coach.id }}/{{ details.sessionid }}" class="btn btn-xs btn-danger" id ="info">
@@ -147,7 +148,7 @@
 	                    </span>
 					{% endfor %}
 				{% endif %}
-		
+
 				{% if unassignedCoaches %}
 					<div class="accordion-heading">
 						<a class="list-group-item clearfix" data-toggle="collapse" data-parent="#accordion" href="#collapseAddCoach">
@@ -183,7 +184,7 @@
 				You have add coaches before you can assign them to a session.
 			{% endif %}
 		</div>
-	</div><!--/.panel-->	
+	</div><!--/.panel-->
 
 
 	<INPUT Type="button" class="btn btn-default" VALUE="Back" ONCLICK="window.location.href='sessions.html'"/>

@@ -5,7 +5,7 @@ from django.shortcuts import render_to_response, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User, Group
 from django.db.models import Q, Sum
-from bookingsystem.models import Client, Session, Block, UserSelectsSession, Payment, SubvenueUsedforSession, sessionCoachedBy
+from bookingsystem.models import Client, Session, Block, UserSelectsSession, Payment, SubvenueUsedforSession#, sessionCoachedBy
 from django.views.decorators.csrf import csrf_exempt
 from django import forms
 from itertools import chain
@@ -264,7 +264,7 @@ def managerSessions(request):
 	context = RequestContext(request)
 	sessionInfo = Session.objects.all()
 	venueInfo = SubvenueUsedforSession.objects.filter(session_sessionid__in=sessionInfo.values_list('sessionid'))
-	#info = sessionInfo | venueInfo
+	#sessionInfo.extra('coachedBy': )
 	context_dict={'sessions':sessionInfo}
 	return render_to_response('manager/sessions.html', context_dict, context)
 
@@ -750,15 +750,15 @@ def sessionInfo(request, sessionID):
 	sessionDetails = Session.objects.get(sessionid=sessionID)
 	context_dict['details'] = sessionDetails
 
-	sessionCoachedByObjects = sessionCoachedBy.objects.filter(session_id = sessionID)
+	#sessionCoachedByObjects = sessionCoachedBy.objects.filter(session_id = sessionID)
 
 	coacheGroups = Group.objects.get(name='Coach')
 	allCoaches = User.objects.filter(Q(groups=coacheGroups))
-	assignedCoaches = allCoaches.filter(Q(id__in = sessionCoachedByObjects.values('user_id')))
-	unassignedCoaches = allCoaches.filter(~Q(id__in = sessionCoachedByObjects.values('user_id')))
-
+	assignedCoaches = sessionDetails.coachedby.all()
+	unassignedCoaches = allCoaches.filter(~Q(id__in = assignedCoaches.values('id')))
 	context_dict['assignedCoaches'] = assignedCoaches
 	context_dict['unassignedCoaches'] = unassignedCoaches
+	print sessionDetails.coachedby.all()
 
 	return render_to_response('manager/sessionInfo.html', context_dict, context)
 
@@ -767,22 +767,23 @@ def sessionInfo(request, sessionID):
 def addCoachToSession(request):
 	context = RequestContext(request)
 	context_dict={}
-
 	SessionID = request.POST['sessionID']
 	sessionObject = Session.objects.get(sessionid = SessionID)
 	for key in request.POST:
 		if (key.startswith('coachID')):
 			userID = request.POST[key]
-			userObject = User.objects.get(id = userID)
-			add = sessionCoachedBy.objects.get_or_create(session_id = sessionObject, user_id = userObject)
+			coach = User.objects.get(id = userID)
+			sessionObject.coachedby.add(coach)
 
 	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 @login_required
 @user_passes_test(is_manager)
 def removeCoachFromSession(request, id, sid):
-
-	sessionCoachedBy.objects.filter(session_id = sid, user_id = id).delete()
+	sessionDetails = Session.objects.get(sessionid=sid)
+	coaches = sessionDetails.coachedby.all().get(id=id)
+	a = coaches.session_set.remove(sessionDetails)
+	#sessionDetails.coaches.clear()
 
 	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
@@ -824,11 +825,11 @@ def addSession(request):
 			session=form.save(commit=False)
 			session.sessionid = getLastSessionID()
 			session.duration = (session.endtime-session.begintime)
-			print form.cleaned_data['coachedby']
-			#print session.sessionid, session.begintime, session.endtime, session.block_blockid
+			session.isfull=0
+			if form.cleaned_data['coachedby'][0] != 0:
+				session.coachedby.add(User.objects.get(id=form.cleaned_data['coachedby'][0]))
 			session.save()
-			sessionCoachedBy(session_id=session, user_id=User.objects.get(id=form.cleaned_data['coachedby'][0])).save()
-
+			#sessionCoachedBy(session_id=session, user_id=User.objects.get(id=form.cleaned_data['coachedby'][0])).save()
 			# Redirect on success
 			return redirect('/success.html')
 		#else:
@@ -842,16 +843,13 @@ def addSession(request):
 @user_passes_test(is_manager)
 def removeSession(request,sid):
 	context = RequestContext(request)
-	context_dict={}
 
 	userSelectSessionObjects = UserSelectsSession.objects.filter(session_sessionid = sid)
-	sessionCoachedByObjects = sessionCoachedBy.objects.filter(session_id = sid)
-
+	sessionCoachedByObjects = Session.objects.get(sessionid=sid).coachedby.all()
 	context_dict = {'sessionid' : sid}
-
 	if userSelectSessionObjects or sessionCoachedByObjects:
 		context_dict['userSelectSessionObjects'] = userSelectSessionObjects
-		context_dict['sessionCoachedByObjects'] = sessionCoachedByObjects
+		context_dict['sessionCoach'] = sessionCoachedByObjects
 		return render_to_response('manager/removeSession.html', context_dict, context)
 	else:
 		return render_to_response('manager/removeSession.html', context_dict, context)
@@ -860,7 +858,8 @@ def removeSession(request,sid):
 @user_passes_test(is_manager)
 def confirmRemoveSession(request,sid):
 	UserSelectsSession.objects.filter(session_sessionid = sid).delete()
-	sessionCoachedBy.objects.filter(session_id = sid).delete()
+	sessionDetails = Session.objects.get(sessionid=sid)
+	coaches = sessionDetails.coachedby.clear()
 	Session.objects.get(sessionid = sid).delete()
 	return redirect('/bookingsystem/manager/sessions.html')
 
