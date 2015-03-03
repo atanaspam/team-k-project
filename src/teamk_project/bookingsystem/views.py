@@ -961,18 +961,17 @@ def removeBlock(request,bid):
 	sessions1 = Session.objects.filter(Q(block_blockid = bid) & Q(sessionid__in = UserSelectsSessionObjects.values('session_sessionid') ))
 	#sessionCoachedByObjects = sessionCoachedBy.objects.filter(session_id__in = sessionsInBlock.values('sessionid'))
 	sessionCoachedByObjects = Session.objects.filter(sessionid__in=sessionsInBlock.values('sessionid'))
-	sessionCoach = []
-	for session in sessionCoachedByObjects:
-		sessionCoach.append(session.coachedby.all())
 	sessions2 = Session.objects.filter(Q(block_blockid = bid) & Q(sessionid__in = sessionCoachedByObjects.values('sessionid') ))
 
 	context_dict = {'blockid' : bid}
-
+	for session in sessionCoachedByObjects:
+		print session.coachedby.all(), session
+	# 		print coach, session
 	if sessions1 or sessions2:
 		context_dict['sessionsInBlock'] = sessions1
 		context_dict['UserSelectsSessionObjects'] = UserSelectsSessionObjects
 		context_dict['sessionWithCoach'] = sessions2
-		context_dict['sessionCoachedByObjects'] = sessionCoach
+		context_dict['sessionCoachedByObjects'] = sessionCoachedByObjects
 		return render_to_response('manager/removeBlock.html', context_dict, context)
 	else:
 		return render_to_response('manager/removeBlock.html', context_dict, context)

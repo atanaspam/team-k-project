@@ -41,21 +41,19 @@
 			    </div>
 
 				<div class="panel-body">
-					{% for session in sessionWithCoach %}
+					{% for session in sessionCoachedByObjects%}
 						<div class="studentLabel list-group-item labelst">
 							<strong>{{ session.begintime }} {{session.sessionid }}</strong>
 						</div>
 						<br>
 
 						<div class="panel-body" style="overflow:auto; max-height: 400px; margin: -35px 0px 0px 0px;">
-							{% for session in sessionCoachedByObjects%}
-								{% for coach in session %}
+								{% for coach in session.coachedby.all %}
 									{% if coach %}
 									<li class="studentLabel list-group-item labelst">
 										{{ coach.first_name }} {{ coach.last_name }}
 									</li>
 									{% endif %}
-								{% endfor %}
 							{% endfor %}
 						</div>
 					{% endfor %}
