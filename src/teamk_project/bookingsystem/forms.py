@@ -30,301 +30,283 @@ SECONDS = 3
 MERIDIEM = 4
 
 class SelectTimeWidget(Widget):
+	hour_field = '%s_hour'
+	minute_field = '%s_minute'
+	second_field = '%s_second'
+	meridiem_field = '%s_meridiem'
+	twelve_hr = False # Default to 24hr.
 
-    hour_field = '%s_hour'
-    minute_field = '%s_minute'
-    second_field = '%s_second'
-    meridiem_field = '%s_meridiem'
-    twelve_hr = False # Default to 24hr.
+	def __init__(self, attrs=None, hour_step=None, minute_step=None, second_step=None, twelve_hr=False):
 
-    def __init__(self, attrs=None, hour_step=None, minute_step=None, second_step=None, twelve_hr=False):
+		self.attrs = attrs or {}
+		if twelve_hr:
+			self.twelve_hr = True # Do 12hr (rather than 24hr)
+			self.meridiem_val = 'a.m.' # Default to Morning (A.M.)
 
-        self.attrs = attrs or {}
+		if hour_step and twelve_hr:
+			self.hours = range(1,13,hour_step)
+		elif hour_step: # 24hr, with stepping.
+			self.hours = range(0,24,hour_step)
+		elif twelve_hr: # 12hr, no stepping
+			self.hours = range(1,13)
+		else: # 24hr, no stepping
+			self.hours = range(0,24)
 
-        if twelve_hr:
-            self.twelve_hr = True # Do 12hr (rather than 24hr)
-            self.meridiem_val = 'a.m.' # Default to Morning (A.M.)
+		if minute_step:
+			self.minutes = range(0,60,minute_step)
+		else:
+			self.minutes = range(0,60)
 
-        if hour_step and twelve_hr:
-            self.hours = range(1,13,hour_step)
-        elif hour_step: # 24hr, with stepping.
-            self.hours = range(0,24,hour_step)
-        elif twelve_hr: # 12hr, no stepping
-            self.hours = range(1,13)
-        else: # 24hr, no stepping
-            self.hours = range(0,24)
+		if second_step:
+			self.seconds = range(0,60,second_step)
+		else:
+			self.seconds = range(0,60)
 
-        if minute_step:
-            self.minutes = range(0,60,minute_step)
-        else:
-            self.minutes = range(0,60)
-
-        if second_step:
-            self.seconds = range(0,60,second_step)
-        else:
-            self.seconds = range(0,60)
-
-    def render(self, name, value, attrs=None):
-        try: # try to get time values from a datetime.time object (value)
-            hour_val, minute_val, second_val = value.hour, value.minute, value.second
-            if self.twelve_hr:
-                if hour_val >= 12:
-                    self.meridiem_val = 'p.m.'
-                else:
-                    self.meridiem_val = 'a.m.'
-        except AttributeError:
-            hour_val = minute_val = second_val = 0
-            if isinstance(value, basestring):
-                match = RE_TIME.match(value)
-                if match:
-                    time_groups = match.groups();
-                    hour_val = int(time_groups[HOURS]) % 24 # force to range(0-24)
-                    minute_val = int(time_groups[MINUTES])
-                    if time_groups[SECONDS] is None:
-                        second_val = 0
-                    else:
-                        second_val = int(time_groups[SECONDS])
-
-                    # check to see if meridiem was passed in
-                    if time_groups[MERIDIEM] is not None:
-                        self.meridiem_val = time_groups[MERIDIEM]
-                    else: # otherwise, set the meridiem based on the time
-                        if self.twelve_hr:
-                            if hour_val >= 12:
-                                self.meridiem_val = 'p.m.'
-                            else:
-                                self.meridiem_val = 'a.m.'
-                        else:
-                            self.meridiem_val = None
+	def render(self, name, value, attrs=None):
+		try: # try to get time values from a datetime.time object (value)
+			hour_val, minute_val, second_val = value.hour, value.minute, value.second
+			if self.twelve_hr:
+				if hour_val >= 12:
+					self.meridiem_val = 'p.m.'
+				else:
+					self.meridiem_val = 'a.m.'
+		except AttributeError:
+			hour_val = minute_val = second_val = 0
+			if isinstance(value, basestring):
+				match = RE_TIME.match(value)
+				if match:
+					time_groups = match.groups();
+					hour_val = int(time_groups[HOURS]) % 24 # force to range(0-24)
+					minute_val = int(time_groups[MINUTES])
+					if time_groups[SECONDS] is None:
+						second_val = 0
+					else:
+						second_val = int(time_groups[SECONDS])
+					# check to see if meridiem was passed in
+					if time_groups[MERIDIEM] is not None:
+						self.meridiem_val = time_groups[MERIDIEM]
+					else: # otherwise, set the meridiem based on the time
+						if self.twelve_hr:
+							if hour_val >= 12:
+								self.meridiem_val = 'p.m.'
+							else:
+								self.meridiem_val = 'a.m.'
+						else:
+							self.meridiem_val = None
 
 
-        # If we're doing a 12-hr clock, there will be a meridiem value, so make sure the
-        # hours get printed correctly
-        if self.twelve_hr and self.meridiem_val:
-            if self.meridiem_val.lower().startswith('p') and hour_val > 12 and hour_val < 24:
-                hour_val = hour_val % 12
-            elif hour_val == 0:
-                hour_val = 12
+		# If we're doing a 12-hr clock, there will be a meridiem value, so make sure the
+		# hours get printed correctly
+		if self.twelve_hr and self.meridiem_val:
+			if self.meridiem_val.lower().startswith('p') and hour_val > 12 and hour_val < 24:
+				hour_val = hour_val % 12
+			elif hour_val == 0:
+				hour_val = 12
 
-        output = []
-        if 'id' in self.attrs:
-            id_ = self.attrs['id']
-        else:
-            id_ = 'id_%s' % name
+		output = []
+		if 'id' in self.attrs:
+			id_ = self.attrs['id']
+		else:
+			id_ = 'id_%s' % name
 
-        # For times to get displayed correctly, the values MUST be converted to unicode
-        # When Select builds a list of options, it checks against Unicode values
-        hour_val = u"%.2d" % hour_val
-        minute_val = u"%.2d" % minute_val
-        second_val = u"%.2d" % second_val
+		# For times to get displayed correctly, the values MUST be converted to unicode
+		# When Select builds a list of options, it checks against Unicode values
+		hour_val = u"%.2d" % hour_val
+		minute_val = u"%.2d" % minute_val
+		second_val = u"%.2d" % second_val
+		hour_choices = [("%.2d"%i, "%.2d"%i) for i in self.hours]
+		local_attrs = self.build_attrs(id=self.hour_field % id_)
+		select_html = Select(choices=hour_choices).render(self.hour_field % name, hour_val, local_attrs)
+		output.append(select_html)
 
-        hour_choices = [("%.2d"%i, "%.2d"%i) for i in self.hours]
-        local_attrs = self.build_attrs(id=self.hour_field % id_)
-        select_html = Select(choices=hour_choices).render(self.hour_field % name, hour_val, local_attrs)
-        output.append(select_html)
+		minute_choices = [("%.2d"%i, "%.2d"%i) for i in self.minutes]
+		local_attrs['id'] = self.minute_field % id_
+		select_html = Select(choices=minute_choices).render(self.minute_field % name, minute_val, local_attrs)
+		output.append(select_html)
 
-        minute_choices = [("%.2d"%i, "%.2d"%i) for i in self.minutes]
-        local_attrs['id'] = self.minute_field % id_
-        select_html = Select(choices=minute_choices).render(self.minute_field % name, minute_val, local_attrs)
-        output.append(select_html)
+		# second_choices = [("%.2d"%i, "%.2d"%i) for i in self.seconds]
+		# local_attrs['id'] = self.second_field % id_
+		# select_html = Select(choices=second_choices).render(self.second_field % name, second_val, local_attrs)
+		# output.append(select_html)
 
-        # second_choices = [("%.2d"%i, "%.2d"%i) for i in self.seconds]
-        # local_attrs['id'] = self.second_field % id_
-        # select_html = Select(choices=second_choices).render(self.second_field % name, second_val, local_attrs)
-        # output.append(select_html)
+		if self.twelve_hr:
+			#  If we were given an initial value, make sure the correct meridiem gets selected.
+			if self.meridiem_val is not None and  self.meridiem_val.startswith('p'):
+				meridiem_choices = [('p.m.','p.m.'), ('a.m.','a.m.')]
+			else:
+				meridiem_choices = [('a.m.','a.m.'), ('p.m.','p.m.')]
 
-        if self.twelve_hr:
-            #  If we were given an initial value, make sure the correct meridiem gets selected.
-            if self.meridiem_val is not None and  self.meridiem_val.startswith('p'):
-                    meridiem_choices = [('p.m.','p.m.'), ('a.m.','a.m.')]
-            else:
-                meridiem_choices = [('a.m.','a.m.'), ('p.m.','p.m.')]
+			local_attrs['id'] = local_attrs['id'] = self.meridiem_field % id_
+			select_html = Select(choices=meridiem_choices).render(self.meridiem_field % name, self.meridiem_val, local_attrs)
+			output.append(select_html)
 
-            local_attrs['id'] = local_attrs['id'] = self.meridiem_field % id_
-            select_html = Select(choices=meridiem_choices).render(self.meridiem_field % name, self.meridiem_val, local_attrs)
-            output.append(select_html)
+		return mark_safe(u'\n'.join(output))
 
-        return mark_safe(u'\n'.join(output))
+	def id_for_label(self, id_):
+		return '%s_hour' % id_
+	id_for_label = classmethod(id_for_label)
 
-    def id_for_label(self, id_):
-        return '%s_hour' % id_
-    id_for_label = classmethod(id_for_label)
+	def value_from_datadict(self, data, files, name):
+		# if there's not h:m:s data, assume zero:
+		h = data.get(self.hour_field % name, 0) # hour
+		m = data.get(self.minute_field % name, 0) # minute
+		#s = data.get(self.second_field % name, 0) # second
+		meridiem = data.get(self.meridiem_field % name, None)
 
-    def value_from_datadict(self, data, files, name):
-        # if there's not h:m:s data, assume zero:
-        h = data.get(self.hour_field % name, 0) # hour
-        m = data.get(self.minute_field % name, 0) # minute
-        #s = data.get(self.second_field % name, 0) # second
+		#NOTE: if meridiem is None, assume 24-hr
+		if meridiem is not None:
+			if meridiem.lower().startswith('p') and int(h) != 12:
+				h = (int(h)+12)%24
+			elif meridiem.lower().startswith('a') and int(h) == 12:
+				h = 0
 
-        meridiem = data.get(self.meridiem_field % name, None)
+		if (int(h) == 0 or h) and m:# and s:
+			return '%s:%s' % (h, m)
 
-        #NOTE: if meridiem is None, assume 24-hr
-        if meridiem is not None:
-            if meridiem.lower().startswith('p') and int(h) != 12:
-                h = (int(h)+12)%24
-            elif meridiem.lower().startswith('a') and int(h) == 12:
-                h = 0
-
-        if (int(h) == 0 or h) and m:# and s:
-            return '%s:%s' % (h, m)
-
-        return data.get(name, None)
+		return data.get(name, None)
 
 class DateSelectorWidget(widgets.MultiWidget):
-    def __init__(self, attrs=None):
+	def __init__(self, attrs=None):
+		years = [(year, year) for year in (2014, 2015, 2016)] #### RED ALERT !!! THIS IS HARDOCDED !
+		days = [(day, day) for day in range(1, 31)]
+		months = [(1,'January'),(2,'February'),(3,'March'),(4,'April'),(5,'May'),(6,'June'),(7,'July'),(8,'August'),(9,'September'),(10,'October'),(11,'November'),(12,'December')]
+		_widgets = (
+			widgets.Select(attrs=attrs, choices=days),
+			widgets.Select(attrs=attrs, choices=months),
+			widgets.Select(attrs=attrs, choices=years),
+		)
+		super(DateSelectorWidget, self).__init__(_widgets, attrs)
 
-        years = [(year, year) for year in (2014, 2015, 2016)] #### RED ALERT !!! THIS IS HARDOCDED !
-        days = [(day, day) for day in range(1, 31)]
-        months = [(1,'January'),(2,'February'),(3,'March'),(4,'April'),(5,'May'),(6,'June'),(7,'July'),(8,'August'),(9,'September'),(10,'October'),(11,'November'),(12,'December')]
-        _widgets = (
-            widgets.Select(attrs=attrs, choices=days),
-            widgets.Select(attrs=attrs, choices=months),
-            widgets.Select(attrs=attrs, choices=years),
-        )
-        super(DateSelectorWidget, self).__init__(_widgets, attrs)
+	def decompress(self, value):
+		if value:
+			#print value
+			return value
+		return [None, None, None]
 
-    def decompress(self, value):
-        if value:
-            #print value
-            return value
-        return [None, None, None]
+	def format_output(self, rendered_widgets):
+		return u''.join(rendered_widgets)
 
-    def format_output(self, rendered_widgets):
-        return u''.join(rendered_widgets)
-
-    def value_from_datadict(self, data, files, name):
-        datelist = [
-            widget.value_from_datadict(data, files, name + '_%s' % i)
-            for i, widget in enumerate(self.widgets)]
-        try:
-            D = date(day=int(datelist[0]), month=int(datelist[1]),
-                    year=int(datelist[2]))
-        except ValueError:
-            return ''
-        else:
-            return str(D)
+	def value_from_datadict(self, data, files, name):
+		datelist = [
+			widget.value_from_datadict(data, files, name + '_%s' % i)
+			for i, widget in enumerate(self.widgets)]
+		try:
+			D = date(day=int(datelist[0]), month=int(datelist[1]), year=int(datelist[2]))
+		except ValueError:
+			return ''
+		else:
+			return str(D)
 
 class DateSelectorWidget1(widgets.MultiWidget):
-    def __init__(self, attrs=None):
+	def __init__(self, attrs=None):
+		years = [(year, year) for year in range(date.today().year-30, date.today().year)] #### RED ALERT !!! THIS IS HARDOCDED !
+		days = [(day, day) for day in range(1, 31)]
+		months = [(1,'January'),(2,'February'),(3,'March'),(4,'April'),(5,'May'),(6,'June'),(7,'July'),(8,'August'),(9,'September'),(10,'October'),(11,'November'),(12,'December')]
+		_widgets = (
+			widgets.Select(attrs=attrs, choices=days),
+			widgets.Select(attrs=attrs, choices=months),
+			widgets.Select(attrs=attrs, choices=years),
+		)
+		super(DateSelectorWidget1, self).__init__(_widgets, attrs)
 
-        years = [(year, year) for year in range(date.today().year-30, date.today().year)] #### RED ALERT !!! THIS IS HARDOCDED !
-        days = [(day, day) for day in range(1, 31)]
-        months = [(1,'January'),(2,'February'),(3,'March'),(4,'April'),(5,'May'),(6,'June'),(7,'July'),(8,'August'),(9,'September'),(10,'October'),(11,'November'),(12,'December')]
-        _widgets = (
-            widgets.Select(attrs=attrs, choices=days),
-            widgets.Select(attrs=attrs, choices=months),
-            widgets.Select(attrs=attrs, choices=years),
-        )
-        super(DateSelectorWidget1, self).__init__(_widgets, attrs)
+	def decompress(self, value):
+		if value:
+			#print value
+			return value
+		return [None, None, None]
 
-    def decompress(self, value):
-        if value:
-            #print value
-            return value
-        return [None, None, None]
+	def format_output(self, rendered_widgets):
+		return u''.join(rendered_widgets)
 
-    def format_output(self, rendered_widgets):
-        return u''.join(rendered_widgets)
-
-    def value_from_datadict(self, data, files, name):
-        datelist = [
-            widget.value_from_datadict(data, files, name + '_%s' % i)
-            for i, widget in enumerate(self.widgets)]
-        try:
-            D = date(day=int(datelist[0]), month=int(datelist[1]),
-                    year=int(datelist[2]))
-        except ValueError:
-            return ''
-        else:
-            return str(D)
+	def value_from_datadict(self, data, files, name):
+		datelist = [widget.value_from_datadict(data, files, name + '_%s' % i)
+		for i, widget in enumerate(self.widgets)]
+		try:
+			D = date(day=int(datelist[0]), month=int(datelist[1]), year=int(datelist[2]))
+		except ValueError:
+			return ''
+		else:
+			return str(D)
 
 class BlockForm(forms.ModelForm):
-
-    #blockid = forms.IntegerField()
-    begindate = forms.DateField(widget=DateSelectorWidget(), help_text="Beginning of the block")
-    enddate = forms.DateField(widget=DateSelectorWidget(), help_text="End of the block")
-    label = forms.CharField(max_length=40, help_text="User Friendly name.")
-    # An inline class to provide additional information on the form.
-    class Meta:
-        # Provide an association between the ModelForm and a model
-        model = Block
-        fields = ['begindate', 'enddate', 'label']
+	begindate = forms.DateField(widget=DateSelectorWidget(), help_text="Beginning of the block")
+	enddate = forms.DateField(widget=DateSelectorWidget(), help_text="End of the block")
+	label = forms.CharField(max_length=40, help_text="User Friendly name.")
+	# An inline class to provide additional information on the form.
+	class Meta:
+		# Provide an association between the ModelForm and a model
+		model = Block
+		fields = ['begindate', 'enddate', 'label']
 
 class BlockFormMore(BlockForm):
-    num_choices = ( (0, "Monday"), (1, "Tuesday"), (2, "Wednesday"), (3, "Thursday"), (4, "Friday"), (5, "Saturday"), (6, "Sunday"))
-    begintime = forms.TimeField(widget=SelectTimeWidget(minute_step=10, twelve_hr=True), label="Session begintime")
-    agegroup = forms.ChoiceField(choices=[('7-10', '7-10'), ('10-12', '10-12'), ('12-15', '12-15'), ('15-21', '15-21')])
-    weekdays = forms.MultipleChoiceField(choices=num_choices, required=True, widget=forms.CheckboxSelectMultiple(), label='Select Days')
-    coachGroups = Group.objects.filter(id=3)
-    coachChoices = User.objects.filter(groups=coachGroups).values_list('id','first_name', 'last_name')
-    COACH_CHOICES = ( )
-    for item in coachChoices:
-        temp = (item[0], str(item[1] + ' ' + item[2]),)
-        COACH_CHOICES += (temp,)
-    coachedby = forms.ChoiceField(choices=COACH_CHOICES)
-    class Meta(BlockForm.Meta):
-        fields = BlockForm.Meta.fields + ['weekdays', 'coachedby']
+	num_choices = ( (0, "Monday"), (1, "Tuesday"), (2, "Wednesday"), (3, "Thursday"), (4, "Friday"), (5, "Saturday"), (6, "Sunday"))
+	begintime = forms.TimeField(widget=SelectTimeWidget(minute_step=10, twelve_hr=True), label="Session begintime")
+	agegroup = forms.ChoiceField(choices=[('7-10', '7-10'), ('10-12', '10-12'), ('12-15', '12-15'), ('15-21', '15-21')])
+	weekdays = forms.MultipleChoiceField(choices=num_choices, required=True, widget=forms.CheckboxSelectMultiple(), label='Select Days')
+	coachGroups = Group.objects.filter(id=3)
+	coachChoices = User.objects.filter(groups=coachGroups).values_list('id','first_name', 'last_name')
+	COACH_CHOICES = ( )
+	for item in coachChoices:
+		temp = (item[0], str(item[1] + ' ' + item[2]),)
+		COACH_CHOICES += (temp,)
+	coachedby = forms.ChoiceField(choices=COACH_CHOICES)
+	class Meta(BlockForm.Meta):
+		fields = BlockForm.Meta.fields + ['weekdays', 'coachedby']
 
 class WeekBlockForm(forms.ModelForm):
-
-    # Get the next Monday
-    today = date.today()
-    today += timedelta(days=-today.weekday())
-    WEEK_CHOICES = []
-    # Get the next 20 Mondays and add them to the select Field
-    for i in range(0,20):
-        today += timedelta(weeks=1)
-        WEEK_CHOICES += [(today, today.strftime("%d/%m/%y"))]
-    begindate = forms.DateField(widget=forms.Select(choices=WEEK_CHOICES), help_text="Beginning of the block")
-    label = forms.CharField(max_length=40, help_text="User Friendly name.")
-    # An inline class to provide additional information on the form.
-    class Meta:
-        # Provide an association between the ModelForm and a model
-        model = Block
-        fields = ('begindate', 'label')
+	# Get the next Monday
+	today = date.today()
+	today += timedelta(days=-today.weekday())
+	WEEK_CHOICES = []
+	# Get the next 20 Mondays and add them to the select Field
+	for i in range(0,20):
+		today += timedelta(weeks=1)
+		WEEK_CHOICES += [(today, today.strftime("%d/%m/%y"))]
+	begindate = forms.DateField(widget=forms.Select(choices=WEEK_CHOICES), help_text="Beginning of the block")
+	label = forms.CharField(max_length=40, help_text="User Friendly name.")
+	# An inline class to provide additional information on the form.
+	class Meta:
+		# Provide an association between the ModelForm and a model
+		model = Block
+		fields = ('begindate', 'label')
 
 class SplitSelectDateTimeWidget(widgets.MultiWidget):
+	def __init__(self, attrs=None, hour_step=None, minute_step=None, second_step=None, twelve_hr=None, years=None):
+		widgets = (SelectDateWidget(attrs=attrs, years=years), SelectTimeWidget(attrs=attrs, hour_step=hour_step, minute_step=minute_step, second_step=second_step, twelve_hr=twelve_hr))
+		super(SplitSelectDateTimeWidget, self).__init__(widgets, attrs)
 
-    def __init__(self, attrs=None, hour_step=None, minute_step=None, second_step=None, twelve_hr=None, years=None):
+	def decompress(self, value):
+		if value:
+			return [value.date(), value.time().replace(microsecond=0)]
+		return [None, None]
 
-        widgets = (SelectDateWidget(attrs=attrs, years=years), SelectTimeWidget(attrs=attrs, hour_step=hour_step, minute_step=minute_step, second_step=second_step, twelve_hr=twelve_hr))
-        super(SplitSelectDateTimeWidget, self).__init__(widgets, attrs)
-
-    def decompress(self, value):
-        if value:
-            return [value.date(), value.time().replace(microsecond=0)]
-        return [None, None]
-
-    def format_output(self, rendered_widgets):
-
-        rendered_widgets.insert(-1, '<br/>')
-        return u''.join(rendered_widgets)
+	def format_output(self, rendered_widgets):
+		rendered_widgets.insert(-1, '<br/>')
+		return u''.join(rendered_widgets)
 
 class SessionForm(forms.ModelForm):
-
-    #duration = forms.Select()
-    begintime = forms.DateTimeField(widget=SplitSelectDateTimeWidget(), label="Beginning of the session")
-    endtime = forms.DateTimeField(widget=SplitSelectDateTimeWidget(), label="End of the session")
-    block_blockid = forms.Select()
-    capacity = forms.IntegerField(label="Capacity of the session")
-    agegroup = forms.CharField(label="Associated age group")
-    skillgroup = forms.CharField(label="Associated skill group")
-    class Meta:
-        model = Session
-        fields = ['begintime', 'endtime', 'block_blockid', 'capacity', 'agegroup', 'skillgroup']
+	begintime = forms.DateTimeField(widget=SplitSelectDateTimeWidget(), label="Beginning of the session")
+	endtime = forms.DateTimeField(widget=SplitSelectDateTimeWidget(), label="End of the session")
+	block_blockid = forms.Select()
+	capacity = forms.IntegerField(label="Capacity of the session")
+	agegroup = forms.CharField(label="Associated age group")
+	skillgroup = forms.CharField(label="Associated skill group")
+	class Meta:
+		model = Session
+		fields = ['begintime', 'endtime', 'block_blockid', 'capacity', 'agegroup', 'skillgroup']
 
 class SessionFormMore(SessionForm):
-    venue_choices = ((1, "Court 1"), (2, "Court 2"), (3, "Court 3"), (4, "Court 4"), (5, "Court 5"), (6, "Court 6"))
-    subvenue = forms.MultipleChoiceField(choices=venue_choices, required=True, widget=forms.CheckboxSelectMultiple(), label='Venue:')
-    coachGroups = Group.objects.filter(id=3)
-    coachChoices = User.objects.filter(groups=coachGroups).values_list('id','first_name', 'last_name')
-    COACH_CHOICES = ((0, 'None'), )
-    for item in coachChoices:
-        temp = (item[0], str(item[1] + ' ' + item[2]),)
-        COACH_CHOICES += (temp,)
-    coachedby = forms.ChoiceField(choices=COACH_CHOICES, label="Coach:")
-    class Meta(SessionForm.Meta):
-        fields = SessionForm.Meta.fields + ['subvenue', 'coachedby']
+	venue_choices = ((1, "Court 1"), (2, "Court 2"), (3, "Court 3"), (4, "Court 4"), (5, "Court 5"), (6, "Court 6"))
+	subvenue = forms.MultipleChoiceField(choices=venue_choices, required=True, widget=forms.CheckboxSelectMultiple(), label='Venue:')
+	coachGroups = Group.objects.filter(id=3)
+	coachChoices = User.objects.filter(groups=coachGroups).values_list('id','first_name', 'last_name')
+	COACH_CHOICES = ((0, 'None'), )
+	for item in coachChoices:
+		temp = (item[0], str(item[1] + ' ' + item[2]),)
+		COACH_CHOICES += (temp,)
+	coachedby = forms.ChoiceField(choices=COACH_CHOICES, label="Coach:")
+	class Meta(SessionForm.Meta):
+		fields = SessionForm.Meta.fields + ['subvenue', 'coachedby']
 
 ################################################################################
 #### TO BE REMOVED.
@@ -346,47 +328,51 @@ class SessionForm1(forms.ModelForm):
 ################################################################################
 
 class RegisterForm(forms.ModelForm):
-    username = forms.CharField(label="Username:")
-    first_name = forms.CharField(label="First Name:")
-    last_name = forms.CharField(label="Last Name:")
-    email = forms.CharField(label="Email:")
-    password = forms.PasswordInput()
-    class Meta:
-        model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'password')
+	username = forms.CharField(label="Username:")
+	first_name = forms.CharField(label="First Name:")
+	last_name = forms.CharField(label="Last Name:")
+	email = forms.CharField(label="Email:")
+	password = forms.PasswordInput()
+	class Meta:
+		model = User
+		fields = ('username', 'first_name', 'last_name', 'email', 'password')
 
 # This form is responsible for changing the personal data of Clients
 class EditPersonalDetailsForm(forms.ModelForm):
-    email = forms.EmailField(label="Email:")
-    telephone = forms.IntegerField(label="Telephone:")
-    class Meta:
-        model = Client
-        fields = ['email', 'telephone']
+	email = forms.EmailField(label="Email:")
+	telephone = forms.IntegerField(label="Telephone:")
+	class Meta:
+		model = Client
+		fields = ['email', 'telephone']
 YES_OR_NO = (
-    (1, 'Yes'),
-    (0, 'No')
+	(1, 'Yes'),
+	(0, 'No')
 )
 class ManagerEditPersonalDetailsForm(EditPersonalDetailsForm):
-    ismember = forms.ChoiceField(choices=YES_OR_NO)
-    class Meta(EditPersonalDetailsForm.Meta):
-        fields = EditPersonalDetailsForm.Meta.fields + ['ismember']
+	ismember = forms.ChoiceField(choices=YES_OR_NO)
+	class Meta(EditPersonalDetailsForm.Meta):
+		fields = EditPersonalDetailsForm.Meta.fields + ['ismember']
 
 class CreateChildForm(forms.ModelForm):
-    firstname = forms.CharField(label="First Name:")
-    lastname = forms.CharField(label="Surname:")
-    email = forms.EmailField(label="Email:")
-    telephone = forms.IntegerField(label="Telephone:")
-    dateofbirth = forms.DateField(widget=DateSelectorWidget1(), label="Date Of Birth")
-    genderid = forms.ChoiceField(initial="Select:", label="Gender",choices=GENDER_CHOICES )
-    class Meta:
-        model = Client
-        fields = ('firstname', 'lastname', 'email', 'telephone', 'dateofbirth', 'genderid')
+	firstname = forms.CharField(label="First Name:")
+	lastname = forms.CharField(label="Surname:")
+	email = forms.EmailField(label="Email:")
+	telephone = forms.IntegerField(label="Telephone:")
+	dateofbirth = forms.DateField(widget=DateSelectorWidget1(), label="Date Of Birth")
+	genderid = forms.ChoiceField(initial="Select:", label="Gender",choices=GENDER_CHOICES )
+	class Meta:
+		model = Client
+		fields = ('firstname', 'lastname', 'email', 'telephone', 'dateofbirth', 'genderid')
 
 # This form is responsible for changing the personal data of django contrib auth users
 class EditUserPersonalDetailsForm(forms.ModelForm):
-    email = forms.EmailField(label="Email:")
-    password = forms.PasswordInput()
-    class Meta:
-        model = User
+	email = forms.EmailField(label="Email:")
+	password = forms.PasswordInput()
+	class Meta:
+		model = User
 
-#class defaultCoachesForm(forms.)
+# class defaultCoachesForm(forms.):
+#     COACH_CHOICES = ((0, 'None'), )
+#     for item in coachChoices:
+#         temp = (item[0], str(item[1] + ' ' + item[2]),)
+#         COACH_CHOICES += (temp,)
