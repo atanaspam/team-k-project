@@ -959,8 +959,12 @@ def removeBlock(request,bid):
 	sessionsInBlock = Session.objects.filter(block_blockid = bid)
 	UserSelectsSessionObjects = UserSelectsSession.objects.filter(session_sessionid__in = sessionsInBlock.values('sessionid'))
 	sessions1 = Session.objects.filter(Q(block_blockid = bid) & Q(sessionid__in = UserSelectsSessionObjects.values('session_sessionid') ))
-	sessionCoachedByObjects = sessionCoachedBy.objects.filter(session_id__in = sessionsInBlock.values('sessionid'))
-	sessions2 = Session.objects.filter(Q(block_blockid = bid) & Q(sessionid__in = sessionCoachedByObjects.values('session_id') ))
+	#sessionCoachedByObjects = sessionCoachedBy.objects.filter(session_id__in = sessionsInBlock.values('sessionid'))
+	sessionCoachedByObjects = Session.objects.filter(sessionid__in=sessionsInBlock.values('sessionid'))
+	sessionCoach = []
+	for session in sessionCoachedByObjects:
+		sessionCoach.append(session.coachedby.all())
+	sessions2 = Session.objects.filter(Q(block_blockid = bid) & Q(sessionid__in = sessionCoachedByObjects.values('sessionid') ))
 
 	context_dict = {'blockid' : bid}
 
@@ -968,7 +972,7 @@ def removeBlock(request,bid):
 		context_dict['sessionsInBlock'] = sessions1
 		context_dict['UserSelectsSessionObjects'] = UserSelectsSessionObjects
 		context_dict['sessionWithCoach'] = sessions2
-		context_dict['sessionCoachedByObjects'] = sessionCoachedByObjects
+		context_dict['sessionCoachedByObjects'] = sessionCoach
 		return render_to_response('manager/removeBlock.html', context_dict, context)
 	else:
 		return render_to_response('manager/removeBlock.html', context_dict, context)
@@ -979,7 +983,10 @@ def removeBlock(request,bid):
 def confirmRemoveBlock(request,bid):
 	sessionsInBlock = Session.objects.filter(block_blockid = bid)
 	UserSelectsSessionObjects = UserSelectsSession.objects.filter(session_sessionid__in = sessionsInBlock.values('sessionid')).delete()
-	sessionCoachedByObjects = sessionCoachedBy.objects.filter(session_id__in = sessionsInBlock.values('sessionid')).delete()
+	#sessionCoachedByObjects = sessionCoachedBy.objects.filter(session_id__in = sessionsInBlock.values('sessionid')).delete()
+	sessionCoachedByObjects = Session.objects.filter(sessionid__in=sessionsInBlock.values('sessionid'))
+	for session in sessionCoachedByObjects:
+		session.coachedby.clear()
 	sessionsInBlock.delete()
 	Block.objects.get(blockid = bid).delete()
 	return redirect('/bookingsystem/manager/blocks.html')

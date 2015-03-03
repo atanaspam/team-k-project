@@ -20,7 +20,7 @@
 							<strong>{{ session.begintime }} {{session.sessionid }}</strong>
 						</div>
 						<br>
-				
+
 						<div class="panel-body" style="overflow:auto; max-height: 400px; margin: -35px 0px 0px 0px;">
 							{% for child in UserSelectsSessionObjects%}
 								{% if child.session_sessionid = session %}
@@ -46,14 +46,16 @@
 							<strong>{{ session.begintime }} {{session.sessionid }}</strong>
 						</div>
 						<br>
-				
+
 						<div class="panel-body" style="overflow:auto; max-height: 400px; margin: -35px 0px 0px 0px;">
-							{% for coach in sessionCoachedByObjects%}
-								{% if coach.session_id = session %}
+							{% for session in sessionCoachedByObjects%}
+								{% for coach in session %}
+									{% if coach %}
 									<li class="studentLabel list-group-item labelst">
-										{{ coach.user_id.first_name }} {{ coach.user_id.last_name }}
+										{{ coach.first_name }} {{ coach.last_name }}
 									</li>
-								{% endif %}
+									{% endif %}
+								{% endfor %}
 							{% endfor %}
 						</div>
 					{% endfor %}
@@ -71,13 +73,13 @@
 		</div> <!-- end panel div -->
 	</div><!-- end block list-->
 	{% endif %}
-	
+
 	<span class="pull-right">
 		<a href="/bookingsystem/manager/confirmRemoveBlock/{{ blockid }}" class="btn btn-danger">
 			Confirm
 		</a>
 	</span>
-	
+
 	<span class="pull-right" style="padding-right: 20px;">
 		<a href="/bookingsystem/manager/blocks" class="btn btn-default">
 			Cancel
