@@ -204,6 +204,40 @@ class DateSelectorWidget(widgets.MultiWidget):
         else:
             return str(D)
 
+class DateSelectorWidget1(widgets.MultiWidget):
+    def __init__(self, attrs=None):
+
+        years = [(year, year) for year in range(date.today().year-30, date.today().year)] #### RED ALERT !!! THIS IS HARDOCDED !
+        days = [(day, day) for day in range(1, 31)]
+        months = [(1,'January'),(2,'February'),(3,'March'),(4,'April'),(5,'May'),(6,'June'),(7,'July'),(8,'August'),(9,'September'),(10,'October'),(11,'November'),(12,'December')]
+        _widgets = (
+            widgets.Select(attrs=attrs, choices=days),
+            widgets.Select(attrs=attrs, choices=months),
+            widgets.Select(attrs=attrs, choices=years),
+        )
+        super(DateSelectorWidget1, self).__init__(_widgets, attrs)
+
+    def decompress(self, value):
+        if value:
+            #print value
+            return value
+        return [None, None, None]
+
+    def format_output(self, rendered_widgets):
+        return u''.join(rendered_widgets)
+
+    def value_from_datadict(self, data, files, name):
+        datelist = [
+            widget.value_from_datadict(data, files, name + '_%s' % i)
+            for i, widget in enumerate(self.widgets)]
+        try:
+            D = date(day=int(datelist[0]), month=int(datelist[1]),
+                    year=int(datelist[2]))
+        except ValueError:
+            return ''
+        else:
+            return str(D)
+
 class BlockForm(forms.ModelForm):
 
     #blockid = forms.IntegerField()
@@ -342,7 +376,7 @@ class CreateChildForm(forms.ModelForm):
     lastname = forms.CharField(label="Surname:")
     email = forms.EmailField(label="Email:")
     telephone = forms.IntegerField(label="Telephone:")
-    dateofbirth = forms.DateField(widget=DateSelectorWidget(), label="Date Of Birth")
+    dateofbirth = forms.DateField(widget=DateSelectorWidget1(), label="Date Of Birth")
     genderid = forms.ChoiceField(initial="Select:", label="Gender",choices=GENDER_CHOICES )
     class Meta:
         model = Client
