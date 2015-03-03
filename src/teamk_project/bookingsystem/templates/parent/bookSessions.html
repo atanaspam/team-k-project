@@ -1,4 +1,5 @@
-    <div class="panel-heading">
+  
+  <div class="panel-heading">
       <h3 class="panel-title">Sessions</h3>
     </div>
     <div class="panel-body">
@@ -29,7 +30,7 @@
           {% for session in sessions %}
           <tr class="greylabel">
             <td class="textCentered">
-                <input type="checkbox" value={{session.sessionid}} {% if session.begintime|time == "8 a.m." %} name="morning" id={{session.begintime|date:"D"|add:" morning"}} onChange="change(this,{{session.begintime|date:"D"|add:" afternoon"}})"/> {% else %} disabled name="afternoon" id={{session.begintime|date:"D"|add:" afternoon"}}/> *{% endif  %}
+                <input type="checkbox" value={{session.sessionid}} {% if session.begintime|time == "8 a.m." %} name="morning" id="{{session.begintime|date:"D"|add:"morning"}}" onChange="changeM(this,{{session.begintime|date:"D"|add:"afternoon"}})"/> {% else %}name="afternoon" id="{{session.begintime|date:"D"|add:"afternoon"}}" onChange="changeA({{session.begintime|date:"D"|add:"morning"}},this)"/> *{% endif  %}
             </td>
             <td>{{session.begintime|date:"D, d M"}}</td>
             <td>{{session.begintime|time:"H:i"}}</td>
@@ -37,7 +38,7 @@
             <td>{{session.skillgroup}}</td>
             <td>{{session.capacity}}</td>
           </tr>
-          {% endfor %}
+          {% endfor %} 
      {% else %}
           <strong> - No sessions are available or none are appropriate for your child. </strong>
      {% endif %}
@@ -49,44 +50,46 @@
 	</form>
 </div> <!-- end panel body -->
 
+
 <script>
-function change(morning, afternoon){
-    if(morning.checked){
-        document.getElementById(afternoon).disabled = false;
+function changeA(morning, afternoon){
+    if($(afternoon).prop("checked")){
+	$(morning).prop('checked',true);
     } else {
-        document.getElementById(afternoon).disabled = true;
+	$(morning).prop('checked',false);
     }
 
+}
+function changeM(morning, afternoon){
+	if(!$(morning).prop("checked")){	
+			try{$(afternoon).prop('checked',false);	}catch(e){}
+	}
 }
 function selectSession(editBool) {
 	if( editBool == 0) {
 		for (var i=0;i<document.getElementsByName("morning").length;i++){
     		document.getElementsByName("morning")[i].checked = true;
-			document.getElementsByName("morning")[i].disabled = true;
 		}
 		for (var i=0;i<document.getElementsByName("afternoon").length;i++){
     		document.getElementsByName("afternoon")[i].checked = false;
-			document.getElementsByName("afternoon")[i].disabled = false;
 		}
 	}else if (editBool == 1){
 		for (var i=0;i<document.getElementsByName("morning").length;i++){
     		document.getElementsByName("morning")[i].checked = true;
-			document.getElementsByName("morning")[i].disabled = true;
 		}
 		for (var i=0;i<document.getElementsByName("afternoon").length;i++){
     		document.getElementsByName("afternoon")[i].checked = true;
-			document.getElementsByName("afternoon")[i].disabled = false;
 		}
 	}else{
 		for (var i=0;i<document.getElementsByName("morning").length;i++){
     		document.getElementsByName("morning")[i].checked = false;
-			document.getElementsByName("morning")[i].disabled = false;
 		}
 		for (var i=0;i<document.getElementsByName("afternoon").length;i++){
     		document.getElementsByName("afternoon")[i].checked = false;
-			document.getElementsByName("afternoon")[i].disabled = true;
 		}
 	}
 }
 </script>
+
+<script src="/static/js/jquery-2.1.3.min.js"></script>
 
