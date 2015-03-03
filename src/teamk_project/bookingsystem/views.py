@@ -97,8 +97,9 @@ def coachIndex(request):
 	today = datetime.date.today()
 	userID = request.user.id
 	todaySessions = Session.objects.filter(Q(begintime__year=today.year, begintime__month=today.month, begintime__day=today.day)).values_list('sessionid')
-	todayAssignedSessions = sessionCoachedBy.objects.filter(Q(session_id__in=todaySessions) & Q(user_id=userID))
-	futureAssignedSessions = sessionCoachedBy.objects.filter(user_id=userID)
+	todayAssignedSessions = Session.objects.filter(Q(coachedby=request.user) & Q(sessionid__in=todaySessions))
+	futureAssignedSessions = Session.objects.filter(Q(coachedby=request.user) & Q(begintime__gte=datetime.date.today()))
+	print futureAssignedSessions
 	context_dict={'todayAssignedSessions':todayAssignedSessions}
 	context_dict['futureAssignedSessions'] = futureAssignedSessions
 	return render_to_response('coach/index.html', context_dict, context)

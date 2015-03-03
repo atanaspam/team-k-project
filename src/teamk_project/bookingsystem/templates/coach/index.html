@@ -19,7 +19,7 @@
               <div class="list-group">
 	            {% if todayAssignedSessions %}
 	            	{% for session in todayAssignedSessions %}
-						<a href="{% url 'bookingsystem.views.attendance' %}{{ session.session_id.sessionid }}" class="list-group-item">{{ session.session_id.begintime }}</a>
+						<a href="{% url 'bookingsystem.views.attendance' %}{{ session.sessionid }}" class="list-group-item">{{ session.begintime }}</a>
 					{% endfor %}
 				{% else %}
 	            	There are no sessions assigned to you today.
@@ -38,7 +38,7 @@
               <div class="list-group">
 	            {% if futureAssignedSessions %}
 	            	{% for session in futureAssignedSessions %}
-						<a href="{% url 'bookingsystem.views.attendance' %}{{ session.session_id.sessionid }}" class="list-group-item">{{ session.session_id.begintime }}</a>
+						<a href="{% url 'bookingsystem.views.attendance' %}{{ session.sessionid }}" class="list-group-item">{{ session.begintime }}</a>
 					{% endfor %}
 				{% else %}
 	            	There are no sessions assigned to you in the future.

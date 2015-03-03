@@ -389,7 +389,4 @@ class EditUserPersonalDetailsForm(forms.ModelForm):
     class Meta:
         model = User
 
-
-
-
-
+#class defaultCoachesForm(forms.)
