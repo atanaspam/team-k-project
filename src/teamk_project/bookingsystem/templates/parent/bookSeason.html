@@ -4,7 +4,7 @@
     <div class="panel-body">
     {% with child.uid|stringformat:'s' as uid %}
     {% url 'bookingsystem.views.confirmBookings' as uurl %}
-	  <form action={{uurl|add:uid}} method="post">{% csrf_token %}
+	  <form action={{uurl|add:'/'|add:uid}} method="post">{% csrf_token %}
 
 
      {% if sessions %}

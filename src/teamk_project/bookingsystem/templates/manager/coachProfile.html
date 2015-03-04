@@ -96,13 +96,45 @@
     </div>
 </div>
 
-          <!-- submit or cancel buttons -->
-          <button class="btn btn-default" type="button" onclick="window.location.href='timeable.html'; return false;">
-          <span  class="glyphicon glyphicon-calendar" aria-hidden="true"></span>View Timetable</button>
+	<!-- Attendance -->
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Today's Sessions</h3>
+		</div>
 
-          <button class="btn btn-default" type="button" onclick="window.location.href='audit.html'; return false;">
-          <span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span>Financial Data</button>
-		  
+		<div class="panel-body">
+			<!-- add body here -->
+              <div class="list-group">
+	            {% if todayAssignedSessions %}
+	            	{% for session in todayAssignedSessions %}
+						<a href="/bookingsystem/manager/sessionInfo{{ session.sessionid }}" class="list-group-item">{{ session.begintime }}</a>
+					{% endfor %}
+				{% else %}
+	            	There are no sessions assigned to you today.
+	            {% endif %}
+              </div>
+		</div>
+	</div>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Future Sessions</h3>
+		</div>
+
+		<div class="panel-body">
+			<!-- add body here -->
+              <div class="list-group">
+	            {% if futureAssignedSessions %}
+	            	{% for session in futureAssignedSessions %}
+						<a href="/bookingsystem/manager/sessionInfo{{ session.sessionid }}" class="list-group-item">{{ session.begintime }}</a>
+					{% endfor %}
+				{% else %}
+	            	There are no sessions assigned to you in the future.
+	            {% endif %}
+              </div>
+		</div>
+	</div>
+
           
   		<span class="pull-right">
   			<a href="/bookingsystem/manager/removeCoach/{{ userObject.id }}" class="btn btn-danger" id ="info">

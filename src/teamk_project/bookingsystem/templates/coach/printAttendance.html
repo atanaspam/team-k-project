@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Addendance for {{ s.begintime }}</title>
+	</head>
+	
+	<h3>Unchecked addendance for {{ s.begintime }}</h3>
+
+	{% if unattendedSessionObjects%}
+		{% for object in unattendedSessionObjects %}
+			<INPUT TYPE=CHECKBOX NAME="maillist"> {{ object.user_uid.firstname }} {{ object.user_uid.lastname }}
+		{% endfor %}
+	{% else %}
+		Attendance completed!
+	{% endif %}
+
+	<h3>Checked addendance for {{ s.begintime }}</h3>
+	
+	{% if attendedSessionObjects%}
+		{% for object in attendedSessionObjects %}
+			{{ object.user_uid.firstname }} {{ object.user_uid.lastname }}
+		{% endfor %}
+	{% else %}
+		No attendance!
+	{% endif %}
+
+	<script type="text/javascript">
+		window.print();            
+	    document.location.href = "/bookingsystem/coach/attendance/{{ s.sessionid }}"; 
+	</script>
+	
+	</body>
+</html>
+

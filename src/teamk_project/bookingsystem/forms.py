@@ -349,7 +349,7 @@ YES_OR_NO = (
 	(0, 'No')
 )
 class ManagerEditPersonalDetailsForm(EditPersonalDetailsForm):
-	ismember = forms.ChoiceField(choices=YES_OR_NO)
+	ismember = forms.ChoiceField(choices=YES_OR_NO, widget=forms.Select(attrs={'class':'form-control'}))
 	class Meta(EditPersonalDetailsForm.Meta):
 		fields = EditPersonalDetailsForm.Meta.fields + ['ismember']
 

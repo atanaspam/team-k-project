@@ -35,12 +35,12 @@
                       <!-- {{ uurl|add:ID }} THIS PRINTS THE CURRENT LINK -->
                       <span class="list-group-item clearfix" style="color: #000;">
 						<span class="glyphicon glyphicon-user" style="color: #4179FA;"></span>
-                        <a href={{ uurl|add:ID }} style="color: #000;">{{ child.firstname }}</a>
+                        {{ child.firstname }}
 	 						<span class="pull-right">
 								<a href={{uuurl|add:ID}} class="btn btn-xs btn-warning" id ="warning">
                             		Enroll <span class="glyphicon glyphicon-pencil"></span>
                           		</a>
-								<a href={{ uurl|add:ID }} class="btn btn-xs btn-info" id ="info">
+								<a href="/bookingsystem/parent/childProfile/{{ child.uid }}" class="btn btn-xs btn-info" id ="info">
                             		<span class="glyphicon glyphicon-info-sign"></span>
                           		</a>
 								<a href="/bookingsystem/parent/removeChild/{{ child.uid }}" class="btn btn-xs btn-danger" id="warning">

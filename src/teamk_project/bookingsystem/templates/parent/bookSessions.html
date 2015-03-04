@@ -7,7 +7,7 @@
     {% url 'bookingsystem.views.confirmBookings' as uurl %}
 
 
-	  <form action={{uurl|add:uid}} method="post">{% csrf_token %}
+	  <form action={{uurl|add:'/'|add:uid}} method="post">{% csrf_token %}
    {% if sessions %}		<span style="float:right;"><tr>Quick Selection:</tr>
 			<INPUT Type="button" class="btn btn-default" VALUE="All Morning Sessions" ONCLICK="selectSession(0);">
 			<INPUT Type="button" class="btn btn-default" VALUE="All Full Day Sessions" ONCLICK="selectSession(1);">

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Schedule</title>
+	</head>
+	
+		<h3>Today's Sessions</h3>
+	
+		{% if todayAssignedSessions %}
+			<ul>
+		    {% for session in todayAssignedSessions %}
+				<li>{{ session.begintime }}</li>
+			{% endfor %}
+			</ul>
+		{% else %}
+			There are no sessions assigned to you today.
+		{% endif %}
+				
+		<h3>Future Sessions</h3>
+	
+		{% if futureAssignedSessions %}
+			<ul>
+			{% for session in futureAssignedSessions %}
+			<li>{{ session.begintime }}</li>
+			{% endfor %}
+			</ul>
+		{% else %}
+			There are no sessions assigned to you in the future.
+		{% endif %}
+		
+		<script type="text/javascript">
+			window.print();            
+		    document.location.href = "/bookingsystem/coach/index.html"; 
+		</script>
+	
+	</body>
+</html>
+

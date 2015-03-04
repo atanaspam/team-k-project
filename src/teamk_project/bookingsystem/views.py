@@ -12,7 +12,7 @@ from itertools import chain
 from django.contrib.auth import logout
 from django.db import models
 from django.db.models import Max
-from bookingsystem.forms import BlockFormMore, EditPersonalDetailsForm, CreateChildForm, WeekBlockForm, SessionFormMore, ManagerEditPersonalDetailsForm##########################  SessionForm,
+from bookingsystem.forms import BlockFormMore, EditPersonalDetailsForm, CreateChildForm, WeekBlockForm, SessionFormMore, ManagerEditPersonalDetailsForm, EditUserPersonalDetailsForm##########################  SessionForm,
 from datetime import timedelta
 import datetime, time
 
@@ -99,7 +99,7 @@ def coachIndex(request):
 	todaySessions = Session.objects.filter(Q(begintime__year=today.year, begintime__month=today.month, begintime__day=today.day)).values_list('sessionid')
 	todayAssignedSessions = Session.objects.filter(Q(coachedby=request.user) & Q(sessionid__in=todaySessions))
 	futureAssignedSessions = Session.objects.filter(Q(coachedby=request.user) & Q(begintime__gte=datetime.date.today() + datetime.timedelta(days=1)))
-	print futureAssignedSessions
+
 	context_dict={'todayAssignedSessions':todayAssignedSessions}
 	context_dict['futureAssignedSessions'] = futureAssignedSessions
 	return render_to_response('coach/index.html', context_dict, context)
@@ -120,16 +120,38 @@ def attendance(request, id):
 @login_required
 @user_passes_test(is_coach)
 def attended(request,id,sid):
-
 	attendance = UserSelectsSession.objects.get(user_uid=id, session_sessionid = sid)
-
 	currentAttendance = (not attendance.hasattended)
-
 	attendance.hasattended = currentAttendance
-
 	attendance.save()
-
 	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+@login_required
+@user_passes_test(is_coach)
+def printSchedule(request):
+	context = RequestContext(request)
+	today = datetime.date.today()
+	userID = request.user.id
+	todaySessions = Session.objects.filter(Q(begintime__year=today.year, begintime__month=today.month, begintime__day=today.day)).values_list('sessionid')
+	todayAssignedSessions = Session.objects.filter(Q(coachedby=request.user) & Q(sessionid__in=todaySessions))
+	futureAssignedSessions = Session.objects.filter(Q(coachedby=request.user) & Q(begintime__gte=datetime.date.today() + datetime.timedelta(days=1)))
+
+	context_dict={'todayAssignedSessions':todayAssignedSessions}
+	context_dict['futureAssignedSessions'] = futureAssignedSessions
+	return render_to_response('coach/printSchedule.html', context_dict, context)
+
+@login_required
+@user_passes_test(is_coach)
+def printAttendance(request, id):
+	context = RequestContext(request)
+	context_dict={}
+	unattendedSessionObjects = UserSelectsSession.objects.filter(session_sessionid = id, status = 'C',hasattended = 0)
+	attendedSessionObjects = UserSelectsSession.objects.filter(session_sessionid = id, status = 'C',hasattended = 1)
+
+	context_dict = {'unattendedSessionObjects':unattendedSessionObjects}
+	context_dict['attendedSessionObjects'] = attendedSessionObjects
+	context_dict['s'] = Session.objects.get(sessionid = id)
+	return render_to_response('coach/printAttendance.html', context_dict, context)
 
 #					 			NOT REQUIRED 								  #
 
@@ -152,23 +174,36 @@ def submitAttendance(request):
 def sessions(request, id):
 	context = RequestContext(request)
 	context_dict={}
-	# today = datetime.date.today()
-	# assignedSessions = Session.objects.filter(begintime__gte=today)
-	# context_dict={'assignedSessions':assignedSessions}
 	return render_to_response('coach/sessions.html', context_dict, context)
-
-
-# @login_required
-# @user_passes_test(is_coach)
-# def coachEditProfile(request):
-# 	context = RequestContext(request)
-# 	context_dict={}
-# 	return render_to_response('coach/editProfile.html', context_dict, context)
-
 
 ###############################################################################
 #								End of Coach 					   			  #
 ###############################################################################
+
+@login_required
+def editProfile(request):
+    
+    context = RequestContext(request)
+    user = request.user
+    context_dict = {'user':user}
+    
+    if "/manager/" in request.META.get('HTTP_REFERER'):
+        context_dict['sidebar'] = "manager"
+    elif "/coach/" in request.META.get('HTTP_REFERER'):
+        context_dict['sidebar'] = "coach"
+    elif "/parent/" in request.META.get('HTTP_REFERER'):
+        context_dict['sidebar'] = "parent"
+
+    if request.method == 'POST':
+        form = EditUserPersonalDetailsForm(request.POST)
+        # Have we been provided with a valid form?
+        if form.is_valid():
+            print form
+    else:
+        # If the request was not a POST, display the form to enter details.
+        form = EditUserPersonalDetailsForm()
+        context['form'] = form
+    return render_to_response('editProfile.html', context_dict, context)
 
 
 @login_required
@@ -184,10 +219,16 @@ def managerIndex(request):
 	nextArrivalDay = UserSelectsSession.objects.filter(user_uid__in=pendingUsers)
 		#pendingUsers = Client.objects.filter(payment__usertopay=nonPaidUsers).select_related()
 		#paymentInfo = Payment.objects.filter(haspayed = '0')
+
+	pendingSessions = UserSelectsSession.objects.filter(status = 'P')
+	declinedSessions = UserSelectsSession.objects.filter(status = 'D')
+
 	## 			DATA COMMUNICATION				##
 	context_dict={'manager':manager}
 	context_dict['pending'] = pendingSessions
+	context_dict['declined'] = declinedSessions
 	context_dict['nextarrivalday'] = nextArrivalDay
+	context_dict['history'] = approvalHistory
 	context_dict['payments'] = pendingPayments
 	return render_to_response('manager/index.html', context_dict, context)
 
@@ -336,6 +377,15 @@ def coachProfile(request, id):
 	userObject = User.objects.get(id = id)
 	if (userObject in allCoaches):
 	 	context_dict['userObject'] = userObject
+	 	
+	 	today = datetime.date.today()
+		userID = request.user.id
+		todaySessions = Session.objects.filter(Q(begintime__year=today.year, begintime__month=today.month, begintime__day=today.day)).values_list('sessionid')
+		todayAssignedSessions = Session.objects.filter(Q(coachedby=request.user) & Q(sessionid__in=todaySessions))
+		futureAssignedSessions = Session.objects.filter(Q(coachedby=request.user) & Q(begintime__gte=datetime.date.today() + datetime.timedelta(days=1)))
+		context_dict['todayAssignedSessions'] = todayAssignedSessions
+		context_dict['futureAssignedSessions'] = futureAssignedSessions
+	 	
 	 	return render_to_response('manager/coachProfile.html', context_dict, context)
 	else:
 		return redirect('/bookingsystem/manager/coaches.html')
@@ -582,7 +632,7 @@ def childProfile(request, id):
 	belongsto = child.belongsto
 
 	print belongsto
-	if belongsto == parentid:
+	if belongsto.id == parentid:
 	 	if request.method == 'POST':
 	 		form = EditPersonalDetailsForm(request.POST)
 	 		if form.is_valid():
@@ -692,13 +742,6 @@ def payments(request):
 	context_dict['payments'] = moneyToPay
 	context_dict['totalDue'] = moneyToPay.filter(haspayed=False).aggregate(Sum('amount'))['amount__sum']
 	return render_to_response('parent/payments.html', context_dict, context)
-
-@login_required
-@user_passes_test(is_parent)
-def sessionsTimetable(request):
-	context = RequestContext(request)
-	context_dict={}
-	return render_to_response('coach/sessionsTimetable.html', context_dict, context)
 
 @login_required
 @user_passes_test(is_manager)

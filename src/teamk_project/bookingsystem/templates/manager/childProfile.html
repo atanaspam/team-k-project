@@ -5,7 +5,7 @@
 {% endblock %}
 
   {% block mainArea %}
-
+	<br>
   <!-- main area -->
 
   <!-- view Status -->
@@ -20,12 +20,13 @@
 			<div class="panel-body"><!-- fields -->
 				<!-- Name -->
 				<div class="input-group">
-					<input type="text" class="form-control" name="firstname" value="{{ child.firstname }}" aria-describedby="basic-addon2" readonly>
-					<input type="text" class="form-control" name="lastname" value="{{ child.lastname }}" aria-describedby="basic-addon1" readonly>
+					<span class="input-group-addon" id="basic-addon1" style="min-width: 110px">Name</span>
+					<input type="text" class="form-control" name="firstname" value="{{ child.firstname }} {{ child.lastname }}" aria-describedby="basic-addon2" readonly style="min-width: 70px">
+
 				</div>
 
 				<div class="input-group">
-													<span class="input-group-addon" id="basic-addon1">Gender</span>
+								<span class="input-group-addon" id="basic-addon1" style="min-width: 110px">Gender</span>
 						{% if child.genderid = 1 %}
 					  			<input type="text" class="form-control" name="gender" value="Male" aria-describedby="basic-addon1" readonly>
 
@@ -42,13 +43,30 @@
 
 				<!-- Date of Birth -->
 				<div class="input-group">
-					<span class="input-group-addon" id="basic-addon1">Date Of Birth</span>
+					<span class="input-group-addon" id="basic-addon1" style="min-width: 110px">Date Of Birth</span>
 					<input type="text" class="form-control" name="dateofbirth" value="{{ child.dateofbirth }}" aria-describedby="basic-addon1" readonly>
 				</div>
 
 				<div class="input-group">
-					<span class="input-group-addon" readonly id="edit5" id="basic-addon1">Membership Status</span>
-					{{form.ismember}}
+					<span class="input-group-addon" readonly id="edit5" id="basic-addon1" style="min-width: 110px">Member</span>
+					<div class="input-group">
+					  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+					    {{ child.ismember }}
+					    <span class="caret"></span>
+					  </button>
+					  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+					    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Yes</a></li>
+					    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">No</a></li>
+					  </ul>
+				  </div>
+					
+				</div>
+
+
+				<div class="input-group">
+					<span class="input-group-addon" readonly id="edit5" id="basic-addon1" style="min-width: 110px">Member</span>
+					{{ form.ismember }}
+					
 				</div>
 
 			</div>
@@ -62,13 +80,13 @@
 			<div class="panel-body"><!-- fields -->
 	        	<!-- phone number -->
 				<div class="input-group">
-					<span class="input-group-addon" id="basic-addon1">#</span>
+					<span class="input-group-addon" id="basic-addon1" style="min-width: 110px">Telephone</span>
 					<input type="text" class="form-control" name="telephone" value="{{ child.telephone }}" aria-describedby="basic-addon1" readonly id="edit2">
 				</div>
 
 				<!-- e-mail -->
 				<div class="input-group">
-					<span class="input-group-addon" id="basic-addon1">@</span>
+					<span class="input-group-addon" id="basic-addon1" style="min-width: 110px">Email</span>
 					<input type="text" class="form-control" name="email" value="{{ child.email }}" aria-describedby="basic-addon1" readonly id="edit3">
 				</div>
 
@@ -82,24 +100,24 @@
 
 			<div class="panel-body"><!-- fields -->
 				<div class="input-group">
-					<span class="input-group-addon" id="basic-addon1">Name:</span>
-					<input type="text" class="form-control" name="phone" value="{{parentInfo.first_name}}	 {{parentInfo.last_name}}" aria-describedby="basic-addon1">
+					<span class="input-group-addon" id="basic-addon1" style="min-width: 110px">Name</span>
+					<input type="text" class="form-control" name="phone" value="{{parentInfo.first_name}} {{parentInfo.last_name}}" readonly aria-describedby="basic-addon1">
 				</div>
 				<!-- e-mail -->
 				<div class="input-group">
-					<span class="input-group-addon" id="basic-addon1">Phone Number:</span>
+					<span class="input-group-addon" id="basic-addon1" style="min-width: 110px">Telephone</span>
 					<input type="text" class="form-control" name="phone" value="{{telephone}}	" aria-describedby="basic-addon1" readonly id="edit3">
 				</div>
 
 				<div class="input-group">
-					<span class="input-group-addon" id="basic-addon1">Email:</span>
+					<span class="input-group-addon" id="basic-addon1" style="min-width: 110px">Email</span>
 					<input type="text" class="form-control" name="email" value="{{ parentInfo.email }}" aria-describedby="basic-addon1" readonly id="edit3">
 				</div>
 
 			</div>
 		</div> <!-- end of Contact Details -->
 
-
+		{% comment %}
 		<!-- Medical Conditions -->
 		<div class="panel panel-default">
 			<div class="panel-heading">
@@ -117,6 +135,7 @@
 				</div><!-- /input-group -->
 			</div>
 		</div><!-- end of Medical Conditions -->
+		{% endcomment %}
 
 		<input type="hidden" name="uid" value={{ child.uid }}>
 		{% with child.uid as id %}
@@ -133,6 +152,37 @@
 {% endwith%}{%endwith%}
 
 	</forms>
+
+<br><br>
+
+<!-- Bocks of Sessions-->
+<div class="panel panel-default">
+	<div class="panel-heading">
+    	<h3 class="panel-title">Sessions Enrolled In</h3>
+  	</div>
+	<div class="panel-body">
+		<!-- add body here -->
+        <div class="list-group">
+            {% if sessions %}
+            	{% for session in sessions %}
+                	<!-- list item -->
+                	<span class="list-group-item clearfix" style="color: #000;">
+                 		<span class="glyphicon glyphicon-file"></span>
+                   		{{session.session_sessionid.begintime|date:"d M y"}} from {{session.session_sessionid.begintime|date:"g:i A"}} to {{session.session_sessionid.endtime|date:"g:i A"}}
+                 	  	<span class="pull-right">
+							<a href="/bookingsystem/manager/sessionInfo{{ session.session_sessionid.sessionid }}" class="btn btn-xs btn-success" id ="info">
+                        		<span class="glyphicon glyphicon-calendar"></span>
+							</a>
+                 	  	</span>
+					</span> <!-- end of list group item -->
+						{% endfor %}
+					{% else %}
+            	This child is not enrolled in any sessions.
+            	To enroll please go to Bookings.
+            {% endif %}
+		</div> <!-- end of list group-->
+	</div>
+</div> <!--panel-->
 
 	<script>
 	function toggle_edit(editBool) {
@@ -151,33 +201,4 @@
 	  }
 	}
 	</script>
-
-<!-- Bocks of Sessions-->
-<div class="panel panel-default">
-	<div class="panel-heading">
-    	<h3 class="panel-title">Sessions Enrolled In</h3>
-  	</div>
-	<div class="panel-body">
-		<!-- add body here -->
-        <div class="list-group">
-            {% if sessions %}
-            	{% for session in sessions %}
-                	<!-- list item -->
-                	<a href="childSessions.html" class="list-group-item clearfix">
-                  		<span class="glyphicon glyphicon-file"></span>
-                    	{{session.session_sessionid.begintime|date:"d M y"}} from {{session.session_sessionid.begintime|date:"g:i A"}} to {{session.session_sessionid.endtime|date:"g:i A"}} - {{session.user_uid.firstname}}
-                  	  	<span class="pull-right">
-                    		<button class="btn btn-xs btn-warning">
-                      			<span class="glyphicon glyphicon-calendar"></span>
-                    		</button>
-                  	  	</span>
-                	</a> <!-- end of list group item -->
-						{% endfor %}
-					{% else %}
-            	This child is not enrolled in any sessions.
-            	To enroll please go to Bookings.
-            {% endif %}
-		</div> <!-- end of list group-->
-	</div>
-</div> <!--panel-->
 {% endblock %}
