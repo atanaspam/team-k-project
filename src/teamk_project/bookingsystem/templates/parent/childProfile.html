@@ -52,12 +52,12 @@
 			<div class="panel-body"><!-- fields -->
 				<!-- Name -->
 				<div class="input-group">
-					<input type="text" class="form-control" name="firstname" value="{{ child.firstname }}" aria-describedby="basic-addon2" readonly>
-					<input type="text" class="form-control" name="lastname" value="{{ child.lastname }}" aria-describedby="basic-addon1" readonly>
+					<span class="input-group-addon" id="basic-addon1" style="min-width: 110px;">Name</span>
+					<input type="text" class="form-control" name="firstname" value="{{ child.firstname }} {{ child.lastname }}" aria-describedby="basic-addon2" style="min-width: 110px;" readonly>
 				</div>
 
 				<div class="input-group">
-													<span class="input-group-addon" id="basic-addon1">Gender</span>
+													<span class="input-group-addon" id="basic-addon1" style="min-width: 110px;">Gender</span>
 						{% if child.genderid = 1 %}
 					  			<input type="text" class="form-control" name="gender" value="Male" aria-describedby="basic-addon1" readonly>
 
@@ -74,7 +74,7 @@
 
 				<!-- Date of Birth -->
 				<div class="input-group">
-					<span class="input-group-addon" id="basic-addon1">Date Of Birth</span>
+					<span class="input-group-addon" id="basic-addon1" style="min-width: 110px;">Date Of Birth</span>
 					<input type="text" class="form-control" name="dateofbirth" value="{{ child.dateofbirth }}" aria-describedby="basic-addon1" readonly>
 				</div>
 
@@ -89,13 +89,13 @@
 			<div class="panel-body"><!-- fields -->
 	        	<!-- phone number -->
 				<div class="input-group">
-					<span class="input-group-addon" id="basic-addon1">#</span>
+					<span class="input-group-addon" id="basic-addon1" style="min-width: 110px;">Telephone</span>
 					<input type="text" class="form-control" name="telephone" value="{{ child.telephone }}" aria-describedby="basic-addon1" readonly id="edit2">
 				</div>
 
 				<!-- e-mail -->
 				<div class="input-group">
-					<span class="input-group-addon" id="basic-addon1">@</span>
+					<span class="input-group-addon" id="basic-addon1" style="min-width: 110px;">Email</span>
 					<input type="text" class="form-control" name="email" value="{{ child.email }}" aria-describedby="basic-addon1" readonly id="edit3">
 				</div>
 
