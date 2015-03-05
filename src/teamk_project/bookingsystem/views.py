@@ -182,18 +182,11 @@ def sessions(request, id):
 
 @login_required
 def editProfile(request):
-    
+    print "test"
     context = RequestContext(request)
     user = request.user
     context_dict = {'user':user}
     
-    if "/manager/" in request.META.get('HTTP_REFERER'):
-        context_dict['sidebar'] = "manager"
-    elif "/coach/" in request.META.get('HTTP_REFERER'):
-        context_dict['sidebar'] = "coach"
-    elif "/parent/" in request.META.get('HTTP_REFERER'):
-        context_dict['sidebar'] = "parent"
-
     if request.method == 'POST':
         form = EditUserPersonalDetailsForm(request.POST)
         # Have we been provided with a valid form?
@@ -203,7 +196,17 @@ def editProfile(request):
         # If the request was not a POST, display the form to enter details.
         form = EditUserPersonalDetailsForm()
         context['form'] = form
-    return render_to_response('editProfile.html', context_dict, context)
+
+    if "/manager/" in request.META.get('HTTP_REFERER'):
+        context_dict['sidebar'] = "manager"
+        return render_to_response('manager/editProfile.html', context_dict, context)
+    elif "/coach/" in request.META.get('HTTP_REFERER'):
+        context_dict['sidebar'] = "coach"
+        return render_to_response('coach/editProfile.html', context_dict, context)
+    elif "/parent/" in request.META.get('HTTP_REFERER'):
+        context_dict['sidebar'] = "parent"
+        return render_to_response('parent/editProfile.html', context_dict, context)
+    
 
 
 @login_required

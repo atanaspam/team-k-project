@@ -328,10 +328,10 @@ class SessionForm1(forms.ModelForm):
 ################################################################################
 
 class RegisterForm(forms.ModelForm):
-	username = forms.CharField(label="Username:")
-	first_name = forms.CharField(label="First Name:")
-	last_name = forms.CharField(label="Last Name:")
-	email = forms.CharField(label="Email:")
+	username = forms.CharField(label="Username")
+	first_name = forms.CharField(label="First Name")
+	last_name = forms.CharField(label="Last Name")
+	email = forms.CharField(label="Email")
 	password = forms.PasswordInput()
 	class Meta:
 		model = User

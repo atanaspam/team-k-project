@@ -81,9 +81,20 @@
 			</div>
 		</div> <!-- end of Personal Details -->
 
+
+
 		<div class="panel panel-default"><!-- Contact Details -->
-			<div class="panel-heading">
-				<h3 class="panel-title">Contact Details</h3>
+			<div class="panel-heading clearfix">
+				<h3 class="panel-title pull-left panel-title">Contact Details</h3>
+				
+		        <div class="btn-group pull-right">
+				<INPUT Type="button" class="btn btn-default" VALUE="Edit Profile" ONCLICK="toggle_edit(0);">
+				<INPUT Type="submit" class="btn btn-default" VALUE="Submit" style="display:none" id="edit1"/>
+
+				
+		        </div>
+				
+				
 			</div>
 
 			<div class="panel-body"><!-- fields -->
@@ -120,18 +131,21 @@
 				</div><!-- /input-group -->
 			</div>
 		</div><!-- end of Medical Conditions -->
+		<a class="btn btn-default" href="index.html">
+			Cancle
+		</a>
 
 		<input type="hidden" name="uid" value={{ child.uid }}>
 		{% with child.uid as id %}
 		{% with id|stringformat:'s' as ID %}
 		{% url 'bookingsystem.views.childProfile' as cpUrl %}
 				<!-- Edit profile and Submit buttons -->
-				<INPUT Type="button" class="btn btn-default" VALUE="Edit Profile" ONCLICK="toggle_edit(0);">
-				<INPUT Type="submit" class="btn btn-default" VALUE="Submit" style="display:none" id="edit1"/>
+				
 		{% endwith%}{%endwith%}
 
 
 	</forms>
+	
 	<span class="pull-right">
 		<a href="/bookingsystem/parent/removeChild/{{ child.uid }}" class="btn btn-danger">
 	   		Remove Child

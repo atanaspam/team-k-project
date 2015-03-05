@@ -3,24 +3,30 @@
 {% block title %}Create an account{% endblock %}
 
 {% block mainArea %}
-  <div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Registration form</h3>
-  </div>
-  <div class="panel-body">
+	{% load bookingsystem_extras %}
+	<br>
+	<form action="" class="form-horizontal" method="post">{% csrf_token %}
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Registration form</h3>
+			</div>
 
-  <form action="" method="post">
-  	{% csrf_token %}
-    {% for field in form %}
-      <div class="form-group">
-      <p><font color="red">{{ field.errors }}</font></p>
-      {{ field.label_tag }} {{ field }}
-      </div>
-    {% endfor %}
-
-
-      <input class="btn btn-default" type="submit" value="Create Account" />
-  </form>
-
-</div>
+			<div class="panel-body">
+  				{% for field in form %}
+  					<div class="form-group">
+  						<p><font color="red">{{ field.errors }}</font></p>
+  						<label class="control-label col-xs-10 col-sm-4 col-md-4" for="email">{{ field.label_tag }}</label>
+  						<div class="col-xs-15 col-sm-7 col-md-5">
+  							{{ field|addcss:"form-control col-xs-1 col-sm-1 col-md-1" }}
+  						</div>
+  					</div>
+  				{% endfor %}
+			</div>
+		</div>
+		<input class="btn btn-default pull-right" type="submit" value="Create Account" />
+	</form>
+  	
+	<a class="btn btn-default" href="/">
+  		Cancle
+	</a>
 {% endblock %}

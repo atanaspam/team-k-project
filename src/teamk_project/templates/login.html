@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
 {% block mainArea %}
+
+<br>
 <!-- login panel -->
 <div class="panel">
 	<div class="panel-body" align="center">
@@ -15,11 +17,10 @@
             <input class="btn btn-default" type="submit" value="Login" />
             <input type="hidden" name="next" value="{{ next|escape }}" />
 
-  			<span class="btn btn-default" type="button">
-				<a class="studentLabel" style="text-decoration:none" href="/register.html">
+				<a class="btn btn-default" href="/register.html">
            			Register
            		</a>
-       	 	</span>
+
 		</form>		
 
 		<br>
