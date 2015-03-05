@@ -186,7 +186,7 @@ def editProfile(request):
     context = RequestContext(request)
     user = request.user
     context_dict = {'user':user}
-    
+
     if request.method == 'POST':
         form = EditUserPersonalDetailsForm(request.POST)
         # Have we been provided with a valid form?
@@ -206,7 +206,7 @@ def editProfile(request):
     elif "/parent/" in request.META.get('HTTP_REFERER'):
         context_dict['sidebar'] = "parent"
         return render_to_response('parent/editProfile.html', context_dict, context)
-    
+
 
 
 @login_required
@@ -380,7 +380,7 @@ def coachProfile(request, id):
 	userObject = User.objects.get(id = id)
 	if (userObject in allCoaches):
 	 	context_dict['userObject'] = userObject
-	 	
+
 	 	today = datetime.date.today()
 		userID = request.user.id
 		todaySessions = Session.objects.filter(Q(begintime__year=today.year, begintime__month=today.month, begintime__day=today.day)).values_list('sessionid')
@@ -388,7 +388,7 @@ def coachProfile(request, id):
 		futureAssignedSessions = Session.objects.filter(Q(coachedby=request.user) & Q(begintime__gte=datetime.date.today() + datetime.timedelta(days=1)))
 		context_dict['todayAssignedSessions'] = todayAssignedSessions
 		context_dict['futureAssignedSessions'] = futureAssignedSessions
-	 	
+
 	 	return render_to_response('manager/coachProfile.html', context_dict, context)
 	else:
 		return redirect('/bookingsystem/manager/coaches.html')
@@ -441,7 +441,7 @@ def managerProfile(request, id):
 	userObject = User.objects.get(id = id)
 	if (userObject in allCoaches):
 	 	context_dict['userObject'] = userObject
-	 	
+
 	 	today = datetime.date.today()
 		userID = request.user.id
 		todaySessions = Session.objects.filter(Q(begintime__year=today.year, begintime__month=today.month, begintime__day=today.day)).values_list('sessionid')
@@ -449,7 +449,7 @@ def managerProfile(request, id):
 		futureAssignedSessions = Session.objects.filter(Q(coachedby=request.user) & Q(begintime__gte=datetime.date.today() + datetime.timedelta(days=1)))
 		context_dict['todayAssignedSessions'] = todayAssignedSessions
 		context_dict['futureAssignedSessions'] = futureAssignedSessions
-	 	
+
 	 	return render_to_response('manager/coachProfile.html', context_dict, context)
 	else:
 		return redirect('/bookingsystem/manager/coaches.html')
@@ -652,8 +652,7 @@ def bookSessions1(request, blockID, uID):
 	preSelectedSessions = UserSelectsSession.objects.filter(user_uid=child.uid)
 	availableSessions = Session.objects.filter(~Q(sessionid__in=[session.session_sessionid.sessionid for session in preSelectedSessions]) )
  	sessions = availableSessions.filter(
- 		(Q(begintime__gte=datetime.datetime.now()) & Q(begintime__gte=owner.begindate)) & Q(begintime__lte=owner.enddate)  & Q(agegroup=getAgeGroup(age.days/365)))
-	print len(sessions)
+ 		(Q(begintime__gte=datetime.datetime.now()) & Q(begintime__gte=owner.begindate)) & Q(begintime__lte=owner.enddate)  & Q(agegroup=getAgeGroup(age.days/365)) & Q(isfull=0))
  	context_dict = {'sessions': sessions}
  	context_dict['child'] = child
  	return render_to_response('parent/bookSessions.html', context_dict, context)
@@ -841,6 +840,11 @@ def applicationApproved(request):
 				approvalHistory.insert(i, session)
 				i=(i+1)%10
 				session.status = 'C' # set from pending to confirmed
+				session.session_sessionid.capacity -= 1
+				print session.session_sessionid.capacity
+				session.session_sessionid.save()
+				if session.session_sessionid.capacity == 0:
+					session.session_sessionid.isfull=1
 				session.save()
 	return HttpResponse('Success!')
 
