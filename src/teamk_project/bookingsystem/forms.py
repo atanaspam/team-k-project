@@ -358,7 +358,7 @@ class CreateChildForm(forms.ModelForm):
 	lastname = forms.CharField(label="Surname")
 	email = forms.EmailField(label="Email")
 	telephone = forms.IntegerField(label="Telephone")
-	dateofbirth = forms.DateField(widget=DateSelectorWidget1(attrs={'style': 'width:100px'}), label="Date Of Birth")
+	dateofbirth = forms.DateField(widget=DateSelectorWidget1(attrs={'style': 'width:33.3%'}), label="Date Of Birth")
 	genderid = forms.ChoiceField(initial="Select", label="Gender",choices=GENDER_CHOICES)
 	class Meta:
 		model = Client
