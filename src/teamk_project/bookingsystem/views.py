@@ -841,10 +841,9 @@ def applicationApproved(request):
 				i=(i+1)%10
 				session.status = 'C' # set from pending to confirmed
 				session.session_sessionid.capacity -= 1
-				print session.session_sessionid.capacity
-				session.session_sessionid.save()
 				if session.session_sessionid.capacity == 0:
 					session.session_sessionid.isfull=1
+				session.session_sessionid.save()
 				session.save()
 	return HttpResponse('Success!')
 
@@ -922,12 +921,16 @@ def addChildToSession(request):
 	context = RequestContext(request)
 	context_dict={}
 	SessionID = request.POST['sessionID']
-	sessionObject = Session.objects.get(sessionid = SessionID)
+	session = Session.objects.get(sessionid = SessionID)
 	for key in request.POST:
 		if (key.startswith('notInSession')):
 			childID = request.POST[key]
 			clientObject = Client.objects.get(uid = childID)
-			add = UserSelectsSession.objects.get_or_create(session_sessionid = sessionObject, user_uid = clientObject)
+			add = UserSelectsSession.objects.get_or_create(session_sessionid = session, user_uid = clientObject, status='C', hasattended=0)
+			session.capacity -= 1
+			if session.capacity == 0:
+				session.isfull=1
+			session.save()
 
 	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
@@ -935,6 +938,11 @@ def addChildToSession(request):
 @user_passes_test(is_manager)
 def removeChildFromSession(request, id, sid):
 	UserSelectsSession.objects.filter(user_uid = id, session_sessionid = sid).delete()
+	session = Session.objects.get(sessionid=sid)
+	session.capacity += 1
+	if session.capacity > 0:
+		session.isfull=0
+	session.save()
 	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 @login_required
