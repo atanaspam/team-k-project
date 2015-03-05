@@ -48,7 +48,7 @@ html,body {
 .page-container {
   min-height: 100%;
   height: auto !important;
-  height: 100%;
+  
   /* negative indent footer by its height */
   margin: 0 auto -20px;
   /* pad bottom by footer height */
