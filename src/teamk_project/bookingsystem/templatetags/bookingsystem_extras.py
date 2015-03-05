@@ -1,5 +1,4 @@
 from django import template
-
 register = template.Library()
 
 @register.filter
@@ -13,3 +12,7 @@ def is_coach(value):
 @register.filter
 def is_parent(value):
     return value.groups.filter(name='Parent').exists()
+
+@register.filter(name='addcss')
+def addcss(field, css):
+   return field.as_widget(attrs={"class":css})

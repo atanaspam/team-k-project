@@ -855,8 +855,8 @@ def applicationDeclined(request):
 			session = UserSelectsSession.objects.get( Q(session_sessionid = sessionID) & Q(user_uid = user) )
 			if session:
 				#print session.session_sessionid
-				approvalHistory.insert(i, session)
-				i=(i+1)%10
+				#approvalHistory.insert(i, session)
+				#i=(i+1)%10
 				session.status = 'D' # set from pending to confirmed
 				session.save()
 	return HttpResponse('Success!')

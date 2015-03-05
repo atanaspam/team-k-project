@@ -5,23 +5,29 @@
 {% endblock %}
 
 {% block mainArea %}
-	<!-- TODO: ** add id's to retrieve data from textfields
-		make sure the format of input is correct-->
-		<div class="panel panel-default"><!-- Personal Details -->
+	<br>
+	{% load bookingsystem_extras %}
+	<form action="/bookingsystem/parent/addNewChild.html" class="form-horizontal" method="post">{% csrf_token %}
+		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title">Personal Details</h3>
 			</div>
-			<form action="/bookingsystem/parent/addNewChild.html" method="post">
-		    {% csrf_token %}
-
-					{% for field in form %}
-						<div class="form-group">
+			<div class="panel-body">
+				{% for field in form %}
+					<div class="form-group">
 						<p><font color="red">{{ field.errors }}</font></p>
-						{{ field.label_tag }} {{ field }}
+						<label class="control-label col-xs-10 col-sm-4	 col-md-3" for="email">{{ field.label_tag }}</label>
+						<div class="col-xs-11 col-sm-7 col-md-7">
+							{{ field|addcss:"form-control col-xs-1 col-sm-1 col-md-1" }}
 						</div>
-						{% endfor %}
-
-		<!-- Submit button -->
-		<input type="submit" name="submit" value="Create User" />
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+		<input class="btn btn-default pull-right" type="submit" name="submit" value="Add Child" />
 	</form>
+	
+	<a class="btn btn-default" href="index.html">
+		Cancle
+	</a>
 {% endblock %}
