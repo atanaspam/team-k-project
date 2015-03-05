@@ -5,7 +5,7 @@ from django.shortcuts import render_to_response, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User, Group
 from django.db.models import Q, Sum
-from bookingsystem.models import Client, Session, Block, UserSelectsSession, Payment, SubvenueUsedforSession#, sessionCoachedBy
+from bookingsystem.models import Client, Session, Block, UserSelectsSession, Payment, SubvenueUsedforSession, sessionCoachedBy
 from django.views.decorators.csrf import csrf_exempt
 from django import forms
 from itertools import chain
@@ -411,6 +411,84 @@ def confirmRemoveCoach(request, id):
 	g.user_set.remove(userObject)
 	sessionCoachedBy.objects.filter(user_id = id).delete()
 	return redirect('/bookingsystem/manager/coaches.html')
+
+@login_required
+@user_passes_test(is_manager)
+def managers(request):
+	context = RequestContext(request)
+	context_dict={}
+
+	managerGroups = Group.objects.get(name='Manager')
+	allManagers = User.objects.filter(Q(groups=managerGroups) & ~Q(id = request.user.id))
+
+	notManager = User.objects.filter(~Q(id__in = allManagers) & ~Q(id = request.user.id))
+
+	context_dict['allManagers'] = allManagers
+	context_dict['notManager'] = notManager
+	context_dict['user'] = request.user
+	return render_to_response('manager/managers.html', context_dict, context)
+
+@login_required
+@user_passes_test(is_manager)
+def managerProfile(request, id):
+ 	context = RequestContext(request)
+ 	context_dict={}
+ 	coacheGroups = Group.objects.get(name='Coach')
+	allCoaches = User.objects.filter(Q(groups=coacheGroups))
+	userObject = User.objects.get(id = id)
+	if (userObject in allCoaches):
+	 	context_dict['userObject'] = userObject
+	 	
+	 	today = datetime.date.today()
+		userID = request.user.id
+		todaySessions = Session.objects.filter(Q(begintime__year=today.year, begintime__month=today.month, begintime__day=today.day)).values_list('sessionid')
+		todayAssignedSessions = Session.objects.filter(Q(coachedby=request.user) & Q(sessionid__in=todaySessions))
+		futureAssignedSessions = Session.objects.filter(Q(coachedby=request.user) & Q(begintime__gte=datetime.date.today() + datetime.timedelta(days=1)))
+		context_dict['todayAssignedSessions'] = todayAssignedSessions
+		context_dict['futureAssignedSessions'] = futureAssignedSessions
+	 	
+	 	return render_to_response('manager/coachProfile.html', context_dict, context)
+	else:
+		return redirect('/bookingsystem/manager/coaches.html')
+
+@login_required
+@user_passes_test(is_manager)
+def addNewManager(request):
+	context = RequestContext(request)
+	user = request.user
+	context_dict={}
+
+	for key in request.POST:
+		if (key.startswith('notManager')):
+			userID = request.POST[key]
+			userObject = User.objects.get(id = userID)
+			g = Group.objects.get(name='Manager')
+			g.user_set.add(userObject)
+
+	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+@login_required
+@user_passes_test(is_manager)
+def removeManager(request, id):
+	context = RequestContext(request)
+ 	context_dict={}
+
+ 	print "---"
+ 	print request.user.id
+ 	print int(id)
+
+ 	if (request.user.id != int(id)):
+		context_dict = {'managerid' : id}
+ 	return render_to_response('manager/removeManager.html', context_dict, context)
+
+@login_required
+@user_passes_test(is_manager)
+def confirmRemoveManager(request, id):
+ 	userObject = User.objects.get(id = id)
+	g = Group.objects.get(name='Manager')
+	g.user_set.remove(userObject)
+	return redirect('/bookingsystem/manager/managers.html')
+
 
 
 @login_required

@@ -190,12 +190,12 @@ class AdditionalInfo(models.Model):
 	user = models.OneToOneField(User)
 	telephone = models.IntegerField(max_length=12)
 
-# class sessionCoachedBy(models.Model):
-#     id = models.IntegerField(primary_key=True, db_column='id')
-#     session_id = models.ForeignKey(Session, db_column='session_id')
-#     user_id = models.ForeignKey(User, db_column='user_id')
+class sessionCoachedBy(models.Model):
+    id = models.IntegerField(primary_key=True, db_column='id')
+    session_id = models.ForeignKey(Session, db_column='session_id')
+    user_id = models.ForeignKey(User, db_column='user_id')
 
-#     class Meta:
-#         db_table = 'session_coachedby'
+    class Meta:
+        db_table = 'session_coachedby'
 
 
