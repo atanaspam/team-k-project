@@ -8,6 +8,7 @@ from django.forms.widgets import Widget, Select, MultiWidget, CheckboxSelectMult
 from django.utils.safestring import mark_safe
 import re
 from django.contrib.auth.models import User, Group
+from django.core.exceptions import ObjectDoesNotExist
 
 
 #from django.forms import MultiWidget
@@ -371,7 +372,7 @@ class EditUserPersonalDetailsForm(forms.ModelForm):
 	class Meta:
 		model = User
 
-class DefaultCoachesForm(forms.Form):
+class DefaultCoachesForm(forms.ModelForm):
 	coachGroups = Group.objects.filter(id=3)
 	coachChoices = User.objects.filter(groups=coachGroups)
 	COACH_CHOICES = ((0, 'None'), )
@@ -389,83 +390,128 @@ class DefaultCoachesForm(forms.Form):
 	friMor = forms.ChoiceField(choices=COACH_CHOICES, label="Morning:")
 	friAft = forms.ChoiceField(choices=COACH_CHOICES, label="Afternoon:")
 
+	def clean_monMor(self):
+		data = self.cleaned_data["monMor"]
+		if User.objects.filter(username=data).exists():
+			return User.objects.get(username=data)
+		else:
+			raise forms.ValidationError("This is not a valid user")
+
+	def clean_monAft(self):
+		data = self.cleaned_data["monAft"]
+		if User.objects.filter(username=data).exists():
+			return User.objects.get(username=data)
+		else:
+			raise forms.ValidationError("This is not a valid user")
+
+	def clean_tueMor(self):
+		data = self.cleaned_data["tueMor"]
+		if User.objects.filter(username=data).exists():
+			return User.objects.get(username=data)
+		else:
+			raise forms.ValidationError("This is not a valid user")
+
+	def clean_tueAft(self):
+		data = self.cleaned_data["tueAft"]
+		if User.objects.filter(username=data).exists():
+			return User.objects.get(username=data)
+		else:
+			raise forms.ValidationError("This is not a valid user")
+
+	def clean_wedMor(self):
+		data = self.cleaned_data["wedMor"]
+		if User.objects.filter(username=data).exists():
+			return User.objects.get(username=data)
+		else:
+			raise forms.ValidationError("This is not a valid user")
+
+	def clean_wedAft(self):
+		data = self.cleaned_data["wedAft"]
+		if User.objects.filter(username=data).exists():
+			return User.objects.get(username=data)
+		else:
+			raise forms.ValidationError("This is not a valid user")
+
+	def clean_thuMor(self):
+		data = self.cleaned_data["thuMor"]
+		if User.objects.filter(username=data).exists():
+			return User.objects.get(username=data)
+		else:
+			raise forms.ValidationError("This is not a valid user")
+
+	def clean_thuAft(self):
+		data = self.cleaned_data["thuAft"]
+		if User.objects.filter(username=data).exists():
+			return User.objects.get(username=data)
+		else:
+			raise forms.ValidationError("This is not a valid user")
+
+	def clean_friMor(self):
+		data = self.cleaned_data["friMor"]
+		if User.objects.filter(username=data).exists():
+			return User.objects.get(username=data)
+		else:
+			raise forms.ValidationError("This is not a valid user")
+
+	def clean_friAft(self):
+		data = self.cleaned_data["friAft"]
+		if User.objects.filter(username=data).exists():
+			return User.objects.get(username=data)
+		else:
+			raise forms.ValidationError("This is not a valid user")
+
 	def clean(self):
-		cleaned_data = super(DefaultCoachesForm, self).clean()
-		data = [
-			cleaned_data["monMor"],
-			cleaned_data["monAft"],
-			cleaned_data["tueMor"],
-			cleaned_data["tueAft"],
-			cleaned_data["wedMor"],
-			cleaned_data["wedAft"],
-			cleaned_data["thuMor"],
-			cleaned_data["thuAft"],
-			cleaned_data["friMor"],
-			cleaned_data["friAft"]
-			]
-		try:
-			for i in range(0,10):
-				User.objects.get(username=data[i])
-		except:
-			#self.add_error('monMor', "Something went wrong")
-			raise forms.ValidationError("An error occurred")
+		cleaned_data = self.cleaned_data
+		# data = [
+		# 	cleaned_data["monMor"],
+		# 	cleaned_data["monAft"],
+		# 	cleaned_data["tueMor"],
+		# 	cleaned_data["tueAft"],
+		# 	cleaned_data["wedMor"],
+		# 	cleaned_data["wedAft"],
+		# 	cleaned_data["thuMor"],
+		# 	cleaned_data["thuAft"],
+		# 	cleaned_data["friMor"],
+		# 	cleaned_data["friAft"]
+		# 	]
+		# try:
+		# 	for i in range(0,10):
+		# 		User.objects.get(username=data[i])
+		# except:
+		# 	#self.add_error('monMor', "Something went wrong")
+		# 	raise forms.ValidationError("An error occurred")
+		return cleaned_data
 
 	def save(self, commit=True):
+		data = self.clean()
+		print data
 		try:
-			b = DefaultCoaches.objects.get(id=1)
+			a = DefaultCoaches.objects.get(id=1)
+			a.monMor = User.objects.get(username=data["monMor"])
+			a.monAft = User.objects.get(username=data["monAft"])
+			a.tueMor = User.objects.get(username=data["tueMor"])
+			a.tueAft = User.objects.get(username=data["tueAft"])
+			a.wedMor = User.objects.get(username=data["wedMor"])
+			a.wedAft = User.objects.get(username=data["wedAft"])
+			a.thuMor = User.objects.get(username=data["thuMor"])
+			a.thuAft = User.objects.get(username=data["thuAft"])
+			a.friMor = User.objects.get(username=data["friMor"])
+			a.friMor = User.objects.get(username=data["friAft"])
 		except ObjectDoesNotExist:
-			b = DefaultCoaches.objects.create(id=1,
-					monMor=user,
-					monAft=user,
-					tueMor=user,
-					tueAft=user,
-					wedMor=user,
-					wedAft=user,
-					thuMon=user,
-					thuAft=user,
-					friMon=user,
-					fri=user
+			a = DefaultCoaches.objects.create(id=1,
+					monMor=User.objects.get(username=data["monMor"]),
+					monAft=User.objects.get(username=data["monAft"]),
+					tueMor=User.objects.get(username=data["tueMor"]),
+					tueAft=User.objects.get(username=data["tueAft"]),
+					wedMor=User.objects.get(username=data["wedMor"]),
+					wedAft=User.objects.get(username=data["wedAft"]),
+					thuMor=User.objects.get(username=data["thuMor"]),
+					thuAft=User.objects.get(username=data["thuAft"]),
+					friMor=User.objects.get(username=data["friMor"]),
+					friAft=User.objects.get(username=data["friAft"])
 					)
-		#cleaned_data = DefaultCoachesForm.clean()
-		cleaned_data = super(DefaultCoachesForm, self).clean()
-		print cleaned_data
-		for i in range(0,10):
-			item = self.cleaned_data[i]
-			try:
-				id = int(form.cleaned_data[item])
-				if (item == 'monMor'):
-						user = User.objects.get(username=item)
-						b.monMor = user
-				elif (item == 'monAft'):
-						user = User.objects.get(username=item)
-						b.monAft = user
-				elif (item == 'tueMor'):
-						user = User.objects.get(username=item)
-						b.tueMor = user
-				elif (item == 'tueAft'):
-						user = User.objects.get(username=item)
-						b.tueAft = user
-				elif (item == 'wedMor'):
-						user = User.objects.get(username=item)
-						b.wedMor = user
-				elif (item == 'wedAft'):
-						user = User.objects.get(username=item)
-						b.wedAft = user
-				elif (item == 'thuMor'):
-						user = User.objects.get(username=item)
-						b.thuMor = user
-				elif (item == 'thuAft'):
-						user = User.objects.get(username=item)
-						b.thuAft = user
-				elif (item == "friMor"):
-						user = User.objects.get(username=item)
-						b.friMor = user
-				elif (item == 'friAft'):
-						user = User.objects.get(username=item)
-						b.friAft = user
-			except:
-				print "A problem has occured"
 		if commit:
-			b.save()
-		return b
-
+			a.save()
+		return a
+	class Meta:
+		model = DefaultCoaches

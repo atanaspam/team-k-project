@@ -80,11 +80,11 @@ def getCoach(day, morOrAft):
 	except ObjectDoesNotExist:
 		return -1
 	info = [
-			[data.monMor_id, data.monAft_id],
-			[data.tueMor_id, data.tueAft_id],
-			[data.wedMor_id, data.wedAft_id],
-			[data.thuMor_id, data.thuAft_id],
-			[data.friMor_id, data.friAft_id]
+			[data.monMor, data.monAft],
+			[data.tueMor, data.tueAft],
+			[data.wedMor, data.wedAft],
+			[data.thuMor, data.thuAft],
+			[data.friMor, data.friAft]
 			]
 	return info[day][morOrAft]
 
@@ -1050,7 +1050,7 @@ def addBlock(request):
 					# Create the morning Block
 					b = Block(blockid=getLastBlockID(), begindate=block.begindate + timedelta(days = i), enddate=block.begindate + timedelta(days = i), label=getDayOfWeek(i) + ' Morning', type='Morning')
 					print 'Morning Block:', b
-					#b.save()
+					b.save()
 					# Create all the sessions for the morning block
 					for age in ageGroups:
 						# Generate the time
@@ -1058,23 +1058,22 @@ def addBlock(request):
 						sessionBegTime = datetime.datetime.combine(block.begindate+timedelta(days = i), sessionTime)
 						s = Session(sessionid=getLastSessionID(), duration=1, begintime=sessionBegTime, endtime=(sessionBegTime+timedelta(hours=1)), block_blockid=b, capacity=10, agegroup=age, skillgroup='RANDOM', isfull=0)
 						if (getCoach(i,0) != (-1 & 0)):
-							print getCoach(i,0)
-							s.coachedby = getCoach(i,0)
-						print s.sessionid , s.begintime, s.endtime, s.agegroup, s.coachedby
-						#s.save()
+							s.coachedby.add(getCoach(i,0))
+						#print s.sessionid , s.begintime, s.endtime, s.agegroup, s.coachedby
+						s.save()
 					# Create the afternoon block
 					b1 = Block(blockid=getLastBlockID(), begindate=block.begindate + timedelta(days = i), enddate=block.begindate + timedelta(days = i), label=getDayOfWeek(i) + ' Afternoon', type='Afternoon')
 					print 'Afternoon Block:',  b1
-					#b1.save()
+					b1.save()
 					for age in ageGroups:
 						# Generate the time
 						sessionTime = datetime.datetime.strptime('13:00', '%H:%M').time() # generate a 8:00 time
 						sessionBegTime = datetime.datetime.combine(block.begindate+timedelta(days = i), sessionTime)
 						s = Session(sessionid=getLastSessionID(), duration=1, begintime=sessionBegTime, endtime=(sessionBegTime+timedelta(hours=1)), block_blockid=b1, capacity=10, agegroup=age, skillgroup='RANDOM', isfull=0)
 						if (getCoach(i,1) != (-1 & 0)):
-							s.coachedby = getCoach(i,1)
-						print s.sessionid , s.begintime, s.endtime, s.agegroup, s.coachedby
-						#s.save()
+							s.coachedby.add(getCoach(i,1))
+						#print s.sessionid , s.begintime, s.endtime, s.agegroup, s.coachedby
+						s.save()
 				# Redirect on success
 				return redirect('/success.html')
 			else:
@@ -1170,43 +1169,11 @@ def setDefaultCoaches(request):
 		form = DefaultCoachesForm(request.POST)
 		# Have we been provided with a valid form?
 		if form.is_valid():
-			for i in range(0,10):
-				item = form.cleaned_data[i]
-				try:
-					id = int(form.cleaned_data[item])
-					if (item == 'monMor'):
-							user = User.objects.get(username=item)
-							b.monMor = user
-					elif (item == 'monAft'):
-							user = User.objects.get(username=item)
-							b.monAft = user
-					elif (item == 'tueMor'):
-							user = User.objects.get(username=item)
-							b.tueMor = user
-					elif (item == 'tueAft'):
-							user = User.objects.get(username=item)
-							b.tueAft = user
-					elif (item == 'wedMor'):
-							user = User.objects.get(username=item)
-							b.wedMor = user
-					elif (item == 'wedAft'):
-							user = User.objects.get(username=item)
-							b.wedAft = user
-					elif (item == 'thuMor'):
-							user = User.objects.get(username=item)
-							b.thuMor = user
-					elif (item == 'thuAft'):
-							user = User.objects.get(username=item)
-							b.thuAft = user
-					elif (item == "friMor"):
-							user = User.objects.get(username=item)
-							b.friMor = user
-					elif (item == 'friAft'):
-							user = User.objects.get(username=item)
-							b.friAft = user
-				except:
-					print "A problem has occured"
-			b.save()
+			#print form.cleaned_data
+			a = form.save(commit = False)
+			#print a.monMor
+			#a.save
+
 			return redirect('/success.html')
 		else:
 			return redirect('/fail.html')
@@ -1223,6 +1190,7 @@ def setDefaultCoaches(request):
 			'friMor': a.friMor, 'friAft': a.friAft
 			}
 			form = DefaultCoachesForm(default_data)
+			print form
 		except ObjectDoesNotExist:
 			form = DefaultCoachesForm()
 	return render_to_response('manager/setDefaultCoaches.html', {'form': form}, context)
