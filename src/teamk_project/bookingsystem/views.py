@@ -5,7 +5,7 @@ from django.shortcuts import render_to_response, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User, Group
 from django.db.models import Q, Sum
-from bookingsystem.models import Client, Session, Block, UserSelectsSession, Payment, SubvenueUsedforSession, sessionCoachedBy, DefaultCoaches
+from bookingsystem.models import Client, Session, Block, UserSelectsSession, Payment, SubvenueUsedforSession, sessionCoachedBy, DefaultCoaches, Medicalcondition
 from django.views.decorators.csrf import csrf_exempt
 from django import forms
 from itertools import chain
@@ -200,30 +200,28 @@ def sessions(request, id):
 
 @login_required
 def editProfile(request):
-    print "test"
     context = RequestContext(request)
     user = request.user
-    context_dict = {'user':user}
+    
 
     if request.method == 'POST':
-        form = EditUserPersonalDetailsForm(request.POST)
+    	userID = request.POST.get('id', '')
+    	userObject = User.objects.get(id = userID)
+    	userObject.email = request.POST.get('email', '')
+    	userObject.save()
+        # form = EditUserPersonalDetailsForm(request.POST)
         # Have we been provided with a valid form?
-        if form.is_valid():
-            print form
-    else:
+        # if form.is_valid():
+        # print form
+    # else:
         # If the request was not a POST, display the form to enter details.
-        form = EditUserPersonalDetailsForm()
-        context['form'] = form
-
-    if "/manager/" in request.META.get('HTTP_REFERER'):
-        context_dict['sidebar'] = "manager"
-        return render_to_response('manager/editProfile.html', context_dict, context)
-    elif "/coach/" in request.META.get('HTTP_REFERER'):
-        context_dict['sidebar'] = "coach"
-        return render_to_response('coach/editProfile.html', context_dict, context)
-    elif "/parent/" in request.META.get('HTTP_REFERER'):
-        context_dict['sidebar'] = "parent"
-        return render_to_response('parent/editProfile.html', context_dict, context)
+        # form = EditUserPersonalDetailsForm()
+        # context['form'] = form
+    
+    user = User.objects.get(id = user.id)
+    context_dict = {'user':user}
+    
+    return render_to_response('parent/editProfile.html', context_dict, context)
 
 
 
@@ -726,24 +724,48 @@ def childProfile(request, id):
 	parentid = request.user.id
 	child = Client.objects.get(uid=id)
 	sessions = UserSelectsSession.objects.filter(user_uid=child.uid)
+	Medical = Medicalcondition.objects.get(ownerid = child.uid)
 	belongsto = child.belongsto
 
-	print belongsto
 	if belongsto.id == parentid:
+		context_dict['sessions'] = sessions
+		context_dict['child'] = child
+		context_dict['medical'] = Medical
 	 	if request.method == 'POST':
-	 		form = EditPersonalDetailsForm(request.POST)
-	 		if form.is_valid():
-	 			newinfo = form.save(commit=False)
-	 			print newinfo
+	 		child.telephone = request.POST.get('telephone', '')
+	 		child.email = request.POST.get('email', '')
+	 		Medical.condition = request.POST.get('medicalconditions', '')
+			child.save()
+	 		# form = EditPersonalDetailsForm(request.POST)
+	 		# if form.is_valid():
+	 		# 	newinfo = form.save(commit=False)
+	 		# 	print newinfo
 	 		#If the request was not a POST, display the form to enter details.
 	 	else:
 	 		form = EditPersonalDetailsForm()
 	 		context_dict['form'] = form
-			context_dict['sessions'] = sessions
-	 		context_dict['child'] = child
 	 	return render_to_response('parent/childProfile.html', context_dict, context)
 	else:
 		return redirect('/bookingsystem/parent/')
+
+
+@login_required
+@user_passes_test(is_parent)
+def printSchedule(request, uid):
+	context = RequestContext(request)
+	context_dict = {}
+	parentid = request.user.id
+	child = Client.objects.get(uid=uid)
+	context_dict['child'] = child
+	belongsto = child.belongsto
+
+	if belongsto.id == parentid:
+		sessions = UserSelectsSession.objects.filter(user_uid=child.uid)
+		context_dict['sessions'] = sessions
+		print context_dict
+	 	return render_to_response('parent/printSchedule.html', context_dict, context)
+
+
 
 @login_required
 @user_passes_test(is_parent)
