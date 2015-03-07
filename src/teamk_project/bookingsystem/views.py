@@ -14,7 +14,7 @@ from django.db import models
 from django.db.models import Max
 from bookingsystem.forms import BlockFormMore, EditPersonalDetailsForm, CreateChildForm, WeekBlockForm, SessionFormMore, ManagerEditPersonalDetailsForm, EditUserPersonalDetailsForm, DefaultCoachesForm
 from datetime import timedelta
-import datetime, time
+import datetime, time, re
 from django.core.exceptions import ObjectDoesNotExist
 
 
@@ -208,7 +208,15 @@ def editProfile(request):
     	userID = request.POST.get('id', '')
     	userObject = User.objects.get(id = userID)
     	userObject.email = request.POST.get('email', '')
+    	userObject.additionalinfo.telephone = request.POST.get('telephone', '')
     	userObject.save()
+
+    	# if not re.match(r"[^@]+@[^@]+\.[^@]+", userObject.email):
+    	# 	print "valid!"
+
+    	# additionalinfo = additionalinfo.objects.get_or_create(user_id = userID)
+    	# additionalinfo.telephone = request.POST.get('telephone', '')
+
         # form = EditUserPersonalDetailsForm(request.POST)
         # Have we been provided with a valid form?
         # if form.is_valid():
@@ -220,6 +228,7 @@ def editProfile(request):
     
     user = User.objects.get(id = user.id)
     context_dict = {'user':user}
+    context_dict['telephone'] = user.additionalinfo.telephone
 
     if request.META.get('HTTP_REFERER') is not None:
 	    if "bookingsystem/manager/" in request.META.get('HTTP_REFERER'):

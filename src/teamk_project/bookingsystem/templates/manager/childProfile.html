@@ -10,13 +10,13 @@
 
   <!-- view Status -->
 
-	<form action="/bookingsystem/manager/childProfile.html" method="post">{% csrf_token %}
+	 <form action="" class="form-horizontal" method="post">{% csrf_token %}
 		<div class="panel panel-default"><!-- Personal Details -->
 			<div class="panel-heading">
 				<h3 class="panel-title">Personal Details</h3>
 			</div>
 
-		    <form action="/bookingsystem/parent/addNew.html" method="post">{% csrf_token %}
+		   
 			<div class="panel-body"><!-- fields -->
 				<!-- Name -->
 				<div class="input-group">
@@ -47,31 +47,20 @@
 					<input type="text" class="form-control" name="dateofbirth" value="{{ child.dateofbirth }}" aria-describedby="basic-addon1" readonly>
 				</div>
 
-				<div class="input-group">
-					<span class="input-group-addon" readonly  id="basic-addon1" style="min-width: 110px">Member</span>
-					<div class="input-group" style="min-width: 411px";>
-					  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true" style="min-width: 100%";>
-					    {{ child.ismember }}
-					    <span class="caret"></span>
-					  </button>
-					  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-					    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Yes</a></li>
-					    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">No</a></li>
-					  </ul>
-				  </div>
-					
-				</div>
-
 				{% comment %}
 				<div class="input-group">
 					<span class="input-group-addon" readonly  id="basic-addon1" style="min-width: 110px">Member</span>
 					{{ form.ismember }}
-					
 				</div>
 				{% endcomment %}
 
 			</div>
 		</div> <!-- end of Personal Details -->
+	{% comment %}
+	<input class="btn btn-default" type="submit" value="Change" />
+	<br><br>
+	{% endcomment %}
+	</form>
 
 		<div class="panel panel-default"><!-- Contact Details -->
 			<div class="panel-heading">

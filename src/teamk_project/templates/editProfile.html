@@ -14,7 +14,6 @@
 
 {% block mainArea %}
 	<br>
-	
 	{% if menu == "error" %}
 		<script type="text/javascript">        
 		    document.location.href = "/"; 
@@ -46,12 +45,10 @@
 			<div class="panel-body">
 				<!-- add body here -->
 				<!-- phone number -->
-				{% comment %}
 				<div class="input-group">
-					<span class="input-group-addon" id="telephone" style="min-width: 130px;">#</span>
-					<input type="text" class="form-control" value="{{ user.telephone }}" aria-describedby="basic-addon1">
+					<span class="input-group-addon" id="telephone" style="min-width: 130px;">Telephone</span>
+					<input type="text" class="form-control" name="telephone" value="{{ telephone }}" readonly aria-describedby="basic-addon1" id="edit8">
 				</div>
-				{% endcomment %}
 				<!-- e-mail -->
 				<div class="input-group">
 					{% comment %}
@@ -116,6 +113,7 @@
 			$("#edit3").attr("readonly", false);
 			$("#edit4").attr("readonly", false);
 			$("#edit5").attr("readonly", false);
+			$("#edit8").attr("readonly", false);
 			$("#edit6").show()
 			$("#edit7").show()
 	}
@@ -124,10 +122,12 @@
 		$("#edit6").hide()
 		$("#edit7").hide()
 		$("#edit2").val("{{ user.email }}")
+		$("#edit8").val("{{ telephone }}")
 	    $("#edit2").attr("readonly", true)
 		$("#edit3").attr("readonly", true)
 		$("#edit4").attr("readonly", true)
 		$("#edit5").attr("readonly", true)
+		$("#edit8").attr("readonly", true);
 		$("#edit1").show()
 	}
 	</script>
