@@ -2,8 +2,48 @@
 <html>
 	<head>
 		<title>Addendance for {{ s.begintime }}</title>
+		<style>
+			html *
+			{
+			   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+			}
+			th,td {
+			    padding: 10px;
+			}
+			
+			.wrapper {
+			    width: 100%;
+			    overflow: hidden;
+			}
+			.first {
+			    width: 50%;
+			    float:left;
+				
+			}
+			.second {
+				width: 50%;
+			    float: right;
+				text-align:right;
+				padding-top: 20px;
+			}
+			
+		</style>
 	</head>
-	
+	<body>
+		<div class="wrapper">
+			<div class="first">
+				<p><font size="6">Western Tennis Club</font></p>
+				30 Hyndland Road<br>
+				Glasgow<br>
+				G12 9UP<br> 
+				Tel: 0141 339 0065
+			</div>
+			<div class="second">
+				<img src="/static/Western Tennis Club tsp.png" width="88" height="88">
+			</div>
+		</div>
+
+	<br><br>
 	<h3>Unchecked addendance for {{ s.begintime }}</h3>
 
 	{% if unattendedSessionObjects%}
@@ -13,7 +53,7 @@
 	{% else %}
 		Attendance completed!
 	{% endif %}
-
+	<br>
 	<h3>Checked addendance for {{ s.begintime }}</h3>
 	
 	{% if attendedSessionObjects%}
@@ -31,4 +71,3 @@
 	
 	</body>
 </html>
-

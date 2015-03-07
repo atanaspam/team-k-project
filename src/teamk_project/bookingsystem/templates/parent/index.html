@@ -25,8 +25,9 @@
             </div>
             <div class="panel-body">
               <!-- add body here -->
+			  {% if children %}
               <div id="groupOfChildren" class="list-group">
-                {% if children %}
+                
                     {% for child in children %}
                       {% with child.uid as id %}
                       {% with id|stringformat:'s' as ID %}
@@ -51,10 +52,9 @@
                       {% endwith %}
                       {% endwith %}
                      {% endfor %}
-                {% else %}
-                    <a href="childProfile.html" class="list-group-item">You have no Children. Press Add child to add.</a>
-                {% endif %}
+                
               </div>
+			  {% endif %}
 
               <!-- Add New Child -->
               <a class="studentLabel" href="addNewChild.html"><button class="btn btn-default" type="button">
@@ -67,7 +67,7 @@
             </div> <!--panel body-->
           </div> <!--panel-->
         <!--END CHILDREN-->
-
+		{% comment %}
         <!--PAYMENTS-->
           <!-- select student checkboxes -->
           <div class="panel panel-default">
@@ -95,6 +95,7 @@
             </div> <!--panel body-->
           </div> <!--panel-->
         <!--END PAYMENTS-->
+		{% endcomment %}
 
 
 {% endblock %}

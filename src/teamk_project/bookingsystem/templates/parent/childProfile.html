@@ -36,17 +36,18 @@
 						{% endfor %}
 					{% else %}
             	This child is not enrolled in any sessions.
-            	To enroll please go to Bookings.
             {% endif %}
 		</div> <!-- end of list group-->
 	</div>
 </div> <!--panel-->
-
+		{% if sessions %}
 		<a class="btn btn-default" href="/bookingsystem/parent/printSchedule/{{ child.uid }}" style="color:black">
 			Print
 		</a>
 		<br>
 		<br>
+		{% endif %}
+		
 		
 		<div class="panel panel-default"><!-- Personal Details -->
 			<div class="panel-heading">
@@ -116,7 +117,7 @@
 			
 			<div class="panel-body">
 				<div class="input-group" style="min-width: 1040px;">
-					<textarea cols="30" rows="5" type="text" class="form-control" name="medicalconditions" readonly id="edit4">{{ medical.condition }}</textarea>
+					<textarea cols="30" rows="5" type="text" class="form-control" name="medicalconditions" readonly id="edit4" style="resize: none;">{{ medical.condition }}</textarea>
 				</div><!-- /input-group -->
 			</div>
 		</div><!-- end of Medical Conditions -->

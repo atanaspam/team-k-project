@@ -52,7 +52,13 @@
 		</div>
 	</div>
 	
-		<a class="btn btn-default" href="/bookingsystem/coach/printAttendance/{{ s.sessionid }}" style="color:black">
+	<a class="btn btn-default" href="/bookingsystem/coach/index.html" style="color:black">
+		Cancel
+	</a>
+	
+		{% if attendedSessionObjects or unattendedSessionObjects %}
+		<a class="btn btn-default pull-right" href="/bookingsystem/coach/printAttendance/{{ s.sessionid }}" style="color:black">
 			Print
 		</a>
+		{% endif %}
 {% endblock %}
