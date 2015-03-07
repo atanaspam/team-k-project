@@ -4,7 +4,7 @@ import os
 SETTINGS_DIR = os.path.dirname(__file__)	# Settings' Path
 
 PROJECT_PATH = os.path.join(SETTINGS_DIR, os.pardir) 	# Project Path
-PROJECT_PATH = os.path.abspath(PROJECT_PATH)	     	
+PROJECT_PATH = os.path.abspath(PROJECT_PATH)
 
 TEMPLATE_PATH = os.path.join(PROJECT_PATH, 'templates') # Templates Path
 
@@ -24,15 +24,24 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+if DEBUG:
+    EMAIL_HOST = 'localhost'
+    EMAIL_PORT = 1025
+    EMAIL_HOST_USER = ''
+    EMAIL_HOST_PASSWORD = ''
+    EMAIL_USE_TLS = False
+    DEFAULT_FROM_EMAIL = 'testing@teamk_project.com'
+
+
 #################################################
 ##               CHANGEME ! ! !                 #
 #################################################
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3', 
-        
+        'ENGINE': 'django.db.backends.sqlite3',
+
         'NAME': DATABASE_PATH,                      # Or path to database file if using sqlite3.
-        
+
         # The following settings are not used with sqlite3:
         'USER': 'root',
         'PASSWORD': '',
@@ -108,8 +117,8 @@ SECRET_KEY = 'd(dxzb=qexk*iq(%k+$871ga)h3xs9ql&b)xkc)6kl^tek^#g)'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
+    'django.template.loaders.filesystem.Loader',
 #     'django.template.loaders.eggs.Loader',
 )
 
@@ -132,7 +141,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    
+
     TEMPLATE_PATH,
     BS_TEMPLATE_PATH,
 )
@@ -144,10 +153,10 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bookingsystem',
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'bookingsystem',
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'

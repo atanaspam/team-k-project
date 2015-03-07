@@ -202,7 +202,7 @@ def sessions(request, id):
 def editProfile(request):
     context = RequestContext(request)
     user = request.user
-    
+
 
     if request.method == 'POST':
     	userID = request.POST.get('id', '')
@@ -217,10 +217,10 @@ def editProfile(request):
         # If the request was not a POST, display the form to enter details.
         # form = EditUserPersonalDetailsForm()
         # context['form'] = form
-    
+
     user = User.objects.get(id = user.id)
     context_dict = {'user':user}
-    
+
     return render_to_response('parent/editProfile.html', context_dict, context)
 
 
@@ -232,8 +232,6 @@ def managerIndex(request):
 	manager = request.user
 	##			PENDING SESSIONS RETRIEVAL		##
 	pendingSessions = UserSelectsSession.objects.filter(status = 'P').order_by('user_uid')
-	for session in pendingSessions:
-		print session.user_uid
 	##			PENDING PAYERS RETRIEVAL		##
 	pendingPayments = Payment.objects.filter(haspayed=0)
 	pendingUsers = pendingPayments.values_list('usertopay')

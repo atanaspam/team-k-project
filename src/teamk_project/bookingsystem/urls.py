@@ -1,6 +1,8 @@
 from django.conf.urls import patterns, url
 from bookingsystem import views
 
+
+
 urlpatterns = patterns('',
 	url(r'^index/$', views.index, name='index'),
 	url(r'^coach/$', views.coachIndex, name='coachIndex'),
@@ -72,5 +74,6 @@ urlpatterns = patterns('',
   url(r'^manager/managerChildProfile/(?P<id>\d+)?', views.managerChildProfile, name='managerChildProfile'),
   url(r'^manager/setDefaultCoaches',views.setDefaultCoaches, name='managerSetDefaultCoaches')
 	#url(r'^manager/applicationApproved/$', views.applicationApproved, name='applicationApproved'),
+
 
 	)
