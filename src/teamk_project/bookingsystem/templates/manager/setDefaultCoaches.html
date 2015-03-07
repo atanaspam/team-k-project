@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block sidebarNav %}
+{% include "sidebarNav/manager.html" %}
+{% endblock %}
+
+{% block mainArea %}
+
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">Default Coaches</h3>
+	</div>
+
+	<div class="panel-body">
+		<!-- add body here -->
+
+		<form id="coach_form" method="post" action="setDefaultCoaches.html">
+		{% csrf_token %}
+		<!-- Monday -->
+		<div class="accordion-heading">
+			<a class="list-group-item clearfix" data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+				<span class="glyphicon glyphicon-file"></span>
+					Monday
+				<span class="pull-right">
+			</a>
+		</div>
+
+		<div id="collapse1" class="accordion-body collapse" role="tabpanel">
+			<div class="panel-body">
+				<div class="form-group">
+					<p><font color="red">{{ form.monMor.errors }}</font></p>
+						{{ form.monMor.label_tag }} {{ form.monMor }}
+				</div>
+					<p><font color="red">{{ form.monAft.errors }}</font></p>
+						{{ form.monAft.label_tag }} {{ form.monAft }}
+				</div>
+			</div>
+
+		<!-- Tuesday -->
+		<div class="accordion-heading">
+			<a class="list-group-item clearfix" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+				<span class="glyphicon glyphicon-file"></span>
+					Tuesday
+				<span class="pull-right">
+			</a>
+		</div>
+		<div id="collapse2" class="accordion-body collapse" role="tabpanel">
+			<div class="panel-body">
+				<div class="form-group">
+					<p><font color="red">{{ form.monMor.errors }}</font></p>
+						{{ form.tueMor.label_tag }} {{ form.tueMor }}
+				</div>
+					<p><font color="red">{{ form.monAft.errors }}</font></p>
+						{{ form.tueAft.label_tag }} {{ form.tueAft }}
+				</div>
+			</div>
+
+
+		<!-- Wednesday -->
+		<div class="accordion-heading">
+			<a class="list-group-item clearfix" data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+				<span class="glyphicon glyphicon-file"></span>
+					Wednesday
+				<span class="pull-right">
+			</a>
+		</div>
+		<div id="collapse3" class="accordion-body collapse" role="tabpanel">
+			<div class="panel-body">
+				<div class="form-group">
+					<p><font color="red">{{ form.monMor.errors }}</font></p>
+						{{ form.wedMor.label_tag }} {{ form.wedMor }}
+				</div>
+					<p><font color="red">{{ form.wedAft.errors }}</font></p>
+						{{ form.wedAft.label_tag }} {{ form.wedAft }}
+				</div>
+			</div>
+
+
+		<div class="accordion-heading">
+			<a class="list-group-item clearfix" data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+				<span class="glyphicon glyphicon-file"></span>
+					Thursday
+				<span class="pull-right">
+			</a>
+		</div>
+		<div id="collapse4" class="accordion-body collapse" role="tabpanel">
+			<div class="panel-body">
+				<div class="form-group">
+					<p><font color="red">{{ form.thuMor.errors }}</font></p>
+						{{ form.thuMor.label_tag }} {{ form.thuMor }}
+				</div>
+					<p><font color="red">{{ form.monAft.errors }}</font></p>
+						{{ form.thuAft.label_tag }} {{ form.thuAft }}
+				</div>
+			</div>
+
+
+		<div class="accordion-heading">
+			<a class="list-group-item clearfix" data-toggle="collapse" data-parent="#accordion" href="#collapse5">
+				<span class="glyphicon glyphicon-file"></span>
+					Friday
+				<span class="pull-right">
+			</a>
+		</div>
+	</div>
+		<div id="collapse5" class="accordion-body collapse" role="tabpanel">
+			<div class="panel-body">
+				<div class="form-group">
+					<p><font color="red">{{ form.monMor.errors }}</font></p>
+						{{ form.friMor.label_tag }} {{ form.friMor }}
+				</div>
+					<p><font color="red">{{ form.monAft.errors }}</font></p>
+						{{ form.friAft.label_tag }} {{ form.friAft }}
+				</div>
+			</div>
+		</div>
+
+			<input type="submit" class="btn btn-default" name="submit_defaults	" value="Set Defaults" />
+	</form>
+			</div>
+	</div>
+
+{% endblock %}

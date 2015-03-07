@@ -1,5 +1,5 @@
 from django import forms
-from bookingsystem.models import Block, Session, Client, GENDER_CHOICES
+from bookingsystem.models import Block, Session, Client, GENDER_CHOICES, DefaultCoaches
 from django.contrib.auth.models import User
 from django.forms import widgets
 from datetime import date, time, timedelta
@@ -371,8 +371,101 @@ class EditUserPersonalDetailsForm(forms.ModelForm):
 	class Meta:
 		model = User
 
-# class defaultCoachesForm(forms.):
-#     COACH_CHOICES = ((0, 'None'), )
-#     for item in coachChoices:
-#         temp = (item[0], str(item[1] + ' ' + item[2]),)
-#         COACH_CHOICES += (temp,)
+class DefaultCoachesForm(forms.Form):
+	coachGroups = Group.objects.filter(id=3)
+	coachChoices = User.objects.filter(groups=coachGroups)
+	COACH_CHOICES = ((0, 'None'), )
+	for item in coachChoices:
+		temp = (item, str(item.first_name + ' ' + item.last_name),)
+		COACH_CHOICES += (temp,)
+	monMor = forms.ChoiceField(choices=COACH_CHOICES, label="Morning:")
+	monAft = forms.ChoiceField(choices=COACH_CHOICES, label="Afternoon:")
+	tueMor = forms.ChoiceField(choices=COACH_CHOICES, label="Morning:")
+	tueAft = forms.ChoiceField(choices=COACH_CHOICES, label="Afternoon:")
+	wedMor = forms.ChoiceField(choices=COACH_CHOICES, label="Morning:")
+	wedAft = forms.ChoiceField(choices=COACH_CHOICES, label="Afternoon:")
+	thuMor = forms.ChoiceField(choices=COACH_CHOICES, label="Morning:")
+	thuAft = forms.ChoiceField(choices=COACH_CHOICES, label="Afternoon:")
+	friMor = forms.ChoiceField(choices=COACH_CHOICES, label="Morning:")
+	friAft = forms.ChoiceField(choices=COACH_CHOICES, label="Afternoon:")
+
+	def clean(self):
+		cleaned_data = super(DefaultCoachesForm, self).clean()
+		data = [
+			cleaned_data["monMor"],
+			cleaned_data["monAft"],
+			cleaned_data["tueMor"],
+			cleaned_data["tueAft"],
+			cleaned_data["wedMor"],
+			cleaned_data["wedAft"],
+			cleaned_data["thuMor"],
+			cleaned_data["thuAft"],
+			cleaned_data["friMor"],
+			cleaned_data["friAft"]
+			]
+		try:
+			for i in range(0,10):
+				User.objects.get(username=data[i])
+		except:
+			#self.add_error('monMor', "Something went wrong")
+			raise forms.ValidationError("An error occurred")
+
+	def save(self, commit=True):
+		try:
+			b = DefaultCoaches.objects.get(id=1)
+		except ObjectDoesNotExist:
+			b = DefaultCoaches.objects.create(id=1,
+					monMor=user,
+					monAft=user,
+					tueMor=user,
+					tueAft=user,
+					wedMor=user,
+					wedAft=user,
+					thuMon=user,
+					thuAft=user,
+					friMon=user,
+					fri=user
+					)
+		#cleaned_data = DefaultCoachesForm.clean()
+		cleaned_data = super(DefaultCoachesForm, self).clean()
+		print cleaned_data
+		for i in range(0,10):
+			item = self.cleaned_data[i]
+			try:
+				id = int(form.cleaned_data[item])
+				if (item == 'monMor'):
+						user = User.objects.get(username=item)
+						b.monMor = user
+				elif (item == 'monAft'):
+						user = User.objects.get(username=item)
+						b.monAft = user
+				elif (item == 'tueMor'):
+						user = User.objects.get(username=item)
+						b.tueMor = user
+				elif (item == 'tueAft'):
+						user = User.objects.get(username=item)
+						b.tueAft = user
+				elif (item == 'wedMor'):
+						user = User.objects.get(username=item)
+						b.wedMor = user
+				elif (item == 'wedAft'):
+						user = User.objects.get(username=item)
+						b.wedAft = user
+				elif (item == 'thuMor'):
+						user = User.objects.get(username=item)
+						b.thuMor = user
+				elif (item == 'thuAft'):
+						user = User.objects.get(username=item)
+						b.thuAft = user
+				elif (item == "friMor"):
+						user = User.objects.get(username=item)
+						b.friMor = user
+				elif (item == 'friAft'):
+						user = User.objects.get(username=item)
+						b.friAft = user
+			except:
+				print "A problem has occured"
+		if commit:
+			b.save()
+		return b
+

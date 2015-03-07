@@ -16,13 +16,13 @@
 	<div class="panel-heading">
 		<h3 class="panel-title">All Coaches</h3>
 	</div>
-	
+
 	<div class="panel-body">
 		<!-- add body here -->
 		<div class="list-group">
 			{% for coach in allCoaches %}
                 <span class="list-group-item clearfix" style="color: #000;">
-					<span class="glyphicon glyphicon-user" style="color: #4179FA;"></span>                      	
+					<span class="glyphicon glyphicon-user" style="color: #4179FA;"></span>
 						{{ coach.first_name }} {{ coach.last_name }}
 					<span class="pull-right">
 						<a href="{% url 'bookingsystem.views.coachProfile' %}{{ coach.id }}" class="btn btn-xs btn-info" id ="info">
@@ -34,9 +34,9 @@
 					</span>
                 </span>
 			{% endfor %}
-			
-			
-			
+
+
+
 			{% if notCoaches %}
 			<form action="/bookingsystem/manager/addNewCoach" method="post">{% csrf_token %}
 			<div class="accordion-heading">
@@ -44,20 +44,20 @@
 					<strong>Add Coaches</strong>
 				</a>
 			</div>
-		
+
 			<div id="collapseAddCoach" class="accordion-body collapse" role="tabpanel">
 				<div class="panel-body">
 
 
 		<div align="center">
-			
+
 		<input align="right" id="search_input" placeholder="Type to filter">
 		<br>
 		<br>
 	</div>
 			<div class="panel-body" style="overflow:auto; max-height: 250px;">
-					
-						
+
+
 					<br>
 						<ul id="search_list" style="list-style:none; margin: -35px -15px -35px -55px;">
 						{% for notCoach in notCoaches %}
@@ -67,21 +67,27 @@
 						{% endfor %}
 						</ul>
 					</ul><br>
-						
+
 				</div><br>
 					<INPUT Type="submit" class="btn btn-default" VALUE="Add"/>
 
 				</div>
 
 			</div>
-				
+
 			</form>
 			{% endif %}
-			
+
 		</div>
 	</div>
 </div> <!--panel-->
 
+<a class="btn btn-default" style="float:left;" href="setDefaultCoaches.html">
+	<button class="btn btn-default" type="button">
+	<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+		Set Default Coaches
+	</button>
+</a>
 
 
 

@@ -28,4 +28,19 @@ $(document).ready(function() {
         });
     });
 
+    $('.removeButton').click(function() {
+        var catid;
+        console.log('AAAAAA');
+        catid = $(this).attr("data-catid");
+        userid = $(this).attr("user");
+        $.get('/bookingsystem/manager/applicationDeleted/', {
+            session_sessionid: catid,
+            userid: userid
+        }, function(data) {
+
+            $('.removeButton[data-catid=' + catid + '][user=' + userid + ']').html(data);
+            //$('#approve').hide();
+        });
+    });
+
 });

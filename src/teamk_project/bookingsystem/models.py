@@ -198,4 +198,16 @@ class sessionCoachedBy(models.Model):
     class Meta:
         db_table = 'session_coachedby'
 
+class DefaultCoaches(models.Model):
+	monMor = models.ForeignKey(User, null=True, related_name = 'MondayMorning')
+	monAft = models.ForeignKey(User, null=True, related_name = 'MondayAfternoon')
+	tueMor = models.ForeignKey(User, null=True, related_name = 'TuesdayMorning')
+	tueAft = models.ForeignKey(User, null=True, related_name = 'TuesdayAfternon')
+	wedMor = models.ForeignKey(User, null=True, related_name = 'WednesdayMorning')
+	wedAft = models.ForeignKey(User, null=True, related_name = 'WednesdayAfternoon')
+	thuMor = models.ForeignKey(User, null=True, related_name = 'ThursdayMorning')
+	thuAft = models.ForeignKey(User, null=True, related_name = 'ThursdayAfternoon')
+	friMor = models.ForeignKey(User, null=True, related_name = 'FridayMorning')
+	friAft = models.ForeignKey(User, null=True, related_name = 'FridayAfternoon')
+
 

@@ -5,16 +5,17 @@ from django.shortcuts import render_to_response, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User, Group
 from django.db.models import Q, Sum
-from bookingsystem.models import Client, Session, Block, UserSelectsSession, Payment, SubvenueUsedforSession, sessionCoachedBy
+from bookingsystem.models import Client, Session, Block, UserSelectsSession, Payment, SubvenueUsedforSession, sessionCoachedBy, DefaultCoaches
 from django.views.decorators.csrf import csrf_exempt
 from django import forms
 from itertools import chain
 from django.contrib.auth import logout
 from django.db import models
 from django.db.models import Max
-from bookingsystem.forms import BlockFormMore, EditPersonalDetailsForm, CreateChildForm, WeekBlockForm, SessionFormMore, ManagerEditPersonalDetailsForm, EditUserPersonalDetailsForm##########################  SessionForm,
+from bookingsystem.forms import BlockFormMore, EditPersonalDetailsForm, CreateChildForm, WeekBlockForm, SessionFormMore, ManagerEditPersonalDetailsForm, EditUserPersonalDetailsForm, DefaultCoachesForm
 from datetime import timedelta
 import datetime, time
+from django.core.exceptions import ObjectDoesNotExist
 
 
 approvalHistory = []
@@ -69,6 +70,23 @@ def getLastBlockID():
 			return lastBlockID
 	lastBlockID += 1
 	return lastBlockID
+
+## days can be 0 to 5
+## morOrAft can be 0 for Morning and 1 for Afternoon
+def getCoach(day, morOrAft):
+
+	try:
+			data = DefaultCoaches.objects.get(id=1)
+	except ObjectDoesNotExist:
+		return -1
+	info = [
+			[data.monMor_id, data.monAft_id],
+			[data.tueMor_id, data.tueAft_id],
+			[data.wedMor_id, data.wedAft_id],
+			[data.thuMor_id, data.thuAft_id],
+			[data.friMor_id, data.friAft_id]
+			]
+	return info[day][morOrAft]
 
 
 
@@ -215,7 +233,7 @@ def managerIndex(request):
 	context = RequestContext(request)
 	manager = request.user
 	##			PENDING SESSIONS RETRIEVAL		##
-	pendingSessions = UserSelectsSession.objects.filter(status = 'P')
+	pendingSessions = UserSelectsSession.objects.filter(status = 'P').order_by('user_uid__firstname')
 	##			PENDING PAYERS RETRIEVAL		##
 	pendingPayments = Payment.objects.filter(haspayed=0)
 	pendingUsers = pendingPayments.values_list('usertopay')
@@ -225,7 +243,6 @@ def managerIndex(request):
 
 	pendingSessions = UserSelectsSession.objects.filter(status = 'P')
 	declinedSessions = UserSelectsSession.objects.filter(status = 'D')
-
 	## 			DATA COMMUNICATION				##
 	context_dict={'manager':manager}
 	context_dict['pending'] = pendingSessions
@@ -848,6 +865,20 @@ def applicationApproved(request):
 	return HttpResponse('Success!')
 
 @login_required
+@user_passes_test(is_parent)
+def removeSelection(request):
+	context = RequestContext(request)
+	sessionID = None
+	if request.method == 'GET':
+		sessionID = request.GET['session_sessionid']
+		user = request.GET['userid']
+		#print user
+		if sessionID:
+			session = UserSelectsSession.objects.get( Q(session_sessionid = sessionID) & Q(user_uid = user)).delete()
+			print session
+ 	return HttpResponse('Success!')
+
+@login_required
 @user_passes_test(is_manager)
 def applicationDeclined(request):
 	global i
@@ -1019,26 +1050,31 @@ def addBlock(request):
 					# Create the morning Block
 					b = Block(blockid=getLastBlockID(), begindate=block.begindate + timedelta(days = i), enddate=block.begindate + timedelta(days = i), label=getDayOfWeek(i) + ' Morning', type='Morning')
 					print 'Morning Block:', b
-					b.save()
+					#b.save()
 					# Create all the sessions for the morning block
 					for age in ageGroups:
 						# Generate the time
 						sessionTime = datetime.datetime.strptime('08:00', '%H:%M').time() # generate a 8:00 time
 						sessionBegTime = datetime.datetime.combine(block.begindate+timedelta(days = i), sessionTime)
 						s = Session(sessionid=getLastSessionID(), duration=1, begintime=sessionBegTime, endtime=(sessionBegTime+timedelta(hours=1)), block_blockid=b, capacity=10, agegroup=age, skillgroup='RANDOM', isfull=0)
-						#print s.sessionid , s.begintime, s.endtime, s.agegroup
-						s.save()
+						if (getCoach(i,0) != (-1 & 0)):
+							print getCoach(i,0)
+							s.coachedby = getCoach(i,0)
+						print s.sessionid , s.begintime, s.endtime, s.agegroup, s.coachedby
+						#s.save()
 					# Create the afternoon block
 					b1 = Block(blockid=getLastBlockID(), begindate=block.begindate + timedelta(days = i), enddate=block.begindate + timedelta(days = i), label=getDayOfWeek(i) + ' Afternoon', type='Afternoon')
 					print 'Afternoon Block:',  b1
-					b1.save()
+					#b1.save()
 					for age in ageGroups:
 						# Generate the time
 						sessionTime = datetime.datetime.strptime('13:00', '%H:%M').time() # generate a 8:00 time
 						sessionBegTime = datetime.datetime.combine(block.begindate+timedelta(days = i), sessionTime)
 						s = Session(sessionid=getLastSessionID(), duration=1, begintime=sessionBegTime, endtime=(sessionBegTime+timedelta(hours=1)), block_blockid=b1, capacity=10, agegroup=age, skillgroup='RANDOM', isfull=0)
-						#print s.sessionid , s.begintime, s.endtime, s.agegroup
-						s.save()
+						if (getCoach(i,1) != (-1 & 0)):
+							s.coachedby = getCoach(i,1)
+						print s.sessionid , s.begintime, s.endtime, s.agegroup, s.coachedby
+						#s.save()
 				# Redirect on success
 				return redirect('/success.html')
 			else:
@@ -1123,3 +1159,70 @@ def confirmRemoveBlock(request,bid):
 	sessionsInBlock.delete()
 	Block.objects.get(blockid = bid).delete()
 	return redirect('/bookingsystem/manager/blocks.html')
+
+@login_required
+@user_passes_test(is_manager)
+def setDefaultCoaches(request):
+	context = RequestContext(request)
+	context_dict={}
+	# A HTTP POST?
+	if request.method == 'POST':
+		form = DefaultCoachesForm(request.POST)
+		# Have we been provided with a valid form?
+		if form.is_valid():
+			for i in range(0,10):
+				item = form.cleaned_data[i]
+				try:
+					id = int(form.cleaned_data[item])
+					if (item == 'monMor'):
+							user = User.objects.get(username=item)
+							b.monMor = user
+					elif (item == 'monAft'):
+							user = User.objects.get(username=item)
+							b.monAft = user
+					elif (item == 'tueMor'):
+							user = User.objects.get(username=item)
+							b.tueMor = user
+					elif (item == 'tueAft'):
+							user = User.objects.get(username=item)
+							b.tueAft = user
+					elif (item == 'wedMor'):
+							user = User.objects.get(username=item)
+							b.wedMor = user
+					elif (item == 'wedAft'):
+							user = User.objects.get(username=item)
+							b.wedAft = user
+					elif (item == 'thuMor'):
+							user = User.objects.get(username=item)
+							b.thuMor = user
+					elif (item == 'thuAft'):
+							user = User.objects.get(username=item)
+							b.thuAft = user
+					elif (item == "friMor"):
+							user = User.objects.get(username=item)
+							b.friMor = user
+					elif (item == 'friAft'):
+							user = User.objects.get(username=item)
+							b.friAft = user
+				except:
+					print "A problem has occured"
+			b.save()
+			return redirect('/success.html')
+		else:
+			return redirect('/fail.html')
+
+	else:
+		# If the request was not a POST, display the form to enter details.
+		try:
+			a = DefaultCoaches.objects.get(id=1)
+			default_data = {
+			'monMor': a.monMor, 'monAft': a.monAft,
+			'tueMor': a.tueMor, 'tueAft': a.tueAft,
+			'wedMor': a.wedMor, 'wedAft': a.wedAft,
+			'thuMor': a.thuMor, 'thuMon': a.thuAft,
+			'friMor': a.friMor, 'friAft': a.friAft
+			}
+			form = DefaultCoachesForm(default_data)
+		except ObjectDoesNotExist:
+			form = DefaultCoachesForm()
+	return render_to_response('manager/setDefaultCoaches.html', {'form': form}, context)

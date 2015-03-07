@@ -16,6 +16,7 @@ urlpatterns = patterns('',
 	url(r'^manager/$', views.managerIndex, name='index'),
 	url(r'^manager/applicationApproved/$', views.applicationApproved, name='applicationApproved'),
 	url(r'^manager/applicationDeclined/$', views.applicationDeclined, name='applicationDeclined'),
+	url(r'^manager/applicationDeleted/$', views.removeSelection, name='removeSelection'),
 	url(r'^manager/index', views.managerIndex, name='index'),
 	url(r'^manager/loggedin', views.loggedin, name='loggedin'),
 	url(r'^manager/bookings', views.managerBookings, name='managerBookings'),
@@ -68,7 +69,7 @@ urlpatterns = patterns('',
   url(r'^manager/removeManager/(?P<id>\d+)?', views.removeManager, name='removeManager'),
   url(r'^manager/confirmRemoveManager/(?P<id>\d+)?', views.confirmRemoveManager, name='confirmRemoveManager'),
   url(r'^manager/managerChildProfile/(?P<id>\d+)?', views.managerChildProfile, name='managerChildProfile'),
-
+  url(r'^manager/setDefaultCoaches',views.setDefaultCoaches, name='managerSetDefaultCoaches')
 	#url(r'^manager/applicationApproved/$', views.applicationApproved, name='applicationApproved'),
 
 	)
