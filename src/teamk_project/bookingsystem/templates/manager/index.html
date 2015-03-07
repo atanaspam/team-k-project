@@ -2,6 +2,7 @@
 
 {% block sidebarNav %}
 {% include "sidebarNav/manager.html" %}
+{% load bookingsystem_extras %}
 {% endblock %}
 <!--!!!!!      ---------------- -TODO- ------------------     !!!!! -->
 <!--                            ATANAS                              -->
@@ -20,6 +21,7 @@
             <h2>Welcome !</h2>
         {% endif %}
 
+
         <!-- bookings pending confirmation -->
 <div class="panel panel-default">
   <div class="panel-heading">
@@ -32,7 +34,7 @@
             <div class="list-group">
 
                 {% if pending %}
-                    {% for session in pending %}
+                    {% for session in pending|orderby:"user_uid" %}
                                 <!-- list item -->
                                  {% url 'bookingsystem.views.sessionInfo' session.session_sessionid.sessionid as uurl %}
                                 <span class="list-group-item clearfix" style="color: #000;">

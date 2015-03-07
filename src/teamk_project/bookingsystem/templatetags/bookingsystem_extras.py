@@ -16,3 +16,7 @@ def is_parent(value):
 @register.filter(name='addcss')
 def addcss(field, css):
    return field.as_widget(attrs={"class":css})
+
+@register.filter
+def orderby(data, field):
+    return data.order_by(field)

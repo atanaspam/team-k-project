@@ -231,7 +231,9 @@ def managerIndex(request):
 	context = RequestContext(request)
 	manager = request.user
 	##			PENDING SESSIONS RETRIEVAL		##
-	pendingSessions = UserSelectsSession.objects.filter(status = 'P').order_by('user_uid__firstname')
+	pendingSessions = UserSelectsSession.objects.filter(status = 'P').order_by('user_uid')
+	for session in pendingSessions:
+		print session.user_uid
 	##			PENDING PAYERS RETRIEVAL		##
 	pendingPayments = Payment.objects.filter(haspayed=0)
 	pendingUsers = pendingPayments.values_list('usertopay')
