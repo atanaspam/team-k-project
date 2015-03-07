@@ -47,10 +47,10 @@
 		</div>
 	</div>
 	
-	
-
-		<a class="btn btn-default" href="/bookingsystem/coach/printSchedule" style="color:black">
+	{% if todayAssignedSessions or futureAssignedSessions %}
+		<a class="btn btn-default pull-right" href="/bookingsystem/coach/printScheduleCoach" style="color:black">
 			Print
 		</a>
+	{% endif %}
 
 {% endblock %}

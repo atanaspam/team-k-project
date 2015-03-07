@@ -3,19 +3,25 @@
 {% load bookingsystem_extras %}
 
 {% block sidebarNav %}
-{% if user.is_authenticated %}
-	{% if sidebar == "manager" %}
+	{% if menu == "manager" %}
 		{% include "sidebarNav/manager.html" %}
-	{% elif sidebar == "coach" %}
+	{% elif menu == "coach" %}
 		{% include "sidebarNav/coach.html" %}
-	{% elif sidebar == "parent" %}
+	{% elif menu == "parent" %}
 		{% include "sidebarNav/parent.html" %}
-	{% endif %}{% endif %}
+	{% endif %}
 {% endblock %}
 
 {% block mainArea %}
 	<br>
-	<form action="changeProfile.html" method="post">{% csrf_token %}
+	{% if menu == "error" %}
+		<script type="text/javascript">        
+		    document.location.href = "/"; 
+		</script>
+	{% else %}
+	
+	<form action="editProfile.html" method="post">{% csrf_token %}
+
 	    <!-- Personal Details -->
 		<div class="panel panel-default">
 			<div class="panel-heading">
@@ -25,8 +31,8 @@
 			<div class="panel-body">
 				<!-- Name -->
 				<div class="input-group">
-					<input type="text" class="form-control" value="{{ user.first_name }}" readonly aria-describedby="basic-addon2" style="max-width: 100px;">
-					<input type="text" class="form-control" value="{{ user.last_name }}" readonly aria-describedby="basic-addon1" style="max-width: 100px;">
+					<span class="input-group-addon" id="email" style="min-width: 130px;">Name</span>
+					<input type="text" class="form-control" value="{{ user.first_name }} {{ user.last_name }}" readonly >
 				</div>
 			</div>
 		</div> <!--panel-->
@@ -39,18 +45,19 @@
 			<div class="panel-body">
 				<!-- add body here -->
 				<!-- phone number -->
-				{% comment %}
 				<div class="input-group">
-					<span class="input-group-addon" id="telephone">#</span>
-					<input type="text" class="form-control" value="{{ user.telephone }}" aria-describedby="basic-addon1">
+					<span class="input-group-addon" id="telephone" style="min-width: 130px;">Telephone</span>
+					<input type="text" class="form-control" name="telephone" value="{{ telephone }}" readonly aria-describedby="basic-addon1" id="edit8">
 				</div>
-				{% endcomment %}
 				<!-- e-mail -->
 				<div class="input-group">
-					<span class="input-group-addon" id="email">Email:</span>
-					<!--<input type="text" class="form-control" value="{{ user.email }}" aria-describedby="basic-addon1"> -->
+					{% comment %}
+					<span class="input-group-addon" id="email" style="min-width: 130px;">Email</span>
 					 <p><font color="red">{{ form.email.errors }}</font></p>
                     {{form.email}}
+					{% endcomment %}
+					<span class="input-group-addon" id="email" style="min-width: 130px;">Email</span>
+					<input type="text" class="form-control" name="email" value="{{ user.email }}" aria-describedby="basic-addon1" readonly id="edit2">
 				</div>
 			</div>
 		</div> <!--panel-->
@@ -67,25 +74,63 @@
 				<!-- add body here -->
 				<!-- old password -->
 				<div class="input-group">
-					<span class="input-group-addon" id="oldpassword">&nbsp;Old Password *</span>
-					<input type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
+					<span class="input-group-addon" id="oldpassword" style="min-width: 130px;">Old Password</span>
+					<input type="password" class="form-control" aria-describedby="basic-addon1" readonly id="edit3">
 				</div>
 
 				<!-- new password -->
 				<div class="input-group">
-					<span class="input-group-addon" id="newpassword1">New Password *</span>
-					<input type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
+					<span class="input-group-addon" id="newpassword1" style="min-width: 130px;">New Password</span>
+					<input type="password" class="form-control" aria-describedby="basic-addon1" readonly id="edit4">
 				</div>
 
 				<!-- confirm new password -->
 				<div class="input-group">
-					<span class="input-group-addon" id="newpassword2">New Password *</span>
-					<input type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
+					<span class="input-group-addon" id="newpassword2" style="min-width: 130px;">New Password</span>
+					<input type="password" class="form-control" aria-describedby="basic-addon1" readonly id="edit5">
 				</div>
 
 			</div>
 		</div> <!--panel-->
+		
 		<!-- end of Account Settings -->
-		<INPUT Type="submit" class="btn btn-default" VALUE="Submit"/>
+		<a class="btn btn-default" ONCLICK="toggle_edit1(0);" id="edit1">
+				Edit
+		</a>
+	
+		<a class="btn btn-default" style="display: none" ONCLICK="toggle_edit2(0);" id="edit6">
+				Cancel
+		</a>
+		
+		<input type="hidden" name="id" value="{{ user.id }}">
+		<INPUT Type="submit" class="btn btn-default" VALUE="Save" style="display: none" id="edit7"/>
 	</form>
+	
+	<script>
+	function toggle_edit1() {
+			$("#edit1").hide()
+	    	$("#edit2").attr("readonly", false);
+			$("#edit3").attr("readonly", false);
+			$("#edit4").attr("readonly", false);
+			$("#edit5").attr("readonly", false);
+			$("#edit8").attr("readonly", false);
+			$("#edit6").show()
+			$("#edit7").show()
+	}
+	
+	function toggle_edit2() {
+		$("#edit6").hide()
+		$("#edit7").hide()
+		$("#edit2").val("{{ user.email }}")
+		$("#edit8").val("{{ telephone }}")
+	    $("#edit2").attr("readonly", true)
+		$("#edit3").attr("readonly", true)
+		$("#edit4").attr("readonly", true)
+		$("#edit5").attr("readonly", true)
+		$("#edit8").attr("readonly", true);
+		$("#edit1").show()
+	}
+	</script>
+	{% endif %}
+	
 {% endblock %}

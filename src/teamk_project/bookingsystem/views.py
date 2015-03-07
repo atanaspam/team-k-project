@@ -14,7 +14,7 @@ from django.db import models
 from django.db.models import Max
 from bookingsystem.forms import BlockFormMore, EditPersonalDetailsForm, CreateChildForm, WeekBlockForm, SessionFormMore, ManagerEditPersonalDetailsForm, EditUserPersonalDetailsForm, DefaultCoachesForm
 from datetime import timedelta
-import datetime, time
+import datetime, time, re
 from django.core.exceptions import ObjectDoesNotExist
 
 
@@ -146,7 +146,7 @@ def attended(request,id,sid):
 
 @login_required
 @user_passes_test(is_coach)
-def printSchedule(request):
+def printScheduleCoach(request):
 	context = RequestContext(request)
 	today = datetime.date.today()
 	userID = request.user.id
@@ -208,7 +208,15 @@ def editProfile(request):
     	userID = request.POST.get('id', '')
     	userObject = User.objects.get(id = userID)
     	userObject.email = request.POST.get('email', '')
+    	userObject.additionalinfo.telephone = request.POST.get('telephone', '')
     	userObject.save()
+
+    	# if not re.match(r"[^@]+@[^@]+\.[^@]+", userObject.email):
+    	# 	print "valid!"
+
+    	# additionalinfo = additionalinfo.objects.get_or_create(user_id = userID)
+    	# additionalinfo.telephone = request.POST.get('telephone', '')
+
         # form = EditUserPersonalDetailsForm(request.POST)
         # Have we been provided with a valid form?
         # if form.is_valid():
@@ -220,9 +228,20 @@ def editProfile(request):
 
     user = User.objects.get(id = user.id)
     context_dict = {'user':user}
+    context_dict['telephone'] = user.additionalinfo.telephone
 
-    return render_to_response('parent/editProfile.html', context_dict, context)
-
+    if request.META.get('HTTP_REFERER') is not None:
+	    if "bookingsystem/manager/" in request.META.get('HTTP_REFERER'):
+	    	context_dict['menu'] = "manager"
+	    elif "bookingsystem/coach/" in request.META.get('HTTP_REFERER'):
+	    	context_dict['menu'] = "coach"
+	    elif "bookingsystem/parent/" in request.META.get('HTTP_REFERER'):
+	    	context_dict['menu'] = "parent"
+	    else:
+	    	context_dict['menu'] = "error"
+	    return render_to_response('editProfile.html', context_dict, context)
+    else:
+		return redirect(request.path.split("/editProfile.html", 1)[0])
 
 
 @login_required
@@ -723,30 +742,44 @@ def childProfile(request, id):
 	context_dict = {}
 	parentid = request.user.id
 	child = Client.objects.get(uid=id)
-	sessions = UserSelectsSession.objects.filter(user_uid=child.uid)
-	Medical = Medicalcondition.objects.get(ownerid = child.uid)
-	belongsto = child.belongsto
 
+	belongsto = child.belongsto
 	if belongsto.id == parentid:
+		sessions = UserSelectsSession.objects.filter(user_uid=child.uid)
+
+		try:
+			Medical = Medicalcondition.objects.get(ownerid = child.uid)
+			context_dict['medical'] = Medical
+		except:
+			pass
+
 		context_dict['sessions'] = sessions
 		context_dict['child'] = child
-		context_dict['medical'] = Medical
+		print context_dict
+
 	 	if request.method == 'POST':
 	 		child.telephone = request.POST.get('telephone', '')
 	 		child.email = request.POST.get('email', '')
-	 		Medical.condition = request.POST.get('medicalconditions', '')
 			child.save()
-	 		# form = EditPersonalDetailsForm(request.POST)
-	 		# if form.is_valid():
-	 		# 	newinfo = form.save(commit=False)
-	 		# 	print newinfo
-	 		#If the request was not a POST, display the form to enter details.
+
+	 		if 'Medical' in locals():
+	 			Medical.condition = request.POST.get('medicalconditions', '')
+	 			Medical.save()
+	 		else:
+	 			Medicalcondition.objects.create(ownerid = id, condition = request.POST.get('medicalconditions', ''))
+
 	 	else:
 	 		form = EditPersonalDetailsForm()
 	 		context_dict['form'] = form
 	 	return render_to_response('parent/childProfile.html', context_dict, context)
 	else:
 		return redirect('/bookingsystem/parent/')
+
+			# form = EditPersonalDetailsForm(request.POST)
+	 		# if form.is_valid():
+	 		# 	newinfo = form.save(commit=False)
+	 		# 	print newinfo
+	 		#If the request was not a POST, display the form to enter details.
 
 
 @login_required
@@ -797,7 +830,8 @@ def managerChildProfile(request, id):
 	context_dict = {}
 	child = Client.objects.get(uid=id)
 	sessions = UserSelectsSession.objects.filter(user_uid=child.uid)
-	parent = User.objects.get(id=child.belongsto.id)
+	print child.belongsto_id
+	parent = User.objects.get(id=child.belongsto_id)
 	telephone = parent.additionalinfo.telephone
 	print telephone, 'AAA'
 	if request.method == 'POST':
