@@ -823,7 +823,8 @@ def managerChildProfile(request, id):
 	context_dict = {}
 	child = Client.objects.get(uid=id)
 	sessions = UserSelectsSession.objects.filter(user_uid=child.uid)
-	parent = User.objects.get(id=child.belongsto.id)
+	print child.belongsto_id
+	parent = User.objects.get(id=child.belongsto_id)
 	telephone = parent.additionalinfo.telephone
 	print telephone, 'AAA'
 	if request.method == 'POST':

@@ -24,15 +24,10 @@
                 	<!-- list item -->
                 	 {% url 'bookingsystem.views.childSessions' session.session_sessionid.sessionid as uurl %}
                 	 {{ uurl }}
-                	<a class="list-group-item clearfix" href={{ uurl }} >
-                  		<span class="glyphicon glyphicon-file"></span>
+                	<span class="list-group-item clearfix" style="color: #000;">
+                  		<span class="glyphicon glyphicon-file" style="color: #4179FA;"></span>
                     	{{session.session_sessionid.begintime|date:"d M y"}} from {{session.session_sessionid.begintime|date:"g:i A"}} to {{session.session_sessionid.endtime|date:"g:i A"}}
-                  	  	<span class="pull-right">
-                    		<button class="btn btn-xs btn-warning">
-                      			<span class="glyphicon glyphicon-calendar"></span>
-                    		</button>
-                  	  	</span>
-                	</a> <!-- end of list group item -->
+					</span> <!-- end of list group item -->
 						{% endfor %}
 					{% else %}
             	This child is not enrolled in any sessions.
