@@ -800,27 +800,24 @@ def managerChildProfile(request, id):
 @user_passes_test(is_parent)
 def addNewChild(request):
 	context = RequestContext(request)
-	#context_dict={}
+	form = CreateChildForm()
 	context_dict = {'parent': request.user}
 	#print lastID
 	if request.method == 'POST':
 		form = CreateChildForm(request.POST)
 		# Have we been provided with a valid form?
 		if form.is_valid():
-			info=form.save(commit=False)
-			info.uid = getLastID
-			info.ismember = 0
-			info.belongsto = request.user
-			print info
-			# info.save()
+			child=form.save(commit=False)
+			child.uid = getLastID
+			child.ismember = 0
+			child.belongsto = request.user
+			child.experiencelevel=0
+			child.save()
 			# Redirect on success
 			return redirect('/success.html')
-
-	else:
-		# If the request was not a POST, display the form to enter details.
-		form = CreateChildForm()
-		context_dict['form'] = form
-		return render_to_response('parent/addNewChild.html', context_dict, context)
+	# If the request was not a POST, display the form to enter details.
+	context_dict['form'] = form
+	return render_to_response('parent/addNewChild.html', context_dict, context)
 
 @login_required
 @user_passes_test(is_parent)
