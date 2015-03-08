@@ -328,6 +328,15 @@ def blockInfo(request, bid):
 	context_dict['details'] = blocks
 	context_dict['blockSessions'] = blockSessions
 	context_dict['blockid'] = bid
+
+	if request.META.get('HTTP_REFERER') is not None:
+		if "/bookingsystem/manager/sessionInfo" in request.META.get('HTTP_REFERER'):
+			context_dict['previous'] = "/bookingsystem/manager/blocks"
+		else:
+			context_dict['previous'] = request.META.get('HTTP_REFERER')
+	else:
+		context_dict['previous'] = "/"
+
 	return render_to_response('manager/blockInfo.html', context_dict, context)
 
 ################################################################################
@@ -394,6 +403,7 @@ def coaches(request):
 
 	context_dict['allCoaches'] = allCoaches
 	context_dict['notCoaches'] = notCoaches
+
 	return render_to_response('manager/coaches.html', context_dict, context)
 
 
@@ -842,22 +852,31 @@ def managerChildProfile(request, id):
 	context_dict = {}
 	child = Client.objects.get(uid=id)
 	sessions = UserSelectsSession.objects.filter(user_uid=child.uid)
-	print child.belongsto_id
 	parent = User.objects.get(id=child.belongsto_id)
-	telephone = parent.additionalinfo.telephone
-	print telephone, 'AAA'
+
+	try:
+		telephone = parent.additionalinfo.telephone
+	except:
+		telephone = ""
+
 	if request.method == 'POST':
 		form = ManagerEditPersonalDetailsForm(request.POST)
 
 		#If the request was not a POST, display the form to enter details.
 	else:
-		print child
 		form = ManagerEditPersonalDetailsForm()
+		print parent
 		context_dict['parentInfo'] = parent
 		context_dict['telephone'] = telephone
 		context_dict['form'] = form
 		context_dict['sessions'] = sessions
 		context_dict['child'] = child
+
+	if request.META.get('HTTP_REFERER') is not None:
+		context_dict['previous'] = request.META.get('HTTP_REFERER')
+	else:
+		context_dict['previous'] = "/"
+
 	return render_to_response('manager/childProfile.html', context_dict, context)
 
 ################################################################################
@@ -927,7 +946,7 @@ def applicationApproved(request):
 					session.session_sessionid.isfull=1
 				session.session_sessionid.save()
 				session.save()
-	return HttpResponse('Success!')
+	return HttpResponse('Approved!')
 
 @login_required
 @user_passes_test(is_parent)
@@ -961,7 +980,7 @@ def applicationDeclined(request):
 				#i=(i+1)%10
 				session.status = 'D' # set from pending to confirmed
 				session.save()
-	return HttpResponse('Success!')
+	return HttpResponse('Declined!')
 
 @login_required
 @user_passes_test(is_manager)
@@ -974,7 +993,6 @@ def sessionInfo(request, sessionID):
 	context_dict['childrenNot'] = childrenNot
 	sessionDetails = Session.objects.get(sessionid=sessionID)
 	context_dict['details'] = sessionDetails
-	#sessionCoachedByObjects = sessionCoachedBy.objects.filter(session_id = sessionID)
 
 	coacheGroups = Group.objects.get(name='Coach')
 	allCoaches = User.objects.filter(Q(groups=coacheGroups))
@@ -982,7 +1000,14 @@ def sessionInfo(request, sessionID):
 	unassignedCoaches = allCoaches.filter(~Q(id__in = assignedCoaches.values('id')))
 	context_dict['assignedCoaches'] = assignedCoaches
 	context_dict['unassignedCoaches'] = unassignedCoaches
-	print sessionDetails.coachedby.all()
+
+	if request.META.get('HTTP_REFERER') is not None:
+		if "/bookingsystem/manager/managerChildProfile/" in request.META.get('HTTP_REFERER'):
+			context_dict['previous'] = "/bookingsystem/manager/sessions"
+		else:
+			context_dict['previous'] = request.META.get('HTTP_REFERER')
+	else:
+		context_dict['previous'] = "/"
 
 	return render_to_response('manager/sessionInfo.html', context_dict, context)
 
@@ -1258,50 +1283,52 @@ def setDefaultCoaches(request):
 			print form
 		except ObjectDoesNotExist:
 			form = DefaultCoachesForm()
-	return render_to_response('manager/setDefaultCoaches.html', {'form': form}, context)
 
-# @login_required
-# @user_passes_test(is_manager)
-# def applicationAllApproved(request):
-# 	global i
-# 	context = RequestContext(request)
-# 	sessionID = None
-# 	if request.method == 'GET':
-# 		user = request.GET['userid']
-# 		#print user
-# 		session = UserSelectsSession.objects.filter(user_uid = user )
-# 		if session:
+	if request.META.get('HTTP_REFERER') is not None:
+		context_dict = {'previous' : request.META.get('HTTP_REFERER')}
+	else:
+		context_dict = {'previous' : "/"}
 
-# 			approvalHistory.insert(i, session)
-# 			i=(i+1)%10
-# 			session.status = 'C' # set from pending to confirmed
-# 			session.session_sessionid.capacity -= 1
-# 			if session.session_sessionid.capacity == 0:
-# 				session.session_sessionid.isfull=1
-# 			session.session_sessionid.save()
-# 			session.save()
-# 	return HttpResponse('Success!')
+	context_dict['form'] = form
 
-# @login_required
-# @user_passes_test(is_manager)
-# def applicationAllDeclined(request):
-# 	global i
-# 	context = RequestContext(request)
-# 	sessionID = None
-# 	if request.method == 'GET':
-# 		sessionID = request.GET['session_sessionid']
-# 		user = request.GET['userid']
-# 		#print user
-# 		if sessionID:
-# 			session = UserSelectsSession.objects.get( Q(session_sessionid = sessionID) & Q(user_uid = user) )
-# 			if session:
-# 				#print session.session_sessionid
-# 				approvalHistory.insert(i, session)
-# 				i=(i+1)%10
-# 				session.status = 'C' # set from pending to confirmed
-# 				session.session_sessionid.capacity -= 1
-# 				if session.session_sessionid.capacity == 0:
-# 					session.session_sessionid.isfull=1
-# 				session.session_sessionid.save()
-# 				session.save()
-# 	return HttpResponse('Success!')
+
+	return render_to_response('manager/setDefaultCoaches.html', context_dict, context)
+
+@login_required
+@user_passes_test(is_manager)
+def applicationAllApproved(request):
+	global i
+	context = RequestContext(request)
+	sessionID = None
+	if request.method == 'GET':
+		user = request.GET['userid']
+		#print user
+		sessions = UserSelectsSession.objects.filter(Q(user_uid = user) & Q(status='P'))
+		if sessions:
+			for session in sessions:
+				approvalHistory.insert(i, session)
+				i=(i+1)%25
+				session.status = 'C' # set from pending to confirmed
+				session.session_sessionid.capacity -= 1
+				if session.session_sessionid.capacity == 0:
+					session.session_sessionid.isfull=1
+				print session.sessionid, session.status
+				#session.session_sessionid.save()
+				#session.save()
+	return HttpResponse('Approved!')
+
+@login_required
+@user_passes_test(is_manager)
+def applicationAllDeclined(request):
+	global i
+	context = RequestContext(request)
+	sessionID = None
+	if request.method == 'GET':
+		user = request.GET['userid']
+		sessions = UserSelectsSession.objects.filter(Q(user_uid = user) & Q(status='P'))
+		if sessions:
+			for session in sessions:
+				session.status = 'D' # set from pending to confirmed
+				print session.sessionid, session.status
+				#session.save()
+	return HttpResponse('Declined!')

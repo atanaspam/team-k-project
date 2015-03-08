@@ -88,7 +88,10 @@
 					<span class="glyphicon glyphicon-user" style="color: #4179FA;"></span>
 						{{ child.user_uid }}
 					<span class="pull-right">
-						<a href="removeChildFromSession/{{ child.user_uid.uid }}/{{ details.sessionid }}" class="btn btn-xs btn-danger" id ="info">
+						<a href="managerChildProfile/{{ child.user_uid.uid }}" class="btn btn-xs btn-info">
+                      		<span class="glyphicon glyphicon-info-sign"></span>
+                    	</a>
+						<a href="removeChildFromSession/{{ child.user_uid.uid }}/{{ details.sessionid }}" class="btn btn-xs btn-danger">
                       		<span class="glyphicon glyphicon-remove"></span>
                     	</a>
 					</span>
@@ -188,9 +191,11 @@
 			{% endif %}
 		</div>
 	</div><!--/.panel-->
-
-
-	<INPUT Type="button" class="btn btn-default" VALUE="Back" ONCLICK="window.location.href='sessions.html'"/>
+	
+	<a href="{{ previous }}" class="btn btn-default">
+  		Cancel
+	</a>
+	
 	<span class="pull-right">
 		<a href="removeSession/{{ details.sessionid }}" class="btn btn-danger" id ="info">
       		Remove Session

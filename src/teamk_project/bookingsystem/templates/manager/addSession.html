@@ -18,6 +18,37 @@
 
 {% endcomment %}
 
+
+{% load bookingsystem_extras %}
+	{% load bookingsystem_extras %}
+	<br>
+	<form action="" class="form-horizontal" method="post">{% csrf_token %}
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Registration</h3>
+			</div>
+
+			<div class="panel-body">
+  				{% for field in form %}
+  					<div class="form-group">
+  						<p><font color="red">{{ field.errors }}</font></p>
+  						<label class="control-label col-xs-10 col-sm-4 col-md-4">{{ field.label_tag }}</label>
+  						<div class="col-xs-15 col-sm-7 col-md-6">
+  							{{ field|addcss:"form-control col-xs-1 col-sm-1 col-md-1" }}
+  						</div>
+  					</div>
+  				{% endfor %}
+			</div>
+		</div>
+		<input class="btn btn-default pull-right" type="submit" value="Create Session" />
+	</form>
+  	
+	<a class="btn btn-default" href="/bookingsystem/manager/sessions">
+  		Cancel
+	</a>
+
+{% comment %}
+
 <form action="/bookingsystem/manager/addSession.html" method="post">
 	<div class="panel panel-default"><!-- Personal Details -->
 		<div class="panel-heading">
@@ -46,5 +77,7 @@
 	</div> <!-- end of Session Details -->
 
 </form>
+
+{% endcomment %}
 
 {% endblock %}

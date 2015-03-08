@@ -286,8 +286,8 @@ class SplitSelectDateTimeWidget(widgets.MultiWidget):
 		return u''.join(rendered_widgets)
 
 class SessionForm(forms.ModelForm):
-	begintime = forms.DateTimeField(widget=SplitSelectDateTimeWidget(), label="Beginning of the session")
-	endtime = forms.DateTimeField(widget=SplitSelectDateTimeWidget(), label="End of the session")
+	begintime = forms.DateTimeField(widget=SplitSelectDateTimeWidget(attrs={'style': 'width:33.3%', 'class': 'form-control col-xs-1 col-sm-1 col-md-1'}), label="Beginning of the session")
+	endtime = forms.DateTimeField(widget=SplitSelectDateTimeWidget(attrs={'style': 'width:33.3%', 'class': 'form-control col-xs-1 col-sm-1 col-md-1'}), label="End of the session")
 	block_blockid = forms.Select()
 	capacity = forms.IntegerField(label="Capacity of the session")
 	agegroup = forms.CharField(label="Associated age group")
@@ -298,7 +298,7 @@ class SessionForm(forms.ModelForm):
 
 class SessionFormMore(SessionForm):
 	venue_choices = ((1, "Court 1"), (2, "Court 2"), (3, "Court 3"), (4, "Court 4"), (5, "Court 5"), (6, "Court 6"))
-	subvenue = forms.MultipleChoiceField(choices=venue_choices, required=True, widget=forms.CheckboxSelectMultiple(), label='Venue:')
+	subvenue = forms.MultipleChoiceField(choices=venue_choices, required=True, widget=forms.SelectMultiple(), label='Venue:')
 	coachGroups = Group.objects.filter(id=3)
 	coachChoices = User.objects.filter(groups=coachGroups).values_list('id','first_name', 'last_name')
 	COACH_CHOICES = ((0, 'None'), )

@@ -43,3 +43,7 @@ def nonEmpty(block, childID):
 	available = Session.objects.filter(~Q(sessionid__in=[session.session_sessionid.sessionid for session in booked]) )
  	sessions = available.filter((Q(begintime__gte=datetime.datetime.now()) & Q(begintime__gte=block.begindate)) & Q(begintime__lte=block.enddate)  & Q(agegroup=getAgeGroup(age.days/365)) & Q(isfull=0))# & Q(block_blockid=block.blockid))
 	return sessions.exists()
+
+@register.filter
+def is_anonymous(value):
+    return value.is_anonymous()

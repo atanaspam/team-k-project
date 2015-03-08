@@ -39,7 +39,7 @@
 
 		    			<a class="navbar-brand" href="/">Western Tennis Club</a>
 						{% if user.is_authenticated %}
-						<div class="btn-group" style="position: fixed; top:8px;">
+						<div class="btn-group" style="position: fixed; top:8px; align:left">
 					  		{% if user|is_manager %} <button type="button" class="btn btn-primary">Manager</button>
 								{% if user|is_coach or user|is_parent %}
 									<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -78,7 +78,7 @@
 
 
 
-				
+
 				</div>
 		    </div>
 
@@ -117,14 +117,13 @@
 		    	<div class="row">
 					{% block footer %}
 					<ul class="list-unstyled">
-		            	<li class="col-sm-4 col-xs-6"><a href="#">About the Club</a></li>
-		            	<li class="col-sm-4 col-xs-6"><a href="#">Venues</a></li>
-		            	<li class="col-sm-4 col-xs-6"><a href="#">Contact</a></li>
-		            	<li class="col-sm-4 col-xs-6"><a href="#">Age Groups</a></li>
-		            	<li class="col-sm-4 col-xs-6"><a href="#">Login</a></li>
-		           	 	<li class="col-sm-4 col-xs-6"><a href="#">News</a></li>
-		            	<li class="col-sm-4 col-xs-6"><a href="#">Contact</a></li>
-		            	<li class="col-sm-4 col-xs-6"><a href="#">Events</a></li>
+		            	<li class="col-sm-4 col-xs-6"><a href="/about">About the Club</a></li>
+		            	<li class="col-sm-4 col-xs-6"><a href="/venues">Venues</a></li>
+		            	<li class="col-sm-4 col-xs-6"><a href="/conact">Contact</a></li>
+		            	<li class="col-sm-4 col-xs-6"><a href="ageGroups">Age Groups</a></li>
+		            	<li class="col-sm-4 col-xs-6"><a href="/login_view">Login</a></li>
+		           	 	<li class="col-sm-4 col-xs-6"><a href="/news">News</a></li>
+		            	<li class="col-sm-4 col-xs-6"><a href="/events">Events</a></li>
 		          	</ul>
 					{% endblock%}
 				</div><!--/row-->
