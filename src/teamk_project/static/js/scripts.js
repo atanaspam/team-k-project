@@ -3,18 +3,21 @@ $(document).ready(function(){
   $('[data-toggle=offcanvas]').click(function() {
     $('.row-offcanvas').toggleClass('active');
   });
+        
 
-	   if ($(window).width() < 960) {
+	   if ($(window).width() < 390) {
 		   $( ".navbar-brand" ).replaceWith( "<a class='navbar-brand' href='/'>WTC</a>" );
 		}
 		else {
 			   $( ".navbar-brand" ).replaceWith( "<a class='navbar-brand' href='/'>Western  Tennis Club</a>" );
 			}
 
+
 });
 
+
 $(window).resize(function() {
-  if ($(window).width() < 960) {
+  if ($(window).width() < 390) {
 	   $( ".navbar-brand" ).replaceWith( "<a class='navbar-brand' href='/'>WTC</a>" );
 	}
 	else {
