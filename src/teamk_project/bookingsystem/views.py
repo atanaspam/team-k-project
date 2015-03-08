@@ -259,12 +259,6 @@ def managerIndex(request):
 		else:
 			result[item.user_uid] = []
 			result[item.user_uid].append(item)
-	# results = {A}
-	# for session in pendingSessions:
-	# 	if session.user_id in person[0].user_id:
-	# 		person.append(session)
-	# print results
-
 
 	##			PENDING PAYERS RETRIEVAL		##
 	pendingPayments = Payment.objects.filter(haspayed=0)
