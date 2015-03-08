@@ -8,20 +8,22 @@
 	<div class="panel-body" align="center">
 		<form action="login_view/" method="post">{% csrf_token %}
 			<h2>Login</h2>
+		{{ form.non_field_errors }}
+		{% for field in form %}
+	    <div class="form-group">
+	       <p><font color="red">{{ field.errors }}</font></p>
+	       {{ field.label_tag }} {{ field }}
+	    </div>
+	    {% endfor %}
 
-			<p><td><label for="username">Username</label></p>
-			<p><td><input class="studentLabel" type="text" name="username" value="" id="username" ></p>
-			<p><label for="password">Password</label><br></p>
-			<p><input class="studentLabel" type="password" name="password" value="" id="password"></p>
-			<br>
-            <input class="btn btn-default" type="submit" value="Login" />
+
+		<input class="btn btn-default" type="submit" value="Login" />
             <input type="hidden" name="next" value="{{ next|escape }}" />
 
 				<a class="btn btn-default" href="/register.html">
            			Register
            		</a>
-
-		</form>		
+		</form>
 
 		<br>
 	</div>

@@ -27,6 +27,16 @@ def is_coach(value):
 def is_parent(value):
     return value.groups.filter(name='Parent').exists()
 
+# Not Used / Not working
+@register.filter
+def is_anon(value):
+	print value.is_anonymous()
+	return value.is_anonymous()
+
+# @register.filter
+# def is_false(arg):
+#     return arg is False
+
 @register.filter(name='addcss')
 def addcss(field, css):
    return field.as_widget(attrs={"class":css})
@@ -44,6 +54,3 @@ def nonEmpty(block, childID):
  	sessions = available.filter((Q(begintime__gte=datetime.datetime.now()) & Q(begintime__gte=block.begindate)) & Q(begintime__lte=block.enddate)  & Q(agegroup=getAgeGroup(age.days/365)) & Q(isfull=0))# & Q(block_blockid=block.blockid))
 	return sessions.exists()
 
-@register.filter
-def is_anonymous(value):
-    return value.is_anonymous()

@@ -660,7 +660,8 @@ def userBookings(request, num):
 	context_dict = {'blocks': weeks}
 	context_dict['child'] = child
 	return render_to_response('parent/userBookings.html', context_dict, context)
-	
+
+
 @login_required
 @user_passes_test(is_parent)
 def confirmBookings(request, uID):
@@ -720,8 +721,6 @@ def bookSeason1(request, blockID, uID):
  	child = Client.objects.get(uid=uID)
 	owner = Block.objects.get(blockid=blockID)
 	age = datetime.date.today() - child.dateofbirth
-	preSelectedSessions = UserSelectsSession.objects.filter(user_uid=child.uid)
-	availableSessions = Session.objects.filter(~Q(sessionid__in=[session.session_sessionid.sessionid for session in preSelectedSessions]) )
  	sessions = Session.objects.filter( Q(block_blockid=blockID) & Q(begintime__gte=datetime.datetime.now() ) & Q(begintime__lte=owner.enddate) & Q(agegroup=getAgeGroup(age.days/365)) & Q(isfull=0))
  	context_dict = {'sessions': sessions}
  	context_dict['child'] = child

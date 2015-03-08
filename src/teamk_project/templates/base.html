@@ -86,7 +86,7 @@
 		    	<div class="row row-offcanvas row-offcanvas-left">
 
 					<!-- sidebar -->
-					{% if user.is_authenticated %}
+
 					<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
 						<div data-spy="affix-top" data-offset-top="45" data-offset-bottom="90">
 							<ul class="nav" id="sidebar-nav">
@@ -99,7 +99,7 @@
 							<span><img src="{% static "Western Tennis Club tsp.png" %}" width="88" height="88"></span>
 						</div>
 					</div>
-					{% endif %}
+
 
 			        <!-- main area -->
 			        <div class="col-xs-12 col-sm-9" data-spy="scroll" data-target="#sidebar-nav">
@@ -121,7 +121,7 @@
 		            	<li class="col-sm-4 col-xs-6"><a href="/venues">Venues</a></li>
 		            	<li class="col-sm-4 col-xs-6"><a href="/conact">Contact</a></li>
 		            	<li class="col-sm-4 col-xs-6"><a href="ageGroups">Age Groups</a></li>
-		            	<li class="col-sm-4 col-xs-6"><a href="/login_view">Login</a></li>
+		            	<li class="col-sm-4 col-xs-6"><a href="/login">Login</a></li>
 		           	 	<li class="col-sm-4 col-xs-6"><a href="/news">News</a></li>
 		            	<li class="col-sm-4 col-xs-6"><a href="/events">Events</a></li>
 		          	</ul>

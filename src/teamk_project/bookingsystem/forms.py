@@ -9,6 +9,7 @@ from django.utils.safestring import mark_safe
 import re
 from django.contrib.auth.models import User, Group
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib import auth
 
 
 #from django.forms import MultiWidget
@@ -327,6 +328,31 @@ class SessionForm1(forms.ModelForm):
         model = Session
         fields = ('begindate', 'begintime', 'endtime', 'capacity', 'agegroup', 'skillgroup')
 ################################################################################
+class loginForm(forms.ModelForm):
+	username = forms.CharField(label="Username")
+	password = forms.CharField(widget=forms.PasswordInput())
+	class Meta:
+		model = User
+		fields = ('username', 'password')
+
+	def clean(self):
+		cleaned_data = self.cleaned_data
+		if 'username'  in cleaned_data:
+			username = cleaned_data['username']
+		else:
+			raise forms.ValidationError("Please enter a username")
+		if 'password'  in cleaned_data:
+			password = cleaned_data['password']
+		else:
+			raise forms.ValidationError("Please enter a password")
+		username = cleaned_data['username']
+		password = cleaned_data['password']
+		user = auth.authenticate(username=username, password=password)
+		if user:
+			return cleaned_data
+		else:
+			print 'AAAA'
+			raise forms.ValidationError("Invalid username/password combination.")
 
 class RegisterForm(forms.ModelForm):
 	username = forms.CharField(label="Username")
