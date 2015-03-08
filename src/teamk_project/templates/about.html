@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load bookingsystem_extras %}
+{% block sidebarNav %}
+
+{% if user|is_manager %}
+	{% include "sidebarNav/manager.html" %}
+
+{% elif user|is_coach %}
+	{% include "sidebarNav/coach.html" %}
+
+{% elif user|is_parent %}
+	{% include "sidebarNav/parent.html" %}
+
+{% elif user|is_anonymous %}
+	{% include "sidebarNav/anon.html" %}
+
+{% endif %}
+
+{% endblock %}
+
+  {% block mainArea %}
+About
+{% endblock %}

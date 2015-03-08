@@ -107,11 +107,11 @@ def fail(request):
     return render_to_response('fail.html', context_dict, context)
 
 def editProfile(request):
-    
+
     context = RequestContext(request)
     user = request.user
     context_dict = {'user':user}
-    
+
     if "/manager/" in request.META.get('HTTP_REFERER'):
         context_dict['sidebar'] = "manager"
     elif "/coach/" in request.META.get('HTTP_REFERER'):
@@ -130,12 +130,38 @@ def editProfile(request):
         context['form'] = form
     return render_to_response('editProfile.html', context_dict, context)
 
-def changePassword(request):
+def about(request):
     context = RequestContext(request)
-    if request.method == 'POST':
-        form = PasswordChangeForm()
-        if form.is_valid():
-            print form
-    else:
-        form = PasswordChangeForm()
-    return render_to_response('changePassword.html', {'form':form}, context)
+    user = request.user
+    context_dict = {'user':user}
+    return render_to_response('about.html', context_dict, context)
+
+def ageGroups(request):
+    context = RequestContext(request)
+    user = request.user
+    context_dict = {'user':user}
+    return render_to_response('ageGroups.html', context_dict, context)
+
+def contact(request):
+    context = RequestContext(request)
+    user = request.user
+    context_dict = {'user':user}
+    return render_to_response('contact.html', context_dict, context)
+
+def events(request):
+    context = RequestContext(request)
+    user = request.user
+    context_dict = {'user':user}
+    return render_to_response('events.html', context_dict, context)
+
+def news(request):
+    context = RequestContext(request)
+    user = request.user
+    context_dict = {'user':user}
+    return render_to_response('news.html', context_dict, context)
+
+def index(request):
+    context = RequestContext(request)
+    user = request.user
+    context_dict = {'user':user}
+    return render_to_response('index.html', context_dict, context)

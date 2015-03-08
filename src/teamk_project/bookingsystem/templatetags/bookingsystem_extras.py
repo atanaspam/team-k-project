@@ -20,3 +20,7 @@ def addcss(field, css):
 @register.filter
 def orderby(data, field):
     return data.order_by(field)
+
+@register.filter
+def is_anonymous(value):
+    return value.is_anonymous()

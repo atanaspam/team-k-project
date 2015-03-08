@@ -851,7 +851,6 @@ def managerChildProfile(request, id):
 	context_dict = {}
 	child = Client.objects.get(uid=id)
 	sessions = UserSelectsSession.objects.filter(user_uid=child.uid)
-	print child.belongsto_id
 	parent = User.objects.get(id=child.belongsto_id)
 
 	try:
@@ -864,8 +863,8 @@ def managerChildProfile(request, id):
 
 		#If the request was not a POST, display the form to enter details.
 	else:
-		print child
 		form = ManagerEditPersonalDetailsForm()
+		print parent
 		context_dict['parentInfo'] = parent
 		context_dict['telephone'] = telephone
 		context_dict['form'] = form

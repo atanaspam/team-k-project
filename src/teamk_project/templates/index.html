@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load bookingsystem_extras %}
+{% block sidebarNav %}
+
+{% if user|is_manager %}
+	{% include "sidebarNav/manager.html" %}
+
+{% elif user|is_coach %}
+	{% include "sidebarNav/coach.html" %}
+
+{% elif user|is_parent %}
+	{% include "sidebarNav/parent.html" %}
+
+{% elif user|is_anonymous %}
+	{% include "sidebarNav/anon.html" %}
+
+{% endif %}
+
+{% endblock %}
+
+{% block mainArea %}
+
+<!-- main area -->
+        <div class="col-xs-12 col-sm-9" data-spy="scroll" data-target="#sidebar-nav">
+
+          <h1 id="section1"><br>
+            <br>
+          Why Western tennis club?</h1>
+          <p>Western tennis club is the best, dude. Wanna know why?</p>
+
+          <p>We have pizza day on Fridays  and ALL children are welcome to stay for pizza including the morning children. They need to let the coach know in the morning when they arrive and hand in £3.50 for this on a Thursday. If morning children are staying for pizza, they can be collected at 1 pm instead of 1230 pm.
+
+We sometimes have a water fight on Friday afternoons (weather dependent). The children get very excited about this but we really just stop at 240, let them throw water at each other (and the unsuspecting coaches) and then send them in to get changed. Change of clothes compulsory. There is also an alternative activity if the children would rather not take part.</p>
+
+          <h1 id="section2">Available Courses</h1>
+          <p>Who cares? We have pizza day on Fridays  and ALL children are welcome to stay for pizza including the morning children. They need to let the coach know in the morning when they arrive and hand in £3.50 for this on a Thursday. If morning children are staying for pizza, they can be collected at 1 pm instead of 1230 pm.
+
+We sometimes have a water fight on Friday afternoons (weather dependent). The children get very excited about this but we really just stop at 240, let them throw water at each other (and the unsuspecting coaches) and then send them in to get changed. Change of clothes compulsory. There is also an alternative activity if the children would rather not take part.</p>
+
+          <h1 id="section3">Make it rain</h1>
+          <p>We have pizza day on Fridays  and ALL children are welcome to stay for pizza including the morning children. They need to let the coach know in the morning when they arrive and hand in £3.50 for this on a Thursday. If morning children are staying for pizza, they can be collected at 1 pm instead of 1230 pm.
+
+We sometimes have a water fight on Friday afternoons (weather dependent). The children get very excited about this but we really just stop at 240, let them throw water at each other (and the unsuspecting coaches) and then send them in to get changed. Change of clothes compulsory. There is also an alternative activity if the children would rather not take part.</p>
+
+        </div><!-- /.col-xs-12 main -->
+{% endblock %}
