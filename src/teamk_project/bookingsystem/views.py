@@ -710,7 +710,8 @@ def bookSeason1(request, blockID, uID):
  	context = RequestContext(request)
  	child = Client.objects.get(uid=uID)
 	owner = Block.objects.get(blockid=blockID)
- 	sessions = Session.objects.filter( Q(begintime__gte=datetime.datetime.now() ) & Q(begintime__lte=owner.enddate))
+	age = datetime.date.today() - child.dateofbirth
+ 	sessions = Session.objects.filter( Q(block_blockid=blockID) & Q(begintime__gte=datetime.datetime.now() ) & Q(begintime__lte=owner.enddate) & Q(agegroup=getAgeGroup(age.days/365)) & Q(isfull=0))
  	context_dict = {'sessions': sessions}
  	context_dict['child'] = child
  	return render_to_response('parent/bookSeason.html', context_dict, context)

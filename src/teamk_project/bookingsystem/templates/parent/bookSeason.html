@@ -24,7 +24,7 @@
           {% for session in sessions %}
           <tr class="greylabel">
             <td class="textCentered">
-                <input type="checkbox" name="checked" checked="checked" disabled="disabled" value={{session.sessionid}}/>
+                <input type="checkbox" checked disabled/><input type="checkbox" name="afternoon" checked="checked" style="display:none;" value="{{session.sessionid}}"/>
             </td>
             <td>{{session.begintime|date:"D, d M"}}</td>
             <td>{{session.begintime|time:"H:i"}}</td>
@@ -33,11 +33,12 @@
             <td>{{session.capacity}}</td>
           </tr>
           {% endfor %}
+        </tbody>
+      </table>
      {% else %}
           <strong> - No sessions available in that period.</strong>
      {% endif %}
-        </tbody>
-      </table>
+
 	   {% endwith %}
     	{% if sessions %}<input class="btn btn-default" style="float:right;" type="submit" value="Submit" />{% endif %}
 

@@ -27,13 +27,6 @@
 						</div>
 
 						<div id="collapse{{ forloop.counter }}" class="accordion-body collapse" role="tabpanel">
-						{% comment %}
-							!!!!!!!!! NOT WORKING !!!!!!!
-							<iframe src={{uurl|add:"bookSessions"|add:ID|add:"/"|add:uid}} width="100%" height="250px" style="overflow: auto; -webkit-overflow-scrolling: touch;"/>
-						</div>
-
-						{% endcomment %}
-						{% comment %}  Previous Version		{% endcomment %}
  						<div>
 					    <object type="text/html" data={{uurl|add:"bookSessions"|add:ID|add:"/"|add:uid}}  width="100%" height="250px" style="overflow:auto;border: 5px ridge rgb(211, 211, 218)">
 					    </object></div>					</div>
@@ -47,12 +40,6 @@
 							</a>
 						</div>
 						<div id="collapse{{ forloop.counter }}" class="accordion-body collapse" role="tabpanel">
-							{% comment %}
-						    <iframe src={{uurl|add:"bookSeason"|add:ID|add:"/"|add:uid}} width="100%" height="350px" style="overflow: auto; -webkit-overflow-scrolling: touch;"/>
-						</div>
-							{% endcomment %}
-
-							{% comment %} Previous Version {% endcomment %}
 
 							<div>
 					    <object type="text/html" data={{uurl|add:"bookSeason"|add:ID|add:"/"|add:uid}}  width="100%" height="250px" style="overflow:auto;border:5px ridge rgb(211, 211, 218)">
