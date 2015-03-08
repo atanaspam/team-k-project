@@ -177,53 +177,50 @@
     </div>
 </div> <!--panel-->
 
-<!-- bookings pending confirmation -->
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Members Due To Pay</h3>
-    </div>
-    <div class="panel-body">
-		<div id="printPayments">
-        {% if payments %}
-            <form name="cashPayed" method="post" action="markPaid">
-            <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                            <div>
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Amount Due</th>
-                                        <!--th>Next Arrival Day</th-->
-                                        <th>Cash</th>
-                                    </tr>
-                                </thead>
-                            </div>
-            {% for pendingpayment in payments %}
-                            <tbody>
-                            <tr class="studentLabel">
-                                <td>{{pendingpayment.usertopay.firstname}} {{pendingpayment.usertopay.lastname}}</td>
-                                <td>£{{pendingpayment.amount}}</td>
-                                <!--td>TODO</td-->
-                                <td><input type="checkbox" name="kidPaid" value="{{pendingpayment.usertopay.uid}}" /></td>
-                            </tr>
-                            </tbody>
-                        {% endfor %}
-        </table>
-        </div>
+<!-- Payments -->
+<form name="cashPayed" method="post" action="markPaid">
+	
+	<div class="panel panel-default">
+	    <div class="panel-heading">
+	        <h3 class="panel-title">Members Due To Pay</h3>
+			{% if paymentMade %}
+				<span class="pull-right" style="color: #F00; margin-top: -17px;">Payments updated!</span>
+			{%endif%}
+	    </div>
+    
+		<div class="panel-body">
+			<div id="printPayments">
+	        	{% if payments %}
+					<table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+						<div>
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Amount Due</th>
+									<!--th>Next Arrival Day</th-->
+									<th>Cash</th>
+								</tr>
+							</thead>
+						</div>
+						{% for pendingpayment in payments %}
+							<tbody>
+	                            <tr class="studentLabel">
+	                                <td>{{pendingpayment.usertopay.firstname}} {{pendingpayment.usertopay.lastname}}</td>
+	                                <td>£{{pendingpayment.amount}}</td>
+	                                <!--td>TODO</td-->
+	                                <td><input type="checkbox" name="kidPaid" value="{{pendingpayment.usertopay.uid}}" /></td>
+	                            </tr>
+							</tbody>
+						{% endfor %}
+					</table>
+				{% else %}
+					There are no Outstanding payments.
+				{% endif %}
+			</div>
+		</div>
+	</div> 
+	
 	<button class="btn btn-default" type="button" onclick="printContent('printPayments')">Print</button>
-    <input class="btn btn-default" style="float:right" value="Confirm Payments" type="submit"></input>
+	<input class="btn btn-default" style="float:right" value="Confirm Payments" type="submit"></input>
 </form>
-
-{% else %}
-<br />
-    There are no Outstanding payments.
-    <br /><br />
-{% endif %}
-
-
-{% if paymentMade %}
-<br /><br/>
-<span style="color: #F00; float:right;">Payments recorded!</span>
-{%endif%}
-</div>
-</div> <!--panel members list-->
 {% endblock %}

@@ -28,13 +28,14 @@
                                 <th>Date of Birth</th>
                                 <th>Experience</th>
                                 <th>Due</th>
+								<th>Info</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for child in clients %}
                                 <tr class="studentLabel">
                                 {% url 'bookingsystem.views.managerChildProfile' child.uid as uurl %}
-                                    <td><a class="studentLabel" href= {{uurl}}> {{child.firstname}} {{child.lastname}} </a></td>
+                                    <td>{{child.firstname}} {{child.lastname}}</td>
                                     <td>{{child.email}}</td>
                                     {% if child.genderid %}
                                       <td>Male</td>
@@ -51,6 +52,11 @@
                                         £0
                                     {% endif %}
                                     </td>
+									<td>
+										<a href= {{uurl}} style="color: #1A387B">
+							      		  <span class="glyphicon glyphicon-info-sign"/>
+									  </a>
+								 	</td>
                                 </tr>
                             {% endfor %}
 

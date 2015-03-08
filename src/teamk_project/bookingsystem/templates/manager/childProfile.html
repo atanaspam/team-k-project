@@ -126,6 +126,11 @@
 			</div>
 		</div><!-- end of Medical Conditions -->
 		{% endcomment %}
+		
+		<a href="{{ previous }}" class="btn btn-default">
+	  		Cancel
+		</a>
+		<br><br>
 
 
 
@@ -153,7 +158,6 @@
 						{% endfor %}
 					{% else %}
             	This child is not enrolled in any sessions.
-            	To enroll please go to Bookings.
             {% endif %}
 		</div> <!-- end of list group-->
 	</div>
