@@ -946,7 +946,7 @@ def applicationApproved(request):
 					session.session_sessionid.isfull=1
 				session.session_sessionid.save()
 				session.save()
-	return HttpResponse('Success!')
+	return HttpResponse('Approved!')
 
 @login_required
 @user_passes_test(is_parent)
@@ -980,7 +980,7 @@ def applicationDeclined(request):
 				#i=(i+1)%10
 				session.status = 'D' # set from pending to confirmed
 				session.save()
-	return HttpResponse('Success!')
+	return HttpResponse('Declined!')
 
 @login_required
 @user_passes_test(is_manager)
@@ -1294,48 +1294,41 @@ def setDefaultCoaches(request):
 
 	return render_to_response('manager/setDefaultCoaches.html', context_dict, context)
 
-# @login_required
-# @user_passes_test(is_manager)
-# def applicationAllApproved(request):
-# 	global i
-# 	context = RequestContext(request)
-# 	sessionID = None
-# 	if request.method == 'GET':
-# 		user = request.GET['userid']
-# 		#print user
-# 		session = UserSelectsSession.objects.filter(user_uid = user )
-# 		if session:
+@login_required
+@user_passes_test(is_manager)
+def applicationAllApproved(request):
+	global i
+	context = RequestContext(request)
+	sessionID = None
+	if request.method == 'GET':
+		user = request.GET['userid']
+		#print user
+		sessions = UserSelectsSession.objects.filter(Q(user_uid = user) & Q(status='P'))
+		if sessions:
+			for session in sessions:
+				approvalHistory.insert(i, session)
+				i=(i+1)%25
+				session.status = 'C' # set from pending to confirmed
+				session.session_sessionid.capacity -= 1
+				if session.session_sessionid.capacity == 0:
+					session.session_sessionid.isfull=1
+				print session.sessionid, session.status
+				#session.session_sessionid.save()
+				#session.save()
+	return HttpResponse('Approved!')
 
-# 			approvalHistory.insert(i, session)
-# 			i=(i+1)%10
-# 			session.status = 'C' # set from pending to confirmed
-# 			session.session_sessionid.capacity -= 1
-# 			if session.session_sessionid.capacity == 0:
-# 				session.session_sessionid.isfull=1
-# 			session.session_sessionid.save()
-# 			session.save()
-# 	return HttpResponse('Success!')
-
-# @login_required
-# @user_passes_test(is_manager)
-# def applicationAllDeclined(request):
-# 	global i
-# 	context = RequestContext(request)
-# 	sessionID = None
-# 	if request.method == 'GET':
-# 		sessionID = request.GET['session_sessionid']
-# 		user = request.GET['userid']
-# 		#print user
-# 		if sessionID:
-# 			session = UserSelectsSession.objects.get( Q(session_sessionid = sessionID) & Q(user_uid = user) )
-# 			if session:
-# 				#print session.session_sessionid
-# 				approvalHistory.insert(i, session)
-# 				i=(i+1)%10
-# 				session.status = 'C' # set from pending to confirmed
-# 				session.session_sessionid.capacity -= 1
-# 				if session.session_sessionid.capacity == 0:
-# 					session.session_sessionid.isfull=1
-# 				session.session_sessionid.save()
-# 				session.save()
-# 	return HttpResponse('Success!')
+@login_required
+@user_passes_test(is_manager)
+def applicationAllDeclined(request):
+	global i
+	context = RequestContext(request)
+	sessionID = None
+	if request.method == 'GET':
+		user = request.GET['userid']
+		sessions = UserSelectsSession.objects.filter(Q(user_uid = user) & Q(status='P'))
+		if sessions:
+			for session in sessions:
+				session.status = 'D' # set from pending to confirmed
+				print session.sessionid, session.status
+				#session.save()
+	return HttpResponse('Declined!')
