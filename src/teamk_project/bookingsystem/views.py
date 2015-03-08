@@ -243,14 +243,29 @@ def editProfile(request):
     else:
 		return redirect(request.path.split("/editProfile.html", 1)[0])
 
-
+from django.db.models import Count
 @login_required
 @user_passes_test(is_manager)
 def managerIndex(request):
 	context = RequestContext(request)
 	manager = request.user
 	##			PENDING SESSIONS RETRIEVAL		##
-	pendingSessions = UserSelectsSession.objects.filter(status = 'P').order_by('user_uid')
+	pendingSessions = UserSelectsSession.objects.filter(status = 'P')
+	result = {}
+	list_result = UserSelectsSession.objects.filter(status='P')  # converts ValuesQuerySet into Python list
+	for item in list_result:
+		if item.user_uid in result:
+			result[item.user_uid].append(item)
+		else:
+			result[item.user_uid] = []
+			result[item.user_uid].append(item)
+	# results = {A}
+	# for session in pendingSessions:
+	# 	if session.user_id in person[0].user_id:
+	# 		person.append(session)
+	# print results
+
+
 	##			PENDING PAYERS RETRIEVAL		##
 	pendingPayments = Payment.objects.filter(haspayed=0)
 	pendingUsers = pendingPayments.values_list('usertopay')
@@ -262,6 +277,7 @@ def managerIndex(request):
 	declinedSessions = UserSelectsSession.objects.filter(status = 'D')
 	## 			DATA COMMUNICATION				##
 	context_dict={'manager':manager}
+	context_dict['data'] = result
 	context_dict['pending'] = pendingSessions
 	context_dict['declined'] = declinedSessions
 	context_dict['nextarrivalday'] = nextArrivalDay
@@ -1247,3 +1263,49 @@ def setDefaultCoaches(request):
 		except ObjectDoesNotExist:
 			form = DefaultCoachesForm()
 	return render_to_response('manager/setDefaultCoaches.html', {'form': form}, context)
+
+# @login_required
+# @user_passes_test(is_manager)
+# def applicationAllApproved(request):
+# 	global i
+# 	context = RequestContext(request)
+# 	sessionID = None
+# 	if request.method == 'GET':
+# 		user = request.GET['userid']
+# 		#print user
+# 		session = UserSelectsSession.objects.filter(user_uid = user )
+# 		if session:
+
+# 			approvalHistory.insert(i, session)
+# 			i=(i+1)%10
+# 			session.status = 'C' # set from pending to confirmed
+# 			session.session_sessionid.capacity -= 1
+# 			if session.session_sessionid.capacity == 0:
+# 				session.session_sessionid.isfull=1
+# 			session.session_sessionid.save()
+# 			session.save()
+# 	return HttpResponse('Success!')
+
+# @login_required
+# @user_passes_test(is_manager)
+# def applicationAllDeclined(request):
+# 	global i
+# 	context = RequestContext(request)
+# 	sessionID = None
+# 	if request.method == 'GET':
+# 		sessionID = request.GET['session_sessionid']
+# 		user = request.GET['userid']
+# 		#print user
+# 		if sessionID:
+# 			session = UserSelectsSession.objects.get( Q(session_sessionid = sessionID) & Q(user_uid = user) )
+# 			if session:
+# 				#print session.session_sessionid
+# 				approvalHistory.insert(i, session)
+# 				i=(i+1)%10
+# 				session.status = 'C' # set from pending to confirmed
+# 				session.session_sessionid.capacity -= 1
+# 				if session.session_sessionid.capacity == 0:
+# 					session.session_sessionid.isfull=1
+# 				session.session_sessionid.save()
+# 				session.save()
+# 	return HttpResponse('Success!')

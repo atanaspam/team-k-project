@@ -43,4 +43,30 @@ $(document).ready(function() {
         });
     });
 
+    $('.approveAllButton').click(function() {
+        var catid;
+        userid = $(this).attr("user");
+        $.get('/bookingsystem/manager/applicationAllApproved/', {
+            session_sessionid: catid,
+            userid: userid
+        }, function(data) {
+
+            $('.approveButton[user=' + userid + ']').html(data);
+            //$('#approve').hide();
+        });
+    });
+
+    $('.declineAllButton').click(function() {
+        var catid;
+        userid = $(this).attr("user");
+        $.get('/bookingsystem/manager/applicationAllDeclined/', {
+            session_sessionid: catid,
+            userid: userid
+        }, function(data) {
+
+            $('.declineButton[user=' + userid + ']').html(data);
+            //$('#approve').hide();
+        });
+    });
+
 });

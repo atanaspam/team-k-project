@@ -21,6 +21,53 @@
             <h2>Welcome !</h2>
         {% endif %}
 
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Bookings Pending Confirmation V2</h3>
+  </div>
+  <div class="panel-body">
+
+{% for key, value in data.items %}
+
+  <div class="accordion-heading">
+    <a class="list-group-item clearfix" data-toggle="collapse" data-parent="#accordion" href="#collapse{{forloop.counter}}">
+      <span class="glyphicon glyphicon-file"></span>
+      {{key.firstname}}
+      <span class="pull-right">
+        <button class="btn btn-xs btn-danger declineAllButton" id ="declineAll" user="{{value.user_uid.uid}}">
+          <span class="glyphicon glyphicon-remove"></span>
+        </button>
+        <button class="btn btn-xs btn-success approveAllButton" id ="approveAll" user="{{value.user_uid.uid}}">
+          <span class="glyphicon glyphicon-ok"></span>
+        </button>
+    </a>
+  </div>
+  <div id="collapse{{forloop.counter}}" class="accordion-body collapse" role="tabpanel">
+    <div class="panel-body">
+      {% for item in value %}
+        <span class="list-group-item clearfix" style="color: #000;">
+          <span class="glyphicon glyphicon-file" style="color: #4179FA;"></span>
+          {{item.session_sessionid.begintime|date:"d M"}} - {{item.session_sessionid.begintime|time:"H:i"}} to {{item.session_sessionid.endtime|time:"H:i"}}
+          <span class="pull-right">Places Left: {{session.session_sessionid.capacity}}
+            <button class="btn btn-xs btn-danger declineButton" id ="decline" data-catid="{{item.session_sessionid.sessionid}}" user="{{item.user_uid.uid}}">
+              <span class="glyphicon glyphicon-remove"></span>
+            </button>
+              <a href="" class="btn btn-xs btn-info" id ="info">
+                <span class="glyphicon glyphicon-info-sign"></span>
+              </a>
+            <button class="btn btn-xs btn-success approveButton" id ="approve" data-catid="{{item.session_sessionid.sessionid}}" user="{{item.user_uid.uid}}">
+              <span class="glyphicon glyphicon-ok"></span>
+            </button>
+          </span>
+        </span> <!-- end of list group item -->
+      {% endfor %}
+
+    </div>
+  </div>
+ {% endfor %}
+
+</div>
+</div> <!--panel bookings pending confirmation-->
 
         <!-- bookings pending confirmation -->
 <div class="panel panel-default">
@@ -30,38 +77,32 @@
   <div class="panel-body">
 
 
-    <!-- add body here -->
-            <div class="list-group">
-
-                {% if pending %}
-                    {% for session in pending|orderby:"user_uid" %}
-                                <!-- list item -->
-                                 {% url 'bookingsystem.views.sessionInfo' session.session_sessionid.sessionid as uurl %}
-                                <span class="list-group-item clearfix" style="color: #000;">
-                                  <span class="glyphicon glyphicon-file" style="color: #4179FA;"></span>
-                                    {{session.session_sessionid.begintime|date:"d M"}} - {{session.session_sessionid.begintime|time:"H:i"}}, {{session.user_uid.firstname}} {{session.user_uid.lastname}}
-                                  <span class="pull-right">Places Left: {{session.session_sessionid.capacity}}
-                                    <button class="btn btn-xs btn-danger declineButton" id ="decline" data-catid="{{session.session_sessionid.sessionid}}" user="{{session.user_uid.uid}}">
-                                      <span class="glyphicon glyphicon-remove"></span>
-                                    </button>
-
-                                     <a href={{ uurl }} class="btn btn-xs btn-info" id ="info">
-                                      <span class="glyphicon glyphicon-info-sign"></span>
-                                    </a>
-
-                                    <button class="btn btn-xs btn-success approveButton" id ="approve" data-catid="{{session.session_sessionid.sessionid}}" user="{{session.user_uid.uid}}">
-                                      <span class="glyphicon glyphicon-ok"></span>
-                                    </button>
-                                  </span>
-                                </span> <!-- end of list group item -->
-                    {% endfor %}
-                {% else %}
-                    <strong>There are no unconfirmed bookings.</strong>
-                {% endif %}
-
-            </div> <!-- end of list group-->
-
-
+<!-- add body here -->
+    <div class="list-group">
+      {% if pending %}
+          {% for session in pending|orderby:"user_uid" %}
+            <!-- list item -->
+            {% url 'bookingsystem.views.sessionInfo' session.session_sessionid.sessionid as uurl %}
+            <span class="list-group-item clearfix" style="color: #000;">
+              <span class="glyphicon glyphicon-file" style="color: #4179FA;"></span>
+              {{session.session_sessionid.begintime|date:"d M"}} - {{session.session_sessionid.begintime|time:"H:i"}}, {{session.user_uid.firstname}} {{session.user_uid.lastname}}
+              <span class="pull-right">Places Left: {{session.session_sessionid.capacity}}
+                <button class="btn btn-xs btn-danger declineButton" id ="decline" data-catid="{{session.session_sessionid.sessionid}}" user="{{session.user_uid.uid}}">
+                  <span class="glyphicon glyphicon-remove"></span>
+                </button>
+                  <a href={{ uurl }} class="btn btn-xs btn-info" id ="info">
+                    <span class="glyphicon glyphicon-info-sign"></span>
+                  </a>
+                <button class="btn btn-xs btn-success approveButton" id ="approve" data-catid="{{session.session_sessionid.sessionid}}" user="{{session.user_uid.uid}}">
+                  <span class="glyphicon glyphicon-ok"></span>
+                </button>
+              </span>
+            </span> <!-- end of list group item -->
+          {% endfor %}
+      {% else %}
+        <strong>There are no unconfirmed bookings.</strong>
+      {% endif %}
+    </div> <!-- end of list group-->
 
   </div>
 </div> <!--panel bookings pending confirmation-->
