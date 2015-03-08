@@ -2,6 +2,7 @@
 
 {% block sidebarNav %}
 {% include "sidebarNav/parent.html" %}
+{% load bookingsystem_extras %}
 {% endblock %}
 
 {% block mainArea %}
@@ -14,14 +15,15 @@
 
 		<div class="panel-body">
 			<div class="list-group">
+				{% with child.uid|stringformat:'s' as uid %}
 				{% for block in blocks %}
-				  {% with block.blockid|stringformat:'s' as ID %}
-          {% with child.uid|stringformat:'s' as uid %}
+				 {% with block.blockid|stringformat:'s' as ID %}
 				  {% if block.type == 'Week' %}
+					{% if block|nonEmpty:uid %}
 						<div class="accordion-heading">
 							<a class="list-group-item clearfix" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ forloop.counter }}">
 								<span class="glyphicon glyphicon-file"></span>
-								Camp Week Beginning on: {{block.begindate}}
+								Camp Week Beginning on: {{block.begindate}}  {% comment %}(Debug info: blockid={{block.blockid}} and type={{block.type}}){% endcomment %}
 								<span class="pull-right">
 							</a>
 						</div>
@@ -30,8 +32,9 @@
  						<div>
 					    <object type="text/html" data={{uurl|add:"bookSessions"|add:ID|add:"/"|add:uid}}  width="100%" height="250px" style="overflow:auto;border: 5px ridge rgb(211, 211, 218)">
 					    </object></div>					</div>
-
+					{% endif %}
 				  {% elif block.type == 'Season' %}
+					{% if block|nonEmpty:uid %}
 						<div class="accordion-heading">
 							<a class="list-group-item clearfix" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ forloop.counter }}">
 								<span class="glyphicon glyphicon-file"></span>
@@ -46,11 +49,11 @@
 					    </object>
 					    </div>
 					    </div>
-
+					{% endif %}
 				  {% endif %}
 				  {% endwith %}
-				  {% endwith %}
 				{% endfor %}
+				{% endwith %}
 
 			</div> <!-- end of list group-->
 		</div> <!-- end panel body -->
