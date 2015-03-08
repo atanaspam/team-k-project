@@ -887,7 +887,7 @@ def managerChildProfile(request, id):
 @user_passes_test(is_parent)
 def addNewChild(request):
 	context = RequestContext(request)
-	form = CreateChildForm()
+	form = CreateChildForm(initial={})
 	context_dict = {'parent': request.user}
 	#print lastID
 	if request.method == 'POST':
