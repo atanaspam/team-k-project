@@ -10,7 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q, Sum, Min, Max
 from bookingsystem.models import *
-from bookingsystem.forms import *
+from bookingsystem.forms import BlockFormMore, EditPersonalDetailsForm, CreateChildForm, WeekBlockForm, SessionFormMore, ManagerEditPersonalDetailsForm, EditUserPersonalDetailsForm, DefaultCoachesForm
 from itertools import chain
 from datetime import timedelta
 import datetime, time, re
@@ -1225,6 +1225,7 @@ def addBlock(request):
 			form = BlockFormMore(request.POST)
 			# Have we been provided with a valid form?
 			if form.is_valid():
+
 				block=form.save(commit=False)
 				block.blockid = getLastBlockID()
 				block.type = 'Season'
@@ -1248,6 +1249,7 @@ def addBlock(request):
 				print Session.objects.filter(block_blockid=block.blockid)
 				return redirect('/success.html')
 			else:
+				print form.errors
 				form = WeekBlockForm()
 				sform = BlockFormMore()
 	else:
