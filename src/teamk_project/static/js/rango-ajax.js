@@ -69,4 +69,8 @@ $(document).ready(function() {
         });
     });
 
+     $("input[name=kidPaid26]").click(function() {
+        $("#divEle").toggle();
+    });
+
 });

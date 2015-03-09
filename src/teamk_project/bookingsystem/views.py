@@ -276,17 +276,17 @@ def managerIndex(request):
 	##			PENDING PAYERS RETRIEVAL		##
 	pendingPayments = Payment.objects.filter(haspayed=0)
 	pendingUsers = pendingPayments.values_list('usertopay')
-	nextArrivalDay = UserSelectsSession.objects.filter(user_uid__in=pendingUsers)
+	#nextArrivalDay = UserSelectsSession.objects.filter(user_uid__in=pendingUsers)
 
 		#pendingUsers = Client.objects.filter(payment__usertopay=nonPaidUsers).select_related()
 		#paymentInfo = Payment.objects.filter(haspayed = '0')
 
-	pendingPayments = Payment.objects.filter(haspayed=0)
-	pendingPayers1 = Client.objects.filter(uid__in=pendingPayments.values_list('usertopay'))
+	#pendingPayers1 = Client.objects.filter(uid__in=pendingPayments.values_list('usertopay'))
 
-	for payer in pendingPayers1:
+	for payer in pendingPayments:
 		#print payer.userselectssession_set.all().aggregate(Min('begindate'))
-		print payer.userselectssession_set.filter(session_sessionid__begintime__gte=datetime.datetime.now()).aggregate(Min('session_sessionid__begintime')).get('session_sessionid__begintime__min')
+		payer.usertopay.nextDate = payer.usertopay.nextArrivalDate
+		#print payer.usertopay.nextArrivalDate
 
 
 	pendingSessions = UserSelectsSession.objects.filter(status = 'P')
@@ -296,7 +296,7 @@ def managerIndex(request):
 	context_dict['data'] = result
 	context_dict['pending'] = pendingSessions
 	context_dict['declined'] = declinedSessions
-	context_dict['nextarrivalday'] = nextArrivalDay
+	#context_dict['nextarrivalday'] = nextArrivalDay
 	context_dict['history'] = approvalHistory
 	context_dict['payments'] = pendingPayments
 	return render_to_response('manager/index.html', context_dict, context)

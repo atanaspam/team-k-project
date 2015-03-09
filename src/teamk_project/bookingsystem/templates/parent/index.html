@@ -15,6 +15,48 @@
 <!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
 
 {% block mainArea %}
+
+<!--PAYMENTS-->
+          <!-- select student checkboxes -->
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Payments</h3>
+            </div>
+            <div class="panel-body">
+              {% if totalDue > 0 %}
+
+
+              <div class="accordion-heading">
+                <a class="list-group-item clearfix" data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                  <span class="glyphicon glyphicon-user" style="color: #4179FA;"></span>
+                  More info
+                </a>
+              </div>
+
+              <div id="collapse1" class="accordion-body collapse" role="tabpanel">
+                <div class="panel-body">
+                 {% for payment in payments %}
+                    <span class="list-group-item clearfix" style="color: #000;">
+                      <span class="glyphicon glyphicon-calendar" style="color: #4179FA;"></span>
+                      {{payment.usertopay.firstname}}, {{payment.amount}} for: {{payment.label}}
+                    </span> <!-- end of list group item -->
+                  {% endfor %}
+                </div>
+              </div>
+              <!-- TODO: add paypal -->
+              <button class="btn btn-default" type="button">
+              <a class="studentLabel"href="payments.html">
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                Make Payment
+              </a>
+              </button>
+              {% else %}
+                You have no payments due
+              {% endif %}
+
+            </div> <!--panel body-->
+          </div> <!--panel-->
+        <!--END PAYMENTS-->
 <br>
 
         <!--CHILDREN-->
@@ -27,7 +69,7 @@
               <!-- add body here -->
 			  {% if children %}
               <div id="groupOfChildren" class="list-group">
-                
+
                     {% for child in children %}
                       {% with child.uid as id %}
                       {% with id|stringformat:'s' as ID %}
@@ -52,50 +94,22 @@
                       {% endwith %}
                       {% endwith %}
                      {% endfor %}
-                
+
               </div>
 			  {% endif %}
 
               <!-- Add New Child -->
               <a class="studentLabel" href="addNewChild.html"><button class="btn btn-default" type="button">
-                
+
                   <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
                   Add New Child
-                
+
               </button></a>
 
             </div> <!--panel body-->
           </div> <!--panel-->
         <!--END CHILDREN-->
-		{% comment %}
-        <!--PAYMENTS-->
-          <!-- select student checkboxes -->
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">Payments</h3>
-            </div>
-            <div class="panel-body">
-              {% if totalDue > 0 %}
 
-              <div class="checkbox">
-                <label>Total Due: £{{ totalDue }}</label>
-              </div>
-
-              <!-- TODO: add paypal -->
-              <button class="btn btn-default" type="button">
-              <a class="studentLabel"href="payments.html">
-                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-                Make Payment
-              </a>
-              </button>
-              {% else %}
-                You have no payments due
-              {% endif %}
-
-            </div> <!--panel body-->
-          </div> <!--panel-->
-        <!--END PAYMENTS-->
-		{% endcomment %}
 
 
 {% endblock %}

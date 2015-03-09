@@ -17,6 +17,8 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.contrib.auth.models import User
+import datetime
+from django.db.models import Min
 
 class Address(models.Model):
 	addressid = models.IntegerField(primary_key=True, db_column='addressID') # Field name made lowercase.
@@ -70,6 +72,11 @@ class Client(models.Model):
 	belongsto = models.ForeignKey(User, db_column='belongsTo') # Field name made lowercase.
 	genderid = models.IntegerField(null=True, db_column='genderID', blank=True, choices = GENDER_CHOICES) # Field name made lowercase.
 	experiencelevel = models.IntegerField(db_column='experienceLevel') # Field name made lowercase.
+
+	@property
+	def nextArrivalDate(self):
+		return self.userselectssession_set.filter(session_sessionid__begintime__gte=datetime.datetime.now()).aggregate(Min('session_sessionid__begintime')).get('session_sessionid__begintime__min')
+
 	def __unicode__(self):
 		return "%s %s" % (self.firstname, self.lastname)
 	class Meta:

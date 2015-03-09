@@ -195,7 +195,7 @@
                                     <tr>
                                         <th>Name</th>
                                         <th>Amount Due</th>
-                                        <!--th>Next Arrival Day</th-->
+                                        <th>Next Arrival Day</th>
                                         <th>Cash</th>
                                     </tr>
                                 </thead>
@@ -205,8 +205,10 @@
                             <tr class="studentLabel">
                                 <td>{{pendingpayment.usertopay.firstname}} {{pendingpayment.usertopay.lastname}}</td>
                                 <td>£{{pendingpayment.amount}}</td>
-                                <!--td>TODO</td-->
-                                <td><input type="checkbox" name="kidPaid" value="{{pendingpayment.usertopay.uid}}" /></td>
+                                <td>{{pendingpayment.usertopay.nextArrivalDate}}</td>
+                                <td><input type="checkbox" name="kidPaid{{pendingpayment.usertopay.uid}}" value="{{pendingpayment.usertopay.uid}}" />
+                                </td>
+
                             </tr>
                             </tbody>
                         {% endfor %}
