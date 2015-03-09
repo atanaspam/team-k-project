@@ -27,7 +27,7 @@
 				<span class="input-group-addon" id="basic-addon1">First Name</span>
 				<input type="text" class="form-control" value="{{ userObject.first_name }}" aria-describedby="basic-addon2" readonly>
 			</div>
-			
+
 			<div class="input-group">
 				<span class="input-group-addon" id="basic-addon1">Last Name</span>
 				<input type="text" class="form-control" value="{{ userObject.last_name }}" aria-describedby="basic-addon1" readonly>
@@ -41,7 +41,7 @@
 		<div class="panel-heading">
 			<h3 class="panel-title">Contact Details</h3>
 		</div>
-		
+
 		<div class="panel-body">
 			<!-- add body here -->
 			<!-- phone number -->
@@ -65,31 +65,24 @@
 		<div class="panel-heading">
 			<h3 class="panel-title">Summary of Coaching hours</h3>
 		</div>
-		
+
 		<div class="panel-body">
 
-                                                                                 
-      <div class="table-responsive">          
+      <div class="table-responsive">
       <table class="table">
         <thead>
           <tr>
             <th>Week</th>
-            <th>Number of Hours</th>
+            <th>Number  	 of Hours</th>
           </tr>
         </thead>
         <tbody>
+        {% for key, value in history.items %}
           <tr>
-            <td>1</td>
-            <td>6</td>
+            <td>{{key}}</td>
+            <td>{{value.duration__sum}}</td>
           </tr>
-          <tr>
-            <td>2</td>
-            <td>8</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>4</td>
-          </tr>
+          {%endfor%}
         </tbody>
       </table>
       </div>
@@ -135,7 +128,7 @@
 		</div>
 	</div>
 
-          
+
   		<span class="pull-right">
   			<a href="/bookingsystem/manager/removeCoach/{{ userObject.id }}" class="btn btn-danger" id ="info">
             		Remove Coach

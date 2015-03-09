@@ -6,7 +6,7 @@ A web app to manage the running and management of sports facilities and camps ov
 Web Site
 --------
 
-* (http://projekt.imlach.co.uk:8000/)
+* (http://atanaspam.pythonanywhere.com/)
 
 Short term TODO's
 -----------------

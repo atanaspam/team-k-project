@@ -454,14 +454,32 @@ def coachProfile(request, id):
  	coacheGroups = Group.objects.get(name='Coach')
 	allCoaches = User.objects.filter(Q(groups=coacheGroups))
 	userObject = User.objects.get(id = id)
-	if (userObject in allCoaches):
-	 	context_dict['userObject'] = userObject
 
-	 	today = datetime.date.today()
+	if (userObject in allCoaches):
+		context_dict['userObject'] = userObject
+		history={}
+		beginning = datetime.date.today() - datetime.timedelta(days=7*5)
+		coachingHistory = Session.objects.filter(Q(coachedby=userObject) & Q(begintime__gte=beginning) )
+		#for session in coachingHistory:
+		i = 5
+		while i > 0:
+			beginning = datetime.date.today() - datetime.timedelta(days=7*i)
+			history["Week Beginning: " + beginning.strftime("%d/%m/%y")] = userObject.session_set.filter( Q(begintime__gte=beginning) & Q(begintime__lte=beginning + datetime.timedelta(days=7)) ).aggregate(Sum('duration'))
+
+	#userObject.session_set.filter( Q(begintime__gte=beginning) & Q(begintime__lte=beginning + datetime.timedelta(days=7)) ).annotate(total_hours=Sum('duration'))
+
+
+
+
+			i -= 1
+		print history
+			#print session.total_hours
+		today = datetime.date.today()
 		userID = request.user.id
 		todaySessions = Session.objects.filter(Q(begintime__year=today.year, begintime__month=today.month, begintime__day=today.day)).values_list('sessionid')
 		todayAssignedSessions = Session.objects.filter(Q(coachedby=request.user) & Q(sessionid__in=todaySessions))
 		futureAssignedSessions = Session.objects.filter(Q(coachedby=request.user) & Q(begintime__gte=datetime.date.today() + datetime.timedelta(days=1)))
+		context_dict['history']= history
 		context_dict['todayAssignedSessions'] = todayAssignedSessions
 		context_dict['futureAssignedSessions'] = futureAssignedSessions
 
