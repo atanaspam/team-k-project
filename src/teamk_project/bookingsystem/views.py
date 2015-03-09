@@ -16,6 +16,7 @@ from bookingsystem.forms import BlockFormMore, EditPersonalDetailsForm, CreateCh
 from datetime import timedelta
 import datetime, time, re
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Min
 
 
 approvalHistory = []
@@ -23,8 +24,10 @@ i = 0
 lastSessionID = -1
 lastID = -1
 lastBlockID = -1
+lastPaymentID = -1
 # This field is also referred to in the forms BlockFormMore
 ageGroups = ['7-10', '10-12', '12-15', '15-21']
+PRICE = 25
 
 def getDayOfWeek(n):
 	daysOfWeek = {0:'Monday', 1:'Tuesday', 2:'Wednesday', 3:'Thurday', 4:'Friday', 5:'Saturday', 6:'Sunday'}
@@ -70,6 +73,16 @@ def getLastBlockID():
 			return lastBlockID
 	lastBlockID += 1
 	return lastBlockID
+
+def getLastPaymentID():
+	global lastPaymentID
+	if (lastPaymentID == -1):
+		lastPaymentID = Payment.objects.all().aggregate(Max('paymentid')).get("paymentid__max")
+		if lastPaymentID is None:
+			lastPaymentID = 1
+			return lastPaymentID
+	lastPaymentID += 1
+	return lastPaymentID
 
 ## days can be 0 to 5
 ## morOrAft can be 0 for Morning and 1 for Afternoon
@@ -264,8 +277,17 @@ def managerIndex(request):
 	pendingPayments = Payment.objects.filter(haspayed=0)
 	pendingUsers = pendingPayments.values_list('usertopay')
 	nextArrivalDay = UserSelectsSession.objects.filter(user_uid__in=pendingUsers)
+
 		#pendingUsers = Client.objects.filter(payment__usertopay=nonPaidUsers).select_related()
 		#paymentInfo = Payment.objects.filter(haspayed = '0')
+
+	pendingPayments = Payment.objects.filter(haspayed=0)
+	pendingPayers1 = Client.objects.filter(uid__in=pendingPayments.values_list('usertopay'))
+
+	for payer in pendingPayers1:
+		#print payer.userselectssession_set.all().aggregate(Min('begindate'))
+		print payer.userselectssession_set.filter(session_sessionid__begintime__gte=datetime.datetime.now()).aggregate(Min('session_sessionid__begintime')).get('session_sessionid__begintime__min')
+
 
 	pendingSessions = UserSelectsSession.objects.filter(status = 'P')
 	declinedSessions = UserSelectsSession.objects.filter(status = 'D')
@@ -943,8 +965,24 @@ def applicationApproved(request):
 				session.session_sessionid.capacity -= 1
 				if session.session_sessionid.capacity == 0:
 					session.session_sessionid.isfull=1
-				session.session_sessionid.save()
-				session.save()
+				#session.session_sessionid.save()
+				#session.save()
+				try:
+					payment = Payment.objects.get(usertopay=Client.objects.get(uid=user))
+				except Payment.DoesNotExist:
+					payment = None
+				if payment:
+					payment.amount += PRICE
+					string = payment.label
+					payment.label = string + str(session.session_sessionid.sessionid)
+					payment.save()
+				else:
+					id ="Sessions: " + str(session.session_sessionid.sessionid) + ", "
+					payment = Payment(paymentid=getLastPaymentID,usertopay=Client.objects.get(uid=user), amount=PRICE, label=id, haspayed=0, duedate=datetime.date.today())
+					payment.save()
+				print payment.paymentid, payment.amount, payment.label
+
+
 	return HttpResponse('Approved!')
 
 @login_required
@@ -1125,7 +1163,6 @@ def addBlock(request):
 	# A HTTP POST?
 	if request.method == 'POST':
 		if 'submit_week' in request.POST:
-
 			form = WeekBlockForm(request.POST)
 			# Have we been provided with a valid form?
 			if form.is_valid():
@@ -1166,10 +1203,10 @@ def addBlock(request):
 				# Redirect on success
 				return redirect('/success.html')
 			else:
-				# The supplied form contained errors - just print them to the terminal.
-				print form.errors
+				sform = BlockFormMore()
+
+
 		if 'submit_season' in request.POST:
-			print 'AAAAAAAAAAAAAAAAA'
 			form = BlockFormMore(request.POST)
 			# Have we been provided with a valid form?
 			if form.is_valid():
@@ -1196,12 +1233,8 @@ def addBlock(request):
 				print Session.objects.filter(block_blockid=block.blockid)
 				return redirect('/success.html')
 			else:
-				# If error
-				print form.errors
-				return redirect('/fail.html')
-		else:
-			# if unrecognised
-			return redirect('/fail.html')
+				form = WeekBlockForm()
+				sform = BlockFormMore()
 	else:
 		# If the request was not a POST, display the form to enter details.
 		form = WeekBlockForm()

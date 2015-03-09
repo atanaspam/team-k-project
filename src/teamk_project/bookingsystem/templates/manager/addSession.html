@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block mainArea %}
-
+{% load bookingsystem_extras %}
 
 {% comment %}
 --------------------------------------------------------------------------------
@@ -19,8 +19,6 @@
 {% endcomment %}
 
 
-{% load bookingsystem_extras %}
-	{% load bookingsystem_extras %}
 	<br>
 	<form action="" class="form-horizontal" method="post">{% csrf_token %}
 		<div class="panel panel-default">
@@ -42,7 +40,7 @@
 		</div>
 		<input class="btn btn-default pull-right" type="submit" value="Create Session" />
 	</form>
-  	
+
 	<a class="btn btn-default" href="/bookingsystem/manager/sessions">
   		Cancel
 	</a>
