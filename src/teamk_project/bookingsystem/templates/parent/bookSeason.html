@@ -1,5 +1,7 @@
+{% load static %}
+<link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
     <div class="panel-heading">
-      <h3 class="panel-title">Sessions</h3>
+      <div style="color: #4179FA; font-size:13px;">Sessions</div>
     </div>
     <div class="panel-body">
     {% with child.uid|stringformat:'s' as uid %}
