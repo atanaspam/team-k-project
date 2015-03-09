@@ -18,7 +18,15 @@
 {% load bookingsystem_extras %}
 {% block mainArea %}
 
+<style>
+ul
+{
+    list-style-type: none;
+}
+</style>
+
 <!-- main area -->
+<br>
 
         <!-- cofigure block name start and end -->
           <div class="panel panel-default">
@@ -38,30 +46,21 @@
 
 							<div id="collapse{{ forloop.counter }}" class="accordion-body collapse" role="tabpanel">
 								<div class="panel-body">
-									<form id="week_form" method="post" action="/bookingsystem/manager/addBlock.html">
-					                {% csrf_token %}
-
-                          {% comment %}
-					                {% for field in form %}
-					                <div class="form-group">
-					                   <p><font color="red">{{ field.errors }}</font></p>
-					                   {{ field.label_tag }} {{ field }}
-					                </div>
-					                {% endfor %}
-                          {% endcomment %}
-                          {{ form.non_field_errors }}
-                          {% for field in form %}
-                          <div class="form-group">
-                            <p><font color="red">{{ field.errors }}</font></p>
-                            <label class="control-label col-xs-10 col-sm-4 col-md-4">{{ field.label_tag }}</label>
-                            <div class="col-xs-15 col-sm-7 col-md-6">
-                              {{ field|addcss:"form-control col-xs-1 col-sm-1 col-md-1" }}
-                            </div>
-                          </div>
-                        {% endfor %}
-
-					                <input type="submit" class="btn btn-default" name="submit_week" value="Create Block" />
-					       </form>
+									<div class="panel-body">
+										<form class="form-horizontal" id="week_form" method="post" action="/bookingsystem/manager/addBlock.html">{% csrf_token %}
+							  				{% for field in form %}
+							  					<div class="form-group">
+							  						<p><font color="red"><strong>{{ field.errors|striptags }}</strong></font></p>
+							  						<label class="control-label col-xs-10 col-sm-4 col-md-4">{{ field.label_tag }}</label>
+							  						<div class="col-xs-15 col-sm-7 col-md-6">
+							  							{{ field|addcss:"form-control col-xs-1 col-sm-1 col-md-1" }}
+							  						</div>
+							  					</div>
+							  				{% endfor %}
+											<input type="submit" class="btn btn-default pull-right" name="submit_week" value="Create Block"/></input>
+										</form>
+										</div>
+									</div>
 								</div>
 							</div>
 						<!-- end of Block of type "Week" -->
@@ -76,16 +75,45 @@
 
 								<div id="collapse2{{ forloop.counter }}" class="accordion-body collapse" role="tabpanel">
 									<div class="panel-body">
+										<div class="panel-body">
+											<form class="form-horizontal" id="week_form" method="post" action="/bookingsystem/manager/addBlock.html">{% csrf_token %}
+								  				{% for field in sform %}
+								  					<div class="form-group">
+														{% if field.name = "weekdays" %}
+																<p><font color="red"><strong>{{ field.errors|striptags }}</strong></font></p>
+	  								  							<label class="control-label col-xs-10 col-sm-4 col-md-4">{{ field.label_tag }}</label>
+																<div class="col-xs-10 col-sm-4 col-md-4" style="margin-left: -40px">
+																	{{ field }}
+																</div>
+														{% else %}
+	  								  						<p><font color="red"><strong>{{ field.errors|striptags }}</strong></font></p>
+	  								  						<label class="control-label col-xs-10 col-sm-4 col-md-4">{{ field.label_tag }}</label>
+	  								  						<div class="col-xs-15 col-sm-7 col-md-6">
+	  								  							{{ field|addcss:"form-control col-xs-1 col-sm-1 col-md-1" }}
+	  								  						</div>
+														{% endif %}
+								  					</div>
+								  				{% endfor %}
+												<input type="submit" class="btn btn-default pull-right" name="submit_week" value="Create Block"/></input>
+											</form>
+											</div>
+										</div>
+										
+										
+										
+										
+										{% comment %}
+										
 										 <form id="season_form" method="post" action="/bookingsystem/manager/addBlock.html">
 							                {% csrf_token %}
-                              {% comment %}
+                              
 							               {% for field in sform %}
 							                <div class="form-group">
 							                   <p><font color="red">{{ field.errors }}</font></p>
 							                   {{ field.label_tag }} {{ field }}
 							                </div>
 							                {% endfor %}
-                              {% endcomment %}
+               
 
                           {{ sform.non_field_errors }}
                           {% for field in sform %}
@@ -101,6 +129,7 @@
 
 							                <input type="submit" class="btn btn-default" name="submit_season" value="Create Block" />
 							              </form>
+										  {% endcomment %}
 									</div>
 								</div>
 						<!-- end of Block of type "Season" -->

@@ -1,8 +1,10 @@
 from django import template
 from bookingsystem.models import Client, Session, UserSelectsSession
+from django.forms.fields import CheckboxInput
 from datetime import timedelta
 from django.db.models import Q
 import datetime, time, re
+from django.forms.fields import CheckboxInput
 
 register = template.Library()
 ageGroups = ['7-10', '10-12', '12-15', '15-21']
@@ -44,6 +46,11 @@ def addcss(field, css):
 @register.filter
 def orderby(data, field):
     return data.order_by(field)
+
+@register.filter(name='is_checkbox')
+def is_checkbox(value):
+    print value.name
+    return isinstance(value, CheckboxInput)
 
 @register.filter(name='nonEmpty')
 def nonEmpty(block, childID):

@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block mainArea %}
+{% load bookingsystem_extras %}
 
 <br>
 <!-- login panel -->
@@ -8,23 +9,26 @@
 	<div class="panel-body" align="center">
 		<form action="login_view/" method="post">{% csrf_token %}
 			<h2>Login</h2>
-		{{ form.non_field_errors }}
-		{% for field in form %}
-	    <div class="form-group">
-	       <p><font color="red">{{ field.errors }}</font></p>
-	       {{ field.label_tag }} {{ field }}
-	    </div>
-	    {% endfor %}
-
-
-		<input class="btn btn-default" type="submit" value="Login" />
-            <input type="hidden" name="next" value="{{ next|escape }}" />
-
-				<a class="btn btn-default" href="/register.html">
-           			Register
-           		</a>
+			{% if form.non_field_errors|striptags in "Invalid username/password combination."%}
+				<p><font color="red"><strong>{{ form.non_field_errors|striptags }}</strong></font></p>
+			{% endif %}
+			<div class="panel-body">
+  				{% for field in form %}
+  					<div class="form-group">						
+						<p><font color="red"><strong>{{ field.errors|striptags }}</strong></font></p>
+						<label>{{ field.label_tag }}</label>
+						<div>
+  							{{ field|addcss:"form-control" }}
+  						</div>
+					</div>
+  				{% endfor %}
+			</div>
+			<input class="btn btn-default" type="submit" value="Login" />
+	        <input type="hidden" name="next" value="{{ next|escape }}" />
+			<a class="btn btn-default" href="/register.html">
+	   			Register
+	   		</a>
 		</form>
-
 		<br>
 	</div>
 </div> <!--panel-->

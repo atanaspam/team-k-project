@@ -231,8 +231,8 @@ class DateSelectorWidget1(widgets.MultiWidget):
 			return str(D)
 
 class BlockForm(forms.ModelForm):
-	begindate = forms.DateField(widget=DateSelectorWidget(), help_text="Beginning of the block")
-	enddate = forms.DateField(widget=DateSelectorWidget(), help_text="End of the block")
+	begindate = forms.DateField(widget=DateSelectorWidget(attrs={'style': 'width:33.3%'}), help_text="Beginning of the block")
+	enddate = forms.DateField(widget=DateSelectorWidget(attrs={'style': 'width:33.3%'}), help_text="End of the block")
 	label = forms.CharField(max_length=40, help_text="User Friendly name.")
 	# An inline class to provide additional information on the form.
 	class Meta:
@@ -242,9 +242,9 @@ class BlockForm(forms.ModelForm):
 
 class BlockFormMore(BlockForm):
 	num_choices = ( (0, "Monday"), (1, "Tuesday"), (2, "Wednesday"), (3, "Thursday"), (4, "Friday"), (5, "Saturday"), (6, "Sunday"))
-	begintime = forms.TimeField(widget=SelectTimeWidget(minute_step=10, twelve_hr=True), label="Session begintime")
+	begintime = forms.TimeField(widget=SelectTimeWidget(minute_step=10, twelve_hr=True, attrs={'style': 'width:33.3%', 'class': 'form-control col-xs-1 col-sm-1 col-md-1'}), label="Session begintime")
 	agegroup = forms.ChoiceField(choices=[('7-10', '7-10'), ('10-12', '10-12'), ('12-15', '12-15'), ('15-21', '15-21')])
-	weekdays = forms.MultipleChoiceField(choices=num_choices, required=True, widget=forms.CheckboxSelectMultiple(), label='Select Days')
+	weekdays = forms.MultipleChoiceField(choices=num_choices, required=True, widget=forms.CheckboxSelectMultiple(), label='Select Day')
 	coachGroups = Group.objects.filter(id=3)
 	coachChoices = User.objects.filter(groups=coachGroups).values_list('id','first_name', 'last_name')
 	COACH_CHOICES = ( )
@@ -264,8 +264,8 @@ class WeekBlockForm(forms.ModelForm):
 	for i in range(0,20):
 		today += timedelta(weeks=1)
 		WEEK_CHOICES += [(today, today.strftime("%d/%m/%y"))]
-	begindate = forms.DateField(widget=forms.Select(choices=WEEK_CHOICES), help_text="Beginning of the block")
-	label = forms.CharField(max_length=40, help_text="User Friendly name.")
+	begindate = forms.DateField(widget=forms.Select(choices=WEEK_CHOICES, attrs={'style': 'max-width:300px'}), help_text="Beginning of the block")
+	label = forms.CharField(max_length=40, help_text="User Friendly name.", widget=forms.TextInput(attrs={'style': 'max-width:300px'}))
 	# An inline class to provide additional information on the form.
 	class Meta:
 		# Provide an association between the ModelForm and a model
@@ -329,8 +329,8 @@ class SessionForm1(forms.ModelForm):
         fields = ('begindate', 'begintime', 'endtime', 'capacity', 'agegroup', 'skillgroup')
 ################################################################################
 class loginForm(forms.ModelForm):
-	username = forms.CharField(label="Username")
-	password = forms.CharField(widget=forms.PasswordInput())
+	username = forms.CharField(label="Username", widget=forms.TextInput(attrs={'style': 'max-width:200px'}))
+	password = forms.CharField(widget=forms.PasswordInput(attrs={'style': 'max-width:200px'}))
 	class Meta:
 		model = User
 		fields = ('username', 'password')
