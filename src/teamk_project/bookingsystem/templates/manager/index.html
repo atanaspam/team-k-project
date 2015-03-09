@@ -37,10 +37,10 @@
         <button class="btn btn-xs btn-info"data-toggle="collapse" data-parent="#accordion" href="#collapse{{forloop.counter}}">
          View sessions <span class="glyphicon glyphicon-collapse-down"></span>
 		</button>
-        <button class="btn btn-xs btn-danger declineAllButton" id ="declineAll" user="{{value.user_uid.uid}}">
+        <button class="btn btn-xs btn-danger declineAllButton" id ="declineAll" user="{{key.uid}}">
           <span class="glyphicon glyphicon-remove"></span>
         </button>
-        <button class="btn btn-xs btn-success approveAllButton" id ="approveAll" user="{{value.user_uid.uid}}">
+        <button class="btn btn-xs btn-success approveAllButton" id ="approveAll" user="{{key.uid}}">
           <span class="glyphicon glyphicon-ok"></span>
         </button>
     </a>

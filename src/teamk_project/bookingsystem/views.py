@@ -1334,7 +1334,6 @@ def applicationAllApproved(request):
 	sessionID = None
 	if request.method == 'GET':
 		user = request.GET['userid']
-		#print user
 		sessions = UserSelectsSession.objects.filter(Q(user_uid = user) & Q(status='P'))
 		if sessions:
 			for session in sessions:
@@ -1344,9 +1343,9 @@ def applicationAllApproved(request):
 				session.session_sessionid.capacity -= 1
 				if session.session_sessionid.capacity == 0:
 					session.session_sessionid.isfull=1
-				print session.sessionid, session.status
-				#session.session_sessionid.save()
-				#session.save()
+				#print session.session_sessionid, session.status
+				session.session_sessionid.save()
+				session.save()
 	return HttpResponse('Approved!')
 
 @login_required
@@ -1361,6 +1360,6 @@ def applicationAllDeclined(request):
 		if sessions:
 			for session in sessions:
 				session.status = 'D' # set from pending to confirmed
-				print session.sessionid, session.status
-				#session.save()
+				#print session.session_sessionid, session.status
+				session.save()
 	return HttpResponse('Declined!')

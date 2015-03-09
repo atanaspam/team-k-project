@@ -51,7 +51,7 @@ $(document).ready(function() {
             userid: userid
         }, function(data) {
 
-            $('.approveButton[user=' + userid + ']').html(data);
+            $('.approveAllButton[user=' + userid + ']').html(data);
             //$('#approve').hide();
         });
     });
@@ -64,7 +64,7 @@ $(document).ready(function() {
             userid: userid
         }, function(data) {
 
-            $('.declineButton[user=' + userid + ']').html(data);
+            $('.declineAllButton[user=' + userid + ']').html(data);
             //$('#approve').hide();
         });
     });
