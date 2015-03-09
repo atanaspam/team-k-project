@@ -1,22 +1,19 @@
-from django.http import HttpResponse
-from django.http import HttpResponseRedirect
+from django import forms
+from django.db import models
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
 from django.shortcuts import render_to_response, redirect
+from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User, Group
-from django.db.models import Q, Sum
-from bookingsystem.models import Client, Session, Block, UserSelectsSession, Payment, SubvenueUsedforSession, sessionCoachedBy, DefaultCoaches, Medicalcondition
 from django.views.decorators.csrf import csrf_exempt
-from django import forms
+from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Q, Sum, Min, Max
+from bookingsystem.models import *
+from bookingsystem.forms import *
 from itertools import chain
-from django.contrib.auth import logout
-from django.db import models
-from django.db.models import Max
-from bookingsystem.forms import BlockFormMore, EditPersonalDetailsForm, CreateChildForm, WeekBlockForm, SessionFormMore, ManagerEditPersonalDetailsForm, EditUserPersonalDetailsForm, DefaultCoachesForm
 from datetime import timedelta
 import datetime, time, re
-from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Min
 
 
 approvalHistory = []

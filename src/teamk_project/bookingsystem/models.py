@@ -16,9 +16,9 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.db.models import Min
 from django.contrib.auth.models import User
 import datetime
-from django.db.models import Min
 
 class Address(models.Model):
 	addressid = models.IntegerField(primary_key=True, db_column='addressID') # Field name made lowercase.

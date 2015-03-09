@@ -1,15 +1,15 @@
 from django import forms
-from bookingsystem.models import Block, Session, Client, GENDER_CHOICES, DefaultCoaches
-from django.contrib.auth.models import User
-from django.forms import widgets
 from datetime import date, time, timedelta
-from django.forms.extras.widgets import SelectDateWidget
-from django.forms.widgets import Widget, Select, MultiWidget, CheckboxSelectMultiple
-from django.utils.safestring import mark_safe
-import re
-from django.contrib.auth.models import User, Group
-from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import auth
+from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
+from django.utils.safestring import mark_safe
+from django.core.exceptions import ObjectDoesNotExist
+from django.forms import widgets
+from django.forms.widgets import Widget, Select, MultiWidget, CheckboxSelectMultiple
+from django.forms.extras.widgets import SelectDateWidget
+from bookingsystem.models import Block, Session, Client, GENDER_CHOICES, DefaultCoaches
+import re
 
 
 #from django.forms import MultiWidget
