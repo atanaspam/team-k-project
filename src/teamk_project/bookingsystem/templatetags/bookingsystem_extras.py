@@ -15,7 +15,7 @@ def getAgeGroup(age):
 		temp = group.split('-')
 		if (age in range(int(temp[0]), int(temp[1]))):
 			return group
-	return NULL
+	return -1
 
 @register.filter
 def is_manager(value):
@@ -58,6 +58,9 @@ def nonEmpty(block, childID):
 	age = datetime.date.today() - child.dateofbirth
 	booked = UserSelectsSession.objects.filter(user_uid=child.uid)
 	available = Session.objects.filter(~Q(sessionid__in=[session.session_sessionid.sessionid for session in booked]) )
- 	sessions = available.filter((Q(begintime__gte=datetime.datetime.now()) & Q(begintime__gte=block.begindate)) & Q(begintime__lte=block.enddate)  & Q(agegroup=getAgeGroup(age.days/365)) & Q(isfull=0))# & Q(block_blockid=block.blockid))
+	agegroupp=getAgeGroup(age.days/365)
+ 	if not agegroupp==-1:
+		sessions = available.filter((Q(begintime__gte=datetime.datetime.now()) & Q(begintime__gte=block.begindate)) & Q(begintime__lte=block.enddate)  & Q(agegroup=agegroupp) & Q(isfull=0))
+	else:
+		sessions = Session.objects.none()
 	return sessions.exists()
-
