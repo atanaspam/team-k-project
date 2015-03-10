@@ -20,7 +20,7 @@
 					{% with block.blockid|stringformat:'s' as ID %}
 				  	
 					{% if block.type == 'Week' %}
-						{% if block|nonEmpty:uid %}
+						{% comment %}	{% if block|nonEmpty:uid %} {% endcomment %}
 							<div class="accordion-heading">
 								<a class="list-group-item clearfix" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ forloop.counter }}">
 									<span class="glyphicon glyphicon-file"></span>
@@ -34,9 +34,9 @@
 					    			<object type="text/html" data={{uurl|add:"bookSessions"|add:ID|add:"/"|add:uid}} style="overflow:hidden; height:560px; width:100%"></object>
 								</div>					
 							</div>
-						{% endif %}
+					{% comment %}	{% endif %}{% endcomment %}
 				  	{% elif block.type == 'Season' %}
-						{% if block|nonEmpty:uid %}
+						{% comment %}	{% if block|nonEmpty:uid %} {% endcomment %}
 							<div class="accordion-heading">
 								<a class="list-group-item clearfix" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ forloop.counter }}">
 									<span class="glyphicon glyphicon-file"></span>
@@ -50,7 +50,7 @@
 					    			<object type="text/html" data={{uurl|add:"bookSeason"|add:ID|add:"/"|add:uid}}  style="overflow:hidden; height:560px; width:100%"></object>
 					    		</div>
 					   	 	</div>
-						{% endif %}
+						{% comment %}	{% endif %}{% endcomment %}
 					{% endif %}
 					{% endwith %}
 				{% endfor %}
