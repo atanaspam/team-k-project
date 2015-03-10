@@ -217,4 +217,3 @@ class DefaultCoaches(models.Model):
 	friMor = models.ForeignKey(User, null=True, related_name = 'FridayMorning')
 	friAft = models.ForeignKey(User, null=True, related_name = 'FridayAfternoon')
 
-
