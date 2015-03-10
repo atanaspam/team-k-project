@@ -1,6 +1,6 @@
 {% load static %}
-<link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet"> 
-  
+<link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+
     <div class="panel-body">
     {% with child.uid|stringformat:'s' as uid %}
     {% url 'bookingsystem.views.confirmBookings' as uurl %}
@@ -13,7 +13,8 @@
 			<INPUT Type="button" class="btn btn-default" VALUE="Clear All Selections" ONCLICK="selectSession(2);">
 		</span></br><br>
 
-	  <table id="example" class="table table-striped table-bordered" border="3" cellspacing="0" width="100%">
+	  <div class="table-responsive">
+      <table id="myTableBlock" class="table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr>
             <th></th>
@@ -37,12 +38,13 @@
             <td>{{session.skillgroup}}</td>
             <td>{{session.capacity}}</td>
           </tr>
-          {% endfor %} 
+          {% endfor %}
      {% else %}
           <strong> - No sessions are available or none are appropriate for your child. </strong>
      {% endif %}
         </tbody>
       </table>
+      </div>
 	   {% endwith %}
     	{% if sessions %} <i>* afternoon sessions are only available as a full days (morning & afternoon session) </i><input class="btn btn-default" style="float:right;" type="submit" value="Submit" />{% endif %}
 
@@ -60,7 +62,7 @@ function changeA(morning, afternoon){
 
 }
 function changeM(morning, afternoon){
-	if(!$(morning).prop("checked")){	
+	if(!$(morning).prop("checked")){
 			try{$(afternoon).prop('checked',false);	}catch(e){}
 	}
 }

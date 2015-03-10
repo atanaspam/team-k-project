@@ -359,7 +359,7 @@ class RegisterForm(forms.ModelForm):
 	first_name = forms.CharField(label="First Name")
 	last_name = forms.CharField(label="Last Name")
 	email = forms.CharField(label="Email")
-	password = forms.PasswordInput()
+	password = forms.CharField(widget=forms.PasswordInput)
 	class Meta:
 		model = User
 		fields = ('username', 'first_name', 'last_name', 'email', 'password')

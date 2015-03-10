@@ -2,7 +2,10 @@
 {% load bookingsystem_extras %}
 {% block sidebarNav %}
 
-{% if user|is_manager %}
+{% if user.is_authenticated != True %}
+  {% include "sidebarNav/anon.html" %}
+
+{% elif user|is_manager %}
 	{% include "sidebarNav/manager.html" %}
 
 {% elif user|is_coach %}
@@ -11,10 +14,8 @@
 {% elif user|is_parent %}
 	{% include "sidebarNav/parent.html" %}
 
-{% elif user|is_anonymous %}
-	{% include "sidebarNav/anon.html" %}
-
 {% endif %}
+
 
 {% endblock %}
 

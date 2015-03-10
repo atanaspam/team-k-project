@@ -931,7 +931,7 @@ def addNewChild(request):
 		# Have we been provided with a valid form?
 		if form.is_valid():
 			child=form.save(commit=False)
-			child.uid = getLastID
+			child.uid = getLastID()
 			child.ismember = 0
 			child.belongsto = request.user
 			child.experiencelevel=0

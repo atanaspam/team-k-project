@@ -42,8 +42,8 @@
 		<br>
 		<br>
 		{% endif %}
-		
-		
+
+
 		<div class="panel panel-default"><!-- Personal Details -->
 			<div class="panel-heading">
 				<h3 class="panel-title">Personal Details</h3>
@@ -59,13 +59,13 @@
 				<div class="input-group">
 													<span class="input-group-addon" id="basic-addon1" style="min-width: 110px;">Gender</span>
 						{% if child.genderid = 1 %}
-					  			<input type="text" class="form-control" name="gender" value="Male" aria-describedby="basic-addon1" readonly>
+					  			<input type="text" class="form-control" name="gender" value="Male" aria-describedby="basic-addon2" style="min-width: 110px;" readonly>
 
 								<span style="display: none;"><select name="genderid" id="genderid">
 								<option selected value="1"></option>
 								</select></span>
 						{% else %}
-					  			<input type="text" class="form-control" name="gender" value="Female" aria-describedby="basic-addon1" readonly>
+					  			<input type="text" class="form-control" name="gender" value="Female" aria-describedby="basic-addon2" style="min-width: 110px;" readonly>
 								<span style="display: none;"><select name="genderid" id="genderid">
 								<option selected value="0"></option>
 								</select></span>
@@ -75,7 +75,7 @@
 				<!-- Date of Birth -->
 				<div class="input-group">
 					<span class="input-group-addon" id="basic-addon1" style="min-width: 110px;">Date Of Birth</span>
-					<input type="text" class="form-control" name="dateofbirth" value="{{ child.dateofbirth }}" aria-describedby="basic-addon1" readonly>
+					<input type="text" class="form-control" name="dateofbirth" value="{{ child.dateofbirth }}" aria-describedby="basic-addon2" style="min-width: 110px;" readonly>
 				</div>
 
 			</div>
@@ -87,7 +87,7 @@
 			<div class="panel-heading clearfix">
 				<h3 class="panel-title pull-left panel-title">Contact Details</h3>
 			</div>
-			
+
 			<div class="panel-body"><!-- fields -->
 	        	<!-- phone number -->
 				<div class="input-group">
@@ -109,9 +109,9 @@
 			<div class="panel-heading clearfix">
 				<h3 class="panel-title pull-left panel-title">Medical Condition</h3>
 			</div>
-			
+
 			<div class="panel-body">
-				<div class="input-group" style="min-width: 1040px;">
+				<div class="input-group" style="min-width: 340px;">
 					<textarea cols="30" rows="5" type="text" class="form-control" name="medicalconditions" readonly id="edit4" style="resize: none;">{{ medical.condition }}</textarea>
 				</div><!-- /input-group -->
 			</div>
@@ -120,11 +120,11 @@
 		<a class="btn btn-default" ONCLICK="toggle_edit1(0);" id="edit1">
 				Edit
 		</a>
-	
+
 		<a class="btn btn-default" style="display: none" ONCLICK="toggle_edit2(0);" id="edit5">
 				Cancel
 		</a>
-		
+
 		<input type="hidden" name="uid" value="{{ child.uid }}">
 		<INPUT Type="submit" class="btn btn-default" VALUE="Save" style="display: none" id="edit6"/>
 	</forms>
@@ -144,7 +144,7 @@
 			$("#edit5").show()
 			$("#edit6").show()
 	}
-	
+
 	function toggle_edit2() {
 		$("#edit5").hide()
 		$("#edit6").hide()
