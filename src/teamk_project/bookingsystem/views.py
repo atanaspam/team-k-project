@@ -697,12 +697,7 @@ def userBookings(request, num):
 	today = datetime.date.today()
 	monday = today - datetime.timedelta(days=today.weekday())
 	weeks = Block.objects.filter(((Q(type='Week') & Q(begindate__gte=monday))) | (Q(type='Season')))
-	age = datetime.date.today() - child.dateofbirth
-	for week in weeks:
-		if Session.objects.filter((Q(begintime__gte=datetime.datetime.now()) & Q(begintime__gte=week.begindate)) & Q(begintime__lte=week.enddate) & Q(agegroup=getAgeGroup(age.days/365)) & Q(isfull=0)).exists():
-			print 'True'
-		else:
-			weeks.exclude(week)
+	print weeks
 	context_dict = {'blocks': weeks}
 	context_dict['child'] = child
 	return render_to_response('parent/userBookings.html', context_dict, context)
@@ -753,10 +748,11 @@ def bookSessions1(request, blockID, uID):
 	seasonSessions = Session.objects.filter(block_blockid__in=Block.objects.filter(type="Season"))
 	availableSessions = Session.objects.filter(~Q(sessionid__in=[session.session_sessionid.sessionid for session in preSelectedSessions]) & ~Q(sessionid__in=seasonSessions))
 	agegroupp=getAgeGroup(age.days/365)
-	if not agegroupp==-1:
-		sessions = availableSessions.filter((Q(begintime__gte=datetime.datetime.now()) & Q(begintime__gte=owner.begindate)) & Q(begintime__lte=owner.enddate)  & Q(agegroup=agegroupp) & Q(isfull=0))
-	else:
+	if agegroupp == -1:
 		sessions = Session.objects.none()
+	else:
+		sessions = availableSessions.filter((Q(begintime__gte=datetime.datetime.now()) & Q(begintime__gte=owner.begindate)) & Q(begintime__lte=owner.enddate)  & Q(agegroup=agegroupp) & Q(isfull=0))
+
  	context_dict = {'sessions': sessions}
  	context_dict['child'] = child
  	return render_to_response('parent/bookSessions.html', context_dict, context)
