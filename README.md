@@ -6,7 +6,8 @@ A web app to manage the running and management of sports facilities and camps ov
 Web Site
 --------
 
-* (http://atanaspam.pythonanywhere.com/)
+* (http://www.westerntennisclub.tk/)
+* or  (http://atanaspam.pythonanywhere.com/))
 
 Short term TODO's
 -----------------
