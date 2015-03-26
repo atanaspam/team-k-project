@@ -5,7 +5,7 @@
 {% block sidebarNav %}
 		{% include "sidebarNav/parent.html" %}
 {% endblock %}
-
+<!-- edi profile main area -->
 {% block mainArea %}
 	<br>
 	<form action="editProfile.html" method="post">{% csrf_token %}
@@ -82,8 +82,9 @@
 
 			</div>
 		</div> <!--panel-->
-		
 		<!-- end of Account Settings -->
+
+		<!-- buttons for editing and canceling -->
 		<a class="btn btn-default" ONCLICK="toggle_edit1(0);" id="edit1">
 				Edit
 		</a>
@@ -95,7 +96,7 @@
 		<input type="hidden" name="id" value="{{ user.id }}">
 		<INPUT Type="submit" class="btn btn-default" VALUE="Save" style="display: none" id="edit7"/>
 	</form>
-	
+	<!-- script to unlock editing -->
 	<script>
 	function toggle_edit1() {
 			$("#edit1").hide()

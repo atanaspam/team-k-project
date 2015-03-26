@@ -3,7 +3,7 @@
 {% block sidebarNav %}
 {% include "sidebarNav/parent.html" %}
 {% endblock %}
-
+<!-- child profile main area -->
 {% block mainArea %}
 <br>
   <!-- main area -->
@@ -125,6 +125,7 @@
 				Cancel
 		</a>
 
+		<!-- submition and removal buttons -->
 		<input type="hidden" name="uid" value="{{ child.uid }}">
 		<INPUT Type="submit" class="btn btn-default" VALUE="Save" style="display: none" id="edit6"/>
 	</forms>
@@ -135,6 +136,7 @@
 	 	</a>
 	</span>
 
+	<!-- scripts to enable editing -->
 	<script>
 	function toggle_edit1() {
 			$("#edit1").hide()
