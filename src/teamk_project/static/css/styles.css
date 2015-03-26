@@ -1,3 +1,4 @@
+/* dark text */
 .darkText{
   color: #000000;
 }
@@ -36,6 +37,7 @@ html,body {
   background:#FFF;
 }
 
+/* panel heading style */
 .panel-heading-day{
   padding: 10px 15px;
   border-bottom: 1px solid transparent;
