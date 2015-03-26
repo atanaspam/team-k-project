@@ -3,7 +3,7 @@
 {% block sidebarNav %}
 {% include "sidebarNav/manager.html" %}
 {% endblock %}
-
+<!-- remove block main area -->
 {% block mainArea %}
 	<!-- List of Blocks -->
 	<br>
@@ -72,6 +72,7 @@
 	</div><!-- end block list-->
 	{% endif %}
 
+	<!-- buttons for confirmation and concelation -->
 	<span class="pull-right">
 		<a href="/bookingsystem/manager/confirmRemoveBlock/{{ blockid }}" class="btn btn-danger">
 			Confirm

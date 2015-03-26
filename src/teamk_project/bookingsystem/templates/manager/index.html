@@ -13,6 +13,7 @@
 <!-- 	                                                            -->
 <!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
 
+<!-- main area for news and homepage -->
 {% block mainArea %}
 
 	{% if manager %}
@@ -214,6 +215,8 @@
                         {% endfor %}
         </table>
         </div>
+
+  <!-- print button -->
 	<button class="btn btn-default" type="button" onclick="printContent('printPayments')">Print</button>
     <input class="btn btn-default" style="float:right" value="Confirm Payments" type="submit"></input>
 </form>
@@ -224,7 +227,7 @@
     <br /><br />
 {% endif %}
 
-
+<!-- for dealing with payments -->
 {% if paymentMade %}
 <br /><br/>
 <span style="color: #F00; float:right;">Payments recorded!</span>

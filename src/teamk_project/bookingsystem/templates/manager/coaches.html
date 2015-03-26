@@ -3,8 +3,9 @@
 {% block sidebarNav %}
 {% include "sidebarNav/manager.html" %}
 {% endblock %}
-
+<!-- coaches list for the manager main area -->
 {% block mainArea %}
+	<!-- script to allow search function in the coaches list -->
 	<script>
 	    $(function() {
 	        $('#search_input').fastLiveFilter('#search_list');

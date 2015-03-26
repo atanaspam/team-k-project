@@ -3,7 +3,7 @@
 {% block sidebarNav %}
 {% include "sidebarNav/manager.html" %}
 {% endblock %}
-
+<!-- main area for remove manager -->
 {% block mainArea %}
 	<!-- List of Blocks -->
 	<br>
@@ -18,6 +18,7 @@
 		</div>
 	
 	
+	<!-- buttons for confirmation and cancelation -->
 	<span class="pull-right">
 		<a href="/bookingsystem/manager/confirmRemoveManager/{{ managerid }}" class="btn btn-danger">
 			Confirm
@@ -30,6 +31,7 @@
 		</a>
 	</span>
 	{% else %}
+	<!-- in case the user tries to delete themselves as a manger -->
 			<div class="panel panel-default">
 				<div class="panel-heading clearfix">
 					<h4 class="panel-title pull-left" style="padding-top: 7.5px;">Warning!</h4>

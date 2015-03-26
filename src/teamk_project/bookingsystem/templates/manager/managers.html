@@ -4,7 +4,9 @@
 {% include "sidebarNav/manager.html" %}
 {% endblock %}
 
+<!-- managers list main area  -->
 {% block mainArea %}
+	<!-- script to enable searching through the list of managers -->
 	<script>
 	    $(function() {
 	        $('#search_input').fastLiveFilter('#search_list');
@@ -74,6 +76,7 @@
 					</ul><br>
 						
 				</div><br>
+					<!-- button to add new managers -->
 					<INPUT Type="submit" class="btn btn-default" VALUE="Add"/>
 
 				</div>

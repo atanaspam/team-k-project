@@ -4,6 +4,7 @@
 {% include "sidebarNav/manager.html" %}
 {% endblock %}
 
+<!-- main area for remove session -->
 {% block mainArea %}
 	<!-- List of Blocks -->
 	<br>
@@ -39,6 +40,7 @@
 		</div>
 	{% endif %}
 
+	<!-- confirmation -->
 	{% if  not userSelectSessionObjects and not sessionCoach %}
 		<div class="panel panel-default">
 			<div class="panel-heading clearfix">
@@ -49,6 +51,7 @@
 			</div> <!-- end panel div -->
 		</div>
 	{% endif %}
+	<!-- buttons for confirmations of cancelation -->
 	<span class="pull-right">
 		<a href="/bookingsystem/manager/confirmRemoveSession/{{ sessionid }}" class="btn btn-danger">
 			Confirm

@@ -11,7 +11,7 @@
 <!-- 	ALSO WE NEED ALL THE BUTTONS THAT WOULD POINT TO THE REST   -->
 <!-- 	OF THE FUNCTIONALITY PLACED AND POINTING TO THE CORRECT URL -->
 <!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
-
+<!-- main area for Audit -->
 {% block mainArea %}
 <br>
 <!-- bookings pending confirmation -->
@@ -23,8 +23,7 @@
 
 
     <!-- add body here -->
-
-
+    <!-- table for the audit amounts -->
     <div class="table-responsive">          
       <table class="table">
         <thead >
@@ -61,7 +60,7 @@
     
 
     <!-- add body here -->
-        
+    <!-- table for expenses -->
     <div class="table-responsive">          
       <table class="table">
         <thead>
@@ -88,12 +87,13 @@
     </div>
   </div>
 
-</div> <!--panel-->
+  </div> <!--panel-->
 
+  <!-- buttons for payroll and edit-->
       <button class="btn btn-default" type="button" onclick="window.location.href='payroll.html'; return false;">
-<span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span>Payroll</button>
+        <span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span>Payroll</button>
 
-                <button class="btn btn-default" type="button" onclick="window.location.href='audit.html'; return false;">
-<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>Edit</button>
+      <button class="btn btn-default" type="button" onclick="window.location.href='audit.html'; return false;">
+        <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>Edit</button>
 
 {% endblock %}
