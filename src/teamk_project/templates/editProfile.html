@@ -1,7 +1,7 @@
 
 {% extends "base.html" %}
 {% load bookingsystem_extras %}
-
+<!-- depending on the user type -->
 {% block sidebarNav %}
 	{% if menu == "manager" %}
 		{% include "sidebarNav/manager.html" %}
@@ -11,7 +11,7 @@
 		{% include "sidebarNav/parent.html" %}
 	{% endif %}
 {% endblock %}
-
+<!-- main area for the edit profile form -->
 {% block mainArea %}
 	<br>
 	{% if menu == "error" %}

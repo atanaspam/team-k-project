@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% load bookingsystem_extras %}
 {% block sidebarNav %}
-
+<!-- authentication -->
 {% if user.is_authenticated != True %}
   {% include "sidebarNav/anon.html" %}
-
+<!-- depending on the type of user -->
 {% elif user|is_manager %}
 	{% include "sidebarNav/manager.html" %}
 
@@ -17,7 +17,7 @@
 {% endif %}
 
 {% endblock %}
-
+<!-- main area for displaying news -->
 {% block mainArea %}
 <!-- main area -->
         <div class="col-xs-12 col-sm-9" data-spy="scroll" data-target="#sidebar-nav">
