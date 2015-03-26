@@ -8,7 +8,7 @@
 
 	<br>
 
-	<!-- Attendance -->
+	<!-- Attendance Today -->
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">Today's Sessions</h3>
@@ -27,7 +27,7 @@
               </div>
 		</div>
 	</div>
-
+	<!-- Attendance Future -->
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">Future Sessions</h3>
@@ -46,7 +46,8 @@
               </div>
 		</div>
 	</div>
-	
+
+	<!-- print -->	
 	{% if todayAssignedSessions or futureAssignedSessions %}
 		<a class="btn btn-default pull-right" href="/bookingsystem/coach/printScheduleCoach" style="color:black">
 			Print
