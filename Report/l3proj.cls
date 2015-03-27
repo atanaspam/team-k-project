@@ -24,7 +24,7 @@
 \fi
 \usepackage{times}
 \usepackage [colorlinks=true]{hyperref}
-\setlength{\parindent}{0pt}
+\setlength{\parindent}{24pt}
 \setlength{\parskip}{11pt plus 2pt}
 \addtolength\textwidth{1.0in}
 \addtolength\oddsidemargin{-0.50in}
