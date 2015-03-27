@@ -1,16 +1,17 @@
 from django import forms
 from django.template import RequestContext
-from django.shortcuts import render_to_response, redirect
-from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render_to_response, redirect, render
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
 from django.contrib import auth
-from bookingsystem.forms import RegisterForm, EditUserPersonalDetailsForm, loginForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth.models import User, Group
-from django.contrib.auth.forms import PasswordChangeForm
+from bookingsystem.forms import RegisterForm, EditUserPersonalDetailsForm, loginForm
 
+# User Login
 def login(request):
+    # If the user is logger in already, return a overview page
+    # Else return the login page
     if request.user.is_authenticated():
         if request.user.groups.filter(name = 'Manager'):
             return HttpResponseRedirect("/bookingsystem/manager/")
@@ -23,7 +24,10 @@ def login(request):
     else:
         return render(request, "login.html")
 
+# Invalid
 def invalid(request):
+    # If the user is authenticated, return the overview page
+    # Else the invalid page
     if request.user.is_authenticated():
         if request.user.groups.filter(name = 'Manager'):
             return HttpResponseRedirect("/bookingsystem/manager/")
@@ -36,16 +40,22 @@ def invalid(request):
     else:
         return render(request, "invalid.html")
 
-
+# Login
 def login(request):
     context = RequestContext(request)
     context_dict ={}
+    # Check if request if post and secure
     if request.method == 'POST':
         form = loginForm(request.POST)
+        # Validate form
         if form.is_valid():
+            # Get data from form
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
+            # Get user
             user = auth.authenticate(username=username, password=password)
+            # If user exists and is active, return overview page and
+            # authenticate the user
             if user:
                 if user.is_active:
                     auth.login(request, user)
@@ -65,48 +75,7 @@ def login(request):
         form = loginForm()
     return render_to_response('login.html', {'form':form}, context)
 
-    # username = request.POST.get('username', '')
-    # password = request.POST.get('password', '')
-    # user = auth.authenticate(username=username, password=password)
-    # if user:
-    #     if user.is_active:
-    #         auth.login(request, user)
-    #         if user.groups.filter(name = 'Manager'):
-    #             return HttpResponseRedirect("/bookingsystem/manager/")
-    #         elif user.groups.filter(name = 'Coach'):
-    #             return HttpResponseRedirect("/bookingsystem/coach/")
-    #         elif user.groups.filter(name = 'Parent'):
-    #             return HttpResponseRedirect("/bookingsystem/parent/")
-    #         else:
-    #             return HttpResponseRedirect("/")
-    #     else:
-    #         return HttpResponseRedirect("This Account is Disabled. Please contact support!")
-    # else:
-    #     context = RequestContext(request)
-    # 	context_dict={}
-    #     context_dict["passed"] = "False"
-    # 	return HttpResponseRedirect('/invalid.html')
-
-    # context = RequestContext(request)
-    # form = CreateChildForm(initial={})
-    # context_dict = {'parent': request.user}
-    # #print lastID
-    # if request.method == 'POST':
-    #     form = CreateChildForm(request.POST)
-    #     # Have we been provided with a valid form?
-    #     if form.is_valid():
-    #         child=form.save(commit=False)
-    #         child.uid = getLastID
-    #         child.ismember = 0
-    #         child.belongsto = request.user
-    #         child.experiencelevel=0
-    #         child.save()
-    #         # Redirect on success
-    #         return redirect('/success.html')
-    # # If the request was not a POST, display the form to enter details.
-    # context_dict['form'] = form
-    # return render_to_response('parent/addNewChild.html', context_dict, context)
-
+# Register
 def register(request):
     context = RequestContext(request)
     # A HTTP POST?
@@ -122,7 +91,6 @@ def register(request):
             g = Group.objects.get(name='Parent')
             g.user_set.add(newUser)
             newUser.save()
-            #   print user.username
             # Redirect on success
             return redirect('/success.html')
         else:
@@ -133,26 +101,7 @@ def register(request):
         form = RegisterForm()
     return render_to_response('register.html', {'form': form}, context)
 
-def logout(request):
-    auth.logout(request)
-    return HttpResponseRedirect("/")
-
-def success(request):
-    context = RequestContext(request)
-    context_dict={}
-    return render_to_response('success.html', context_dict, context)
-
-def successEmb(request):
-    context = RequestContext(request)
-    context_dict={}
-    return render_to_response('successEmb.html', context_dict, context)
-
-
-def fail(request):
-    context = RequestContext(request)
-    context_dict={}
-    return render_to_response('fail.html', context_dict, context)
-
+# Edit profile
 def editProfile(request):
 
     context = RequestContext(request)
@@ -176,6 +125,40 @@ def editProfile(request):
         form = EditUserPersonalDetailsForm()
         context['form'] = form
     return render_to_response('editProfile.html', context_dict, context)
+
+# Logout
+def logout(request):
+    auth.logout(request)
+    return HttpResponseRedirect("/")
+
+# Success
+def success(request):
+    context = RequestContext(request)
+    context_dict={}
+    return render_to_response('success.html', context_dict, context)
+
+# Embedded Success
+def successEmb(request):
+    context = RequestContext(request)
+    context_dict={}
+    return render_to_response('successEmb.html', context_dict, context)
+
+# Fail
+def fail(request):
+    context = RequestContext(request)
+    context_dict={}
+    return render_to_response('fail.html', context_dict, context)
+    
+# Index
+def index(request):
+    context = RequestContext(request)
+    user = request.user
+    print user
+    context_dict = {'user':user}
+    return render_to_response('index.html', context_dict, context)
+
+
+# Currently unused
 
 def about(request):
     context = RequestContext(request)
@@ -206,10 +189,3 @@ def news(request):
     user = request.user
     context_dict = {'user':user}
     return render_to_response('news.html', context_dict, context)
-
-def index(request):
-    context = RequestContext(request)
-    user = request.user
-    print user
-    context_dict = {'user':user}
-    return render_to_response('index.html', context_dict, context)

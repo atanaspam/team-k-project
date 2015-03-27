@@ -31,21 +31,8 @@
 				<h3 class="panel-title">Contact Details</h3>
 			</div>
 			<div class="panel-body">
-				<!-- add body here -->
-				<!-- phone number -->
-				{% comment %}
+
 				<div class="input-group">
-					<span class="input-group-addon" id="telephone" style="min-width: 130px;">#</span>
-					<input type="text" class="form-control" value="{{ user.telephone }}" aria-describedby="basic-addon1">
-				</div>
-				{% endcomment %}
-				<!-- e-mail -->
-				<div class="input-group">
-					{% comment %}
-					<span class="input-group-addon" id="email" style="min-width: 130px;">Email</span>
-					 <p><font color="red">{{ form.email.errors }}</font></p>
-                    {{form.email}}
-					{% endcomment %}
 					<span class="input-group-addon" id="email" style="min-width: 130px;">Email</span>
 					<input type="text" class="form-control" name="email" value="{{ user.email }}" aria-describedby="basic-addon1" readonly id="edit2">
 				</div>

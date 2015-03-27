@@ -4,14 +4,6 @@
 {% include "sidebarNav/manager.html" %}
 {% load bookingsystem_extras %}
 {% endblock %}
-<!--!!!!!      ---------------- -TODO- ------------------     !!!!! -->
-<!--                            ATANAS                              -->
-<!-- 	                                                            -->
-<!-- 	      ALLIGN THE PLACES LEFT ATTRIBUTE PROPERLY	 	    	-->
-<!-- 																-->
-<!-- FINISH THE MEMBERS TO PAY TABLE, ADD A PRINTER FRIENDLY BUTTON -->
-<!-- 	                                                            -->
-<!--!!!!!      ---------------- -TODO- ------------------      !!!!!-->
 
 <!-- main area for news and homepage -->
 {% block mainArea %}
@@ -72,46 +64,7 @@
 
 </div>
 </div> <!--panel bookings pending confirmation-->
-{% comment %}
-        <!-- bookings pending confirmation -->
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Bookings Pending Confirmation</h3>
-  </div>
-  <div class="panel-body">
 
-
-<!-- add body here -->
-    <div class="list-group">
-      {% if pending %}
-          {% for session in pending|orderby:"user_uid" %}
-            <!-- list item -->
-            {% url 'bookingsystem.views.sessionInfo' session.session_sessionid.sessionid as uurl %}
-            <span class="list-group-item clearfix" style="color: #000;">
-              <span class="glyphicon glyphicon-file" style="color: #4179FA;"></span>
-              {{session.session_sessionid.begintime|date:"d M"}} - {{session.session_sessionid.begintime|time:"H:i"}}, {{session.user_uid.firstname}} {{session.user_uid.lastname}}
-              <span class="pull-right">Places Left: {{session.session_sessionid.capacity}}
-                <button class="btn btn-xs btn-danger declineButton" id ="decline" data-catid="{{session.session_sessionid.sessionid}}" user="{{session.user_uid.uid}}">
-                  <span class="glyphicon glyphicon-remove"></span>
-                </button>
-                  <a href={{ uurl }} class="btn btn-xs btn-info" id ="info">
-                    <span class="glyphicon glyphicon-info-sign"></span>
-                  </a>
-                <button class="btn btn-xs btn-success approveButton" id ="approve" data-catid="{{session.session_sessionid.sessionid}}" user="{{session.user_uid.uid}}">
-                  <span class="glyphicon glyphicon-ok"></span>
-                </button>
-              </span>
-            </span> <!-- end of list group item -->
-          {% endfor %}
-      {% else %}
-        <strong>There are no unconfirmed bookings.</strong>
-      {% endif %}
-    </div> <!-- end of list group-->
-
-  </div>
-</div> <!--panel bookings pending confirmation-->
-
-{% endcomment %}
 <!-- Confirmed bookings -->
 <div class="panel panel-default">
   <div class="panel-heading">

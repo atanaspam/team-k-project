@@ -6,19 +6,6 @@
 
 {% block mainArea %}
 {% load bookingsystem_extras %}
-
-{% comment %}
---------------------------------------------------------------------------------
----                               TODO'S                                     ---
---------------------------------------------------------------------------------
-
-  * Reallocate and add appropriate spacing to the widgets of the form.
-  * Get rid or do something else with the submit button at the bottom of the code
-
-
-{% endcomment %}
-<!-- main area for add sessions -->
-
 	<br>
 	<form action="" class="form-horizontal" method="post">{% csrf_token %}
 		<div class="panel panel-default">
@@ -44,38 +31,4 @@
 	<a class="btn btn-default" href="/bookingsystem/manager/sessions">
   		Cancel
 	</a>
-
-{% comment %}
-
-<form action="/bookingsystem/manager/addSession.html" method="post">
-	<div class="panel panel-default"><!-- Personal Details -->
-		<div class="panel-heading">
-			<h3 class="panel-title">Session Details</h3>
-		</div>
-
-		<form action="/bookingsystem/manager/addSession.html" method="post">
-			{% csrf_token %}
-			<div class="panel-body"><!-- fields -->
-				<div class="input-group">
-
-					<!--{{form.as_p}} -->
-					{% for field in form %}
-						<div class="form-group">
-						<p><font color="red">{{ field.errors }}</font></p>
-						{{ field.label_tag }} {{ field }}
-						</div>
-					{% endfor %}
-					<input type="submit" class="btn btn-default" name="submit" value="Create Session" />
-
-
-				</div>
-
-			</div>
-		</form>
-	</div> <!-- end of Session Details -->
-
-</form>
-
-{% endcomment %}
-
 {% endblock %}

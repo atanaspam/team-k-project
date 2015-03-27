@@ -117,26 +117,6 @@
 			</div>
 		</div> <!-- end of Contact Details -->
 
-		{% comment %}
-		<!-- Medical Conditions -->
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h3 class="panel-title">Medical Conditions</h3>
-			</div>
-
-			<div class="panel-body">
-				<!-- TODO: have to make this button add items-->
-				<!-- add body here -->
-				<div class="input-group">
-					<span class="input-group-btn">
-						<button class="btn btn-default" type="button">+</button>
-					</span>
-					<input type="text" class="form-control" name="medicalconditions" value="{{ child.medicalconditions }}" readonly id="edit4">
-				</div><!-- /input-group -->
-			</div>
-		</div><!-- end of Medical Conditions -->
-		{% endcomment %}
-
 		<input type="hidden" name="uid" value={{ child.uid }}>
 		{% with child.uid as id %}
 		{% with id|stringformat:'s' as ID %}

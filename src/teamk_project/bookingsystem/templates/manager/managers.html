@@ -32,11 +32,6 @@
 					<span class="glyphicon glyphicon-user" style="color: #4179FA;"></span>                      	
 						{{ manager.first_name }} {{ manager.last_name }}
 					<span class="pull-right">
-						{% comment %}
-						<a href="{% url 'bookingsystem.views.managerProfile' %}{{ manager.id }}" class="btn btn-xs btn-info" id ="info">
-                      		<span class="glyphicon glyphicon-info-sign"></span>
-                    	</a>
-						{% endcomment %}
 						<a href="{% url 'bookingsystem.views.removeManager' %}{{ manager.id }}" class="btn btn-xs btn-danger" id ="info">
                       		<span class="glyphicon glyphicon-remove"></span>
                     	</a>
