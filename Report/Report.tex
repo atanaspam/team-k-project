@@ -480,7 +480,7 @@ Designing the User Interface began by planning and deciding on the priorities of
 \\The `Parent' user had to be able to rapidly enroll a child into more classes, since this is the major driving force for the business.\\
 \\The `Manager' user had to create a set of bookable sessions in a quick and efficient way. It would be an incredible workload for the manager, if every session they ever create is done individually.\\
 \\The `Coach' user had to see its list of upcoming classes and check attendance for them.\\
-\par Draft diagrams were sketched according to the Requirements Gathering and Prioritisation previously mentioned. Hence, they were reviewed by the team and further extended. These sketches are attached in Appendix A.1. This allowed for a better understanding of the system flow and any potential problems. During the interface design process, the team conducted extensive discussions regarding the display of specific functionalities.  It was decided that having a menu to travel through the different sections would be the most suitable choice, as it allows a quick outline of the functionalities, while giving the user an abstraction of each section. For example, the `Manager' user has multiple important functionalities available, such as confirming bookings and setting up sessions and blocks, etc. A navigation menu allows for these different functionalities to be displayed in appropriately aggregated clusters, and the user to see the available possibilities. If we have a menu button for `Members', the user knows right away that they can see anything related to members in that menu.\\ 
+\par Draft diagrams were sketched according to the Requirements Gathering and Prioritisation previously mentioned. Hence, they were reviewed by the team and further extended. These sketches are attached in Appendix 7.3. This allowed for a better understanding of the system flow and any potential problems. During the interface design process, the team conducted extensive discussions regarding the display of specific functionalities.  It was decided that having a menu to travel through the different sections would be the most suitable choice, as it allows a quick outline of the functionalities, while giving the user an abstraction of each section. For example, the `Manager' user has multiple important functionalities available, such as confirming bookings and setting up sessions and blocks, etc. A navigation menu allows for these different functionalities to be displayed in appropriately aggregated clusters, and the user to see the available possibilities. If we have a menu button for `Members', the user knows right away that they can see anything related to members in that menu.\\ 
 \par Another challenge was deciding on how to display the information in the best way. As the sketches show, the team had not yet decided about how to display the sessions and the the blocks to the users. Thus,, it was implemented very similarly to Western Tennis Club’s Google form (having checkboxes for each day of the week, representing mornings or full days). \\
 \\ 
 {
@@ -493,7 +493,7 @@ Designing the User Interface began by planning and deciding on the priorities of
 \\
 \par 
 Since this system needed a mobile version, the UI was designed with that into consideration. Designing it for a mobile device allowed the website to be suitable for both small and big screens, since the smaller screen is the lower limit. After the general flow was established, a neater flow diagram of the system was produced for each user:\\
-\\ \textbf{Parent: (Further designs can be found in Appendix A.2)}\\
+\\ \textbf{Parent: (Further designs can be found in Appendix 7.4)}\\
 {
 \begin{figure}[h]
 \caption{Parent View in Mobile Version}
@@ -502,7 +502,7 @@ Since this system needed a mobile version, the UI was designed with that into co
 \end{figure}
 }
 \\
-\\ \textbf{Manager: (Further designs can be found in Appendix A.2)}
+\\ \textbf{Manager: (Further designs can be found in Appendix 7.4)}
 \\ 
 {
 \begin{figure}[h]
@@ -513,7 +513,7 @@ Since this system needed a mobile version, the UI was designed with that into co
 }
 \\
 \par 
-Hence, this neater diagram was used to create the HTML templates. The templates were produced with hard coded data, to get the look and feel of the GUI to be consistent throughout the entire system. (More templates are attached in Appendix A.3)
+Hence, this neater diagram was used to create the HTML templates. The templates were produced with hard coded data, to get the look and feel of the GUI to be consistent throughout the entire system. (More templates are attached in Appendix 7.5)
 \\ 
 {
 \begin{figure}[h]
@@ -893,8 +893,299 @@ The dates and times for each class are set but the number of groups formed depen
 	\end{itemize}
 \emph{* No Wi-Fi Connection - Only Mobile Data}\\
 \noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}
+\pagebreak
+
+%------------------------------------------------------------------------------
+\section{Flow Charts}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\subsection{User: Manager}
+{
+\begin{figure}[h]
+\caption{Confirm a Booking}
+\centering
+\includegraphics[scale=0.30]{Manager(ConfirmBooking).jpg}
+\end{figure}
+}
+
+\pagebreak
+
+{
+\begin{figure}[h]
+\caption{Add a new Manager}
+\centering
+\includegraphics[scale=0.30]{Manager(AddManager).jpg}
+\end{figure}
+}
+
+\pagebreak
+
+{
+\begin{figure}[h]
+\caption{Add a new Coach}
+\centering
+\includegraphics[scale=0.30]{Manager(AddCoach).jpg}
+\end{figure}
+}
+
+\pagebreak
+
+{
+\begin{figure}[h]
+\caption{Add a new Session}
+\centering
+\includegraphics[scale=0.30]{Manager(AddSession).jpg}
+\end{figure}
+}
+
+\pagebreak
+
+{
+\begin{figure}[h]
+\caption{Add a new Block of Sessions}
+\centering
+\includegraphics[scale=0.30]{Manager(AddBlock).jpg}
+\end{figure}
+}
+
+\pagebreak
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\subsection{User: Coach}
+{
+\begin{figure}[h]
+\caption{Take Attendance}
+\centering
+\includegraphics[scale=0.30]{Coach(TakeAttendance).jpg}
+\end{figure}
+}
+
+\pagebreak
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\subsection{User: Parent}
+
+{
+\begin{figure}[h]
+\caption{Make a Booking}
+\centering
+\includegraphics[scale=0.30]{Parent(MakeABooking).jpg}
+\end{figure}
+}
+
+\pagebreak
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+%------------------------------------------------------------------------------
+\section{Initial Sketches for the User Interface}
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\subsection{User: Manager}
+
+{
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.50]{0085_001-page-005.jpg}
+\end{figure}
+}
+
+\pagebreak
+
+{
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.50]{0085_001-page-006.jpg}
+\end{figure}
+}
+
+\pagebreak
+
+{
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.50]{0085_001-page-007.jpg}
+\end{figure}
+}
+
+\pagebreak
+
+{
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.50]{0085_001-page-008.jpg}
+\end{figure}
+}
+
+\pagebreak
+
+{
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.50]{0085_001-page-009.jpg}
+\end{figure}
+}
+
+\pagebreak
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\subsection{User: Coach}
+
+{
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.50]{0085_001-page-010.jpg}
+\end{figure}
+}
+
+\pagebreak
+
+{
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.50]{0085_001-page-011.jpg}
+\end{figure}
+}
+
+\pagebreak
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\subsection{User: Parent}
+
+{
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.50]{0085_001-page-001.jpg}
+\end{figure}
+}
+
+\pagebreak
+
+{
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.50]{0085_001-page-002.jpg}
+\end{figure}
+}
+
+\pagebreak
+
+{
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.50]{0085_001-page-003.jpg}
+\end{figure}
+}
+
+\pagebreak
+
+{
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.50]{0085_001-page-004.jpg}
+\end{figure}
+}
+
+\pagebreak
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+%------------------------------------------------------------------------------
+\section{Initial Diagrams for the Mobile User Interface}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\subsection{User: Manager}
+
+{
+\begin{figure}[h]
+\includegraphics[scale=0.20]{page-3.jpg}
+\includegraphics[scale=0.20]{page-17.jpg}
+\\
+\\
+\includegraphics[scale=0.20]{page-13.jpg}
+\includegraphics[scale=0.20]{page-14.jpg}
+\\
+\\
+\includegraphics[scale=0.20]{page-15.jpg}
+\includegraphics[scale=0.20]{page-16.jpg}
+\\
+\\
+\includegraphics[scale=0.20]{page-4.jpg}
+\includegraphics[scale=0.20]{page-8.jpg}
+\end{figure}
+}
+
+\pagebreak
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\subsection{User: Parent}
+
+{
+\begin{figure}[h]
+\includegraphics[scale=0.20]{page-21.jpg}
+\includegraphics[scale=0.20]{page-22.jpg}
+\\
+\\
+\includegraphics[scale=0.20]{page-23.jpg}
+\includegraphics[scale=0.20]{page-24.jpg}
+\end{figure}
+}
+
+\pagebreak
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+%------------------------------------------------------------------------------
+\section{Initial Templates for the User Interface}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\subsection{User: Manager}
+
+{
+\begin{figure}[h]
+\includegraphics[scale=0.50]{managertemplate1.jpg}
+\\
+\\
+\\
+\\
+\includegraphics[scale=0.50]{managertemplate2.jpg}
+\end{figure}
+}
+\pagebreak
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\subsection{User: Coach}
+
+{
+\begin{figure}[h]
+\includegraphics[scale=0.50]{coachtemplate1.jpg}
+\\
+\\
+\\
+\\
+\includegraphics[scale=0.50]{coachtemplate2.jpg}
+\end{figure}
+}
+\pagebreak
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\subsection{User: Parent}
+
+{
+\begin{figure}[h]
+\includegraphics[scale=0.35]{parenttemplate1.jpg}
+\\
+\includegraphics[scale=0.35]{parenttemplate2.jpg}
+\\
+\includegraphics[scale=0.35]{parenttemplate3.jpg}
+\end{figure}
+}
+
+\pagebreak
+
+{
+\begin{figure}[h]
+\includegraphics[scale=0.35]{parenttemplate6.jpg}
+\\
+\\
+\\
+\includegraphics[scale=0.35]{parenttemplate5.jpg}
+\\
+\\
+\\
+\includegraphics[scale=0.35]{parenttemplate4.jpg}
+\end{figure}
+}
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 %------------------------------------------------------------------------------
 %==============================================================================
+
 
 \bibliographystyle{plain}
 \bibliography{Report}
