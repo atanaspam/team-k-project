@@ -57,3 +57,11 @@ target/
 src/teamk_project/Database.db
 
 src/teamk_project/Database.db
+
+Report/Report.aux
+
+Report/Report.out
+
+Report/Report.synctex.gz
+
+Report/Report.toc

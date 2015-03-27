@@ -5,7 +5,6 @@
 % Modified 
 \documentclass{l3proj}
 \usepackage{hyperref}
-\usepackage{indentfirst}
 \usepackage{graphicx}
 \graphicspath{ {images/} }
 \begin{document}
@@ -34,31 +33,24 @@ The abstract goes here
 \section{Introduction}
 
 \subsection{Preliminaries}
+There are many sports clubs within and around Glasgow, which offer coaching throughout the Summer. They run for a number of weeks and anyone interested in enrolling, can do so for as little as a single morning, up to several full days of the week or, even, several weeks. For the purposes of this development, the attendance patterns are described in terms of \emph{sessions} and \emph{blocks of sessions}, where sessions are the events that actually take place, and are typically organised into blocks.
+\par Most of the summer camps to date, utilise manual, paper-based methods for managing reservations. As a result, the retrieval and any later manipulation of bookings is extremely inefficient, increases labour costs, and acts as a bottleneck to the expansion of the relevant business.
 
-\par There are many sports clubs within and around Glasgow who offer coaching throughout the Summer. The latter run for a number of weeks and anyone interested in enrolling can do so for as little as a single morning, to several full-days of the week or, even, several weeks. For the purposes of this development, the attendance patterns are described in terms of sessions and blocks of sessions, where sessions are the events that actually take place, and are typically organised into blocks.
-
-\par Most of the summer camps to date, utilise manual, paper-based methods for managing reservations. As a result, the retrieval and any later manipulation of bookings is extremely inefficient, increases labour costs, and acts as a bottleneck to the expansion of the relevant business venture.
-
-
-\subsection{Aims}
+\subsection{Aims \& Motivation}
+This project aims to encourage a deeper understanding of booking and managements systems for sports clubs and to facilitate the need for an electronic, web-based system that efficiently automates the majority of the day-to-day procedures.
 \par
-The primary aim of this project is to create a computerized booking and management system for Western Tennis Club, to improve the efficiency of the processes, and ultimately save coaching hours from waste. In addition, while focusing on the needs of Western Tennis Club, it is aimed to maintain reusability, so that the project can be easily adapted to the needs of another sports camp.
- 
-\subsection{Motivation}
-\par
-There are two key elements of high motivation in the project; the presence of an actual stakeholder underlies both. Being a project for a local business venture, its lifespan is expected to well outlast the duration of our studies, which entails the challenge of delivering a robust, well-engineered solution. Secondly, the fact that the requirements capturing occurs within a business environment adds a great challenge in the process, due to qualitative analysis involved.
-
-\par In addition, another motivating factor is the challenge of developing and delivering software architectures, which are capable of adapting to unpredictable requirements (high modularity). The presence of the latter is the result of the adaptation to highly competitive environments, and unfortunately the cause of the writing off of many software developments. 
-
+Thus, the ultimate target of this project is to develop and deliver a system, which is capable of adapting to unpredictable requirements (high modularity). The presence of the latter is the result of the adaptation to highly competitive environments, and unfortunately the cause of the writing off of many software developments. \par
+Furthermore, due to the fact that the end users are not of a specific profile (occupation, age, educational background), two main goals were deemed a necessity. First and foremost, the system needed to be accessible from all devices available on the market today, utilising a technology that is proven to persevere through time. Secondly, the interface had to be user-friendly, to an extent that it can be used by everyone, irrespective of age and background.\par
+There are two key elements of high motivation in the project; the presence of an actual stakeholder underlies both. Being a project for a local business, its lifespan is expected to well outlast the duration of the studies of the developing team, which entails the challenge of delivering a robust, well-engineered solution. Lastly, the fact that the requirements capturing occurs within a business environment, adds a great challenge in the process, due to the qualitative analysis involved.
 
 %------------------------------------------------------------------------------
 \section{Our Stakeholder}
 \par
-The stakeholder for this project is the Western Tennis Club, part of the Western Health \& Racquets Club. This club is located in Glasgow’s West End, within close proximity of the University of Glasgow campus. Its facilities include a number of weatherproof and floodlit tennis and squash courts as well as a fully equipped, modern gym. The manager of the club, Julie Gordon, was in close collaboration with us throughout the duration of this project.
+The stakeholder for this project is the Western Tennis Club, part of the Western Health \& Racquets Club. This club is located in Glasgow's West End, within close proximity of the University of Glasgow campus. Its facilities include a number of weatherproof and floodlit tennis and squash courts as well as a fully equipped, modern gym. The manager of the club, Julie Gordon, was in close collaboration with the team throughout the duration of this project.
 \par
-The Western Tennis Club itself runs a number of programmes that aim to provide people with different sports backgrounds with the opportunity to either take up or improve their tennis skills with the assistance of qualified coaches. Lessons can be done in private or in groups, between players of equal level. The Club offers programmes that are suitable for both adults and children.
+The Western Tennis Club itself runs a number of programmes that aim to provide people with different sports backgrounds with the opportunity to either take up, or improve their tennis skills with the assistance of qualified coaches. Lessons can be done in private or in groups with players of similar skill level. The Club offers programmes that are suitable for both adults and children.
 \par
-Along with the regular tennis lessons, the Club also organises camps for children during the summer holiday period. The children can attend a single day session ( in the morning,in the afternoon, or both), book for a whole week or even book for more than one week. In addition to the tennis lessons and matches, a large number of different activities also take place in the summer camp, including football and rounder games.
+Along with the regular tennis lessons, the Club also organises camps for children during the summer holiday period. The children can attend a single day session (in the morning,in the afternoon, or both), book for a whole week or even book for more than one week. In addition to the tennis lessons and matches, a large number of different activities also take place in the summer camp, including football and rounder games.
 
 %------------------------------------------------------------------------------
 %==============================================================================
@@ -67,18 +59,15 @@ Along with the regular tennis lessons, the Club also organises camps for childre
 
 %------------------------------------------------------------------------------
 \section{Model of Team Organisation}
+The team decided to follow the Role Based model. The structure of the model is built around a set of roles which are either long-lived, or created, and assigned for a specific task (PSD3, 2014). All team members were flexible, which enabled the switching of the roles via rotation. 
 \par
-From all the team organisation models that are commonly used in the Software Engineering process, we chose to stick with the Role Based model. The Role Based model provides that the particular team that follows it is built around a set of roles which are either long-lived or created and assigned for a specific task (PSD3, 2014). We considered our organisation to be very flexible so that we have the option of having the different roles rotated within the team open throughout the whole project duration.
+The Role Based model allowed the provision of authority and responsibility for decision making to different people for different aspects of the project. Each decision was taken after a group discussion between all the members of the team. In case of a disagreement between the members of the team during the discussion, the person who was in charge for the specific area of the project was responsible for making the final decision as they had more experience and knowledge in the particular area. 
 \par
-The Role Based model that we used allowed us to provide the authority and responsibility for decision making to different people for different aspects of our project. We, of course, worked on a democratic basis, so each decision was taken after a group discussion between all the members of the team. In case of a disagreement between the members of the team during the discussion for making a decision for a certain issue, the person who was in charge for the specific area of the project was responsible for making the final decision as the most experienced and knowledgeable.
-\par
-When circumstances suggested so, we switched roles within the team in order to make sure we have a good fit for that role. In specific, when it became evident that the initially appointed project manager did not have the time to coordinate this project, resulting in organisational issues, the team underwent a project manager change. The most flexible roles such the Tool Smith and Secretary were undertaken by almost all the members of the team at different times.
-
-
+Roles were rotated, when circumstances demanded so. In particular, when it became evident that the initially appointed project manager was not excelling at their role, the role was assigned to a different team member to prevent organisational issues. The most flexible roles such the Tool Smith and Secretary were undertaken by almost all the members of the team at different times.
 %------------------------------------------------------------------------------
 \section{Roles of Team Members}
 \par
-Our roles by the end of the project were:\\
+By the completion of the project, the roles were assigned as follows:\\
 \\
 \textbf{Project Manager}: Dimitrios Kykeridis\\
 \textbf{Chief Architect}: Atanas Pamukchiev\\
@@ -93,14 +82,14 @@ Each of these roles implied a set of responsibilities (PS3, 2014), listed below:
 \\
 \begin{itemize}
 
-\item The \textbf{Project Manager} has the overall responsibility over the progress of a project and the organisation of the team and maintains the schedule of the project.
-\item The \textbf{Chief Architect} is in charge of making high level design decisions for a system.
-\item The \textbf{Quality Assuror} is responsible for assuring the quality of a software system and its documentation.
-\item The \textbf{Test Manager} prepares the test plans and suites to evaluate the functionality of a project at different stages.
-\item The \textbf{Customer Liaison} is the contact point between the software development team and the stakeholders and conducts all the in between communication.
-\item The \textbf{Tool Smith} is in charge for the configuration and maintenance of all the different software tools used by the team and provides training on these tools’ interfaces to the rest of the team.
-\item The \textbf{Librarian} prepares and archives the appropriate project documentation for all the different versions of a system.
-\item The \textbf{Secretary} produces records of the project meetings and document them appropriately in order to be circulated to the other members of the team.
+\item The \textbf{Project Manager} had the overall responsibility over the progress of a project and the organisation of the team and maintained the schedule of the project.
+\item The \textbf{Chief Architect} was in charge of making high level design decisions for a system.
+\item The \textbf{Quality Assuror} was responsible for assuring the quality of a software system and its documentation.
+\item The \textbf{Test Manager} prepared the test plans and suited to evaluate the functionality of a project at different stages.
+\item The \textbf{Customer Liaison} was the contact point between the software development team and the stakeholders and conducted all the in between communication.
+\item The \textbf{Tool Smith} was in charge for the configuration and maintenance of all the different software tools used by the team and provided training on these tools? interfaces to the rest of the team.
+\item The \textbf{Librarian} prepared and archived the appropriate project documentation for all the different versions of a system.
+\item The \textbf{Secretary} produced records of the project meetings and documented them appropriately, in order to be circulated to the other members of the team.
 
 \end{itemize}
 
@@ -108,13 +97,9 @@ Each of these roles implied a set of responsibilities (PS3, 2014), listed below:
 \section{Team Communication}
 \par
 The team utilised different technologies available on the internet for internal communication. Each of the contact methods that were selected served different aspects of the organisation:
-\\
 \begin{itemize}
-
 \item \textbf{Facebook Group:} The team set up and participated in a Facebook group that was used for both this project (TP3) and the Professional Software Development 3 (PSD3) project. Along with the Facebook Group, a group chat conversation was also created. They were used for arranging informal, day-to-day organisational matters quickly, such as deciding dates and times for our group meetings as well as the weekly supervisor meetings.
-
 \item \textbf{Google Drive \& Docs:} These two services provided by Google were used intensively for keeping draft versions of documents to which all the members of the team needed to contribute. A folder was created and shared within the team in which all the documents that were products of collaborative work were stored. The members of the team took advantage of the concurrent access and manipulation that Google Docs offers for its documents to work on them in parallel.
-
 \item \textbf{Github:} It was the web-based repository, and issue tracking service that we used throughout the implementation of our product. We have created a private repository on Github, that stored all the source code that our project comprised of, along with the final versions of our system documentation. We took advantage of the Version and Revision Control features that Github provides to work remotely and individually on the source code of our system.
 
 \end{itemize}
@@ -126,11 +111,10 @@ The team utilised different technologies available on the internet for internal 
 %------------------------------------------------------------------------------
 \section{Research of Previous Products}
 \par
-Prior to the initial requirements elicitation, the team conducted a small research of previous products used within the industry for similar purposes. This was a crucial part of the preparation process since it provided an insight on how those systems are used and what features they provide. All of the above would be taken into account during the design and implementation of the new system. The following products were of particular interest to the team:\\
-
+Prior to the initial requirements elicitation, the team conducted a small research of previous products used within the industry for similar purposes. This was a crucial part of the preparation process since it provided an insight on how those systems are used and what features they provide. All of the above would be taken into account during the design and implementation of the new system. The following products were of particular interest to the team:
 \begin{itemize}
 \item \textbf{TennisBookingsPlus --- \url{http://www.tennisbookings.com/}}\\
-A highly-customisable, web-based tool that enables Tennis Clubs to transfer their booking systems to an external web service that automates some of the clubs’ tasks. It provides a transition plan that helps their new customers to migrate to the new system. It provides features such as:\\
+A highly-customisable, web-based tool that enables Tennis Clubs to transfer their booking systems to an external web service that automates some of the clubs? tasks. It provides a transition plan that helps their new customers to migrate to the new system. It provides features such as:
 		\begin{itemize}
 	\item Court Scheduling
 	\item `Club New' Web Pages
@@ -139,7 +123,7 @@ A highly-customisable, web-based tool that enables Tennis Clubs to transfer thei
 	\item Event Registration
 	\item Online Bookings
 		\end{itemize}
-\item \textbf{TennisBiz --- \url{http://uk.thinksmartsoftware.com/}}\\
+\item \textbf{TennisBiz --- \url{http://uk.thinksmartsoftware.com/}}
 A very strong software package that administers both the class scheduling and the customer support using an integrated invoicing and marketing system. It is targeted for Tennis Clubs specifically, it is moderately flexible and configurable. It provides:
 		\begin{itemize}
 	\item Student grading system with respect to their skills level
@@ -147,15 +131,15 @@ A very strong software package that administers both the class scheduling and th
 	\item Attendance Tracking
 	\item Waiting List for future enrolment
 		\end{itemize}
-\item \textbf{Bookingbug --- \url{http://uk.bookingbug.com/}}\\
+\item \textbf{Bookingbug --- \url{http://uk.bookingbug.com/}}
 A quite general booking system that can be used for scheduling various sports activities. ranging from sport club sessions to gym classes. The system can be personalised to meet the customers needs. Some of the features that it offers:
 		\begin{itemize}
-	\item Handling of Bookings, Appointments and Enquiries directly from the system’s website
+	\item Handling of Bookings, Appointments and Enquiries directly from the system?s website
 	\item Online Payments
 	\item Automated e-mail and SMS confirmations
 	\item Calendar View for the Timetable
 		\end{itemize}
-\item \textbf{Teamer --- \url{https://teamer.net/}}\\
+\item \textbf{Teamer --- \url{https://teamer.net/}}
 A flexible product that can be adapted appropriately for the requirements of different sports clubs. It offers a large range of different product variations to satisfy the needs of every customer. The purchase and installation costs for Teamer are very high compare to other products:
 		\begin{itemize}
 	\item Schedule Management
@@ -164,14 +148,11 @@ A flexible product that can be adapted appropriately for the requirements of dif
 	\item SMS \& E-mail Confirmations
 		\end{itemize}
 \end{itemize}
-
-
 %------------------------------------------------------------------------------
 \section{Client Interview}
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 \subsection{Preparation}
-\par 
 After conducting research on similar products, the team arranged a meeting with the stakeholder.  The purpose of this meeting was to capture the requirements for the new system. To achieve this, the team  prepared a number of different questions, designed to lead to useful conclusions, related to the design of the product. Their main aim was to warm-up the discussion and encourage the client to talk about how the summer camp is organised and describe their personal envision of the new system. In addition to the questions, the team prepared several User Stories and Scenarios that could help the stakeholder get a better understanding of the new system. These refinements were mostly done in order to remove any ambiguities or technical terminologies that might make the above documents unclear or difficult to understand for the stakeholder.
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -179,7 +160,6 @@ After conducting research on similar products, the team arranged a meeting with 
 \par 
 
 After careful consideration of the specifications, each team member proposed a set of questions to be asked during the interview. The final list of questions, as it was compiled before the Stakeholder Interview, can be seen below:
-
 \begin{enumerate}
 \item How are the classes set up?
 		\begin{enumerate}
@@ -238,10 +218,10 @@ After careful consideration of the specifications, each team member proposed a s
 \item Should we provide a customisable profile for the users?
 \item Should the children have access to the system?
 		\begin{enumerate}
-		\item Should they access the system through their parent’s account?
+		\item Should they access the system through their parent?s account?
 			\begin{enumerate}
 			\item If yes, should they access their parent's account with less permissions?
-			\item If no, should we link their account to their parent’s one or just create a new, separate and completely independent, account?
+			\item If no, should we link their account to their parent?s one or just create a new, separate and completely independent, account?
 			\end{enumerate}
 		\end{enumerate}
 \item Can children request to be with friends?
@@ -255,24 +235,25 @@ After careful consideration of the specifications, each team member proposed a s
 	\item Do you need an Equipment Report generated by the system?
 	\end{enumerate}
 \item What features are important to you? What would you expect to be able to do with the system?
-
-
-
 \end{enumerate}
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 \subsection{Meeting with the Client}
 \par
 The first meeting with our product Stakeholder took place on Wednesday, 22 October, 2014 in Room 303, the Triangular Meeting Room, Sir Alwyn Williams Building. Both our supervisor and our stakeholder attended the meeting.\\
-\par Our Stakeholder is Julie Gordon and she is one of the coaches at the Western Tennis Club in Glasgow. She has been organising and managing the Summer Camp ever since its establishment.\\
-\par After the team was introduced to the client by the Supervisor, the client was asked for her consent to record the discussion. Hence,  some general warm-up questions about the Western Tennis Club were discussed. The main objective was to encourage the Stakeholder to talk about the Club and its needs, before proceeding with more specific questions that may direct her responses. A lot of useful information regarding the operation of the club for both the winter and the summer seasons was gathered.\\
-\par The complexity of our questions increased as the discussion progressed, in order to get more specific and detailed answers. At this step, most of the ambiguities were clarified.\\
-\par Furthermore,  the electronic system that was currently used by the Summer Camp was examined in detail. The main focus were the personal details provided by the parents, in order to register their children in the Tennis Club and the storage and manipulation of the gathered data by the managers, in order to accept or decline the aforementioned booking.\\
-\par At the end of the meeting, the team sincerely thanked the Stakeholder for her time and asked for her personal email address in order to set up a channel of direct communication between the Western Tennis Club management and the team. She was informed that via email she would receive the formal requirements specification document, produced after the end of Meeting, contacted for any clarifications around potential issues during the implementation of the project, and  asked to provide feedback for our product during the evaluation stage.
+\\
+Our Stakeholder is Julie Gordon and she is one of the coaches at the Western Tennis Club in Glasgow. She has been organising and managing the Summer Camp ever since its establishment.\\
+\\
+After the team was introduced to the client by the Supervisor, the client was asked for her consent to record the discussion. Hence,  some general warm-up questions about the Western Tennis Club were discussed. The main objective was to encourage the Stakeholder to talk about the Club and its needs, before proceeding with more specific questions that may direct her responses. A lot of useful information regarding the operation of the club for both the winter and the summer seasons was gathered.\\
+\\
+The complexity of our questions increased as the discussion progressed, in order to get more specific and detailed answers. At this step, most of the ambiguities were clarified.\\
+\\
+Furthermore,  the electronic system that was currently used by the Summer Camp was examined in detail. The main focus were the personal details provided by the parents, in order to register their children in the Tennis Club and the storage and manipulation of the gathered data by the managers, in order to accept or decline the aforementioned booking.\\
+\\
+At the end of the meeting, the team sincerely thanked the Stakeholder for her time and asked for her personal email address in order to set up a channel of direct communication between the Western Tennis Club management and the team. She was informed that via email she would receive the formal requirements specification document, produced after the end of Meeting, contacted for any clarifications around potential issues during the implementation of the project, and  asked to provide feedback for our product during the evaluation stage.
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 %------------------------------------------------------------------------------
 \section{Functional Requirements}
-\par 
 The requirements gathered from the meeting with the stakeholder suggested that the system should be available to three different kinds of users. To provide a better overview, each requirement is marked with a different user role, namely Manager, Coach, and Parent. Requirements that were role independent are marked with `For All Types Of Users'. When a Functional Requirement did not involve a particular kind of users but it was, mostly, related to the overall system, it was marked as `General'.
 \begin{enumerate}
 	\item \textbf{Creating Blocks \& Sessions (Manager):} The Manager of the Summer Camp should be able to create and set up new sessions,available for the children to be enrolled in. A number of these sessions will be combined together by the Manager to form a `Block of Sessions'.
@@ -301,7 +282,7 @@ The team defined the following non-functional requirements:
 \begin{enumerate}
 	\item \textbf{Flexibility:} The system should be flexible enough in order to be used by other sport clubs, without requiring extensive changes.
 	\item \textbf{Extendibility:} The design and structure of the system should allow the implementation of extra functionalities in the future.
-	\item \textbf{Portability:} The system must be available for different devices, including personal computers, tablets and smartphones. A mobile version of the Booking System will allow it to fulfill the `Strong mobile component’ requirement.
+	\item \textbf{Portability:} The system must be available for different devices, including personal computers, tablets and smartphones. A mobile version of the Booking System will allow it to fulfill the `Strong mobile component? requirement.
 	\item \textbf{Security:} When deployed, the system will hold sensitive data, including contact details or medical conditions, for many users. Therefore, the data must be protected from unauthorised access.
 	\item \textbf{Usability:} The system is targeted to be used by novice users. Therefore, the user interface should be intuitive and easy-to-learn.
 	\item \textbf{Good Documentation:} The system will provide a large number of different features to all types of users. A user guide documentation should be provided with the final product. 
@@ -345,7 +326,7 @@ So that \textbf{I will confirm it, in case I approve it.}\\
 \textbf{\underline{User Story \#7}}\\
 As a \textbf{Manager}\\
 I want to \textbf{review a pending booking,}\\
-So that \textbf{I canwi add it to the “Waiting List”, in case I reject it.}\\
+So that \textbf{I canwi add it to the ?Waiting List?, in case I reject it.}\\
 \\
 \textbf{\underline{User Story \#8}}\\
 As a \textbf{Coach}\\
@@ -424,7 +405,7 @@ A user is satisfied by a system, if the system presents a high value for the use
 \par First, the team focused on how to develop the Booking and Management System. Developing a web application was the most beneficial for a number of reasons. The alternatives were a desktop, an iPhone, an android and/or a blackberry application, increasing the development cost significantly. A web application allows access through multiple devices with a single implementation. It also assigns the complexity to the browser, rather than the operating system, allowing easier development, maintenance and deployability. The user does not need to download any software to use the system. A web application keeps all the functionalities for managers, parents and coaches in one single place, where all users, independent of their role, can login from the same page.\\
 \par Hence, the team focused on how to display sessions and blocks to the user, and how to retrieve the editing of such bookings. The manager had to easily and intuitively create a new set of bookable sessions, yet allow for as much flexibility as possible. The current system had to be optimised, and the most rational solution was to allow the manager to create sessions, by inputting all the details for each session. However, as the new system would collect much more data for each session, the manager would have to fill in not only the details for multiple sessions daily, but also a larger amount of data. Hence, the manager would have to do more work than they usually have to, which was highly undesirable. It is important that the automation of such a process is flexible, in order to make the user engaged in using it. So the management of such cost and value is vital. The automation should also be accurate enough in order to actually increase the added value of using the product. This is why great care was taken to appropriately match the clients requirements and the tasks, accomplished by automation.\\
 ----------------------------------------
-\par The sidebar allows the user to have access to all the functionalities, provided by the system. It also splits clusters of controls into an index of tabs, allowing for easier navigation. The starting `Overview’ page allows the high complexity of the system, and yet does not overwhelm the user. The most common tasks were included in the overview of each of the types of user. The manager `Overview' page displays the list of bookings pending confirmation, list of latest confirmed bookings, the waiting list of bookings and a list of members due to pay with a shortcut for printing. The parent `Overview’ page shows the list of payments due and the list of children. This means the user can quickly access the most important tasks. All other complex functionalities, such as lists of members and sessions, are kept in the sidebar for users who seek more information about the specific tasks.\\
+\par The sidebar allows the user to have access to all the functionalities, provided by the system. It also splits clusters of controls into an index of tabs, allowing for easier navigation. The starting `Overview? page allows the high complexity of the system, and yet does not overwhelm the user. The most common tasks were included in the overview of each of the types of user. The manager `Overview' page displays the list of bookings pending confirmation, list of latest confirmed bookings, the waiting list of bookings and a list of members due to pay with a shortcut for printing. The parent `Overview? page shows the list of payments due and the list of children. This means the user can quickly access the most important tasks. All other complex functionalities, such as lists of members and sessions, are kept in the sidebar for users who seek more information about the specific tasks.\\
 --------------------------------------------
 {\LARGE{EDIT HERE}}
 
@@ -445,21 +426,21 @@ The Database design was the most challenging, time-consuming, and functionally i
 \par 
 Under `Personal Information' the database would store all the clients' and management's personal details, required for the normal operation of a sports camp, such as name, date of birth, email, and telephone number.\\
 \par 
-`Venue Information' would contain data about the venue, such as address, capacity, name, and load. Potentially, information about the venue’s manager might be included as well for larger scale applications.\\
+`Venue Information' would contain data about the venue, such as address, capacity, name, and load. Potentially, information about the venue?s manager might be included as well for larger scale applications.\\
 \par 
 `Group Information' would correspond to a coaching group, for instance, a class, and stores information such as capacity, the name of the group, the age classification, and, potentially, a human readable name.\\
 \par 
-`Event Details' would store data such as duration, any notes taken during that event, the group that is making this `event', and the venue at which this ‘event’ actually takes place.\\
+`Event Details' would store data such as duration, any notes taken during that event, the group that is making this `event', and the venue at which this ?event? actually takes place.\\
 \par 
 `Payment Information' would include the amount of money due to be paid or paid already, the label, and the due date of the payment if applicable.\\
 \par 
 `Login Details' would store the passwords of the users.\\
 \par 
-This served as the first prototype of the database’s design and was extensively discussed among the team members and with the supervisor as well. The team faced a great challenge at this point since in order for the application to be as flexible as planned, a simple group-event relationship was not sufficient. Another level of complexity would be required in order for the Database (and respectively the Application) to be used by any type of camp. Furthermore, another difficulty emerged as the client demanded that the application had to distinguish between events in the morning and events in the afternoon, (as specified in Section 3.3 `Functional Requirements'). A sample solution, presented at a later stage, was able to partially solve the problem. The solution introduced some changes to the relationship between the future tables. `Group’s Events' became part of a sub-session, which is a part of a session itself. Those new terms were defined in the sense that events can be part of a sub-session, which in terms is part of a session. This way a session would have a location, but the sub-sessions of those sessions would be grouped according to whether they are in the morning or in the afternoon, and lastly events would have an associated coach capacity and group.\\
+This served as the first prototype of the database?s design and was extensively discussed among the team members and with the supervisor as well. The team faced a great challenge at this point since in order for the application to be as flexible as planned, a simple group-event relationship was not sufficient. Another level of complexity would be required in order for the Database (and respectively the Application) to be used by any type of camp. Furthermore, another difficulty emerged as the client demanded that the application had to distinguish between events in the morning and events in the afternoon, (as specified in Section 3.3 `Functional Requirements'). A sample solution, presented at a later stage, was able to partially solve the problem. The solution introduced some changes to the relationship between the future tables. `Group?s Events' became part of a sub-session, which is a part of a session itself. Those new terms were defined in the sense that events can be part of a sub-session, which in terms is part of a session. This way a session would have a location, but the sub-sessions of those sessions would be grouped according to whether they are in the morning or in the afternoon, and lastly events would have an associated coach capacity and group.\\
 
 \par
 This concept allowed a form of sub-classing, which solves the problem of the morning and afternoon events, since a sample database query would be able not only to get all the events as a part of a specific session i.e. define location, but also as a part of a specific sub-session, i.e. part of a specific part of the day.\\
-\par This solution was, however, discarded as it would create too much redundancy within the database and only solved one of the problems present at hand. As the team continued to gain a deeper understanding of both the problem and the clients’ requirements, another Database refinement iteration had to be done, in order to optimise the kind of data stored and the way in which it was stored. Furthermore, several new tables were added to the prototype ER diagram. An important aspect of this change to the Database model was the addition of tables to store sub-venue information. This resulted in a redefinition of the term `Venue'. A `Venue' would now represent a real world address, being used by the company, operating the system. A `Sub-Venue', on the other hand, would now represent a facility, which is a part of that venue. A good example to illustrate this concept would be a club with address `1 University Avenue, Glasgow', say, with 6 tennis courts. This would be displayed in the database with one entry in the `Venue' table and six entries in the `Sub-Venue' table. In case the company starts operating another venue with address `2 University Avenue, Glasgow', say, it would be trivial to add this single entry. This feature was not a requirement of our client, but was added as it allowed the Database and the system to be used in companies of any size. The payment part was overhauled as well, including new fields that would aid the future application easily distinguish between pending payments and successful ones. Also, a distinction between the types of payments was included, since a PayPal payments feature was planned.\\
+\par This solution was, however, discarded as it would create too much redundancy within the database and only solved one of the problems present at hand. As the team continued to gain a deeper understanding of both the problem and the clients? requirements, another Database refinement iteration had to be done, in order to optimise the kind of data stored and the way in which it was stored. Furthermore, several new tables were added to the prototype ER diagram. An important aspect of this change to the Database model was the addition of tables to store sub-venue information. This resulted in a redefinition of the term `Venue'. A `Venue' would now represent a real world address, being used by the company, operating the system. A `Sub-Venue', on the other hand, would now represent a facility, which is a part of that venue. A good example to illustrate this concept would be a club with address `1 University Avenue, Glasgow', say, with 6 tennis courts. This would be displayed in the database with one entry in the `Venue' table and six entries in the `Sub-Venue' table. In case the company starts operating another venue with address `2 University Avenue, Glasgow', say, it would be trivial to add this single entry. This feature was not a requirement of our client, but was added as it allowed the Database and the system to be used in companies of any size. The payment part was overhauled as well, including new fields that would aid the future application easily distinguish between pending payments and successful ones. Also, a distinction between the types of payments was included, since a PayPal payments feature was planned.\\
 \par Following additional discussions within the team and with the stakeholder, even more features were added to the database. These included medical conditions records, the option to include extras in specific sessions, as well as taking notes and attaching them to specific sessions. Moreover, the Database could now store the BTM rank (or any other kind of rank) and the experience level of each member, so that filtration of the members could be done not only by age, but also by experience.  Of course the level would change, depending on the type of sport the application is deployed to interact with. A feature that was excluded was the storing of the login details, since the team figured out that Django can automatically handle and protect the login details,and therefore the corresponding tables became redundant.\\
 \par However, at this time the Database Design did not fully solve the issue with the proper storage of the events information. The team continued investing time and energy in order to create a solution. Following numerous discussions and rigorous analysis of the issue at hand, the problem was resolved via abstraction of the events. The key element in this abstraction was the block. A block is a collection of sessions, which can have any attribute in common. This allows any kind of event to be easily distinguished and grouped by a common attribute. Hence, Events or Sessions can be grouped with respect to the time of the day they take place, i.e. morning or afternoon. Moreover, multiple sessions can be assigned to a single week or for the duration of a whole course. All of the features developed make the Database extremely flexible and hence, easy to implement in a system, dealing with any kind of sport or event. 
 \\
@@ -481,7 +462,7 @@ Designing the User Interface began by planning and deciding on the priorities of
 \\The `Manager' user had to create a set of bookable sessions in a quick and efficient way. It would be an incredible workload for the manager, if every session they ever create is done individually.\\
 \\The `Coach' user had to see its list of upcoming classes and check attendance for them.\\
 \par Draft diagrams were sketched according to the Requirements Gathering and Prioritisation previously mentioned. Hence, they were reviewed by the team and further extended. These sketches are attached in Appendix A.1. This allowed for a better understanding of the system flow and any potential problems. During the interface design process, the team conducted extensive discussions regarding the display of specific functionalities.  It was decided that having a menu to travel through the different sections would be the most suitable choice, as it allows a quick outline of the functionalities, while giving the user an abstraction of each section. For example, the `Manager' user has multiple important functionalities available, such as confirming bookings and setting up sessions and blocks, etc. A navigation menu allows for these different functionalities to be displayed in appropriately aggregated clusters, and the user to see the available possibilities. If we have a menu button for `Members', the user knows right away that they can see anything related to members in that menu.\\ 
-\par Another challenge was deciding on how to display the information in the best way. As the sketches show, the team had not yet decided about how to display the sessions and the the blocks to the users. Thus,, it was implemented very similarly to Western Tennis Club’s Google form (having checkboxes for each day of the week, representing mornings or full days). \\
+\par Another challenge was deciding on how to display the information in the best way. As the sketches show, the team had not yet decided about how to display the sessions and the the blocks to the users. Thus,, it was implemented very similarly to Western Tennis Club?s Google form (having checkboxes for each day of the week, representing mornings or full days). \\
 \\ 
 {
 \begin{figure}[h]
@@ -562,7 +543,7 @@ The design decisions are crucial for the User Interface, since they define how t
 }
 \\
 \par It was decided that having the different clusters of controls, grouped by function, in dedicated containers would allow for glanceable intuition. Guiding the user through each section of controls such as the `List of Children' will show a parent a list of their children, with a button to add a new child, all inside a container of its own.\\
-\par The colours were chosen carefully to give contrast between each cluster. On a projector having a lighter grey as the background would make it seem white, which in turn would dissolve the effect of the containers. On the initial HTML templates, mentioned in Section 4.3, the headers grabbed too much attention from the user. It was decided that having the body lighter would make it stand out, making it easier for the user to navigate through the system. The blue adds a theme to the organization, giving some colour without being emphasized. If the top bar was a stronger colour,  for example, red, it would detract from the emphasis the main display area should have. The header of each container is a darker grey with the purpose of giving the body of the container more emphasis. Where each button’s colour was chosen with respect to their functionality. For deletion and removal buttons, red was used to trigger warning. Blue is used for extra information, while orange is used to draw the parent’s attention to the enrollment. \\
+\par The colours were chosen carefully to give contrast between each cluster. On a projector having a lighter grey as the background would make it seem white, which in turn would dissolve the effect of the containers. On the initial HTML templates, mentioned in Section 4.3, the headers grabbed too much attention from the user. It was decided that having the body lighter would make it stand out, making it easier for the user to navigate through the system. The blue adds a theme to the organization, giving some colour without being emphasized. If the top bar was a stronger colour,  for example, red, it would detract from the emphasis the main display area should have. The header of each container is a darker grey with the purpose of giving the body of the container more emphasis. Where each button?s colour was chosen with respect to their functionality. For deletion and removal buttons, red was used to trigger warning. Blue is used for extra information, while orange is used to draw the parent?s attention to the enrollment. \\
 \par The general look and feel uses Bootstrap's CSS library. This improves the system's flow due to the consistency of the different components used (such as text fields, buttons, tables and glyphicons). The icons were used to guide and help the users. They were chosen in accordance with the functionality at hand. For example, the remove glyphicon is used for deletion; the pencil glyphicon is used for bookings; the plus glyphicon is used for adding children. It makes the design more glanceable, rather than having each button tagged by text, and adds consistency to the overall look and feel.\\
 \par Tables and list-groups are used to display lists of information. Tables are used only for a `Manager' user, as they display large amounts of data particularly well. Such as the list of members, blocks and sessions. List-groups were used where the user benefits from focussing on more specific data. Such as the list of children for a `Parent' user, where the attention should be draw to the name and the button controls on the right rather than their full details. For lists of pending bookings, it is clear that the attention is drawn to the control buttons, since dealing with bookings is the main focus of that panel. The list of coaches, for the `Manager' user, extends down a list of users to be given the privileges of a coach. The list has a search filter and because it extends, when the user clicks the `Add Coaches' button, it draws their attention.
 \\
@@ -628,9 +609,9 @@ As previously mentioned, the stakeholder had some requests for the new implement
 \section{Database}
 \par As discussed in the design section above, it is clear that the database is a very important part of this project. The database is responsible for storing and organising data that is used by the web application. The Django back-end framework is able to use three different database systems; MySQL, SQLite and Postgres. All of those support the basic SQL functionality, however, the team was looking for a database that could be deployed without too many difficulties and too much maintenance during the implementation process. Initially the team planned to use MySQL because it was supported by Django, was scalable and secure and was also the DBMS with which the team was most familiar with. But when the application was first deployed and started a problem was revealed. There was no efficient way for the team to synchronize the development database between their computers and to be able to rollback any changes made to the information in the DB.\\
 \par After some research, the team decided to use the SQLite database because of the fact that it is a lightweight fully functional SQL database engine. The entire database is self-contained in one single file and does not require an additional server processes, configurations or maintenance to operate. It can be directly integrated into the Django back-end which is also important at the development stage of the product. However the team would suggest that the Database back end be changed to a more scalable and robust DBMS, because of the metrics collected during the evaluation sage. Those metrics suggested that when the system is extensively used the back end could get as many as thousands of hits per second, and this could be a problem for a back-end such as SQLite which is not that scalable. The final web application is planned to be a medium traffic website that will receive 500 - 1000 HTTP requests that include dynamic content in a typical day. SQLite states that the database engine is able to deal with about 100,000 hits per day without any disturbance and therefore for an initial deployment such usage intensity would not be a problem. Furthermore the maximum capacity of the database is far above the minimum requirements of 10 giga-bytes that were set by the team during the design steps. Finally the last reason to choose SQLite was the fact that a migration at a later stage to a different DBMS would not be a problem since it requires only a couple of changes.\\
-\par Because of the initial choice of MySQL as a DBMS the first database was created using MySQL’s schema creator. The schema itself was discussed in the database design section and its actual creation was even easier because of the graphical relation builder that MySQL provides. Later it was easily migrated to the server using the built in migrator and the local server started. Because of the already discussed problem with the data not being easily accessible between multiple development machines the same MySQL schema was translated to SQLite using a script and the database file was added to the project folder.\\
+\par Because of the initial choice of MySQL as a DBMS the first database was created using MySQL?s schema creator. The schema itself was discussed in the database design section and its actual creation was even easier because of the graphical relation builder that MySQL provides. Later it was easily migrated to the server using the built in migrator and the local server started. Because of the already discussed problem with the data not being easily accessible between multiple development machines the same MySQL schema was translated to SQLite using a script and the database file was added to the project folder.\\
 \par 
-Even though the database was deployed already during the implementation process there were a number of cases which required columns to be added or removed or even data types to be changed. Because of the fact that the team would already be well into the development process the changes introduced had to have minimal effect on the rest of the structure. A good example of this was the fact that the team did not include an isMember boolean field to the client details(Which was required by the client). Because of the fact that this field would be required for every user and the  way django models work such an addition required the whole existing database to be dropped and rebuilt. Such a task can waste a lot of time and was a serious mistake made during the design stage. Another change that was introduced at a later stage involved the addition of a separate table to hold parent’s telephone numbers. The reason for such a change was lack of understanding of the way django works. The current model as described in the database design section uses a combination of the tables of the team’s database and the django required database. Because of the fact that parent’s details are stored in the django generated part of the DB they simply cannot be changed once the application is started and deployed because the cost of doing so is enormous. This is why the team came up with a solution that simply added a separate table to store the telephone numbers of users. This required a bit more server side work in order to make sure that this field is also populated when for example a new user is registered. \\
+Even though the database was deployed already during the implementation process there were a number of cases which required columns to be added or removed or even data types to be changed. Because of the fact that the team would already be well into the development process the changes introduced had to have minimal effect on the rest of the structure. A good example of this was the fact that the team did not include an isMember boolean field to the client details(Which was required by the client). Because of the fact that this field would be required for every user and the  way django models work such an addition required the whole existing database to be dropped and rebuilt. Such a task can waste a lot of time and was a serious mistake made during the design stage. Another change that was introduced at a later stage involved the addition of a separate table to hold parent?s telephone numbers. The reason for such a change was lack of understanding of the way django works. The current model as described in the database design section uses a combination of the tables of the team?s database and the django required database. Because of the fact that parent?s details are stored in the django generated part of the DB they simply cannot be changed once the application is started and deployed because the cost of doing so is enormous. This is why the team came up with a solution that simply added a separate table to store the telephone numbers of users. This required a bit more server side work in order to make sure that this field is also populated when for example a new user is registered. \\
 
 
 %------------------------------------------------------------------------------
@@ -657,10 +638,10 @@ The user authentication system provided by Django was one feature that helped th
 \par 
 With the help of \underline{django.auth} three user groups were defined, and all the users created with help the authentication system are assigned to one or more of those user groups. This feature allowed the team to restrict web pages to specific users who were not authorised to view them. For example, only users that are in the Manager group are able to access manager tagged web pages. However, if a user tries to access a page without their restricts, they are automatically redirected to their index page. \\
 \par 
-Another important security improvement is concerned with data communication within the app through the links. This is an easy way of communicating information between different views by sending some information via the url. On the other hand it is not as secure as using, for example communication through the built in Django, context feature.For example, if the user would like to see their child’s profile the user clicks on a link that may look like this:\\
-\texttt{http://...domain name…/bookingsystem/parent/childProfile/6}
+Another important security improvement is concerned with data communication within the app through the links. This is an easy way of communicating information between different views by sending some information via the url. On the other hand it is not as secure as using, for example communication through the built in Django, context feature.For example, if the user would like to see their child?s profile the user clicks on a link that may look like this:\\
+\texttt{http://...domain name?/bookingsystem/parent/childProfile/6}
 
-The last digit in the URL is the child’s User ID in the database. To avoid parents opening another user’s child's profile by changing the last digit of the URL the team members implemented extra security steps that guarantee that the request child belongs to the authenticated user that requests the profile. This principle is used in other sections of the system, for example for coaches that access their timetables.
+The last digit in the URL is the child?s User ID in the database. To avoid parents opening another user?s child's profile by changing the last digit of the URL the team members implemented extra security steps that guarantee that the request child belongs to the authenticated user that requests the profile. This principle is used in other sections of the system, for example for coaches that access their timetables.
 \\
 \par Also, Cross-Site Request Forgery protection and Form Validation were used to protect the communication between the users browser and the back-end. CSRF protection is supported by Django and was enabled to work with the built in cookie management which is responsible for keeping track of active users and protecting the sessions of those users from attacks. Forms on the other hand were implemented so that they include the built in data validation as well as additional protection using custom validation that makes sure the data submitted is appropriate and that no attacks such as SQL injection can occur.
 
@@ -694,7 +675,7 @@ Later, the team discussed features related to the Tennis Club management. The cl
 \par 
 A number of suggestions made by Ms. Gordon were related to the payments feature. She believed that this functionality had to be extended to several other aspects so that it satisfies the Tennis Club needs as much as possible. The system ought to allow both full and partial payments, depending on client's preference. As soon as a new payment was completed, either online or cash, the system should update the corresponding record, immediately, to prove its responsiveness and avoid any misunderstandings on upcoming transactions. Additionally, she proposed that it would be very convenient if the coaches' payment would be fulfilled by the system itself. Any level of automation in the payment seemed to be extremely appreciated.\\
 \par 
-By the end of the meeting the team had a clearer view on the client’s requirements for the system. Hence, the team was ready to proceed with the implementation in accordance to the guidelines given.
+By the end of the meeting the team had a clearer view on the client?s requirements for the system. Hence, the team was ready to proceed with the implementation in accordance to the guidelines given.
 
 
 
@@ -714,10 +695,10 @@ The received feedback was very useful for the team and will be taken into consid
 Apart from its performance, the Booking Management System deployed was also evaluated for the design of its User Interface. Jakob Nielsen's \emph{Heuristics} (Nielsen, 1994) was the set of usability heuristics that were used to review the User Interface:\\
 \\
 \textbf{Visibility of system status:}
-The system keeps the Users informed about its status with the appropriate messages that appear within reasonable time. Whenever a task is completed, the system returns the corresponding `Successful!” message to mark this accomplishment.\\
+The system keeps the Users informed about its status with the appropriate messages that appear within reasonable time. Whenever a task is completed, the system returns the corresponding `Successful!? message to mark this accomplishment.\\
  \\
 \textbf{Match between system and the real world:}
-The System uses words that are familiar to the Users such as ‘Coach’, ‘Sessions”’ and ‘Enrol’, whilst it avoids technical terms and notions that may be unknown.\\
+The System uses words that are familiar to the Users such as ?Coach?, ?Sessions?? and ?Enrol?, whilst it avoids technical terms and notions that may be unknown.\\
  \\
 \textbf{Consistency and standards:}
 The same words and icons are used throughout the system to mark the same operations. For example, the X icon is used everywhere to mark the deletion of a User (either a manager, or a coach).\\
@@ -732,13 +713,13 @@ All the objects and icons throughout the system are clearly visible so that the 
 The System design allows the common tasks to be no more than three clicks away from the User in order to accelerate the process and save time.\\
  \\
 \textbf{Aesthetic and minimalist design:}
-The System’s design is fairly minimalistic and does not contain information that is not relevant for either the system, or its specific operations.\\
+The System?s design is fairly minimalistic and does not contain information that is not relevant for either the system, or its specific operations.\\
  \\
 \textbf{Help users recognize, diagnose, and recover from errors:}
 The System should be enhanced in the future for better error handling. More precise and concise error messages should be added that describe the problem in plain language and clearly suggest the appropriate solution.\\
  \\
 \textbf{Help and documentation:}
-The System’s User Interface is so well-designed and simple so that it does not require an extra documentation to help the User perform a task. The quick and easy concrete steps that are carried out to perform an operation work as a good documentation on their own.\\
+The System?s User Interface is so well-designed and simple so that it does not require an extra documentation to help the User perform a task. The quick and easy concrete steps that are carried out to perform an operation work as a good documentation on their own.\\
 
 %------------------------------------------------------------------------------
 \section{Future Improvements}
@@ -772,7 +753,7 @@ The team used the notes and recordings, taken during the meeting with the stakeh
 	\item Express their interest in enrolling self or offsprings to specific classes (self is not applicable in the case of summer camp)
 	\item Once their place is confirmed, they have to pay (online or by cash) to finalise the enrolment
 	\item Receive notifications about the status of their payments (pending, due, completed)
-	\item Retrieve their (or their children’s) data and previous enrollment pattern each time they make a new booking (no need to enter the same data again and again)
+	\item Retrieve their (or their children?s) data and previous enrollment pattern each time they make a new booking (no need to enter the same data again and again)
 	\end{itemize}
 \textbf{\underline{Manager must be able to:}}
 	\begin{itemize}
@@ -785,7 +766,7 @@ The team used the notes and recordings, taken during the meeting with the stakeh
 \textbf{\underline{Coaches must be able to:}}
 	\begin{itemize}
 	\item Be assigned to each of the groups
-	\item Be registered and have their personal information included in the coaches’ register
+	\item Be registered and have their personal information included in the coaches? register
 	\item Be able to fill in attendance sheet for session, as there can it sometimes works as drop-in
 	\item Have access to the weekly timetable via their personal devices (tablets, smartphones, etc.)
 	\item Be able to check the names and the ages of the children that belong to their group but not their contact numbers (in case of emergency, manager will contact the parents)
@@ -878,7 +859,7 @@ The dates and times for each class are set but the number of groups formed depen
 	\end{itemize}
 \textbf{\underline{Payment}}
 	\begin{itemize}
-	\item A list of people that haven’t paid yet generated for the manager.
+	\item A list of people that haven?t paid yet generated for the manager.
 	\item Notifications will be sent to the customers that have outstanding payments.
 	\end{itemize}
 \textbf{\underline{Extras}}
