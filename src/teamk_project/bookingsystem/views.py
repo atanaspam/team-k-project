@@ -364,7 +364,7 @@ def blockInfo(request, bid):
 ################################################################################
 @login_required
 @user_passes_test(is_manager)
-def managerBookings(request):																	#### WARNING: Repetitive code:Line 51
+def managerBookings(request):
 	context = RequestContext(request)
 	parent = request.user
 	##			PENDING SESSIONS RETRIEVAL		##
