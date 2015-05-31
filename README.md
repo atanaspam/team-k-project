@@ -1,37 +1,27 @@
-Sports Facilities Management <sup>pending better name</sup>
+Sports Facilities Management
 ============================
 
-A web app to manage the running and management of sports facilities and camps over varying periods of time.
+The aim of this project was to provide a flexible system to automate the booking process for the clients of a sport venue. The application should also ease some of the tasks commonly related to a sports venue management such as timetable creation and possibly a built in payment system.
 
-Web Site
---------
+The application was developed as an assessed project in the University of Glasgow by
 
-* (http://www.westerntennisclub.tk/)
-* or  (http://atanaspam.pythonanywhere.com/))
-
-Short term TODO's
------------------
-
-* Refer to the tickets and report any issues using the ticket system
-* Please do NOT commit changes to the database unless you have implicitly changed something.
-
-
-Team Members
-------------
-
+* Atanas Pamukchiev - _atanaspam_
 * Ross Imlach  - _imlach_
 * Pedro Quintas -  _spedroq_
 * Zoe Gerolemou -  _zoegerolemou_
 * Karl Drouven  - _kadrouven_
-* Atanas Pamukchiev - _atanaspam_
 * Dimitris Kiker - _dkiker_
+
+Web Site
+--------
+
+* (Not Yet Deployed) (http://atanaspam.pythonanywhere.com/))
 
 
 Requirements
 ------------
 
-* Python Virtualenv (NOT)
-* Python Django 1.5.4 following http://www.tangowithdjango.com/book/chapters/requirements.html#installing-the-software
+* Python Django 1.5.4
 * Python Version 2.7.6
 
 Django Login Details
@@ -41,5 +31,3 @@ Django Login Details
 * zoe/zoe - parent
 * pedro/pedro - coach
 * atanas/atanas manager
-* Each Django Admin has a number of clients that are his "Children"
-
