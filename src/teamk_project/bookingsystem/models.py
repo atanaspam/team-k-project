@@ -67,21 +67,12 @@ class Address(models.Model):
 	class Meta:
 		db_table = 'address'
 
-class UserSelectsSession(models.Model):
-	user_uid = models.ForeignKey(Client, db_column='User_uID') # Field name made lowercase.
-	session_sessionid = models.ForeignKey(Session, db_column='Session_sessionID') # Field name made lowercase.
-	status = models.CharField(max_length=1, blank=True)
-	hasattended = models.IntegerField(db_column='hasattended')
-	class Meta:
-			unique_together = (("user_uid", "session_sessionid"),)
-			db_table = 'user_selects_session'
-
 class AdditionalInfo(models.Model):
 	user = models.OneToOneField(User)
 	telephone = models.IntegerField(max_length=12)
 
-# Client - Child    
-    
+# Client - Child
+
 class Client(models.Model):
 	uid = models.AutoField(primary_key=True, db_column='uID') # Field name made lowercase.
 	firstname = models.CharField(max_length=45, db_column='firstName', blank=True) # Field name made lowercase.
@@ -94,6 +85,8 @@ class Client(models.Model):
 	belongsto = models.ForeignKey(User, db_column='belongsTo') # Field name made lowercase.
 	genderid = models.IntegerField(null=True, db_column='genderID', blank=True, choices = GENDER_CHOICES) # Field name made lowercase.
 	experiencelevel = models.IntegerField(db_column='experienceLevel') # Field name made lowercase.
+	class Meta:
+		db_table = 'client'
 
 class Experiencelevel(models.Model):
 	levelid = models.IntegerField(primary_key=True, db_column='levelID') # Field name made lowercase.
@@ -106,16 +99,6 @@ class Medicalcondition(models.Model):
 	condition = models.CharField(max_length=45, blank=True)
 	class Meta:
 		db_table = 'medicalcondition'
-    
-# Coach
-
-class sessionCoachedBy(models.Model):
-    id = models.IntegerField(primary_key=True, db_column='id')
-    session_id = models.ForeignKey(Session, db_column='session_id')
-    user_id = models.ForeignKey(User, db_column='user_id')
-
-    class Meta:
-        db_table = 'session_coachedby'
 
 class DefaultCoaches(models.Model):
 	monMor = models.ForeignKey(User, null=True, related_name = 'MondayMorning')
@@ -155,6 +138,25 @@ class Session(models.Model):
 	coachedby = models.ManyToManyField(User, null=True, blank=True)
 	class Meta:
 			db_table = 'session'
+
+class UserSelectsSession(models.Model):
+	user_uid = models.ForeignKey(Client, db_column='User_uID') # Field name made lowercase.
+	session_sessionid = models.ForeignKey(Session, db_column='Session_sessionID') # Field name made lowercase.
+	status = models.CharField(max_length=1, blank=True)
+	hasattended = models.IntegerField(db_column='hasattended')
+	class Meta:
+			unique_together = (("user_uid", "session_sessionid"),)
+			db_table = 'user_selects_session'
+
+# Coach
+
+class sessionCoachedBy(models.Model):
+    id = models.IntegerField(primary_key=True, db_column='id')
+    session_id = models.ForeignKey(Session, db_column='session_id')
+    user_id = models.ForeignKey(User, db_column='user_id')
+
+    class Meta:
+        db_table = 'session_coachedby'
 
 class Notes(models.Model):
 	noteid = models.IntegerField(primary_key=True, db_column='noteID') # Field name made lowercase.

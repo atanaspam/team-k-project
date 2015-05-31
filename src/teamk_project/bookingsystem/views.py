@@ -4,19 +4,25 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
 from django.shortcuts import render_to_response, redirect
 from django.contrib.auth import logout
-from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User, Group
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Q, Sum, Min, Max
 from bookingsystem.models import *
 from bookingsystem.forms import BlockFormMore, EditPersonalDetailsForm, CreateChildForm, WeekBlockForm, SessionFormMore, ManagerEditPersonalDetailsForm, EditUserPersonalDetailsForm, DefaultCoachesForm
+from django.db.models import Q, Sum, Min, Max, Count
 from itertools import chain
 from datetime import timedelta
 import datetime, time, re
 
-
+###
+### Depreciated To be removed with the new Approved page
+### Complexity to be moved to DB
 approvalHistory = []
+
+
+
+### This is bad and you should feel bad...
 i = 0
 lastSessionID = -1
 lastID = -1
@@ -38,8 +44,9 @@ def getAgeGroup(age):
 			return group
 	return -1
 
-
-
+###
+### Depreciated  To be removed with the inclusion of autoIncrement Primary Key for client
+###
 def getLastID():
 	global lastID
 	if (lastID == -1):
@@ -50,6 +57,10 @@ def getLastID():
 	#print lastID +1
 	return ++lastID
 
+
+###
+### Depreciated  To be removed with the inclusion of autoIncrement Primary Key for session
+###
 def getLastSessionID():
 	global lastSessionID
 	if (lastSessionID == -1):
@@ -59,6 +70,10 @@ def getLastSessionID():
 			return lastSessionID
 	lastSessionID += 1
 	return lastSessionID
+
+###
+### Depreciated  To be removed with the inclusion of autoIncrement Primary Key for block
+###
 
 def getLastBlockID():
 	global lastBlockID
@@ -70,6 +85,10 @@ def getLastBlockID():
 			return lastBlockID
 	lastBlockID += 1
 	return lastBlockID
+
+###
+### Depreciated  To be removed with the inclusion of autoIncrement Primary Key for payment
+###
 
 def getLastPaymentID():
 	global lastPaymentID
@@ -114,7 +133,7 @@ def is_parent(user):
     return user.groups.filter(name='Parent').exists()
 
 ###############################################################################
-#									Coach 					   				  #
+#																	Coach 																			#
 ###############################################################################
 
 
@@ -205,7 +224,7 @@ def sessions(request, id):
 	return render_to_response('coach/sessions.html', context_dict, context)
 
 ###############################################################################
-#								End of Coach 					   			  #
+#																	Manager 																		#
 ###############################################################################
 
 @login_required
@@ -256,7 +275,6 @@ def editProfile(request):
     else:
 		return redirect(request.path.split("/editProfile.html", 1)[0])
 
-from django.db.models import Count
 @login_required
 @user_passes_test(is_manager)
 def managerIndex(request):
@@ -283,9 +301,9 @@ def managerIndex(request):
 
 	#pendingPayers1 = Client.objects.filter(uid__in=pendingPayments.values_list('usertopay'))
 
-	for payer in pendingPayments:
+	######for payer in pendingPayments:
 		#print payer.userselectssession_set.all().aggregate(Min('begindate'))
-		payer.usertopay.nextDate = payer.usertopay.nextArrivalDate
+		######payer.usertopay.nextDate = payer.usertopay.nextArrivalDate
 		#print payer.usertopay.nextArrivalDate
 
 
@@ -390,7 +408,7 @@ def managerSessions(request):
 
 
 
-###################### Add block id query in context detail#####################
+##################### Add block id query in context detail #####################
 
 @login_required
 @user_passes_test(is_manager)
@@ -404,13 +422,14 @@ def managerBlocks(request):
 
 ################################################################################
 
+# @login_required
+# @user_passes_test(is_manager)
+# def confirmbooking(request):
+# 	context = RequestContext(request)
+# 	context_dict={}
+# 	return render_to_response('success.html', context_dict, context)
 
-@login_required
-@user_passes_test(is_manager)
-def confirmbooking(request):
-	context = RequestContext(request)
-	context_dict={}
-	return render_to_response('success.html', context_dict, context)
+
 
 @login_required
 @user_passes_test(is_manager)
@@ -615,6 +634,83 @@ def audit(request):
  	context = RequestContext(request)
  	context_dict={}
  	return render_to_response('manager/audit.html', context_dict, context)
+
+@login_required
+@user_passes_test(is_manager)
+def managerChildProfile(request, id):
+	context = RequestContext(request)
+	context_dict = {}
+	child = Client.objects.get(uid=id)
+	sessions = UserSelectsSession.objects.filter(user_uid=child.uid)
+	parent = User.objects.get(id=child.belongsto_id)
+
+	try:
+		telephone = parent.additionalinfo.telephone
+	except:
+		telephone = ""
+
+	if request.method == 'POST':
+		form = ManagerEditPersonalDetailsForm(request.POST)
+
+		#If the request was not a POST, display the form to enter details.
+	else:
+		form = ManagerEditPersonalDetailsForm()
+		print parent
+		context_dict['parentInfo'] = parent
+		context_dict['telephone'] = telephone
+		context_dict['form'] = form
+		context_dict['sessions'] = sessions
+		context_dict['child'] = child
+
+	if request.META.get('HTTP_REFERER') is not None:
+		context_dict['previous'] = request.META.get('HTTP_REFERER')
+	else:
+		context_dict['previous'] = "/"
+
+	return render_to_response('manager/childProfile.html', context_dict, context)
+
+@login_required
+@user_passes_test(is_manager)
+def applicationApproved(request):
+	global i
+	context = RequestContext(request)
+	sessionID = None
+	if request.method == 'GET':
+		sessionID = request.GET['session_sessionid']
+		user = request.GET['userid']
+		#print user
+		if sessionID:
+			session = UserSelectsSession.objects.get( Q(session_sessionid = sessionID) & Q(user_uid = user) )
+			if session:
+				#print session.session_sessionid
+				approvalHistory.insert(i, session)
+				i=(i+1)%10
+				session.status = 'C' # set from pending to confirmed
+				session.session_sessionid.capacity -= 1
+				if session.session_sessionid.capacity == 0:
+					session.session_sessionid.isfull=1
+				#session.session_sessionid.save()
+				#session.save()
+				try:
+					payment = Payment.objects.get(usertopay=Client.objects.get(uid=user))
+				except Payment.DoesNotExist:
+					payment = None
+				if payment:
+					payment.amount += PRICE
+					string = payment.label
+					payment.label = string + str(session.session_sessionid.sessionid)
+					payment.save()
+				else:
+					id ="Sessions: " + str(session.session_sessionid.sessionid) + ", "
+					payment = Payment(paymentid=getLastPaymentID,usertopay=Client.objects.get(uid=user), amount=PRICE, label=id, haspayed=0, duedate=datetime.date.today())
+					payment.save()
+				print payment.paymentid, payment.amount, payment.label
+
+	return HttpResponse('Approved!')
+
+###############################################################################
+#																	Parent 																			#
+###############################################################################
 
 @login_required
 @user_passes_test(is_parent)
@@ -894,39 +990,6 @@ def confirmRemoveChild(request, uid):
 
  	return redirect('/bookingsystem/parent/')
 
-@login_required
-@user_passes_test(is_manager)
-def managerChildProfile(request, id):
-	context = RequestContext(request)
-	context_dict = {}
-	child = Client.objects.get(uid=id)
-	sessions = UserSelectsSession.objects.filter(user_uid=child.uid)
-	parent = User.objects.get(id=child.belongsto_id)
-
-	try:
-		telephone = parent.additionalinfo.telephone
-	except:
-		telephone = ""
-
-	if request.method == 'POST':
-		form = ManagerEditPersonalDetailsForm(request.POST)
-
-		#If the request was not a POST, display the form to enter details.
-	else:
-		form = ManagerEditPersonalDetailsForm()
-		print parent
-		context_dict['parentInfo'] = parent
-		context_dict['telephone'] = telephone
-		context_dict['form'] = form
-		context_dict['sessions'] = sessions
-		context_dict['child'] = child
-
-	if request.META.get('HTTP_REFERER') is not None:
-		context_dict['previous'] = request.META.get('HTTP_REFERER')
-	else:
-		context_dict['previous'] = "/"
-
-	return render_to_response('manager/childProfile.html', context_dict, context)
 
 ################################################################################
 ####												Adding new Child	 															 ###
@@ -974,46 +1037,6 @@ def payments(request):
 	return render_to_response('parent/payments.html', context_dict, context)
 
 @login_required
-@user_passes_test(is_manager)
-def applicationApproved(request):
-	global i
-	context = RequestContext(request)
-	sessionID = None
-	if request.method == 'GET':
-		sessionID = request.GET['session_sessionid']
-		user = request.GET['userid']
-		#print user
-		if sessionID:
-			session = UserSelectsSession.objects.get( Q(session_sessionid = sessionID) & Q(user_uid = user) )
-			if session:
-				#print session.session_sessionid
-				approvalHistory.insert(i, session)
-				i=(i+1)%10
-				session.status = 'C' # set from pending to confirmed
-				session.session_sessionid.capacity -= 1
-				if session.session_sessionid.capacity == 0:
-					session.session_sessionid.isfull=1
-				#session.session_sessionid.save()
-				#session.save()
-				try:
-					payment = Payment.objects.get(usertopay=Client.objects.get(uid=user))
-				except Payment.DoesNotExist:
-					payment = None
-				if payment:
-					payment.amount += PRICE
-					string = payment.label
-					payment.label = string + str(session.session_sessionid.sessionid)
-					payment.save()
-				else:
-					id ="Sessions: " + str(session.session_sessionid.sessionid) + ", "
-					payment = Payment(paymentid=getLastPaymentID,usertopay=Client.objects.get(uid=user), amount=PRICE, label=id, haspayed=0, duedate=datetime.date.today())
-					payment.save()
-				print payment.paymentid, payment.amount, payment.label
-
-
-	return HttpResponse('Approved!')
-
-@login_required
 @user_passes_test(is_parent)
 def removeSelection(request):
 	context = RequestContext(request)
@@ -1026,6 +1049,10 @@ def removeSelection(request):
 			session = UserSelectsSession.objects.get( Q(session_sessionid = sessionID) & Q(user_uid = user)).delete()
 			print session
  	return HttpResponse('Success!')
+
+###############################################################################
+#																		Misc 																			#
+###############################################################################
 
 @login_required
 @user_passes_test(is_manager)
@@ -1043,7 +1070,7 @@ def applicationDeclined(request):
 				#print session.session_sessionid
 				#approvalHistory.insert(i, session)
 				#i=(i+1)%10
-				session.status = 'D' # set from pending to confirmed
+				session.status = 'D' # set from pending to declined
 				session.save()
 	return HttpResponse('Declined!')
 
