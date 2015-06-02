@@ -75,16 +75,16 @@ def getLastSessionID():
 ### Depreciated  To be removed with the inclusion of autoIncrement Primary Key for block
 ###
 
-def getLastBlockID():
-	global lastBlockID
-	if (lastBlockID == -1):
-		lastBlockID = Block.objects.all().aggregate(Max('blockid')).get("blockid__max")
-		if lastBlockID is None:
-			print 'noBlock'
-			lastBlockID = 1
-			return lastBlockID
-	lastBlockID += 1
-	return lastBlockID
+# def getLastBlockID():
+# 	global lastBlockID
+# 	if (lastBlockID == -1):
+# 		lastBlockID = Block.objects.all().aggregate(Max('blockid')).get("blockid__max")
+# 		if lastBlockID is None:
+# 			print 'noBlock'
+# 			lastBlockID = 1
+# 			return lastBlockID
+# 	lastBlockID += 1
+# 	return lastBlockID
 
 ###
 ### Depreciated  To be removed with the inclusion of autoIncrement Primary Key for payment
@@ -1015,7 +1015,7 @@ def addNewChild(request):
 		# Have we been provided with a valid form?
 		if form.is_valid():
 			child=form.save(commit=False)
-			child.uid = getLastID()
+			#child.uid = getLastID()
 			child.ismember = 0
 			child.belongsto = request.user
 			child.experiencelevel=0
