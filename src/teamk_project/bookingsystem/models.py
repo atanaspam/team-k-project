@@ -69,7 +69,7 @@ class Address(models.Model):
 
 class AdditionalInfo(models.Model):
 	user = models.OneToOneField(User)
-	telephone = models.IntegerField(max_length=12)
+	telephone = models.IntegerField()
 
 # Client - Child
 
@@ -135,7 +135,7 @@ class Session(models.Model):
 	agegroup = models.CharField(max_length=45, db_column='ageGroup', blank=True) # Field name made lowercase.
 	skillgroup = models.CharField(max_length=45, db_column='skillGroup', blank=True) # Field name made lowercase.
 	isfull = models.CharField(max_length=45, db_column='isFull', blank=True) # Field name made lowercase.
-	coachedby = models.ManyToManyField(User, null=True, blank=True)
+	coachedby = models.ManyToManyField(User, blank=True)
 	class Meta:
 			db_table = 'session'
 

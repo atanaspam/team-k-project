@@ -397,6 +397,7 @@ class EditUserPersonalDetailsForm(forms.ModelForm):
 	password = forms.PasswordInput()
 	class Meta:
 		model = User
+		fields = ['email', 'password']
 
 class DefaultCoachesForm(forms.ModelForm):
 	coachGroups = Group.objects.filter(id=3)
@@ -541,3 +542,4 @@ class DefaultCoachesForm(forms.ModelForm):
 		return a
 	class Meta:
 		model = DefaultCoaches
+		exclude = ('',)
