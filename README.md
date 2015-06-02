@@ -21,8 +21,9 @@ Web Site
 Requirements
 ------------
 
-* Python Django 1.5.4
-* Python Version 2.7.6
+* Django==1.8.2
+* wheel==0.24.0
+* Python==2.7.6
 
 Django Login Details
 --------------------

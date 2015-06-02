@@ -611,14 +611,22 @@ def confirmRemoveManager(request, id):
 @user_passes_test(is_manager)
 def members(request):
     context = RequestContext(request)
-    #clients = Client.objects.select_related('payment__usertopay')
-    clients = Client.objects.raw('''
-    	SELECT client.*, payment.amount
-    	FROM client
-    	LEFT JOIN payment
-    	ON client.uID = payment.usertopay;
-    	''')
+    clients = Client.objects.all()
+    #for client in clients:
+    #	print client.payment_set.all()
+    #clients = Payment.objects.select_related('usertopay__uid')
+
+
+    # clients = Client.objects.raw('''
+    # 	SELECT client.*, payment.amount
+    # 	FROM client
+    # 	LEFT JOIN payment
+    # 	ON client.uID = payment.usertopay;
+    # 	''')
+
+
     #print clients.query, "\n"
+    #print clients
     context_dict={'clients':clients}
 
     #for i in clients:
@@ -1229,7 +1237,7 @@ def addBlock(request):
 				block.save()
 				for i in range(0,5):
 					# Create the morning Block
-					b = Block(blockid=getLastBlockID(), begindate=block.begindate + timedelta(days = i), enddate=block.begindate + timedelta(days = i), label=getDayOfWeek(i) + ' Morning', type='Morning')
+					b = Block(begindate=block.begindate + timedelta(days = i), enddate=block.begindate + timedelta(days = i), label=getDayOfWeek(i) + ' Morning', type='Morning')
 					print 'Morning Block:', b
 					b.save()
 					# Create all the sessions for the morning block
@@ -1243,7 +1251,7 @@ def addBlock(request):
 						#print s.sessionid , s.begintime, s.endtime, s.agegroup, s.coachedby
 						s.save()
 					# Create the afternoon block
-					b1 = Block(blockid=getLastBlockID(), begindate=block.begindate + timedelta(days = i), enddate=block.begindate + timedelta(days = i), label=getDayOfWeek(i) + ' Afternoon', type='Afternoon')
+					b1 = Block(begindate=block.begindate + timedelta(days = i), enddate=block.begindate + timedelta(days = i), label=getDayOfWeek(i) + ' Afternoon', type='Afternoon')
 					print 'Afternoon Block:',  b1
 					b1.save()
 					for age in ageGroups:

@@ -58,7 +58,7 @@ class ClientManager(models.Manager):
 # User
 
 class Address(models.Model):
-	addressid = models.IntegerField(primary_key=True, db_column='addressID') # Field name made lowercase.
+	addressid = models.AutoField(primary_key=True, db_column='addressID') # Field name made lowercase.
 	city = models.CharField(max_length=45, blank=True)
 	country = models.CharField(max_length=45, blank=True)
 	street = models.CharField(max_length=45, blank=True)
@@ -115,7 +115,7 @@ class DefaultCoaches(models.Model):
 # Blocks and Sessions
 
 class Block(models.Model):
-	blockid = models.IntegerField(primary_key=True, db_column='BlockID') # Field name made lowercase.
+	blockid = models.AutoField(primary_key=True, db_column='BlockID') # Field name made lowercase.
 	begindate = models.DateField(db_column='beginDate') # Field name made lowercase.
 	enddate = models.DateField(db_column='endDate') # Field name made lowercase.
 	label = models.CharField(max_length=45, blank=True)
