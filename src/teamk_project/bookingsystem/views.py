@@ -44,61 +44,6 @@ def getAgeGroup(age):
 			return group
 	return -1
 
-###
-### Depreciated  To be removed with the inclusion of autoIncrement Primary Key for client
-###
-def getLastID():
-	global lastID
-	if (lastID == -1):
-		lastID = Client.objects.all().aggregate(Max('uid')).get("uid__max")
-		if lastID is None:
-			lastID = 1
-			return lastID
-	#print lastID +1
-	return ++lastID
-
-
-###
-### Depreciated  To be removed with the inclusion of autoIncrement Primary Key for session
-###
-def getLastSessionID():
-	global lastSessionID
-	if (lastSessionID == -1):
-		lastSessionID = Session.objects.all().aggregate(Max('sessionid')).get("sessionid__max")
-		if lastSessionID is None:
-			lastSessionID = 1
-			return lastSessionID
-	lastSessionID += 1
-	return lastSessionID
-
-###
-### Depreciated  To be removed with the inclusion of autoIncrement Primary Key for block
-###
-
-# def getLastBlockID():
-# 	global lastBlockID
-# 	if (lastBlockID == -1):
-# 		lastBlockID = Block.objects.all().aggregate(Max('blockid')).get("blockid__max")
-# 		if lastBlockID is None:
-# 			print 'noBlock'
-# 			lastBlockID = 1
-# 			return lastBlockID
-# 	lastBlockID += 1
-# 	return lastBlockID
-
-###
-### Depreciated  To be removed with the inclusion of autoIncrement Primary Key for payment
-###
-
-def getLastPaymentID():
-	global lastPaymentID
-	if (lastPaymentID == -1):
-		lastPaymentID = Payment.objects.all().aggregate(Max('paymentid')).get("paymentid__max")
-		if lastPaymentID is None:
-			lastPaymentID = 1
-			return lastPaymentID
-	lastPaymentID += 1
-	return lastPaymentID
 
 ## days can be 0 to 5
 ## morOrAft can be 0 for Morning and 1 for Afternoon
@@ -1178,7 +1123,6 @@ def addSession(request):
 		# Have we been provided with a valid form?
 		if form.is_valid():
 			session=form.save(commit=False)
-			session.sessionid = getLastSessionID()
 			session.duration = (session.endtime-session.begintime)
 			session.isfull=0
 			if form.cleaned_data['coachedby'][0] != 0:
@@ -1258,7 +1202,7 @@ def addBlock(request):
 						# Generate the time
 						sessionTime = datetime.datetime.strptime('13:00', '%H:%M').time() # generate a 8:00 time
 						sessionBegTime = datetime.datetime.combine(block.begindate+timedelta(days = i), sessionTime)
-						s = Session(sessionid=getLastSessionID(), duration=1, begintime=sessionBegTime, endtime=(sessionBegTime+timedelta(hours=1)), block_blockid=b1, capacity=10, agegroup=age, skillgroup='RANDOM', isfull=0)
+						s = Session(duration=1, begintime=sessionBegTime, endtime=(sessionBegTime+timedelta(hours=1)), block_blockid=b1, capacity=10, agegroup=age, skillgroup='RANDOM', isfull=0)
 						if (getCoach(i,1) != (-1 & 0)):
 							s.coachedby.add(getCoach(i,1))
 						#print s.sessionid , s.begintime, s.endtime, s.agegroup, s.coachedby
@@ -1290,7 +1234,7 @@ def addBlock(request):
 						#sessionTime = datetime.datetime.strptime('13:00', '%H:%M').time() # generate a 8:00 time
 						sessionTime = form.cleaned_data['begintime']
 						sessionBegTime = datetime.datetime.combine(day, sessionTime)
-						s = Session(sessionid=getLastSessionID(), duration=1, begintime=sessionBegTime, endtime=(sessionBegTime+timedelta(hours=1)), block_blockid=block, capacity=10, agegroup=form.cleaned_data['agegroup'], skillgroup='RANDOM', isfull=0)
+						s = Session(duration=1, begintime=sessionBegTime, endtime=(sessionBegTime+timedelta(hours=1)), block_blockid=block, capacity=10, agegroup=form.cleaned_data['agegroup'], skillgroup='RANDOM', isfull=0)
 						print s.sessionid , s.begintime, s.endtime, s.agegroup, s.block_blockid.blockid
 						s.save()
 					day += delta

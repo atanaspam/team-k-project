@@ -126,7 +126,7 @@ class Block(models.Model):
 		return '%s %s %s' % (self.begindate, self.enddate, self.label)
 
 class Session(models.Model):
-	sessionid = models.IntegerField(primary_key=True, db_column='sessionID') # Field name made lowercase
+	sessionid = models.AutoField(primary_key=True, db_column='sessionID') # Field name made lowercase
 	duration = models.CharField(max_length=45, blank=True, choices=DURATION_TYPES)
 	begintime = models.DateTimeField(null=True, db_column='beginTime', blank=True) # Field name made lowercase.
 	endtime = models.DateTimeField(null=True, db_column='endTime', blank=True) # Field name made lowercase.
@@ -154,9 +154,8 @@ class sessionCoachedBy(models.Model):
     id = models.IntegerField(primary_key=True, db_column='id')
     session_id = models.ForeignKey(Session, db_column='session_id')
     user_id = models.ForeignKey(User, db_column='user_id')
-
     class Meta:
-        db_table = 'session_coachedby'
+        db_table = 'session_coached_by'
 
 class Notes(models.Model):
 	noteid = models.IntegerField(primary_key=True, db_column='noteID') # Field name made lowercase.
@@ -188,7 +187,7 @@ class Extras(models.Model):
 # Payments
 
 class Payment(models.Model):
-	paymentid = models.IntegerField(primary_key=True, db_column='paymentID') # Field name made lowercase.
+	paymentid = models.AutoField(primary_key=True, db_column='paymentID') # Field name made lowercase.
 	usertopay = models.ForeignKey(Client, db_column='userToPay') # Field name made lowercase.
 	paymenttype = models.IntegerField(db_column='paymentType') # Field name made lowercase.
 	amount = models.IntegerField(null=True, blank=True)
@@ -208,7 +207,7 @@ class Paymenttype(models.Model):
 # Venue
 
 class Venue(models.Model):
-	venueid = models.IntegerField(primary_key=True, db_column='venueID') # Field name made lowercase.
+	venueid = models.AutoField(primary_key=True, db_column='venueID') # Field name made lowercase.
 	capacity = models.IntegerField(null=True, blank=True)
 	name = models.CharField(max_length=45, blank=True)
 	load = models.IntegerField(null=True, blank=True)
@@ -218,7 +217,7 @@ class Venue(models.Model):
 		db_table = 'venue'
 
 class Subvenue(models.Model):
-	subvenueid = models.IntegerField(primary_key=True, db_column='subVenueID') # Field name made lowercase.
+	subvenueid = models.AutoField(primary_key=True, db_column='subVenueID') # Field name made lowercase.
 	label = models.CharField(max_length=45, blank=True)
 	capacity = models.CharField(max_length=45, blank=True)
 	ownervenue = models.ForeignKey(Venue, db_column='ownerVenue') # Field name made lowercase.
