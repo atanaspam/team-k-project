@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-#from django.contrib.auth.views import password_reset
+#from django.contrib.auth.views import password_change
+from django.contrib.auth.forms import PasswordChangeForm
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -23,6 +24,9 @@ urlpatterns = patterns('',
 	url(r'^password/reset/done/$','django.contrib.auth.views.password_reset_done'),
 	url(r'^password/reset/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$', 'django.contrib.auth.views.password_reset_confirm', {'post_reset_redirect' : '/password/done/'}),
 	url(r'^password/done/$', 'django.contrib.auth.views.password_reset_complete'),
+	url(r'^password/change/$','django.contrib.auth.views.password_change',
+		{'password_change_form': PasswordChangeForm, 'post_change_redirect' : '/password/change/done/'}, name="password_change"),
+	url(r'^password/change/done/$','django.contrib.auth.views.password_change_done'),
 
 	# User edit profile page
 	url(r'^editProfile', 'teamk_project.views.editProfile', name='editProfile'),

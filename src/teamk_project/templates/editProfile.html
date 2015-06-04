@@ -2,24 +2,27 @@
 {% extends "base.html" %}
 {% load bookingsystem_extras %}
 <!-- depending on the user type -->
-{% block sidebarNav %}
-	{% if menu == "manager" %}
-		{% include "sidebarNav/manager.html" %}
-	{% elif menu == "coach" %}
-		{% include "sidebarNav/coach.html" %}
-	{% elif menu == "parent" %}
-		{% include "sidebarNav/parent.html" %}
-	{% endif %}
+{% block sidebarNav%}
+{% if user|is_manager %}
+	{% include "sidebarNav/manager.html" %}
+
+{% elif user|is_coach %}
+	{% include "sidebarNav/coach.html" %}
+
+{% elif user|is_parent %}
+	{% include "sidebarNav/parent.html" %}
+{% endif %}
 {% endblock %}
+
 <!-- main area for the edit profile form -->
 {% block mainArea %}
 	<br>
 	{% if menu == "error" %}
-		<script type="text/javascript">        
-		    document.location.href = "/"; 
+		<script type="text/javascript">
+		    document.location.href = "/";
 		</script>
 	{% else %}
-	
+
 	<form action="editProfile.html" method="post">{% csrf_token %}
 
 	    <!-- Personal Details -->
@@ -46,18 +49,28 @@
 				<!-- add body here -->
 				<!-- phone number -->
 				<div class="input-group">
+            <div class="form-group">
+            <p><font color="red"><strong>{{ form.telephone.errors|striptags }}</strong></font></p>
+            <span class="input-group-addon" id="telephone" style="min-width: 130px;">{{ form.telephone.label }}</span>
+                {{ form.telephone }}
+          </div>
+
+          {% comment %}
 					<span class="input-group-addon" id="telephone" style="min-width: 130px;">Telephone</span>
 					<input type="text" class="form-control" name="telephone" value="{{ telephone }}" readonly aria-describedby="basic-addon1" id="edit8">
+					{% endcomment %}
 				</div>
 				<!-- e-mail -->
 				<div class="input-group">
-					{% comment %}
-					<span class="input-group-addon" id="email" style="min-width: 130px;">Email</span>
-					 <p><font color="red">{{ form.email.errors }}</font></p>
-                    {{form.email}}
-					{% endcomment %}
+            <div class="form-group">
+            <p><font color="red"><strong>{{ form.telephone.errors|striptags }}</strong></font></p>
+            <span class="input-group-addon" id="telephone" style="min-width: 130px;">{{ form.telephone.label }}</span>
+                {{ form.telephone }}
+          </div>
+          {% comment %}
 					<span class="input-group-addon" id="email" style="min-width: 130px;">Email</span>
 					<input type="text" class="form-control" name="email" value="{{ user.email }}" aria-describedby="basic-addon1" readonly id="edit2">
+					{% endcomment %}
 				</div>
 			</div>
 		</div> <!--panel-->
@@ -72,40 +85,27 @@
 
 			<div class="panel-body">
 				<!-- add body here -->
-				<!-- old password -->
-				<div class="input-group">
-					<span class="input-group-addon" id="oldpassword" style="min-width: 130px;">Old Password</span>
-					<input type="password" class="form-control" aria-describedby="basic-addon1" readonly id="edit3">
-				</div>
-
-				<!-- new password -->
-				<div class="input-group">
-					<span class="input-group-addon" id="newpassword1" style="min-width: 130px;">New Password</span>
-					<input type="password" class="form-control" aria-describedby="basic-addon1" readonly id="edit4">
-				</div>
-
-				<!-- confirm new password -->
-				<div class="input-group">
-					<span class="input-group-addon" id="newpassword2" style="min-width: 130px;">New Password</span>
-					<input type="password" class="form-control" aria-describedby="basic-addon1" readonly id="edit5">
-				</div>
+				<a class="btn btn-default" href="/password/change/">
+				Change Password
+				</a>
 
 			</div>
 		</div> <!--panel-->
-		
+
 		<!-- end of Account Settings -->
 		<a class="btn btn-default" ONCLICK="toggle_edit1(0);" id="edit1">
 				Edit
 		</a>
-	
+
 		<a class="btn btn-default" style="display: none" ONCLICK="toggle_edit2(0);" id="edit6">
 				Cancel
 		</a>
-		
+
 		<input type="hidden" name="id" value="{{ user.id }}">
 		<INPUT Type="submit" class="btn btn-default" VALUE="Save" style="display: none" id="edit7"/>
 	</form>
-	
+
+
 	<script>
 	function toggle_edit1() {
 			$("#edit1").hide()
@@ -117,7 +117,7 @@
 			$("#edit6").show()
 			$("#edit7").show()
 	}
-	
+
 	function toggle_edit2() {
 		$("#edit6").hide()
 		$("#edit7").hide()
@@ -132,5 +132,5 @@
 	}
 	</script>
 	{% endif %}
-	
+
 {% endblock %}

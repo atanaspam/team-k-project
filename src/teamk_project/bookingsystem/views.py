@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import ObjectDoesNotExist
 from bookingsystem.models import *
-from bookingsystem.forms import BlockFormMore, EditPersonalDetailsForm, CreateChildForm, WeekBlockForm, SessionFormMore, ManagerEditPersonalDetailsForm, EditUserPersonalDetailsForm, DefaultCoachesForm
+from bookingsystem.forms import BlockFormMore, EditPersonalDetailsForm, CreateChildForm, WeekBlockForm, SessionFormMore, ManagerEditPersonalDetailsForm, EditUserPersonalDetailsForm, DefaultCoachesForm, EditPersonalDetailsForm
 from django.db.models import Q, Sum, Min, Max, Count
 from itertools import chain
 from datetime import timedelta
@@ -24,13 +24,12 @@ approvalHistory = []
 
 ### This is bad and you should feel bad...
 i = 0
-lastSessionID = -1
-lastID = -1
-lastBlockID = -1
-lastPaymentID = -1
+### Hardcoded price per session
+PRICE = 25
+
+
 # This field is also referred to in the forms BlockFormMore
 ageGroups = ['7-10', '10-12', '12-15', '15-21']
-PRICE = 25
 
 def getDayOfWeek(n):
 	daysOfWeek = {0:'Monday', 1:'Tuesday', 2:'Wednesday', 3:'Thurday', 4:'Friday', 5:'Saturday', 6:'Sunday'}
@@ -146,7 +145,7 @@ def printAttendance(request, id):
 	return render_to_response('coach/printAttendance.html', context_dict, context)
 
 #					 			NOT REQUIRED 								  #
-
+# 							DEPRECIIATED									#
 @login_required
 @user_passes_test(is_coach)
 def submitAttendance(request):
@@ -174,9 +173,12 @@ def sessions(request, id):
 
 @login_required
 def editProfile(request):
+		############################################################################
+		### 						HAS TO BE REFACTORED TO INCLUDE A FORM 										 #
+		############################################################################
+		## PENDING HTML CHANGE
     context = RequestContext(request)
     user = request.user
-
 
     if request.method == 'POST':
     	userID = request.POST.get('id', '')
@@ -202,6 +204,7 @@ def editProfile(request):
 
     user = User.objects.get(id = user.id)
     context_dict = {'user':user}
+    context_dict['form'] = EditPersonalDetailsForm()
     try:
         context_dict['telephone'] = user.additionalinfo.telephone
     except:
@@ -239,10 +242,10 @@ def managerIndex(request):
 	##			PENDING PAYERS RETRIEVAL		##
 	pendingPayments = Payment.objects.filter(haspayed=0)
 	pendingUsers = pendingPayments.values_list('usertopay')
-	#nextArrivalDay = UserSelectsSession.objects.filter(user_uid__in=pendingUsers)
-
-		#pendingUsers = Client.objects.filter(payment__usertopay=nonPaidUsers).select_related()
-		#paymentInfo = Payment.objects.filter(haspayed = '0')
+	#nextArrivalDay1 = UserSelectsSession.objects.filter(user_uid__in=pendingUsers)
+	#nextArrivalDay = nextArrivalDay1.objects.filter(session_sessionid.begintime)
+	#pendingUsers = Client.objects.filter(payment__usertopay=nonPaidUsers).select_related()
+	#paymentInfo = Payment.objects.filter(haspayed = '0')
 
 	#pendingPayers1 = Client.objects.filter(uid__in=pendingPayments.values_list('usertopay'))
 

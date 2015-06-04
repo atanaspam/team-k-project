@@ -4,9 +4,10 @@ from django.shortcuts import render_to_response, redirect, render
 from django.http import HttpResponseRedirect
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
+from django.contrib.auth.forms import UserCreationForm#, PasswordChangeForm
+from django.contrib.auth.views import password_change, password_change_done
 from django.contrib.auth.models import User, Group
-from bookingsystem.forms import RegisterForm, EditUserPersonalDetailsForm, loginForm
+from bookingsystem.forms import RegisterForm, EditUserPersonalDetailsForm, loginForm, UserEditDetailsForm
 
 # User Login
 def login(request):
@@ -102,28 +103,23 @@ def register(request):
     return render_to_response('register.html', {'form': form}, context)
 
 # Edit profile
+@login_required
 def editProfile(request):
 
     context = RequestContext(request)
     user = request.user
     context_dict = {'user':user}
 
-    if "/manager/" in request.META.get('HTTP_REFERER'):
-        context_dict['sidebar'] = "manager"
-    elif "/coach/" in request.META.get('HTTP_REFERER'):
-        context_dict['sidebar'] = "coach"
-    elif "/parent/" in request.META.get('HTTP_REFERER'):
-        context_dict['sidebar'] = "parent"
-
     if request.method == 'POST':
-        form = EditUserPersonalDetailsForm(request.POST)
+        form = UserEditDetailsForm(request.POST)
         # Have we been provided with a valid form?
         if form.is_valid():
             print form
     else:
         # If the request was not a POST, display the form to enter details.
-        form = EditUserPersonalDetailsForm()
+        form = UserEditDetailsForm(initial={'telephone':user.additionalinfo.telephone, 'email':user.email })
         context['form'] = form
+        print form
     return render_to_response('editProfile.html', context_dict, context)
 
 # Logout
@@ -148,7 +144,7 @@ def fail(request):
     context = RequestContext(request)
     context_dict={}
     return render_to_response('fail.html', context_dict, context)
-    
+
 # Index
 def index(request):
     context = RequestContext(request)

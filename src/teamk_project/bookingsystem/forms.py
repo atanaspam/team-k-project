@@ -1,7 +1,6 @@
 from django import forms
 from datetime import date, time, timedelta
 from django.contrib import auth
-from django.contrib.auth.models import User
 from django.contrib.auth.models import User, Group
 from django.utils.safestring import mark_safe
 from django.core.exceptions import ObjectDoesNotExist
@@ -543,3 +542,11 @@ class DefaultCoachesForm(forms.ModelForm):
 	class Meta:
 		model = DefaultCoaches
 		exclude = ('',)
+
+class UserEditDetailsForm(forms.ModelForm):
+	#firstName = forms.CharField(max_length=20, help_text='Your new name')
+	email = forms.EmailField(label="New Email:")
+	telephone = forms.IntegerField(label="New Telephone:")
+	class Meta:
+		model = User
+		fields = ['email', 'telephone']
