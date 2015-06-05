@@ -28,11 +28,13 @@ class InitialSetup(TestCase):
     def test_empty_child_exists(self):
         self.assertTrue(Client.objects.get(uid=1) is not None)
     def test_empty_block_exists(self):
-        block = Block.objects.create(begindate=datetime.date(1993, 10, 9), enddate=datetime.date(1993, 10, 9), label='Some Day Morning', type='Morning')
+        block = Block(begindate=datetime.date(1993, 10, 9), enddate=datetime.date(1993, 10, 9), label='Some Day Morning', type='Morning')
+        block.save()
         self.assertEquals(Block.objects.get(blockid=1).label, 'Some Day Morning')
     def test_empty_session_exists(self):
         block = Block.objects.create(begindate=datetime.date(1993, 10, 9), enddate=datetime.date(1993, 10, 9), label='Some Day Morning', type='Morning')
-        session = Session.objects.create(duration=1, begintime=timezone.now(), endtime=timezone.now() + datetime.timedelta(hours=1), block_blockid=block, capacity=1, agegroup="random", skillgroup='RANDOM', isfull=0)
+        session = Session(duration=1, begintime=timezone.now(), endtime=timezone.now() + datetime.timedelta(hours=1), block_blockid=block, capacity=1, agegroup="random", skillgroup='RANDOM', isfull=0)
+        session.save()
         self.assertEquals(Session.objects.get(sessionid=1).capacity, 1)
     def test_empty_payment_exists(self):
         payment = Payment.objects.create(usertopay=Client.objects.get(uid=1), amount=100, label=1, haspayed=0, duedate=datetime.date.today(), paymenttype=1)

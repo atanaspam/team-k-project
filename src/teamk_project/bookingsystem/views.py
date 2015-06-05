@@ -242,8 +242,10 @@ def managerIndex(request):
 	##			PENDING PAYERS RETRIEVAL		##
 	pendingPayments = Payment.objects.filter(haspayed=0)
 	pendingUsers = pendingPayments.values_list('usertopay')
-	#nextArrivalDay1 = UserSelectsSession.objects.filter(user_uid__in=pendingUsers)
-	#nextArrivalDay = nextArrivalDay1.objects.filter(session_sessionid.begintime)
+	#print UserSelectsSession.objects.all().session_sessionid
+	#UserSelectsSession.objects.extra(select={'dayDiff':"(session_sessionid.begintime.date()-date.today().days)"	})
+	#nextArrivalDay = UserSelectsSession.objects.filter(user_uid__in=pendingUsers)
+	#print nextArrivalDay
 	#pendingUsers = Client.objects.filter(payment__usertopay=nonPaidUsers).select_related()
 	#paymentInfo = Payment.objects.filter(haspayed = '0')
 
@@ -658,7 +660,7 @@ def applicationApproved(request):
 					payment.save()
 				else:
 					id ="Sessions: " + str(session.session_sessionid.sessionid) + ", "
-					payment = Payment(paymentid=getLastPaymentID,usertopay=Client.objects.get(uid=user), amount=PRICE, label=id, haspayed=0, duedate=datetime.date.today())
+					payment = Payment(usertopay=Client.objects.get(uid=user), amount=PRICE, label=id, haspayed=0, duedate=datetime.date.today())
 					payment.save()
 				print payment.paymentid, payment.amount, payment.label
 
@@ -1177,7 +1179,7 @@ def addBlock(request):
 			# Have we been provided with a valid form?
 			if form.is_valid():
 				block=form.save(commit=False)
-				block.blockid = getLastBlockID()
+				#block.blockid = getLastBlockID()
 				print 'Week block ID:', block.blockid
 				block.enddate = block.begindate + timedelta(days = 6)
 				block.type = 'Week'
@@ -1192,10 +1194,11 @@ def addBlock(request):
 						# Generate the time
 						sessionTime = datetime.datetime.strptime('08:00', '%H:%M').time() # generate a 8:00 time
 						sessionBegTime = datetime.datetime.combine(block.begindate+timedelta(days = i), sessionTime)
-						s = Session(sessionid=getLastSessionID(), duration=1, begintime=sessionBegTime, endtime=(sessionBegTime+timedelta(hours=1)), block_blockid=b, capacity=10, agegroup=age, skillgroup='RANDOM', isfull=0)
+						s = Session(duration=1, begintime=sessionBegTime, endtime=(sessionBegTime+timedelta(hours=1)), block_blockid=b, capacity=10, agegroup=age, skillgroup='RANDOM', isfull=0)
+						s.save()
 						if (getCoach(i,0) != (-1 & 0)):
 							s.coachedby.add(getCoach(i,0))
-						#print s.sessionid , s.begintime, s.endtime, s.agegroup, s.coachedby
+						print s.sessionid , s.begintime, s.endtime, s.agegroup, s.coachedby
 						s.save()
 					# Create the afternoon block
 					b1 = Block(begindate=block.begindate + timedelta(days = i), enddate=block.begindate + timedelta(days = i), label=getDayOfWeek(i) + ' Afternoon', type='Afternoon')
@@ -1206,6 +1209,7 @@ def addBlock(request):
 						sessionTime = datetime.datetime.strptime('13:00', '%H:%M').time() # generate a 8:00 time
 						sessionBegTime = datetime.datetime.combine(block.begindate+timedelta(days = i), sessionTime)
 						s = Session(duration=1, begintime=sessionBegTime, endtime=(sessionBegTime+timedelta(hours=1)), block_blockid=b1, capacity=10, agegroup=age, skillgroup='RANDOM', isfull=0)
+						s.save()
 						if (getCoach(i,1) != (-1 & 0)):
 							s.coachedby.add(getCoach(i,1))
 						#print s.sessionid , s.begintime, s.endtime, s.agegroup, s.coachedby
@@ -1222,14 +1226,13 @@ def addBlock(request):
 			if form.is_valid():
 
 				block=form.save(commit=False)
-				block.blockid = getLastBlockID()
+				#block.blockid = getLastBlockID()
 				block.type = 'Season'
 				block.save()
 				#print form.cleaned_data['begintime']
 				days = []
 				for data in form.cleaned_data['weekdays']:
 					days.append(int(data))
-				print days
 				delta = datetime.timedelta(days=1)
 				day = block.begindate
 				while day <= block.enddate:

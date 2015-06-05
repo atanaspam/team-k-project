@@ -150,12 +150,12 @@ class UserSelectsSession(models.Model):
 
 # Coach
 
-class sessionCoachedBy(models.Model):
-    id = models.IntegerField(primary_key=True, db_column='id')
-    session_id = models.ForeignKey(Session, db_column='session_id')
-    user_id = models.ForeignKey(User, db_column='user_id')
-    class Meta:
-        db_table = 'session_coached_by'
+# class sessionCoachedBy(models.Model):
+#     id = models.IntegerField(primary_key=True, db_column='id')
+#     session_id = models.ForeignKey(Session, db_column='session_id')
+#     user_id = models.ForeignKey(User, db_column='user_id')
+#     class Meta:
+#         db_table = 'session_coached_by'
 
 class Notes(models.Model):
 	noteid = models.IntegerField(primary_key=True, db_column='noteID') # Field name made lowercase.
