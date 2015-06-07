@@ -6,10 +6,11 @@ Replace this with more appropriate tests for your application.
 """
 
 from django.test import TestCase
-from bookingsystem.models import Client, Block, Session, Payment
+from bookingsystem.models import Client, Block, Session, Payment, Paymenttype
 from django.contrib.auth.models import User, Group, UserManager
 from django.utils import timezone
 import datetime
+
 
 
 class SimpleTest(TestCase):
@@ -21,9 +22,11 @@ class SimpleTest(TestCase):
 
 class InitialSetup(TestCase):
     def setUp(self):
-        parent = User.objects.create_user(username="Parent1", email="parent@parents.com", password="There is no pass", first_name = "John", last_name = "Hyfig")
+        Paymenttype.objects.create(typeid=1, typelabel='Cash')
+        manager = User.objects.create_user(username="Manager1", email="man@managers.com", password="NoPass", first_name="Alex", last_name="Ferguson")
+        parent = User.objects.create_user(username="Parent1", email="parent@parents.com", password="There is no pass", first_name="John", last_name="Hyfig")
 
-        Client.objects.create(firstname="Atanas", lastname = "Pamukchiev", email="atanas.pam@gmail.com", telephone="021312213", dateofbirth=datetime.date(1993, 10, 9), ismember=False, managedby=0, belongsto=parent, genderid=1, experiencelevel=8)
+        Client.objects.create(firstname="Atanas", lastname = "Pamukchiev", email="atanas.pam@gmail.com", telephone="021312213", dateofbirth=datetime.date(1993, 10, 9), ismember=False, managedby=manager, belongsto=parent, genderid=1, experiencelevel=8)
 
     def test_empty_child_exists(self):
         self.assertTrue(Client.objects.get(uid=1) is not None)
@@ -37,23 +40,21 @@ class InitialSetup(TestCase):
         session.save()
         self.assertEquals(Session.objects.get(sessionid=1).capacity, 1)
     def test_empty_payment_exists(self):
-        payment = Payment.objects.create(usertopay=Client.objects.get(uid=1), amount=100, label=1, haspayed=0, duedate=datetime.date.today(), paymenttype=1)
+        payment = Payment.objects.create(usertopay=Client.objects.get(uid=1), amount=100, label=1, haspayed=0, duedate=datetime.date.today(), paymenttype=Paymenttype.objects.get(typeid=1))
         self.assertTrue(True)
 
 class TestMemberStatusChange(TestCase):
     def setUp(self):
-
-        parentsGroup = Group.objects.create(name="Parent")
-
-        parent = User.objects.create_user(username="Parent1", email="parent@parents.com", password="There is no pass", first_name = "John", last_name = "Hyfig")
-        #parent.first_name = "John"
-        #parent.last_name = "Hyfig"
-        g = Group.objects.get(name='Parent')
+        parentsGroup = Group.objects.create(name="Parents")
+        managersGroup = Group.objects.create(name="Managers")
+        manager = User.objects.create_user(username="Manager1", email="man@managers.com", password="NoPass", first_name="Alex", last_name="Ferguson")
+        parent = User.objects.create_user(username="Parent1", email="parent@parents.com", password="NoPAss", first_name="John", last_name="Hyfig")
+        g = Group.objects.get(name='Parents')
         g.user_set.add(parent)
         parent.save()
 
-        Client.objects.create(uid=1, firstname="Atanas", lastname = "Pamukchiev", email="atanas.pam@gmail.com", telephone="021312213", dateofbirth=datetime.date(1993, 10, 9), ismember=False, managedby=0, belongsto=parent, genderid=1, experiencelevel=8)
-        Client.objects.create(uid=2, firstname="Mahsa", lastname = "Johnson", email="mahsa.johnson@gmail.com", telephone="034672213", dateofbirth=datetime.date(1998, 8, 15), ismember=False, managedby=0, belongsto=parent, genderid=0, experiencelevel=2)
+        Client.objects.create(uid=1, firstname="Atanas", lastname = "Pamukchiev", email="atanas.pam@gmail.com", telephone="021312213", dateofbirth=datetime.date(1993, 10, 9), ismember=False, managedby=manager, belongsto=parent, genderid=1, experiencelevel=8)
+        Client.objects.create(uid=2, firstname="Mahsa", lastname = "Johnson", email="mahsa.johnson@gmail.com", telephone="034672213", dateofbirth=datetime.date(1998, 8, 15), ismember=False, managedby=manager, belongsto=parent, genderid=0, experiencelevel=2)
 
     def test_child_does_exist(self):
         client = Client.objects.get(uid=1)

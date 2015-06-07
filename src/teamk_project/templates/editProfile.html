@@ -51,8 +51,8 @@
 				<div class="input-group">
             <div class="form-group">
             <p><font color="red"><strong>{{ form.telephone.errors|striptags }}</strong></font></p>
-            <span class="input-group-addon" id="telephone" style="min-width: 130px;">{{ form.telephone.label }}</span>
-                {{ form.telephone }}
+             <span class="input-group-addon" id="email" style="min-width: 130px;">{{ form.telephone.label }} </span>
+            <span class="input-group-addon" id="telephone" style="min-width: 130px;">{{ form.telephone }}</span>
           </div>
 
           {% comment %}
@@ -63,9 +63,10 @@
 				<!-- e-mail -->
 				<div class="input-group">
             <div class="form-group">
-            <p><font color="red"><strong>{{ form.telephone.errors|striptags }}</strong></font></p>
-            <span class="input-group-addon" id="telephone" style="min-width: 130px;">{{ form.telephone.label }}</span>
-                {{ form.telephone }}
+            <p><font color="red"><strong>{{ form.email.errors|striptags }}</strong></font></p>
+             <span class="input-group-addon" id="email" style="min-width: 130px;">{{ form.email.label }} </span>
+            <span class="input-group-addon" id="email" style="min-width: 130px;"> {{ form.email }}</span>
+
           </div>
           {% comment %}
 					<span class="input-group-addon" id="email" style="min-width: 130px;">Email</span>
@@ -75,8 +76,6 @@
 			</div>
 		</div> <!--panel-->
 		<!-- end of Contact Details -->
-
-
 		<!-- Account Settings -->
 		<div class="panel panel-default">
 			<div class="panel-heading">

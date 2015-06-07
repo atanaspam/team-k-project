@@ -5,7 +5,7 @@ from django.contrib.auth.models import User, Group
 from django.utils.safestring import mark_safe
 from django.core.exceptions import ObjectDoesNotExist
 from django.forms import widgets
-from django.forms.widgets import Widget, Select, MultiWidget, CheckboxSelectMultiple, CheckboxInput, TextInput
+from django.forms.widgets import Widget, Select, MultiWidget, CheckboxSelectMultiple, CheckboxInput, TextInput, NumberInput, EmailInput
 from django.forms.extras.widgets import SelectDateWidget
 from bookingsystem.models import Block, Session, Client, GENDER_CHOICES, DefaultCoaches
 import re
@@ -407,6 +407,14 @@ class EditUserPersonalDetailsForm(forms.ModelForm):
 		model = User
 		fields = ['email', 'password']
 
+class UserEditDetailsForm(forms.ModelForm):
+	#firstName = forms.CharField(max_length=20, help_text='Your new name')
+	email = forms.EmailField(label="New Email:", widget=EmailInput(attrs={'size':25}))
+	telephone = forms.IntegerField(label="New Telephone:")
+	class Meta:
+		model = User
+		fields = ['email', 'telephone']
+
 class DefaultCoachesForm(forms.ModelForm):
 	coachGroups = Group.objects.filter(id=3)
 	coachChoices = User.objects.filter(groups=coachGroups)
@@ -552,10 +560,4 @@ class DefaultCoachesForm(forms.ModelForm):
 		model = DefaultCoaches
 		exclude = ('',)
 
-class UserEditDetailsForm(forms.ModelForm):
-	#firstName = forms.CharField(max_length=20, help_text='Your new name')
-	email = forms.EmailField(label="New Email:")
-	telephone = forms.IntegerField(label="New Telephone:")
-	class Meta:
-		model = User
-		fields = ['email', 'telephone']
+

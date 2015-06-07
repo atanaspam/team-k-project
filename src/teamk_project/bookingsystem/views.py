@@ -1,6 +1,7 @@
 from django import forms
 from django.db import models
 from django.http import HttpResponse, HttpResponseRedirect
+from django.utils import timezone
 from django.template import RequestContext
 from django.shortcuts import render_to_response, redirect
 from django.contrib.auth import logout
@@ -12,8 +13,8 @@ from bookingsystem.models import *
 from bookingsystem.forms import BlockFormMore, EditPersonalDetailsForm, CreateChildForm, WeekBlockForm, SessionFormMore, ManagerEditPersonalDetailsForm, EditUserPersonalDetailsForm, DefaultCoachesForm, EditPersonalDetailsForm, SessionEditForm
 from django.db.models import Q, F, Sum, Min, Max, Count
 from itertools import chain
-from datetime import timedelta, date
-import datetime, time, re
+from datetime import timedelta, date, datetime
+import time, re, pytz
 
 ###
 ### Depreciated To be removed with the new Approved page
@@ -40,7 +41,7 @@ def addPayment(user, session, type):
 	else:
 		id ="Sessions: " + str(session.session_sessionid.sessionid)
 		payType = Paymenttype.objects.get(typeid=type)
-		payment = Payment(usertopay=Client.objects.get(uid=user), paymenttype=payType, amount=PRICE, label=id, haspayed=0, duedate=datetime.date.today())
+		payment = Payment(usertopay=Client.objects.get(uid=user), paymenttype=payType, amount=PRICE, label=id, haspayed=0, duedate=date.today())
 		payment.save()
 	#print payment.paymentid, payment.amount, payment.label
 
@@ -102,11 +103,11 @@ def is_parent(user):
 @user_passes_test(is_coach)
 def coachIndex(request):
 	context = RequestContext(request)
-	today = datetime.date.today()
+	today = date.today()
 	userID = request.user.id
 	todaySessions = Session.objects.filter(Q(begintime__year=today.year, begintime__month=today.month, begintime__day=today.day)).values_list('sessionid')
 	todayAssignedSessions = Session.objects.filter(Q(coachedby=request.user) & Q(sessionid__in=todaySessions))
-	futureAssignedSessions = Session.objects.filter(Q(coachedby=request.user) & Q(begintime__gte=datetime.date.today() + datetime.timedelta(days=1)))
+	futureAssignedSessions = Session.objects.filter(Q(coachedby=request.user) & Q(begintime__gte=date.today() + timedelta(days=1)))
 
 	context_dict={'todayAssignedSessions':todayAssignedSessions}
 	context_dict['futureAssignedSessions'] = futureAssignedSessions
@@ -138,11 +139,11 @@ def attended(request,id,sid):
 @user_passes_test(is_coach)
 def printScheduleCoach(request):
 	context = RequestContext(request)
-	today = datetime.date.today()
+	today = date.today()
 	userID = request.user.id
 	todaySessions = Session.objects.filter(Q(begintime__year=today.year, begintime__month=today.month, begintime__day=today.day)).values_list('sessionid')
 	todayAssignedSessions = Session.objects.filter(Q(coachedby=request.user) & Q(sessionid__in=todaySessions))
-	futureAssignedSessions = Session.objects.filter(Q(coachedby=request.user) & Q(begintime__gte=datetime.date.today() + datetime.timedelta(days=1)))
+	futureAssignedSessions = Session.objects.filter(Q(coachedby=request.user) & Q(begintime__gte=date.today() + timedelta(days=1)))
 
 	context_dict={'todayAssignedSessions':todayAssignedSessions}
 	context_dict['futureAssignedSessions'] = futureAssignedSessions
@@ -188,57 +189,57 @@ def sessions(request, id):
 #																	Manager 																		#
 ###############################################################################
 
-@login_required
-def editProfile(request):
-		############################################################################
-		### 						HAS TO BE REFACTORED TO INCLUDE A FORM 										 #
-		############################################################################
-		## PENDING HTML CHANGE
-    context = RequestContext(request)
-    user = request.user
+# @login_required
+# def editProfile(request):
+# 		############################################################################
+# 		### 						HAS TO BE REFACTORED TO INCLUDE A FORM 										 #
+# 		############################################################################
+# 		## PENDING HTML CHANGE
+#     context = RequestContext(request)
+#     user = request.user
 
-    if request.method == 'POST':
-    	userID = request.POST.get('id', '')
-    	userObject = User.objects.get(id = userID)
-    	userObject.email = request.POST.get('email', '')
-    	userObject.additionalinfo.telephone = request.POST.get('telephone', '')
-    	userObject.save()
+#     if request.method == 'POST':
+#     	userID = request.POST.get('id', '')
+#     	userObject = User.objects.get(id = userID)
+#     	userObject.email = request.POST.get('email', '')
+#     	userObject.additionalinfo.telephone = request.POST.get('telephone', '')
+#     	userObject.save()
 
-    	# if not re.match(r"[^@]+@[^@]+\.[^@]+", userObject.email):
-    	# 	print "valid!"
+#     	# if not re.match(r"[^@]+@[^@]+\.[^@]+", userObject.email):
+#     	# 	print "valid!"
 
-    	# additionalinfo = additionalinfo.objects.get_or_create(user_id = userID)
-    	# additionalinfo.telephone = request.POST.get('telephone', '')
+#     	# additionalinfo = additionalinfo.objects.get_or_create(user_id = userID)
+#     	# additionalinfo.telephone = request.POST.get('telephone', '')
 
-        # form = EditUserPersonalDetailsForm(request.POST)
-        # Have we been provided with a valid form?
-        # if form.is_valid():
-        # print form
-    # else:
-        # If the request was not a POST, display the form to enter details.
-        # form = EditUserPersonalDetailsForm()
-        # context['form'] = form
+#         # form = EditUserPersonalDetailsForm(request.POST)
+#         # Have we been provided with a valid form?
+#         # if form.is_valid():
+#         # print form
+#     # else:
+#         # If the request was not a POST, display the form to enter details.
+#         # form = EditUserPersonalDetailsForm()
+#         # context['form'] = form
 
-    user = User.objects.get(id = user.id)
-    context_dict = {'user':user}
-    context_dict['form'] = EditPersonalDetailsForm()
-    try:
-        context_dict['telephone'] = user.additionalinfo.telephone
-    except:
-        pass
+#     user = User.objects.get(id = user.id)
+#     context_dict = {'user':user}
+#     context_dict['form'] = EditPersonalDetailsForm()
+#     try:
+#         context_dict['telephone'] = user.additionalinfo.telephone
+#     except:
+#         pass
 
-    if request.META.get('HTTP_REFERER') is not None:
-	    if "bookingsystem/manager/" in request.META.get('HTTP_REFERER'):
-	    	context_dict['menu'] = "manager"
-	    elif "bookingsystem/coach/" in request.META.get('HTTP_REFERER'):
-	    	context_dict['menu'] = "coach"
-	    elif "bookingsystem/parent/" in request.META.get('HTTP_REFERER'):
-	    	context_dict['menu'] = "parent"
-	    else:
-	    	context_dict['menu'] = "error"
-	    return render_to_response('editProfile.html', context_dict, context)
-    else:
-		return redirect(request.path.split("/editProfile.html", 1)[0])
+#     if request.META.get('HTTP_REFERER') is not None:
+# 	    if "bookingsystem/manager/" in request.META.get('HTTP_REFERER'):
+# 	    	context_dict['menu'] = "manager"
+# 	    elif "bookingsystem/coach/" in request.META.get('HTTP_REFERER'):
+# 	    	context_dict['menu'] = "coach"
+# 	    elif "bookingsystem/parent/" in request.META.get('HTTP_REFERER'):
+# 	    	context_dict['menu'] = "parent"
+# 	    else:
+# 	    	context_dict['menu'] = "error"
+# 	    return render_to_response('editProfile.html', context_dict, context)
+#     else:
+# 		return redirect(request.path.split("/editProfile.html", 1)[0])
 
 @login_required
 @user_passes_test(is_manager)
@@ -262,11 +263,10 @@ def managerIndex(request):
 	#print UserSelectsSession.objects.all().session_sessioni
 	UserSelectsSession.objects.extra(select={'dayDiff':"(session_sessionid__begintime.date() - date.today()).days"})
 	nextArrivalDay = UserSelectsSession.objects.filter(user_uid__in=pendingUsers).select_related('session_sessionid')
-	nextArrivalDay1 = nextArrivalDay.filter(session_sessionid__begintime__gte=datetime.datetime.now())
+	nextArrivalDay1 = nextArrivalDay.filter(session_sessionid__begintime__gte=datetime.now())
 	for item in nextArrivalDay1:
 		dayDiff = (item.session_sessionid.begintime.date() - date.today()).days
 		item.__dict__['dayDiff'] = dayDiff
-		print item.__dict__
 		#print item.session_sessionid.begintime.date(), date.today(), dayDiff
 
 	######for payer in pendingPayments:
@@ -454,13 +454,13 @@ def coachProfile(request, id):
 	if (userObject in allCoaches):
 		context_dict['userObject'] = userObject
 		history={}
-		beginning = datetime.date.today() - datetime.timedelta(days=7*5)
+		beginning = date.today() - timedelta(days=7*5)
 		coachingHistory = Session.objects.filter(Q(coachedby=userObject) & Q(begintime__gte=beginning) )
 		#for session in coachingHistory:
 		i = 5
 		while i > 0:
-			beginning = datetime.date.today() - datetime.timedelta(days=7*i)
-			history["Week Beginning: " + beginning.strftime("%d/%m/%y")] = userObject.session_set.filter( Q(begintime__gte=beginning) & Q(begintime__lte=beginning + datetime.timedelta(days=7)) ).aggregate(Sum('duration'))
+			beginning = datetime.now(pytz.utc) - timedelta(days=7*i)
+			history["Week Beginning: " + beginning.strftime("%d/%m/%y")] = userObject.session_set.filter( Q(begintime__gte=beginning) & Q(begintime__lte=beginning + timedelta(days=7)) ).aggregate(Sum('duration'))
 
 	#userObject.session_set.filter( Q(begintime__gte=beginning) & Q(begintime__lte=beginning + datetime.timedelta(days=7)) ).annotate(total_hours=Sum('duration'))
 
@@ -470,11 +470,11 @@ def coachProfile(request, id):
 			i -= 1
 		print history
 			#print session.total_hours
-		today = datetime.date.today()
+		today = date.today()
 		userID = request.user.id
 		todaySessions = Session.objects.filter(Q(begintime__year=today.year, begintime__month=today.month, begintime__day=today.day)).values_list('sessionid')
 		todayAssignedSessions = Session.objects.filter(Q(coachedby=request.user) & Q(sessionid__in=todaySessions))
-		futureAssignedSessions = Session.objects.filter(Q(coachedby=request.user) & Q(begintime__gte=datetime.date.today() + datetime.timedelta(days=1)))
+		futureAssignedSessions = Session.objects.filter(Q(coachedby=request.user) & Q(begintime__gte=date.today() + timedelta(days=1)))
 		context_dict['history']= history
 		context_dict['todayAssignedSessions'] = todayAssignedSessions
 		context_dict['futureAssignedSessions'] = futureAssignedSessions
@@ -532,11 +532,11 @@ def managerProfile(request, id):
 	if (userObject in allCoaches):
 	 	context_dict['userObject'] = userObject
 
-	 	today = datetime.date.today()
+	 	today = date.today()
 		userID = request.user.id
 		todaySessions = Session.objects.filter(Q(begintime__year=today.year, begintime__month=today.month, begintime__day=today.day)).values_list('sessionid')
 		todayAssignedSessions = Session.objects.filter(Q(coachedby=request.user) & Q(sessionid__in=todaySessions))
-		futureAssignedSessions = Session.objects.filter(Q(coachedby=request.user) & Q(begintime__gte=datetime.date.today() + datetime.timedelta(days=1)))
+		futureAssignedSessions = Session.objects.filter(Q(coachedby=request.user) & Q(begintime__gte=date.today() + timedelta(days=1)))
 		context_dict['todayAssignedSessions'] = todayAssignedSessions
 		context_dict['futureAssignedSessions'] = futureAssignedSessions
 
@@ -762,8 +762,8 @@ def parentBookings(request):
 def userBookings(request, num):
 	context = RequestContext(request)
 	child = Client.objects.get(uid=num)
-	today = datetime.date.today()
-	monday = today - datetime.timedelta(days=today.weekday())
+	today = date.today()
+	monday = today - timedelta(days=today.weekday())
 	weeks = Block.objects.filter(((Q(type='Week') & Q(begindate__gte=monday))) | (Q(type='Season')))
 	print weeks
 	context_dict = {'blocks': weeks}
@@ -811,7 +811,7 @@ def bookSessions1(request, blockID, uID):
  	context = RequestContext(request)
  	child = Client.objects.get(uid=uID)
 	owner = Block.objects.get(blockid=blockID)
-	age = datetime.date.today() - child.dateofbirth
+	age = date.today() - child.dateofbirth
 	preSelectedSessions = UserSelectsSession.objects.filter(user_uid=child.uid)
 	seasonSessions = Session.objects.filter(block_blockid__in=Block.objects.filter(type="Season"))
 	availableSessions = Session.objects.filter(~Q(sessionid__in=[session.session_sessionid.sessionid for session in preSelectedSessions]) & ~Q(sessionid__in=seasonSessions))
@@ -819,7 +819,7 @@ def bookSessions1(request, blockID, uID):
 	if agegroupp == -1:
 		sessions = Session.objects.none()
 	else:
-		sessions = availableSessions.filter((Q(begintime__gte=datetime.datetime.now()) & Q(begintime__gte=owner.begindate)) & Q(begintime__lte=owner.enddate)  & Q(agegroup=agegroupp) & Q(isfull=0))
+		sessions = availableSessions.filter((Q(begintime__gte=datetime.now()) & Q(begintime__gte=owner.begindate)) & Q(begintime__lte=owner.enddate)  & Q(agegroup=agegroupp) & Q(isfull=0))
 
  	context_dict = {'sessions': sessions}
  	context_dict['child'] = child
@@ -834,10 +834,10 @@ def bookSeason1(request, blockID, uID):
  	context = RequestContext(request)
  	child = Client.objects.get(uid=uID)
 	owner = Block.objects.get(blockid=blockID)
-	age = datetime.date.today() - child.dateofbirth
+	age = date.today() - child.dateofbirth
 	agegroupp=getAgeGroup(age.days/365)
  	if not agegroupp==-1:
-		sessions = Session.objects.filter( Q(block_blockid=blockID) & Q(begintime__gte=datetime.datetime.now() ) & Q(begintime__lte=owner.enddate) & Q(agegroup=agegroupp) & Q(isfull=0))
+		sessions = Session.objects.filter( Q(block_blockid=blockID) & Q(begintime__gte=datetime.now() ) & Q(begintime__lte=owner.enddate) & Q(agegroup=agegroupp) & Q(isfull=0))
 	else:
 		sessions = Session.objects.none()
  	context_dict = {'sessions': sessions}
@@ -1234,8 +1234,8 @@ def addBlock(request):
 					# Create all the sessions for the morning block
 					for age in ageGroups:
 						# Generate the time
-						sessionTime = datetime.datetime.strptime('08:00', '%H:%M').time() # generate a 8:00 time
-						sessionBegTime = datetime.datetime.combine(block.begindate+timedelta(days = i), sessionTime)
+						sessionTime = datetime.strptime('08:00', '%H:%M').time() # generate a 8:00 time
+						sessionBegTime = datetime.combine(block.begindate+timedelta(days = i), sessionTime)
 						s = Session(duration=1, begintime=sessionBegTime, endtime=(sessionBegTime+timedelta(hours=1)), block_blockid=b, capacity=10, agegroup=age, skillgroup='RANDOM', isfull=0)
 						s.save()
 						if (getCoach(i,0) != (-1 & 0)):
@@ -1248,8 +1248,8 @@ def addBlock(request):
 					b1.save()
 					for age in ageGroups:
 						# Generate the time
-						sessionTime = datetime.datetime.strptime('13:00', '%H:%M').time() # generate a 8:00 time
-						sessionBegTime = datetime.datetime.combine(block.begindate+timedelta(days = i), sessionTime)
+						sessionTime = datetime.strptime('13:00', '%H:%M').time() # generate a 8:00 time
+						sessionBegTime = datetime.combine(block.begindate+timedelta(days = i), sessionTime)
 						s = Session(duration=1, begintime=sessionBegTime, endtime=(sessionBegTime+timedelta(hours=1)), block_blockid=b1, capacity=10, agegroup=age, skillgroup='RANDOM', isfull=0)
 						s.save()
 						if (getCoach(i,1) != (-1 & 0)):
@@ -1275,13 +1275,13 @@ def addBlock(request):
 				days = []
 				for data in form.cleaned_data['weekdays']:
 					days.append(int(data))
-				delta = datetime.timedelta(days=1)
+				delta = timedelta(days=1)
 				day = block.begindate
 				while day <= block.enddate:
 					if day.weekday() in days:
 						#sessionTime = datetime.datetime.strptime('13:00', '%H:%M').time() # generate a 8:00 time
 						sessionTime = form.cleaned_data['begintime']
-						sessionBegTime = datetime.datetime.combine(day, sessionTime)
+						sessionBegTime = datetime.combine(day, sessionTime)
 						s = Session(duration=1, begintime=sessionBegTime, endtime=(sessionBegTime+timedelta(hours=1)), block_blockid=block, capacity=10, agegroup=form.cleaned_data['agegroup'], skillgroup='RANDOM', isfull=0)
 						print s.sessionid , s.begintime, s.endtime, s.agegroup, s.block_blockid.blockid
 						s.save()

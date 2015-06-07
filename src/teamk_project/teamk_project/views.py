@@ -105,11 +105,9 @@ def register(request):
 # Edit profile
 @login_required
 def editProfile(request):
-
     context = RequestContext(request)
     user = request.user
     context_dict = {'user':user}
-
     if request.method == 'POST':
         form = UserEditDetailsForm(request.POST)
         # Have we been provided with a valid form?
@@ -118,7 +116,7 @@ def editProfile(request):
     else:
         # If the request was not a POST, display the form to enter details.
         form = UserEditDetailsForm(initial={'telephone':user.additionalinfo.telephone, 'email':user.email })
-        context['form'] = form
+        context_dict['form'] = form
         print form
     return render_to_response('editProfile.html', context_dict, context)
 

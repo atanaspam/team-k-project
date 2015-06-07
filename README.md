@@ -23,6 +23,7 @@ Requirements
 
 * Django==1.8.2
 * wheel==0.24.0
+* pytz==2015.4
 * Python==2.7.6
 
 Django Login Details

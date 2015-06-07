@@ -33,10 +33,10 @@ GENDER_CHOICES = (
 	)
 
 DURATION_TYPES = (
-		('0:30', '30 minutes'),
-		('1:00', '1 hour'),
-		('1:30', '1:30 hours'),
-		('2:00', '2 hours'),
+		('0:30:00', '30 minutes'),
+		('1:00:00', '1 hour'),
+		('1:30:00', '1:30 hours'),
+		('2:00:00', '2 hours'),
 		('-1', 'Other'),
 		)
 
@@ -78,24 +78,24 @@ class Client(models.Model):
 	firstname = models.CharField(max_length=45, db_column='firstName', blank=True) # Field name made lowercase.
 	lastname = models.CharField(max_length=45, db_column='lastName', blank=True) # Field name made lowercase.
 	email = models.CharField(max_length=45, blank=True)
-	telephone = models.TextField(blank=True) # This field type is a guess.
+	telephone = models.IntegerField(blank=True) # This field type is a guess.
 	dateofbirth = models.DateField(null=False, blank=False, db_column='dateofbirth')
-	ismember = models.IntegerField(null=True, db_column='isMember', blank=True) # Field name made lowercase.
-	managedby = models.IntegerField(null=True, db_column='managedBy', blank=True) # Field name made lowercase.
-	belongsto = models.ForeignKey(User, db_column='belongsTo') # Field name made lowercase.
+	ismember = models.BooleanField(db_column='isMember', blank=True) # Field name made lowercase.
+	managedby = models.ForeignKey(User, null=True, db_column='managedBy', blank=True, related_name='Manager') # Field name made lowercase.
+	belongsto = models.ForeignKey(User, db_column='belongsTo', related_name='Parent') # Field name made lowercase.
 	genderid = models.IntegerField(null=True, db_column='genderID', blank=True, choices = GENDER_CHOICES) # Field name made lowercase.
 	experiencelevel = models.IntegerField(db_column='experienceLevel') # Field name made lowercase.
 	class Meta:
 		db_table = 'client'
 
 class Experiencelevel(models.Model):
-	levelid = models.IntegerField(primary_key=True, db_column='levelID') # Field name made lowercase.
+	levelid = models.AutoField(primary_key=True, db_column='levelID') # Field name made lowercase.
 	label = models.CharField(max_length=45, blank=True)
 	class Meta:
 		db_table = 'experiencelevel'
 
 class Medicalcondition(models.Model):
-	ownerid = models.IntegerField(primary_key=True, db_column='ownerID') # Field name made lowercase.
+	ownerid = models.AutoField(primary_key=True, db_column='ownerID') # Field name made lowercase.
 	condition = models.CharField(max_length=45, blank=True)
 	class Meta:
 		db_table = 'medicalcondition'
@@ -143,7 +143,7 @@ class UserSelectsSession(models.Model):
 	user_uid = models.ForeignKey(Client, db_column='User_uID') # Field name made lowercase.
 	session_sessionid = models.ForeignKey(Session, db_column='Session_sessionID') # Field name made lowercase.
 	status = models.CharField(max_length=1, blank=True)
-	hasattended = models.IntegerField(db_column='hasattended')
+	hasattended = models.BooleanField(db_column='hasattended')
 	class Meta:
 			unique_together = (("user_uid", "session_sessionid"),)
 			db_table = 'user_selects_session'
@@ -158,10 +158,10 @@ class UserSelectsSession(models.Model):
 #         db_table = 'session_coached_by'
 
 class Notes(models.Model):
-	noteid = models.IntegerField(primary_key=True, db_column='noteID') # Field name made lowercase.
+	noteid = models.AutoField(primary_key=True, db_column='noteID') # Field name made lowercase.
 	note = models.TextField(db_column='Note', blank=True) # Field name made lowercase. This field type is a guess.
-	session_sessionid = models.IntegerField(db_column='Session_sessionID') # Field name made lowercase.
-	hasnotes = models.IntegerField(null=True, db_column='hasNotes', blank=True) # Field name made lowercase.
+	session_sessionid = models.ForeignKey(Session, db_column='Session_sessionID') # Field name made lowercase.
+	hasnotes = models.BooleanField(db_column='hasNotes', blank=True) # Field name made lowercase.
 	class Meta:
 		db_table = 'notes'
 
@@ -169,25 +169,25 @@ class Notes(models.Model):
 # Extras or Unused
 
 class BtmRank(models.Model):
-	uid = models.IntegerField(primary_key=True, db_column='uID') # Field name made lowercase.
+	uid = models.AutoField(primary_key=True, db_column='uID') # Field name made lowercase.
 	membershipnum = models.IntegerField(null=True, db_column='membershipNum', blank=True) # Field name made lowercase.
 	numofponts = models.IntegerField(null=True, db_column='numOfPonts', blank=True) # Field name made lowercase.
 	class Meta:
 		db_table = 'btm_rank'
 
 class Extras(models.Model):
-	extrasid = models.IntegerField(primary_key=True, db_column='extrasID') # Field name made lowercase.
+	extrasid = models.AutoField(primary_key=True, db_column='extrasID') # Field name made lowercase.
 	label = models.CharField(max_length=45, blank=True)
 	price = models.IntegerField(null=True, blank=True)
 	description = models.CharField(max_length=45, blank=True)
-	ownersessionid = models.IntegerField(db_column='ownerSessionID') # Field name made lowercase.
+	ownersessionid = models.ForeignKey(Session, db_column='ownerSessionID') # Field name made lowercase.
 	class Meta:
 		db_table = 'extras'
 
 # Payments
 
 class Paymenttype(models.Model):
-	typeid = models.IntegerField(primary_key=True, db_column='typeID') # Field name made lowercase.
+	typeid = models.AutoField(primary_key=True, db_column='typeID') # Field name made lowercase.
 	typelabel = models.CharField(max_length=45, db_column='typeLabel', blank=True) # Field name made lowercase.
 	class Meta:
 		db_table = 'paymenttype'
@@ -198,7 +198,7 @@ class Payment(models.Model):
 	paymenttype = models.ForeignKey(Paymenttype, db_column='paymentType') # Field name made lowercase.
 	amount = models.IntegerField(null=True, blank=True)
 	label = models.CharField(max_length=45, blank=True)
-	haspayed = models.IntegerField(null=True, db_column='hasPayed', blank=True) # Field name made lowercase.
+	haspayed = models.BooleanField(db_column='hasPayed', blank=True) # Field name made lowercase.
 	duedate = models.DateField(null=True, db_column='dueDate', blank=True) # Field name made lowercase.
 	payeddate = models.DateField(null=True, db_column='payedDate', blank=True) # Field name made lowercase.
 	class Meta:
@@ -211,15 +211,15 @@ class Venue(models.Model):
 	capacity = models.IntegerField(null=True, blank=True)
 	name = models.CharField(max_length=45, blank=True)
 	load = models.IntegerField(null=True, blank=True)
-	manager = models.IntegerField(db_column='Manager') # Field name made lowercase.
-	address_addressid = models.ForeignKey(Address,db_column='Address_addressID') # Field name made lowercase.
+	manager = models.ForeignKey(User, db_column='Manager') # Field name made lowercase.
+	address_addressid = models.ForeignKey(Address, db_column='Address_addressID') # Field name made lowercase.
 	class Meta:
 		db_table = 'venue'
 
 class Subvenue(models.Model):
 	subvenueid = models.AutoField(primary_key=True, db_column='subVenueID') # Field name made lowercase.
 	label = models.CharField(max_length=45, blank=True)
-	capacity = models.CharField(max_length=45, blank=True)
+	capacity = models.IntegerField(blank=True)
 	ownervenue = models.ForeignKey(Venue, db_column='ownerVenue') # Field name made lowercase.
 	class Meta:
 		db_table = 'subvenue'
