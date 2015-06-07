@@ -134,7 +134,7 @@ class Session(models.Model):
 	capacity = models.IntegerField(null=True, blank=True)
 	agegroup = models.CharField(max_length=45, db_column='ageGroup', blank=True) # Field name made lowercase.
 	skillgroup = models.CharField(max_length=45, db_column='skillGroup', blank=True) # Field name made lowercase.
-	isfull = models.CharField(max_length=45, db_column='isFull', blank=True) # Field name made lowercase.
+	isfull = models.BooleanField(max_length=45, db_column='isFull', blank=True) # Field name made lowercase.
 	coachedby = models.ManyToManyField(User, blank=True)
 	class Meta:
 			db_table = 'session'
@@ -186,10 +186,16 @@ class Extras(models.Model):
 
 # Payments
 
+class Paymenttype(models.Model):
+	typeid = models.IntegerField(primary_key=True, db_column='typeID') # Field name made lowercase.
+	typelabel = models.CharField(max_length=45, db_column='typeLabel', blank=True) # Field name made lowercase.
+	class Meta:
+		db_table = 'paymenttype'
+
 class Payment(models.Model):
 	paymentid = models.AutoField(primary_key=True, db_column='paymentID') # Field name made lowercase.
 	usertopay = models.ForeignKey(Client, db_column='userToPay') # Field name made lowercase.
-	paymenttype = models.IntegerField(db_column='paymentType') # Field name made lowercase.
+	paymenttype = models.ForeignKey(Paymenttype, db_column='paymentType') # Field name made lowercase.
 	amount = models.IntegerField(null=True, blank=True)
 	label = models.CharField(max_length=45, blank=True)
 	haspayed = models.IntegerField(null=True, db_column='hasPayed', blank=True) # Field name made lowercase.
@@ -197,12 +203,6 @@ class Payment(models.Model):
 	payeddate = models.DateField(null=True, db_column='payedDate', blank=True) # Field name made lowercase.
 	class Meta:
 		db_table = 'payment'
-
-class Paymenttype(models.Model):
-	typeid = models.IntegerField(primary_key=True, db_column='typeID') # Field name made lowercase.
-	typelabel = models.CharField(max_length=45, db_column='typeLabel', blank=True) # Field name made lowercase.
-	class Meta:
-		db_table = 'paymenttype'
 
 # Venue
 

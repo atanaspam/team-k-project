@@ -4,7 +4,6 @@
 {% include "sidebarNav/manager.html" %}
 {% endblock %}
 
-
 <!-- main area for session info -->
 {% block mainArea %}
 	<!-- scprits to enable searching -->
@@ -28,9 +27,7 @@
 		</div>
 
 		<div class="panel-body">
-			{% if success %}
-				<font color="green">Changes Successfully applied!</font>
-			{% endif %}
+			<form action="/bookingsystem/manager/sessionInfo/{{details.sessionid}}/" class="form-horizontal" method="post">{% csrf_token %}
 			<!-- list of sessions-->
 			<table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
 				<thead>
@@ -42,37 +39,34 @@
           			  	<th>Capacity</th>
           			  	<th>Ages Group</th>
           			  	<th>Skill Group</th>
-          			  	<th>Assigned Coach</th>
         			</tr>
       		  	</thead>
 
 				{% if details %}
+					{% if form %}
 					<tbody>
 						<tr class="studentLabel">
 							<a class="studentLabel" href="childProfile.html"></a>
 
-							{% if details.isfull %}
-								<td>Yes</td>
-							{% else %}
- 						   		<td>No</td>
-							{% endif %}
-
-							<td>{{details.begintime|date:"d M"}} - {{details.begintime|time:"H:i"}}</td>
-            				<td>{{details.endtime|time:"H:i"}}</td>
-            				<td>{{details.block_blockid.label}}</td>
-            				<td>{{details.capacity}}</td>
-            				<td>{{details.agegroup}}</td>
-            				<td>{{details.skillgroup}}</td>
-            				<td>{% for coach in details.coachedby.all %}
-
-					            {{coach.first_name}} {{coach.last_name}}
-					            {% endfor %}</td>
+							<td>{{form.isfull}}</td>
+							<td>{{form.begintime}}</td>
+							<td>{{form.endtime}}</td>
+							<td>{{form.block_blockid}}</td>
+							<td>{{form.capacity}}</td>
+							<td>{{form.agegroup}}</td>
+							<td>{{form.skillgroup}}</td>
 						</tr>
 					</tbody>
+					{% endif %}
 				{% endif %}
 			</table>
 		</div>
+
 	</div><!--/.panel-->
+	{% comment %}
+	******************************************************************************
+	******			This functionality is provided by sessionInfo								******
+	******************************************************************************
 
 	<div class="panel panel-default">
 		<div class="panel-heading">
@@ -189,20 +183,20 @@
 			{% endif %}
 		</div>
 	</div><!--/.panel-->
+	{% endcomment %}
 
-	<a href="{{ previous }}" class="btn btn-default">
+	<a href="/bookingsystem/manager/sessionInfo/{{details.sessionid}}/" class="btn btn-default">
   		Cancel
 	</a>
 
 	<span class="pull-right">
 
-	<a class="btn btn-default editButton" id ="edit"  href="/bookingsystem/manager/sessionInfoEdit/{{details.sessionid}}/">
-		Edit Session
-	</a>
-
+	<input class="btn btn-default" type="submit" value="Submit Changes" />
+		</form>
 		<a href="removeSession/{{ details.sessionid }}" class="btn btn-danger" id ="info">
       		Remove Session
     	</a>
+
 	</span>
 
 {% endblock %}

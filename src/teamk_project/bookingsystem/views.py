@@ -9,10 +9,10 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import ObjectDoesNotExist
 from bookingsystem.models import *
-from bookingsystem.forms import BlockFormMore, EditPersonalDetailsForm, CreateChildForm, WeekBlockForm, SessionFormMore, ManagerEditPersonalDetailsForm, EditUserPersonalDetailsForm, DefaultCoachesForm, EditPersonalDetailsForm
-from django.db.models import Q, Sum, Min, Max, Count
+from bookingsystem.forms import BlockFormMore, EditPersonalDetailsForm, CreateChildForm, WeekBlockForm, SessionFormMore, ManagerEditPersonalDetailsForm, EditUserPersonalDetailsForm, DefaultCoachesForm, EditPersonalDetailsForm, SessionEditForm
+from django.db.models import Q, F, Sum, Min, Max, Count
 from itertools import chain
-from datetime import timedelta
+from datetime import timedelta, date
 import datetime, time, re
 
 ###
@@ -26,6 +26,23 @@ approvalHistory = []
 i = 0
 ### Hardcoded price per session
 PRICE = 25
+
+def addPayment(user, session, type):
+	try:
+		payment = Payment.objects.get(usertopay=Client.objects.get(uid=user))
+	except Payment.DoesNotExist:
+		payment = None
+	if payment:
+		payment.amount += PRICE
+		string = payment.label
+		payment.label = string + ", " + str(session.session_sessionid.sessionid)
+		payment.save()
+	else:
+		id ="Sessions: " + str(session.session_sessionid.sessionid)
+		payType = Paymenttype.objects.get(typeid=type)
+		payment = Payment(usertopay=Client.objects.get(uid=user), paymenttype=payType, amount=PRICE, label=id, haspayed=0, duedate=datetime.date.today())
+		payment.save()
+	#print payment.paymentid, payment.amount, payment.label
 
 
 # This field is also referred to in the forms BlockFormMore
@@ -242,19 +259,29 @@ def managerIndex(request):
 	##			PENDING PAYERS RETRIEVAL		##
 	pendingPayments = Payment.objects.filter(haspayed=0)
 	pendingUsers = pendingPayments.values_list('usertopay')
-	#print UserSelectsSession.objects.all().session_sessionid
-	#UserSelectsSession.objects.extra(select={'dayDiff':"(session_sessionid.begintime.date()-date.today().days)"	})
-	#nextArrivalDay = UserSelectsSession.objects.filter(user_uid__in=pendingUsers)
-	#print nextArrivalDay
-	#pendingUsers = Client.objects.filter(payment__usertopay=nonPaidUsers).select_related()
-	#paymentInfo = Payment.objects.filter(haspayed = '0')
-
-	#pendingPayers1 = Client.objects.filter(uid__in=pendingPayments.values_list('usertopay'))
+	#print UserSelectsSession.objects.all().session_sessioni
+	UserSelectsSession.objects.extra(select={'dayDiff':"(session_sessionid__begintime.date() - date.today()).days"})
+	nextArrivalDay = UserSelectsSession.objects.filter(user_uid__in=pendingUsers).select_related('session_sessionid')
+	nextArrivalDay1 = nextArrivalDay.filter(session_sessionid__begintime__gte=datetime.datetime.now())
+	for item in nextArrivalDay1:
+		dayDiff = (item.session_sessionid.begintime.date() - date.today()).days
+		item.__dict__['dayDiff'] = dayDiff
+		print item.__dict__
+		#print item.session_sessionid.begintime.date(), date.today(), dayDiff
 
 	######for payer in pendingPayments:
 		#print payer.userselectssession_set.all().aggregate(Min('begindate'))
 		######payer.usertopay.nextDate = payer.usertopay.nextArrivalDate
 		#print payer.usertopay.nextArrivalDate
+
+	#
+	#	SELECT id
+	#	FROM UserSelectsSession NATURAL JOIN Session,
+	#	GROUP BY user_uid
+	# HAVING MIN(julianday(begintime) - julianday(SELECT date('now')))
+	#
+	#
+	#
 
 
 	pendingSessions = UserSelectsSession.objects.filter(status = 'P')
@@ -649,20 +676,7 @@ def applicationApproved(request):
 					session.session_sessionid.isfull=1
 				#session.session_sessionid.save()
 				#session.save()
-				try:
-					payment = Payment.objects.get(usertopay=Client.objects.get(uid=user))
-				except Payment.DoesNotExist:
-					payment = None
-				if payment:
-					payment.amount += PRICE
-					string = payment.label
-					payment.label = string + str(session.session_sessionid.sessionid)
-					payment.save()
-				else:
-					id ="Sessions: " + str(session.session_sessionid.sessionid) + ", "
-					payment = Payment(usertopay=Client.objects.get(uid=user), amount=PRICE, label=id, haspayed=0, duedate=datetime.date.today())
-					payment.save()
-				print payment.paymentid, payment.amount, payment.label
+				addPayment(user, session, 1)
 
 	return HttpResponse('Approved!')
 
@@ -1034,20 +1048,19 @@ def applicationDeclined(request):
 
 @login_required
 @user_passes_test(is_manager)
-def sessionInfo(request, sessionID):
+def sessionInfo(request, sessionID, type):
 	context = RequestContext(request)
 
 	userSelectSessionObjects = UserSelectsSession.objects.filter(Q(session_sessionid = sessionID))
-	context_dict = {'userSelectSessionObjects': userSelectSessionObjects}
 	childrenNot = Client.objects.filter(~Q(uid__in = userSelectSessionObjects.values('user_uid')))
-	context_dict['childrenNot'] = childrenNot
 	sessionDetails = Session.objects.get(sessionid=sessionID)
-	context_dict['details'] = sessionDetails
-
-	coacheGroups = Group.objects.get(name='Coach')
-	allCoaches = User.objects.filter(Q(groups=coacheGroups))
+	allCoaches = User.objects.filter(Q(groups=Group.objects.get(name='Coach')))
 	assignedCoaches = sessionDetails.coachedby.all()
 	unassignedCoaches = allCoaches.filter(~Q(id__in = assignedCoaches.values('id')))
+
+	context_dict = {'userSelectSessionObjects': userSelectSessionObjects}
+	context_dict['childrenNot'] = childrenNot
+	context_dict['details'] = sessionDetails
 	context_dict['assignedCoaches'] = assignedCoaches
 	context_dict['unassignedCoaches'] = unassignedCoaches
 
@@ -1059,7 +1072,36 @@ def sessionInfo(request, sessionID):
 	else:
 		context_dict['previous'] = "/"
 
-	return render_to_response('manager/sessionInfo.html', context_dict, context)
+	if request.method == 'POST':
+		form = SessionEditForm(request.POST)
+		# Have we been provided with a valid form?
+		if form.is_valid():
+			session=form.save(commit=False)
+			session.sessionid = sessionDetails.sessionid
+			if not form.cleaned_data['isfull']:
+				session.isfull = False;
+			session.duration = (session.endtime-session.begintime)
+			session.save()
+			print session.sessionid
+			context_dict['success'] = 1
+			return redirect('manager/sessionInfo.html')
+		else:
+			return redirect('fail.html')
+	else:
+		if int(type) == 1:
+			print sessionDetails.isfull
+			form = SessionEditForm(initial={'isfull' : sessionDetails.isfull,
+																			'begintime' : sessionDetails.begintime,
+																			'endtime' : sessionDetails.endtime,
+																			'block_blockid' : sessionDetails.block_blockid,
+																			'capacity' : sessionDetails.capacity,
+																			'agegroup' : sessionDetails.agegroup,
+																			'skillgroup' : sessionDetails.skillgroup
+				})
+			context_dict['form'] = form
+			return render_to_response('manager/sessionInfoEdit.html', context_dict, context)
+		else:
+			return render_to_response('manager/sessionInfo.html', context_dict, context)
 
 @login_required
 @user_passes_test(is_manager)
@@ -1361,6 +1403,7 @@ def applicationAllApproved(request):
 				#print session.session_sessionid, session.status
 				session.session_sessionid.save()
 				session.save()
+				addPayment(user, session, 1)
 	return HttpResponse('Approved!')
 
 @login_required

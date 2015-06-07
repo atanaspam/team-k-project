@@ -45,7 +45,9 @@ urlpatterns = patterns('',
 	url(r'^manager/confirmRemoveManager/(?P<id>\d+)?', views.confirmRemoveManager, name='confirmRemoveManager'),
 	url(r'^manager/managerChildProfile/(?P<id>\d+)?', views.managerChildProfile, name='managerChildProfile'),
 	url(r'^manager/setDefaultCoaches',views.setDefaultCoaches, name='managerSetDefaultCoaches'),
-	url(r'^manager/sessionInfo(\d{1,5})', views.sessionInfo, name='sessionInfo'),
+	url(r'^manager/sessionInfoEdit/(\d{1,5})/', views.sessionInfo, {'type':'1'}, name='sessionInfoEdit'),
+	url(r'^manager/sessionInfo/(\d{1,5})/', views.sessionInfo, {'type':'0'}, name='sessionInfo'),
+	url(r'^manager/sessionInfoEdit/(\d{1,5})/', views.sessionInfo, {'type':'1'}, name='sessionInfoEdit'),
 	url(r'^manager/addCoachToSession', views.addCoachToSession, name='addCoachToSession'),
 
 	# Coach URLs

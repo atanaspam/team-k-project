@@ -5,7 +5,7 @@ from django.contrib.auth.models import User, Group
 from django.utils.safestring import mark_safe
 from django.core.exceptions import ObjectDoesNotExist
 from django.forms import widgets
-from django.forms.widgets import Widget, Select, MultiWidget, CheckboxSelectMultiple
+from django.forms.widgets import Widget, Select, MultiWidget, CheckboxSelectMultiple, CheckboxInput, TextInput
 from django.forms.extras.widgets import SelectDateWidget
 from bookingsystem.models import Block, Session, Client, GENDER_CHOICES, DefaultCoaches
 import re
@@ -295,6 +295,15 @@ class SessionForm(forms.ModelForm):
 	class Meta:
 		model = Session
 		fields = ['begintime', 'endtime', 'block_blockid', 'capacity', 'agegroup', 'skillgroup']
+
+class SessionEditForm(SessionForm):
+	isfull = forms.BooleanField(required=False)
+	block_blockid = forms.Select()
+	agegroup = forms.CharField(label="Associated age group", widget=TextInput(attrs={'size':8}))
+	skillgroup = forms.CharField(label="Associated skill group", widget=TextInput(attrs={'size':10}))
+	capacity = forms.IntegerField(label="Capacity of the session", widget=NumberInput(attrs={'style': 'width:50px'}))
+	class Meta(SessionForm.Meta):
+		fields = SessionForm.Meta.fields +['isfull']
 
 class SessionFormMore(SessionForm):
 	venue_choices = ((1, "Court 1"), (2, "Court 2"), (3, "Court 3"), (4, "Court 4"), (5, "Court 5"), (6, "Court 6"))

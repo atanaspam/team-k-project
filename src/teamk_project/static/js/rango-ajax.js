@@ -27,7 +27,21 @@ $(document).ready(function() {
             //$('#approve').hide();
         });
     });
-
+/*
+    $('.editButton').click(function() {
+        var catid;
+        var sessionid;
+        var staus = 1;
+        sessionid = $(this).attr("data-sessionid");
+        $.get('/bookingsystem/manager/sessionInfoEdit/'+ sessionid, {
+            //sessionID: sessionid,
+            //type: 1
+        }, function(data) {
+            $('.editButton[data-sessionid=' + sessionid + ']').html("Submit");
+            //$('#approve').hide();
+        });
+    });
+*/
     $('.removeButton').click(function() {
         var catid;
         console.log('AAAAAA');
