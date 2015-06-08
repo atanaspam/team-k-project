@@ -12,8 +12,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
 		<link href="{% static "css/styles.css" %}" rel="stylesheet">
-    	<link rel="shortcut icon" href="{% static "wtc small icon.ico" %}">
-    	<!-- script references -->
+		<link rel="shortcut icon" href="{% static "wtc small icon.ico" %}">
+		<!-- script references -->
 		<script src="{% static "/static/js/jquery-2.1.3.min.js" %}"></script>
 		<script src="{% static "/static/js/rango-ajax.js" %}"></script>
 		<script src="{% static "/static/js/jquery.fastLiveFilter.js" %}"></script>
@@ -26,21 +26,18 @@
 		<!-- table libraries -->
 		<link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"></style>
 		<script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
-
 	</head>
-
 	<body>
 		<div class="page-container">
-
 			<!-- top navbar -->
-		    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+			<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 				<div class="container">
-		    		<div class="navbar-header">
-
-		    			<a class="navbar-brand" href="/">Western Tennis Club</a>
+					<div class="navbar-header">
+						<a class="navbar-brand" href="/">Western Tennis Club</a>
 						{% if user.is_authenticated %}
-						<div class="btn-group" style="position: fixed; top:8px; align:left">
-					  		{% if user|is_manager %} <button type="button" class="btn btn-primary">Manager</button>
+							<div class="btn-group" style="position: fixed; top:8px; align:left">
+								{% if user|is_manager %}
+									<button type="button" class="btn btn-primary">Manager</button>
 								{% if user|is_coach or user|is_parent %}
 									<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 										<span class="caret"></span>
@@ -48,65 +45,52 @@
 									</button>
 									<ul class="dropdown-menu" role="menu">
 										<li><a href="/bookingsystem/manager">Manager</a></li>
-										{% if user|is_coach %}<li><a href="/bookingsystem/coach">Coach</a></li>{% endif %}
-										{% if user|is_parent %}<li><a href="/bookingsystem/parent">Parent</a></li>{% endif %}
+										{% if user|is_coach %}<li><a href="/bookingsystem/coach">Coach</a></li> {% endif %}
+
+										{% if user|is_parent %}<li><a href="/bookingsystem/parent">Parent</a></li> {% endif %}
 									</ul>
 								{% endif %}
-					    	{% elif user|is_coach %} <button type="button" class="btn btn-primary">Coach</button>
+								{% elif user|is_coach %} <button type="button" class="btn btn-primary">Coach</button>
 								{% if user|is_parent %}
-								<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-									<span class="caret"></span>
-									<span class="sr-only">Toggle Dropdown</span>
-								</button>
-								<ul class="dropdown-menu" role="menu">
-									<li><a href="/bookingsystem/coach">Coach</a></li>
-									<li><a href="/bookingsystem/parent">Parent</a></li>
-								</ul>
+									<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+										<span class="caret"></span>
+										<span class="sr-only">Toggle Dropdown</span>
+									</button>
+									<ul class="dropdown-menu" role="menu">
+										<li><a href="/bookingsystem/coach">Coach</a></li>
+										<li><a href="/bookingsystem/parent">Parent</a></li>
+									</ul>
 								{% endif %}
-					     	{% elif user|is_parent %} <button type="button" class="btn btn-primary">Parent</button>{% endif %}
-						</div>{% endif %}
-
-
-
+								{% elif user|is_parent %} <button type="button" class="btn btn-primary">Parent</button>{% endif %}
+							</div>
+						{% endif %}
 						<button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".sidebar-nav">
-		             		<span class="icon-bar"></span>
-		             		<span class="icon-bar"></span>
-		             		<span class="icon-bar"></span>
-		           		</button>
-		    		</div>
-
-
-
-
-
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+					</div>
 				</div>
-		    </div>
-
-		    <div class="container">
-		    	<div class="row row-offcanvas row-offcanvas-left">
-
+			</div>
+			<div class="container">
+				<div class="row row-offcanvas row-offcanvas-left">
 					<!-- sidebar -->
-
 					<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
 						<div data-spy="affix-top" data-offset-top="45" data-offset-bottom="90">
 							<ul class="nav" id="sidebar-nav">
-
 								{% block sidebarNav %}
+									{# Sidebar Goes Here #}
 								{% endblock %}
-
-
 							</ul>
 							<span><img src="{% static "Western Tennis Club tsp.png" %}" width="88" height="88"></span>
 						</div>
 					</div>
-
-
-			        <!-- main area -->
-			        <div class="col-xs-12 col-sm-9" data-spy="scroll" data-target="#sidebar-nav">
+					<!-- main area -->
+					<div class="col-xs-12 col-sm-9" data-spy="scroll" data-target="#sidebar-nav">
 						{% block mainArea %}
-
-					  	{% endblock %}
-				  	</div><!-- /.col-xs-12 main -->
+							{# Page Goes Here #}
+						{% endblock %}
+					</div><!-- /.col-xs-12 main -->
 				</div><!--/.row-->
 			</div><!--/.container-->
 		</div><!--/.page-container-->
@@ -114,22 +98,21 @@
 		<!--footer-->
 		<div id="footer">
 			<div class="container">
-		    	<div class="row">
+				<div class="row">
 					{% block footer %}
-					<ul class="list-unstyled">
-		            	<li class="col-sm-4 col-xs-6"><a href="/about">About the Club</a></li>
-		            	<li class="col-sm-4 col-xs-6"><a href="/venues">Venues</a></li>
-		            	<li class="col-sm-4 col-xs-6"><a href="/conact">Contact</a></li>
-		            	<li class="col-sm-4 col-xs-6"><a href="ageGroups">Age Groups</a></li>
-		            	<li class="col-sm-4 col-xs-6"><a href="/login">Login</a></li>
-		           	 	<li class="col-sm-4 col-xs-6"><a href="/news">News</a></li>
-		            	<li class="col-sm-4 col-xs-6"><a href="/events">Events</a></li>
-		          	</ul>
+						<ul class="list-unstyled">
+							<li class="col-sm-4 col-xs-6"><a href="/about">About the Club</a></li>
+							<li class="col-sm-4 col-xs-6"><a href="/venues">Venues</a></li>
+							<li class="col-sm-4 col-xs-6"><a href="/conact">Contact</a></li>
+							<li class="col-sm-4 col-xs-6"><a href="ageGroups">Age Groups</a></li>
+							<li class="col-sm-4 col-xs-6"><a href="/login">Login</a></li>
+							<li class="col-sm-4 col-xs-6"><a href="/news">News</a></li>
+							<li class="col-sm-4 col-xs-6"><a href="/events">Events</a></li>
+						</ul>
 					{% endblock%}
 				</div><!--/row-->
 			</div><!--/container-->
 		</div><!--/footer-->
-
 
 	</body>
 </html>
